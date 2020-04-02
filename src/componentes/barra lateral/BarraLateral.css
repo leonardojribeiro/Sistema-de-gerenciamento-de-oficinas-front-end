@@ -1,0 +1,37 @@
+
+.barraLateral{
+    min-width: 200px;
+    height: 100vh;
+    margin-left: -200px;
+    -webkit-transition: margin .25s ease-out;
+    -moz-transition: margin .25s ease-out;
+    -o-transition: margin .25s ease-out;
+    transition: margin .25s ease-out;
+}
+
+.areaLogo{
+  display: flex;
+  justify-content: center;
+}
+.logoOficina {
+  max-height: 100px;
+}
+.nomeOficina{
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 575px){
+  .barraLateral{
+    margin-left: -200px;
+  }
+  .ba{
+    margin-left: 0;
+  }
+}
+
+@media (min-width: 576px){
+  .barraLateral{
+    margin-left: 0;
+  }
+}

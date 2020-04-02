@@ -1,0 +1,11 @@
+.rodape{
+    background-color: lightgray;
+    position: absolute;
+    width: 100vw;
+    min-height:  64px;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
