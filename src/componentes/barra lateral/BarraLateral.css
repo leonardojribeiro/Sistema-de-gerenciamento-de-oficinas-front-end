@@ -1,12 +1,18 @@
 
 .barraLateral{
-    min-width: 200px;
-    height: 100vh;
-    margin-left: -200px;
+    width: 300px;
+    min-height: calc(100vh - 64px);
+    max-height: calc(100vh - 64px);
+    overflow-y: scroll;
+    margin-left: -300px;
     -webkit-transition: margin .25s ease-out;
     -moz-transition: margin .25s ease-out;
     -o-transition: margin .25s ease-out;
     transition: margin .25s ease-out;
+}
+
+.barraLateral::-webkit-scrollbar{
+  display: none;
 }
 
 .areaLogo{
@@ -14,7 +20,7 @@
   justify-content: center;
 }
 .logoOficina {
-  max-height: 100px;
+  max-height: 30vh;
 }
 .nomeOficina{
   display: flex;
@@ -23,7 +29,7 @@
 
 @media (max-width: 575px){
   .barraLateral{
-    margin-left: -200px;
+    margin-left: -300px;
   }
   .ba{
     margin-left: 0;

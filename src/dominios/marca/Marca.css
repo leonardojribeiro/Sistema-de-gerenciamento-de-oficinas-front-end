@@ -1,5 +1,19 @@
-.corpo{
-    background-color: white;
-    display: flex;
-    background-color: blue;
+.previa-imagem-container{
+    min-height: 156px;
+    border: 2px dashed #ddd;
+}
+
+.previa-imagem-container .previa-imagem{
+    height: 156px;
+    max-width: 100%;
+}
+
+.marca-item{
+    min-height: 64px;
+}
+
+
+.marca-item-imagem{
+    max-width: 64px;
+    max-height: 48px;
 }

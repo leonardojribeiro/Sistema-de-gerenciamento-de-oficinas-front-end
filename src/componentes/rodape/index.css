@@ -1,7 +1,6 @@
 .rodape{
     background-color: lightgray;
-    position: absolute;
-    width: 100vw;
+    width: 100%;
     min-height:  64px;
     bottom: 0;
     display: flex;

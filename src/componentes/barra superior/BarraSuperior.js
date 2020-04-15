@@ -1,19 +1,22 @@
 import React from 'react';
-import { Navbar, Button, } from 'react-bootstrap';
-//import { Link, NavLink } from 'react-router-dom'
-import './BarraSuperior.css'
-//import { Button } from 'react-bootstrap';
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import { Navbar} from 'react-bootstrap';
+import Icon from '@material-ui/core/Icon';
+import './BarraSuperior.css';
 
-export default function BarraSuperior({nomeOficina, logoOficina, menuClique}) {
+export default function BarraSuperior({ nomeOficina, logoOficina, menuPressionado }) {
     return (
         <div className="d-sm-none">
             <Navbar bg="light" className="justify-content-between">
                 <Navbar.Brand>
-                    <img className="logoOficina" src={logoOficina.caminho} alt={logoOficina.alt}/>
+                    <img className="logo-oficina-superior" src={logoOficina.caminho} alt={logoOficina.alt} />
                 </Navbar.Brand>
                 <Navbar.Brand>{nomeOficina}</Navbar.Brand>
-                <Button onClick={()=>{menuClique()}}><Icon name="menu"/></Button>
+                <div
+                    className="btn btn-light botao-menu"
+                    onClick={() => { menuPressionado() }}
+                >
+                    <Icon fontSize="large" className="icone-menu">menu</Icon>
+                </div>
             </Navbar>
         </div>
     );
