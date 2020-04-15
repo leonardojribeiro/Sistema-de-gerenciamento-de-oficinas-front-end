@@ -1,37 +1,51 @@
 
 .barraLateral{
     width: 300px;
-    min-height: calc(100vh - 64px);
-    max-height: calc(100vh - 64px);
     overflow-y: scroll;
     margin-left: -300px;
-    -webkit-transition: margin .25s ease-out;
-    -moz-transition: margin .25s ease-out;
-    -o-transition: margin .25s ease-out;
-    transition: margin .25s ease-out;
-}
-
-.barraLateral::-webkit-scrollbar{
-  display: none;
+    -webkit-transition: margin .25s ease-in-out;
+    -moz-transition: margin .25s ease-in-out;
+    -o-transition: margin .25s ease-in-out;
+    transition: margin .25s ease-in-out;
+    background-color: #fff;
+    opacity: 1;
 }
 
 .areaLogo{
   display: flex;
   justify-content: center;
 }
+
 .logoOficina {
   max-height: 30vh;
 }
+
 .nomeOficina{
   display: flex;
   justify-content: center;
 }
 
 @media (max-width: 575px){
-  .barraLateral{
-    margin-left: -300px;
+  .barra-lateral-fundo{
+    height: var(--h-livre-com-barra-rodape);
+    width: 100%;
+    margin-left: -100%;
+    transition: margin 0.2s ease-in-out;
+    position: absolute;
+    z-index: 1;
+    background-color: rgba(1, 1, 1, 0.3);
   }
-  .ba{
+  .barra-lateral-fundo-aberta{
+    margin-left: 0;
+  }
+  .barraLateral{
+    height: var(--h-livre-com-barra-rodape);
+    margin-left: -300px;
+    position: absolute;
+    z-index: 1;
+    opacity: 0.95;
+  }
+  .barraLateral-aberta{
     margin-left: 0;
   }
 }
@@ -39,5 +53,7 @@
 @media (min-width: 576px){
   .barraLateral{
     margin-left: 0;
+    min-height: calc(100vh - 64px);
+    max-height: calc(100vh - 64px);
   }
 }

@@ -11,3 +11,6 @@
 .icone-menu{
     align-self: center;
 }
+.barra-superior{
+    height: var(--h-barra-nav);
+}

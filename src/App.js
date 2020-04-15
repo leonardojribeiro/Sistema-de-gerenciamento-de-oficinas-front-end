@@ -40,7 +40,7 @@ function App() {
           nomeOficina={nomeOficina}
           logoOficina={logoOficina}
         />
-        <div className="container">
+        <div className={aberto?"container conteudo conteudo-ligth conteudo-light-blur":"container conteudo conteudo-light"}>
           <Rotas />
         </div>
       </div>
