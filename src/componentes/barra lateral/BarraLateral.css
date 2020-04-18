@@ -52,7 +52,7 @@
 
 @media (min-width: 576px){
   .barraLateral{
-    width: 300px;
+    width: 200px;
     margin-left: 0;
     height: var(--h-livre-com-rodape)
   }
