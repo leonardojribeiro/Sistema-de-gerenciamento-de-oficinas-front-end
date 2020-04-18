@@ -2,12 +2,12 @@ import React from 'react';
 import { ListGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
 import './BarraLateral.css'
-import { useToasts } from 'react-toast-notifications'
 
-export default function BarraLateral({estaAberta, nomeOficina, logoOficina, menuPressionado }) {
-    const { addToast } = useToasts()
+import { toast, Flip } from 'react-toastify';
+
+export default function BarraLateral({ estaAberta, nomeOficina, logoOficina, menuPressionado }) {
     return (
-        <div className={estaAberta?"barra-lateral-fundo barra-lateral-fundo-aberta":"barra-lateral-fundo"}>
+        <div className={estaAberta ? "barra-lateral-fundo barra-lateral-fundo-aberta" : "barra-lateral-fundo"}>
             <div className={estaAberta ? "barraLateral barraLateral-aberta" : "barraLateral"}>
                 <div className="d-none d-sm-block">
                     <div className="areaLogo">
@@ -23,11 +23,15 @@ export default function BarraLateral({estaAberta, nomeOficina, logoOficina, menu
                         <Link to="/marca" className=" list-group-item-action bg-light my-1">Marcas</Link>
                         <Link to="marca" className=" list-group-item-action bg-light my-1">Modelos</Link>
                         <Link to="marca" className=" list-group-item-action bg-light my-1">Veículos</Link>
-                        <div onClick={()=>{
-                            addToast("Olá, essa é uma notificação",{
-                                appearance: "success",
-                                autoDismiss: true,
-                                
+                        <div onClick={() => {
+                            toast.info('🦄 Wow so easy!', {
+                                position: "top-right",
+                                autoClose: 5000,
+                                hideProgressBar: false,
+                                transition: Flip,
+                                closeOnClick: false,
+                                pauseOnHover: true,
+                                draggable: true,
                             })
                         }} className=" list-group-item-action bg-light my-1">Notificar</div>
                     </ListGroup>
@@ -38,10 +42,14 @@ export default function BarraLateral({estaAberta, nomeOficina, logoOficina, menu
                         <Link to="/marca" className=" list-group-item-action bg-light my-1">Marcas</Link>
                         <Link to="marca" className=" list-group-item-action bg-light my-1">Modelos</Link>
                         <Link to="marca" className=" list-group-item-action bg-light my-1">Veículos</Link>
-                        <div onClick={()=>{
-                            addToast("Olá, essa é uma notificação",{
-                                appearance: "success",
-                                autoDismiss: true,
+                        <div onClick={() => {
+                            toast('🦄 Wow so easy!', {
+                                position: "top-right",
+                                autoClose: 5000,
+                                transition: Flip,
+                                closeOnClick: false,
+                                pauseOnHover: true,
+                                draggable: true,
                             })
                         }} className=" list-group-item-action bg-light my-1">Notificar</div>
                     </ListGroup>
