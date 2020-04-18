@@ -25,7 +25,7 @@ export default function BarraLateral({ estaAberta, nomeOficina, logoOficina, men
                     </ListGroup>
                 </div>
                 <div className="d-sm-none" onClick={() => { menuPressionado() }}>
-                    <ListGroup className="m-2 opaco">
+                    <ListGroup className="m-2">
                         <Link to="" className="list-group-item-action bg-light my-1">Início</Link>
                         <Link to="/marca" className=" list-group-item-action bg-light my-1">Marcas</Link>
                         <Link to="marca" className=" list-group-item-action bg-light my-1">Modelos</Link>

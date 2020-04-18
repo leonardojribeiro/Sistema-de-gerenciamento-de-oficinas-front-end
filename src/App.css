@@ -3,6 +3,7 @@
   --h-rodape: 75px;
   --h-livre-com-barra: calc(100vh - var(--h-barra-nav));
   --h-livre-com-barra-rodape: calc(100vh - var(--h-barra-nav) - var(--h-rodape));
+  --h-livre-com-rodape: calc(100vh - var(--h-rodape));
 }
 
 
@@ -15,7 +16,6 @@
   min-height: var(--h-livre-com-barra-rodape);
 }
 .conteudo-light{
-  transition: filter .25s;
   overflow-block: hidden;
 }
 
