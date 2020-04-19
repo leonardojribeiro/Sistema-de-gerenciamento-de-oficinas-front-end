@@ -24,7 +24,7 @@ export default function BarraLateral({ estaAberta, nomeOficina, logoOficina, men
                         <Link to="marca" className=" list-group-item-action bg-light my-1">Modelos</Link>
                         <Link to="marca" className=" list-group-item-action bg-light my-1">Veículos</Link>
                         <div onClick={() => {
-                            toast.info('🦄 Wow so easy!', {
+                            toast.info('Notificação!', {
                                 position: "top-right",
                                 autoClose: 5000,
                                 hideProgressBar: false,
@@ -43,7 +43,7 @@ export default function BarraLateral({ estaAberta, nomeOficina, logoOficina, men
                         <Link to="marca" className=" list-group-item-action bg-light my-1">Modelos</Link>
                         <Link to="marca" className=" list-group-item-action bg-light my-1">Veículos</Link>
                         <div onClick={() => {
-                            toast('🦄 Wow so easy!', {
+                            toast.info('Notificação!', {
                                 position: "top-right",
                                 autoClose: 5000,
                                 transition: Flip,
