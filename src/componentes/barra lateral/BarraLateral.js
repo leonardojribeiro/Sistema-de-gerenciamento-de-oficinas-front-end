@@ -19,10 +19,10 @@ export default function BarraLateral({ estaAberta, nomeOficina, logoOficina, men
                 </div>
                 <div className="d-none d-sm-block">
                     <ListGroup className="m-2">
-                        <Link to="" className="list-group-item-action bg-light my-1">Início</Link>
-                        <Link to="/marca" className=" list-group-item-action bg-light my-1">Marcas</Link>
-                        <Link to="marca" className=" list-group-item-action bg-light my-1">Modelos</Link>
-                        <Link to="marca" className=" list-group-item-action bg-light my-1">Veículos</Link>
+                        <Link to="" className="list-group-item-action border rounded p-1 mb-1">Início</Link>
+                        <Link to="/marca" className="list-group-item-action border rounded p-1 mb-1">Marcas</Link>
+                        <Link to="marca" className="list-group-item-action border rounded p-1 mb-1">Modelos</Link>
+                        <Link to="marca" className="list-group-item-action border rounded p-1 mb-1">Veículos</Link>
                         <div onClick={() => {
                             toast.info('Notificação!', {
                                 position: "top-right",
@@ -33,15 +33,15 @@ export default function BarraLateral({ estaAberta, nomeOficina, logoOficina, men
                                 pauseOnHover: true,
                                 draggable: true,
                             })
-                        }} className=" list-group-item-action bg-light my-1">Notificar</div>
+                        }} className="list-group-item-action border rounded p-1 mb-1">Notificar</div>
                     </ListGroup>
                 </div>
                 <div className="d-sm-none" onClick={() => { menuPressionado() }}>
                     <ListGroup className="m-2">
-                        <Link to="" className="list-group-item-action bg-light my-1">Início</Link>
-                        <Link to="/marca" className=" list-group-item-action bg-light my-1">Marcas</Link>
-                        <Link to="marca" className=" list-group-item-action bg-light my-1">Modelos</Link>
-                        <Link to="marca" className=" list-group-item-action bg-light my-1">Veículos</Link>
+                        <Link to="" className="list-group-item-action border rounded p-1 mb-1">Início</Link>
+                        <Link to="/marca" className=" list-group-item-action border rounded p-1 mb-1">Marcas</Link>
+                        <Link to="marca" className=" list-group-item-action border rounded p-1 mb-1">Modelos</Link>
+                        <Link to="marca" className=" list-group-item-action border rounded p-1 mb-1">Veículos</Link>
                         <div onClick={() => {
                             toast.info('Notificação!', {
                                 position: "top-right",
@@ -51,7 +51,7 @@ export default function BarraLateral({ estaAberta, nomeOficina, logoOficina, men
                                 pauseOnHover: true,
                                 draggable: true,
                             })
-                        }} className=" list-group-item-action bg-light my-1">Notificar</div>
+                        }} className=" list-group-item-action border rounded p-1 mb-1">Notificar</div>
                     </ListGroup>
                 </div>
             </div>

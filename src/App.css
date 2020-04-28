@@ -1,11 +1,71 @@
 :root{
-  --h-barra-nav: 75px;
+  --h-barra-nav: 64px;
   --h-rodape: 75px;
+  --h-assistente: 24px;
   --h-livre-com-barra: calc(100vh - var(--h-barra-nav));
   --h-livre-com-barra-rodape: calc(100vh - var(--h-barra-nav) - var(--h-rodape));
   --h-livre-com-rodape: calc(100vh - var(--h-rodape));
+  --h-livre-assistente: calc(var(--h-livre-com-barra-rodape) - (40px) - (36px));
 }
 
+.sem-outline:focus{
+  outline: none;
+}
+
+.transicao-tema{
+  transition: all 3.s;
+  -webkit-transition: all .3s;
+  -moz-transition: all .3s;
+  -o-transition: all .3s;
+}
+
+.claro{
+  background-color: #efefef !important;
+  color: #121212 !important;
+  --bg-cor: #efefef !important;
+  --cor: #121212 !important;
+  --cor-borda: rgba(0, 0, 0, 0.42) !important;
+  --cor-borda-hover: #888888 !important;
+  --cor-borda-after: #121212 !important;
+  --cor-label: #121212 !important;
+  --cor-label-focado: #121212 !important;
+}
+
+.escuro{
+  color: #efefef !important;
+  background-color: #121212 !important;
+  --bg-cor: #121212 !important;
+  --cor: #efefef !important;
+  --cor-borda: rgba(255, 255, 255, 0.42) !important;
+  --cor-borda-hover:  #888888 !important;
+  --cor-borda-after: #efefef !important;
+  --cor-label: #efefef !important;
+  --cor-label-focado: #efefef !important;
+}
+
+.h-min-barra-rodape{
+  min-height: var(--h-livre-com-barra-rodape);
+}
+
+.flex{
+  display: flex;
+}
+
+.align-center{
+  align-items: center;
+}
+
+.justify-center{
+  justify-content: center;
+}
+
+.justify-around{
+  justify-content: space-around;
+}
+
+.justify-between{
+  justify-content: space-between;
+}
 
 .layout{
   display: flex;

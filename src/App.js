@@ -1,54 +1,69 @@
-import React, { useState, useEffect } from 'react';
-import Rotas from './rotas';
-import BarraLateral from './componentes/barra lateral/BarraLateral';
+import React, { useState, useEffect, useMemo } from 'react';
 import BarraSuperior from './componentes/barra superior/BarraSuperior';
 import Rodape from './componentes/rodape';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Link, Redirect } from 'react-router-dom';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import BrightnessHigh from '@material-ui/icons/BrightnessHigh';
+import BrightnessLow from '@material-ui/icons/BrightnessLow';
+import Menu from '@material-ui/icons/Menu';
+import AddCircle from '@material-ui/icons/AddCircle';
+import Drawer from './componentes/Drawer';
+import { ButtonGroup, IconButton, Tooltip } from '@material-ui/core';
+import Backdrop from './componentes/Backdrop';
+import Botao from './componentes/IconButton';
+import Rotas from './rotas';
 
 function App() {
-  const [aberto, setAberto] = useState(false);
-  const [logoOficina, setLogoOficina] = useState({});
-  const [nomeOficina, setNomeOficina] = useState("");
-
-
+  const [tema, setTema] = useState("claro");
+  const [logo, setLogo] = useState({});
+  const [titulo, setTitulo] = useState("");
+  const [icoTema, setIcoTema] = useState(<BrightnessHigh />);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   useEffect(() => {
-    setLogoOficina({
-      caminho: "logo.jpg",
-      alt: "Logomarca da oficina"
+    setLogo({
+      url: "logo.jpg",
+      alt: "Logomarca"
     });
-    setNomeOficina("Nome Da Oficina")
+    setTitulo("Sistema de Gerenciamento de Oficinas");
   }, []);
 
+  const alterarTema = () => {
+    if (tema === "claro") {
+      setTema("escuro");
+      setIcoTema(<BrightnessLow />)
+    }
+    else {
+      setTema("claro");
+      setIcoTema(<BrightnessHigh />);
+    }
+  }
+
+  const botoes = (
+    <ButtonGroup>
+      <Botao tooltip="Cadastrar Oficina" component={Link} to="/oficina/cadastro/">
+        <AddCircle />
+      </Botao>
+      <Botao tooltip="Alterar Tema" onClick={alterarTema}>
+        {icoTema}
+      </Botao>
+      <Botao tooltip="Menu" onClick={() => { setDrawerOpen(!drawerOpen) }}>
+        <Menu />
+      </Botao>
+    </ButtonGroup>
+  );
 
   return (
-    <BrowserRouter>
-      
-      <BarraSuperior
-        nomeOficina={nomeOficina}
-        logoOficina={logoOficina}
-        menuPressionado={() => {
-          setAberto(!aberto);
-        }} />
-      <div className="layout">
-        <BarraLateral
-          estaAberta={aberto}
-          menuPressionado={() => {
-            setAberto(!aberto);
-          }}
-          nomeOficina={nomeOficina}
-          logoOficina={logoOficina}
-        />
-        <div className={aberto?"container conteudo conteudo-ligth conteudo-light-blur":"container conteudo conteudo-light"}>
-          <Rotas />
+    <div className={`transicao-tema ${tema}`}>
+      <BrowserRouter>
+        <BarraSuperior logo={logo} titulo={titulo} items={botoes} />
+        <div className="h-min-barra-rodape">
+          <Rotas tema={tema}/>
         </div>
-      </div>
-      <Rodape />
-      <ToastContainer/>
-    </BrowserRouter>
+        <Rodape />
+        <Drawer open={drawerOpen} onOpen={() => { setDrawerOpen(true) }} onClose={() => { setDrawerOpen(false) }} />
+      </BrowserRouter>
+      <Backdrop />
+    </div>
   );
 }
 
