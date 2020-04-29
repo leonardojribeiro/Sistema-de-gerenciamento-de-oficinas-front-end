@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Stepper, Step, StepLabel, Button, StepContent, Container, StepButton, makeStyles, Grid, Box } from '@material-ui/core';
+import { Stepper, Step, StepLabel, Button, makeStyles, Grid, Box } from '@material-ui/core';
 
 
 
@@ -7,11 +7,23 @@ const useStyles = makeStyles({
   fundo: {
     padding: "8px",
     backgroundColor: "inherit",
-    '& .MuiStepIcon-root.MuiStepIcon-active': {
-      color: "#ddd"
-    },
-    '& .MuiStepIcon-root.MuiStepIcon-completed': {
+    '& .MuiStepIcon-root':{
       color: "#888"
+    },
+    '& .MuiStepIcon-active': {
+      color: "var(--cor)"
+    },
+    '& .MuiStepLabel-label':{
+      color: "var(--cor)"
+    },
+    '& .MuiStepIcon-text':{
+      fill: "var(--cor)"
+    },
+    '& .MuiStepIcon-active .MuiStepIcon-text':{
+      fill: "var(--bg-cor)"
+    },
+    '& .MuiStepIcon-completed': {
+      color: "var(--cor)"
     }
   },
   container: {
@@ -32,9 +44,6 @@ export default function Assistente({ passos, titulo }) {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
 
   return (
     <Grid container>
@@ -61,7 +70,7 @@ export default function Assistente({ passos, titulo }) {
               disabled={activeStep === 0}
               onClick={handleBack}
             > Voltar</Button>
-            <Button variant="contained" color="primary" onClick={handleNext}>
+            <Button variant="contained" color="primary" onClick={activeStep === passos.length - 1 ? null : handleNext}>
               {activeStep === passos.length - 1 ? 'Salvar' : 'Próximo'}
             </Button>
           </Grid>

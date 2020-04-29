@@ -1,25 +1,33 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect} from 'react';
 import BarraSuperior from './componentes/barra superior/BarraSuperior';
 import Rodape from './componentes/rodape';
-import { BrowserRouter, Switch, Route, Link, Redirect } from 'react-router-dom';
+import {BrowserRouter, Link} from 'react-router-dom';
 import './App.css';
 import BrightnessHigh from '@material-ui/icons/BrightnessHigh';
 import BrightnessLow from '@material-ui/icons/BrightnessLow';
 import Menu from '@material-ui/icons/Menu';
 import AddCircle from '@material-ui/icons/AddCircle';
 import Drawer from './componentes/Drawer';
-import { ButtonGroup, IconButton, Tooltip } from '@material-ui/core';
+import { ButtonGroup,} from '@material-ui/core';
 import Backdrop from './componentes/Backdrop';
 import Botao from './componentes/IconButton';
 import Rotas from './rotas';
 
 function App() {
-  const [tema, setTema] = useState("claro");
+  const [tema, setTema] = useState("");
   const [logo, setLogo] = useState({});
   const [titulo, setTitulo] = useState("");
   const [icoTema, setIcoTema] = useState(<BrightnessHigh />);
   const [drawerOpen, setDrawerOpen] = useState(false);
   useEffect(() => {
+    const t = localStorage.getItem("tema");
+    console.log(t);
+    if(t){
+      setTema(t);
+    }
+    else{
+      setTema("claro");
+    }
     setLogo({
       url: "logo.jpg",
       alt: "Logomarca"
@@ -31,11 +39,14 @@ function App() {
     if (tema === "claro") {
       setTema("escuro");
       setIcoTema(<BrightnessLow />)
+      localStorage.setItem("tema", "escuro");
     }
     else {
       setTema("claro");
       setIcoTema(<BrightnessHigh />);
+      localStorage.setItem("tema", "claro");
     }
+    
   }
 
   const botoes = (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import StringMask from 'string-mask';
 import GoogleMaps from '../../componentes/GoogleMaps';
-import { Grid, Box, Container, TextField, withWidth, Input, InputLabel, Hidden, Button, Paper } from '@material-ui/core';
+import { Grid, Box, Container, withWidth, Input, InputLabel, Hidden, Button } from '@material-ui/core';
 import CampoTexto from '../../componentes/CampoTexto';
 import Assistente from '../../componentes/Assistente';
 import DragAndDrop from '../../componentes/DragAndDrop';
@@ -10,10 +10,7 @@ export default withWidth()(function CadastroOficina({ tema, width }) {
   const [valor, setValor] = useState("");
   const [logomarca, setLogomarca] = useState(null);
   const [urlLogomarca, setUrlLogomarca] = useState("");
-  const [coordenadas, setCoordenadas] = useState({
-    lat: process.env.REACT_APP_INITIAL_LATITUDE,
-    lng: process.env.REACT_APP_INITIAL_LONGITUDE
-  });
+  const [coordenadas, setCoordenadas] = useState({ lat: 0, lng: 0 });
 
   useEffect(() => {
     if (navigator && navigator.geolocation) {
@@ -142,9 +139,11 @@ export default withWidth()(function CadastroOficina({ tema, width }) {
         <Box p={2}>
           <GoogleMaps
             initialCenter={coordenadas}
-            onClick={(a, s, e) => setCoordenadas(e.latLng.toJSON())} 
+            onClick={async (a, s, e) => {
+              setCoordenadas(e.latLng.toJSON());
+            }}
             icone={urlLogomarca}
-            />
+          />
         </Box>
       </Grid>
     </Grid>
