@@ -32,7 +32,7 @@ const useStyles = makeStyles({
 });
 
 export default function Assistente({ passos, titulo }) {
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(1);
 
   const classes = useStyles();
 

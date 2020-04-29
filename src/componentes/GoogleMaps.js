@@ -1,9 +1,7 @@
 import React from 'react';
-import { Map, Marker, GoogleApiWrapper} from 'google-maps-react';
+import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
 
-var geocoder;
 export function MapContainer({ initialCenter, onClick, icone, ...props }) {
-  
   return (
     <Map
       containerStyle={{
@@ -19,7 +17,13 @@ export function MapContainer({ initialCenter, onClick, icone, ...props }) {
     >
       <Marker
         position={initialCenter}
-        
+        draggable={true}
+        onDragend={onClick}
+        icon={{
+          url: icone ? icone : null, 
+          anchor: new props.google.maps.Point(32, 32),
+          scaledSize: new props.google.maps.Size(32, 32)
+        }}
       />
     </Map>
   );

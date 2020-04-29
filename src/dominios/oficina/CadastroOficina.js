@@ -5,6 +5,7 @@ import { Grid, Box, Container, withWidth, Input, InputLabel, Hidden, Button } fr
 import CampoTexto from '../../componentes/CampoTexto';
 import Assistente from '../../componentes/Assistente';
 import DragAndDrop from '../../componentes/DragAndDrop';
+import SeletorImagem from '../../componentes/SeletorImagem';
 
 export default withWidth()(function CadastroOficina({ tema, width }) {
   const [valor, setValor] = useState("");
@@ -59,6 +60,8 @@ export default withWidth()(function CadastroOficina({ tema, width }) {
     }
   };
 
+  const onImagemInput = evento => onImagem(evento.target.files);
+
 
   const dados = (
     <Grid container>
@@ -80,16 +83,7 @@ export default withWidth()(function CadastroOficina({ tema, width }) {
             <CampoTexto label="Celular" />
           </Grid>
           <Hidden smUp>
-            <Grid xs={12} sm={6} md={4} lg={4} item>
-              <Box p={2}>
-                <InputLabel htmlFor="logomarca" >
-                  <Button fullWidth variant="outlined" component="span">
-                    Selecione a logomarca
-                  </Button>
-                </InputLabel>
-                <Input type="file" style={{ display: 'none' }} id="logomarca" />
-              </Box>
-            </Grid>
+            <SeletorImagem onChange={onImagemInput} urlImagem={urlLogomarca}/>
           </Hidden>
         </Grid>
       </Grid>
@@ -139,7 +133,7 @@ export default withWidth()(function CadastroOficina({ tema, width }) {
         <Box p={2}>
           <GoogleMaps
             initialCenter={coordenadas}
-            onClick={async (a, s, e) => {
+            onClick={(a, s, e) => {
               setCoordenadas(e.latLng.toJSON());
             }}
             icone={urlLogomarca}

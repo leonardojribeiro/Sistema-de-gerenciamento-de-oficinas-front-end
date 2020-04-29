@@ -7,7 +7,7 @@ import './arrastar e soltar/style.css';
 
 const useStyles = makeStyles({
   drag: {
-    transition: "all 0.3s",
+    transition: "border 0.3s",
     border: "3px dashed var(--cor-borda)",
     borderRadius: "4px",
     cursor: "pointer",
