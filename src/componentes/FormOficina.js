@@ -3,23 +3,30 @@ import { Grid, Hidden, Box } from '@material-ui/core';
 import CampoTexto from './CampoTexto';
 import DragAndDrop from './DragAndDrop';
 import SeletorImagem from './SeletorImagem';
-
 import mascara from '../recursos/MascaraNumerica';
 
-export default function FormOficina({dadosOficina}) {
-  const [urlLogomarca, setUrlLogomarca] = useState("");
-  
-  const onChangeDescricao = e => {
-    dadosOficina.descricao.setDescricao(e.target.value);
-  }
+export default function FormOficina({ dadosOficina }) {
+  const { oficina, setOficina } = dadosOficina;
+  const { nomeFantasia, razaoSocial, cpfCnpj, telefoneFixo, telefoneCelular, urlLogomarca } = oficina
 
   const onChangeNomeFantasia = e => {
-    dadosOficina.nomeFantasia.setNomeFantasia(e.target.value);
+    setOficina({
+      ...oficina,
+      nomeFantasia: e.target.value
+    });
+  }
+
+  const onChangeRazaoSocial = e => {
+    setOficina({
+      ...oficina,
+      razaoSocial: e.target.value
+    });
   }
 
   const onChangeCpfCnpj = e => {
-    dadosOficina.cpfCnpj.setCpfCnpj(
-      mascara(
+    setOficina({
+      ...oficina,
+      cpfCnpj: mascara(
         e.target.value,
         tamanho => {
           return tamanho < 12 //se o tamanho é menor que 12 indica cpf, se não cnpj
@@ -27,12 +34,13 @@ export default function FormOficina({dadosOficina}) {
             : "00.000.000/0000-00"
         }
       )
-    );
+    });
   }
 
-  const onChangeTelefone = e => {
-    dadosOficina.telefone.setTelefone(
-      mascara(
+  const onChangeTelefoneFixo = e => {
+    setOficina({
+      ...oficina,
+      telefoneFixo: mascara(
         e.target.value,
         tamanho => {
           return tamanho < 11
@@ -40,76 +48,71 @@ export default function FormOficina({dadosOficina}) {
             : "(00) 00000-0000"
         }
       )
-    );
+    });
   }
 
-  const onChangeCelular = e => {
-    dadosOficina.celular.setCelular(
-      mascara(
+  const onChangeTelefoneCelular = e => {
+    setOficina({
+      ...oficina,
+      telefoneCelular: mascara(
         e.target.value,
         tamanho => {
-          return tamanho < 11 
+          return tamanho < 11
             ? "(00) 0000-0000"
             : "(00) 00000-0000"
         }
       )
-    );
+    });
   }
 
   const onChangeImagem = imagem => {
     const reader = new FileReader();
     reader.onloadend = () => {
-      setUrlLogomarca(reader.result);
+      setOficina({
+        ...oficina,
+        urlLogomarca: reader.result
+      });
     }
     if (imagem[0]) {
       reader.readAsDataURL(imagem[0]);
-      setUrlLogomarca(reader.result);
-      dadosOficina.logomarca.setLogomarca(imagem[0]);
+      setOficina({
+        ...oficina,
+        logomarca: imagem[0]
+      });
     }
     else {
-      setUrlLogomarca("");
-      dadosOficina.logomarca.setLogomarca(null);
+      setOficina({
+        ...oficina,
+        logomarca: null,
+        urlLogomarca: ""
+      });
     }
   };
 
   return (
     <Grid container>
-      <Grid md={9} item>
-        <Grid container>
-          <Grid xs={12} sm={6} md={6} item>
-            <CampoTexto
-              label="Descrição"
-              onChange={onChangeDescricao}
-              value={dadosOficina.descricao.descricao}
-            />
+      <Grid item lg={8}>
+        <Grid container justify="center" alignItems="center">
+          <Grid xs={12} sm={12} md={6} item>
+            <CampoTexto label="Nome Fantasia / Nome" onChange={onChangeNomeFantasia} value={nomeFantasia} />
           </Grid>
-          <Grid xs={12} sm={6} md={6} item>
-            <CampoTexto
-              label="Nome Fantasia"
-              onChange={onChangeNomeFantasia}
-              value={dadosOficina.nomeFantasia.nomeFantasia}
-            />
+          <Grid xs={12} sm={12} md={6} item>
+            <CampoTexto label="Razão Social" onChange={onChangeRazaoSocial} value={razaoSocial} />
           </Grid>
-          <Grid xs={12} sm={4} md={4} item>
-            <CampoTexto
-              label="CPF/CNPJ"
-              onChange={onChangeCpfCnpj}
-              value={dadosOficina.cpfCnpj.cpfCnpj}
-            />
+          <Grid xs={12} sm={6} md={4} item>
+            <CampoTexto label="CPF/CNPJ" onChange={onChangeCpfCnpj} value={cpfCnpj} />
           </Grid>
-          <Grid xs={12} sm={4} md={4} item>
-            <CampoTexto
-              label="Telefone"
-              onChange={onChangeTelefone}
-              value={dadosOficina.telefone.telefone}
-            />
+          <Grid xs={12} sm={6} md={4} item>
+            <CampoTexto label="Telefone Fixo" onChange={onChangeTelefoneFixo} value={telefoneFixo} />
           </Grid>
-          <Grid xs={12} sm={4} md={4} item>
-            <CampoTexto
-              label="Celular"
-              onChange={onChangeCelular}
-              value={dadosOficina.celular.celular}
-            />
+          <Grid xs={12} sm={6} md={4} item>
+            <CampoTexto label="Telefone Celular" onChange={onChangeTelefoneCelular} value={telefoneCelular} />
+          </Grid>
+          <Grid xs={12} sm={6} md={4} item>
+            <CampoTexto label="E-mail"  />
+          </Grid>
+          <Grid xs={12} md={8} item>
+            <CampoTexto label="Website"  />
           </Grid>
           <Hidden smUp>
             <SeletorImagem urlImagem={urlLogomarca} onChange={onChangeImagem} />
@@ -117,12 +120,12 @@ export default function FormOficina({dadosOficina}) {
         </Grid>
       </Grid>
       <Hidden xsDown>
-        <Grid xs={12} sm={12} md={3} item>
-          <Box mt={2} p={2} display="flex" justifyContent="center">
-            <DragAndDrop urlImagem={urlLogomarca} onChange={onChangeImagem} />
-          </Box>
-        </Grid>
-      </Hidden>
+          <Grid xs={12} lg={4} item>
+            <Box mt={2} p={2} display="flex" justifyContent="center">
+              <DragAndDrop urlImagem={urlLogomarca} onChange={onChangeImagem} />
+            </Box>
+          </Grid>
+        </Hidden>
     </Grid>
   );
 }

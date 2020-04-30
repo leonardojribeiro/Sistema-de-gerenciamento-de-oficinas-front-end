@@ -2,11 +2,6 @@ import React from 'react';
 import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
 
 export function MapContainer({ initialCenter, onClick, icone, ...props }) {
-  const icon={
-    url: icone ? icone : "https://developers.google.com/maps/documentation/javascript/images/default-marker.png", 
-    anchor: new props.google.maps.Point(32, 32),
-    scaledSize: new props.google.maps.Size(32, 32)
-  };
   return (
     <Map
       containerStyle={{
@@ -25,7 +20,6 @@ export function MapContainer({ initialCenter, onClick, icone, ...props }) {
         position={initialCenter}
         draggable={true}
         onDragend={onClick}
-        
       />
     </Map>
   );

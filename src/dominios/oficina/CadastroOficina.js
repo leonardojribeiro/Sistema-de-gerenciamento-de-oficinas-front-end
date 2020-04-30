@@ -6,50 +6,24 @@ import FormEndereco from '../../componentes/FormEndereco';
 
 export default function CadastroOficina() {
   //oficina
-  const [descricao, setDescricao] = useState("");
-  const [nomeFantasia, setNomeFantasia] = useState("");
-  const [cpfCnpj, setCpfCnpj] = useState("");
-  const [telefone, setTelefone] = useState("");
-  const [celular, setCelular] = useState("");
-  const [logomarca, setLogomarca] = useState(null);
 
-  //endereço
-  const [logradouro, setLogradouro] = useState("");
-  const [bairro, setBairro] = useState("");
-  const [numero, setNumero] = useState("");
-  const [cep, setCep] = useState("");
-  const [complemento, setComplemento] = useState("");
-  const [cidade, setCidade] = useState("");
-  const [estado, setEstado] = useState("");
-  const [coordenadas, setCoordenadas] = useState({ lat: 0, lng: 0 });
-
+  const [oficina, setOficina] = useState({
+    nomeFantasia: "",
+    razaoSocial: "",
+    cpfCnpj: "",
+    telefoneFixo: "",
+    telefoneCelular: "",
+    email: "",
+    webSite: "",
+    logomarca: "",
+  });
 
   const dadosOficina = {
-    descricao: {
-      descricao,
-      setDescricao
-    },
-    nomeFantasia: {
-      nomeFantasia,
-      setNomeFantasia
-    },
-    cpfCnpj: {
-      cpfCnpj,
-      setCpfCnpj
-    },
-    telefone: {
-      telefone,
-      setTelefone
-    },
-    celular: {
-      celular,
-      setCelular
-    },
-    logomarca: {
-      logomarca,
-      setLogomarca
-    }
+    oficina,
+    setOficina
   }
+
+  console.log(oficina);
 
   const [endereco, setEndereco] = useState({
     logradouro: "",
@@ -68,9 +42,10 @@ export default function CadastroOficina() {
     setEndereco
   }
 
-  const dados = (
+  const formOficina = (
     <FormOficina dadosOficina={dadosOficina} />
   );
+
   const formEndereco = (
     <FormEndereco dadosEndereco={dadosEndereco} />
   );
@@ -81,20 +56,18 @@ export default function CadastroOficina() {
         <Grid xs={12} item>
           <Box display="flex" alignItems="center">
             <Assistente passos={
-              [
-                {
-                  label: "Dados",
-                  dados: dados
-                },
-                {
-                  label: "Endereço",
-                  dados: formEndereco
-                },
-                {
-                  label: "Confirmar",
-                  dados: ""
-                }
-              ]
+              [{
+                label: "Dados",
+                dados: formOficina
+              },
+              {
+                label: "Endereço",
+                dados: formEndereco
+              },
+              {
+                label: "Confirmar",
+                dados: ""
+              }]
             }
             />
           </Box>

@@ -15,7 +15,7 @@ const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "center",
     textAlign: "center",
-    height: "156px",
+    height: "256px",
   },
   dragActive: {
     transition: "all 0.3s",
@@ -24,7 +24,7 @@ const useStyles = makeStyles({
     borderRadius: "4px",
     cursor: "pointer",
     textAlign: "center",
-    height: "156px",
+    height: "256px",
   },
   dragReject: {
     transition: "all 0.3s",
@@ -33,7 +33,7 @@ const useStyles = makeStyles({
     borderRadius: "4px",
     cursor: "pointer",
     textAlign: "center",
-    height: "156px",
+    height: "256px",
   },
   mensagem: {
     backgroundColor: "var(--cor-transparente)",
@@ -44,11 +44,11 @@ const useStyles = makeStyles({
     zIndex: 1
   },
   imagem: {
-    maxHeight : "142px",
-    maxWidth: "182px"
+    maxHeight : "240px",
+    maxWidth: "calc( 100%  - (24px))"
   },
   container: {
-    height: "156px",
+    height: "256px",
     minWidth: "100%",
   }
 });

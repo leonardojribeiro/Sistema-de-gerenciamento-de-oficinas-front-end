@@ -21,7 +21,7 @@ export default function FormEndereco({ dadosEndereco }) {
         });
         setCoordenadas({
           lat: coords.latitude,
-          lng: coords.latitude
+          lng: coords.longitude
         });
       })
     }
@@ -111,21 +111,21 @@ export default function FormEndereco({ dadosEndereco }) {
 
   return (
     <Grid container justify="center" alignItems="center">
-      <Grid md={7} item>
+      <Grid lg={8} item>
         <Grid container >
-          <Grid xs={12} sm={6} md={6} item>
+          <Grid xs={12} md={6} item>
             <CampoTexto label="Logradouro" onChange={onChangeLogradouro} value={logradouro} />
           </Grid>
-          <Grid xs={12} sm={6} md={6} item>
+          <Grid xs={12} md={6} item>
             <CampoTexto fullWidth label="Bairro" onChange={onChangeBairro} value={bairro} />
           </Grid>
-          <Grid xs={6} sm={3} item>
+          <Grid xs={6} sm={6} md={3} item>
             <CampoTexto fullWidth label="Número" onChange={onChangeNumero} value={numero} />
           </Grid>
-          <Grid xs={6} sm={3} item>
+          <Grid xs={6} md={3} item>
             <CampoTexto fullWidth label="CEP" onChange={onChangeCep} value={cep} />
           </Grid>
-          <Grid xs={12} sm={6} item>
+          <Grid xs={12}  md={6} item>
             <CampoTexto fullWidth label="Complemento" onChange={onChangeComplemento} value={complemento} />
           </Grid>
           <Grid xs={12} sm={6} item>
@@ -142,7 +142,7 @@ export default function FormEndereco({ dadosEndereco }) {
           </Grid>
         </Grid>
       </Grid>
-      <Grid xs={12} md={5} sm={12} item>
+      <Grid xs={12} lg={4} sm={12} item>
         <Box p={2}>
           <GoogleMaps
             initialCenter={coordenadas}
