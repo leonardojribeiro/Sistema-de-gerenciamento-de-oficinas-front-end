@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Stepper, Step, StepLabel, Button, makeStyles, Grid, Box } from '@material-ui/core';
+import { Stepper, Step, StepLabel, Button, makeStyles, Grid, Box, StepButton } from '@material-ui/core';
 
 const useStyles = makeStyles({
   fundo: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles({
 });
 
 export default function Assistente({ passos, titulo }) {
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(0);
 
   const classes = useStyles();
 
@@ -42,15 +42,18 @@ export default function Assistente({ passos, titulo }) {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const handleStep = (step) => () => {
+    setActiveStep(step);
+  };
 
   return (
     <Grid container>
       <Grid xs={12} item>
-        <Stepper className={classes.fundo} activeStep={activeStep} orientation="horizontal" >
+        <Stepper className={classes.fundo} nonLinear activeStep={activeStep} orientation="horizontal" >
           {passos.map((passo, index) => {
             return (
               <Step key={index}>
-                <StepLabel>{passo.label}</StepLabel>
+                <StepButton onClick={handleStep(index)}>{passo.label}</StepButton>
               </Step>
             );
           })}

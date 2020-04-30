@@ -49,7 +49,9 @@ const useStyles = makeStyles({
   },
   container: {
     height: "256px",
-    minWidth: "100%",
+    minWidth: "256px",
+    width: "100%",
+    maxWidth: "512px"
   }
 });
 

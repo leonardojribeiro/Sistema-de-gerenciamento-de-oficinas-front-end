@@ -5,27 +5,9 @@ import GoogleMaps from './GoogleMaps';
 
 
 export default function FormEndereco({ dadosEndereco }) {
-  const [coordenadas, setCoordenadas] = useState({lat:"", lng:""});
   const { endereco, setEndereco } = dadosEndereco;
 
   const { logradouro, bairro, numero, cep, complemento, cidade, estado, latitude, longitude } = endereco;
-
-  useEffect(() => {
-    if (navigator && navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((pos) => {
-        const coords = pos.coords;
-        setEndereco({
-          ...endereco,
-          latitude: coords.latitude,
-          longitude: coords.longitude
-        });
-        setCoordenadas({
-          lat: coords.latitude,
-          lng: coords.longitude
-        });
-      })
-    }
-  }, []);
 
   const onChangeLogradouro = e => {
     setEndereco({
@@ -33,8 +15,6 @@ export default function FormEndereco({ dadosEndereco }) {
       logradouro: e.target.value
     });
   }
-
-  console.log(dadosEndereco);
 
   const onChangeBairro = e => {
     setEndereco({
@@ -83,20 +63,12 @@ export default function FormEndereco({ dadosEndereco }) {
       ...endereco,
       latitude: e.target.value
     });
-    setCoordenadas({
-      ...coordenadas,
-      lat: e.target.value
-    });
   }
 
   const onChangeLongitude = e => {
     setEndereco({
       ...endereco,
       longitude: e.target.value
-    });
-    setCoordenadas({
-      ...coordenadas,
-      lng: e.target.value
     });
   }
 
@@ -106,7 +78,6 @@ export default function FormEndereco({ dadosEndereco }) {
       latitude: event.latLng.lat(),
       longitude: event.latLng.lng()
     });
-    setCoordenadas(event.latLng.toJSON());
   }
 
   return (
@@ -145,7 +116,7 @@ export default function FormEndereco({ dadosEndereco }) {
       <Grid xs={12} lg={4} sm={12} item>
         <Box p={2}>
           <GoogleMaps
-            initialCenter={coordenadas}
+            initialCenter={{lat:latitude, lng:longitude}}
             onClick={onChangeMapa}
           />
         </Box>

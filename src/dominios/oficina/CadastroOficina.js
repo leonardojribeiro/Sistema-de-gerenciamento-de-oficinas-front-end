@@ -37,6 +37,19 @@ export default function CadastroOficina() {
     longitude: ""
   });
 
+  useEffect(() => {
+    if (navigator && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((pos) => {
+        const coords = pos.coords;
+        setEndereco({
+          ...endereco,
+          latitude: coords.latitude,
+          longitude: coords.longitude
+        });
+      })
+    }
+  }, []);
+
   const dadosEndereco = {
     endereco,
     setEndereco
