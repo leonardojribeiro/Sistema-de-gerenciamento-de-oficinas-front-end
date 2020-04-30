@@ -21,7 +21,6 @@ function App() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   useEffect(() => {
     const t = localStorage.getItem("tema");
-    console.log(t);
     if(t){
       setTema(t);
     }

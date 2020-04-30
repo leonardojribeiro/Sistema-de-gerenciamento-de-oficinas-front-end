@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextField, Box, makeStyles } from '@material-ui/core';
+import { TextField, Box, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
   campoTexto: {
@@ -26,10 +26,10 @@ const useStyles = makeStyles({
 });
 
 
-export default function CampoTexto({label, value, onChange}) {
+export default function CampoTexto({ label, value, onChange, type }) {
   return (
-      <Box mt={2} p={2} display="flex" alignItems="center">
-        <TextField className={useStyles().campoTexto} fullWidth label={label} value={value} onChange={onChange}/>
-      </Box>
+    <Box mt={2} p={2}>
+      <TextField type={type} className={useStyles().campoTexto} fullWidth label={label} value={value} onChange={onChange} />
+    </Box>
   );
 }

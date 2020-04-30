@@ -36,27 +36,30 @@ const useStyles = makeStyles({
     height: "156px",
   },
   mensagem: {
+    backgroundColor: "var(--cor-transparente)",
     width:"192px",
+    padding: "8px",
+    borderRadius: "3px",
     position: "absolute",
     zIndex: 1
   },
   imagem: {
     maxHeight : "142px",
-    maxWidth: "172px"
+    maxWidth: "182px"
   },
   container: {
     height: "156px",
-    width:"192px",
+    minWidth: "100%",
   }
 });
 
 
-export default function ArrastarESoltar({ onImagem, imagem, id }) {
+export default function ArrastarESoltar({ onChange, urlImagem}) {
   const classes = useStyles();
 
   const imagemContainer = (
     <Box p={1}>
-      <img src={imagem} className={classes.imagem} alt="Logomarca"/>
+      <img src={urlImagem} className={classes.imagem} alt="Logomarca"/>
     </Box>
   );
 
@@ -66,7 +69,7 @@ export default function ArrastarESoltar({ onImagem, imagem, id }) {
           Clique ou arraste uma logomarca aqui.
       </div>
       <div>
-        {imagem ? imagemContainer : ""}
+        {urlImagem ? imagemContainer : ""}
       </div>
     </Box>
   );
@@ -85,11 +88,11 @@ export default function ArrastarESoltar({ onImagem, imagem, id }) {
 
 
   return (
-    <Dropzone accept="image/*" multiple={false} onDropAccepted={onImagem}>
+    <Dropzone accept="image/*" multiple={false} onDropAccepted={onChange}>
       {({ getRootProps, getInputProps, isDragActive, isDragReject }) => {
         return (
           <div className={classes.container} {...getRootProps()}>
-            <input {...getInputProps()} id={id} />
+            <input {...getInputProps()} />
             {
               isDragReject ? dragReject : isDragActive ? dragActive : drag
             }

@@ -5,7 +5,7 @@
   --h-livre-com-barra: calc(100vh - var(--h-barra-nav));
   --h-livre-com-barra-rodape: calc(100vh - var(--h-barra-nav) - var(--h-rodape));
   --h-livre-com-rodape: calc(100vh - var(--h-rodape));
-  --h-livre-assistente: calc(var(--h-livre-com-barra-rodape) - (40px) - (36px));
+  --h-livre-assistente: calc(var(--h-livre-com-barra-rodape) - (40px) - (48px));
 }
 
 .sem-outline:focus{
@@ -25,6 +25,7 @@
   --bg-cor: #efefef !important;
   --cor: #121212 !important;
   --cor-borda: rgba(0, 0, 0, 0.42) !important;
+  --cor-transparente: rgba(255,255,255, 0.4);
   --cor-borda-hover: #888888 !important;
   --cor-borda-after: #121212 !important;
   --cor-label: #121212 !important;
@@ -36,7 +37,8 @@
   background-color: #121212 !important;
   --bg-cor: #121212 !important;
   --cor: #efefef !important;
-  --cor-borda: rgba(255, 255, 255, 0.42) !important;
+  --cor-borda: rgba(255, 255, 255, 0.4) !important;
+  --cor-transparente: rgba(0,0,0, 0.4);
   --cor-borda-hover:  #888888 !important;
   --cor-borda-after: #efefef !important;
   --cor-label: #efefef !important;

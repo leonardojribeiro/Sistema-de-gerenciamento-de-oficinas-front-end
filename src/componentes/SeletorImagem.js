@@ -1,7 +1,6 @@
 import React from 'react';
 import { Grid, Box, InputLabel, Button, Input, makeStyles } from '@material-ui/core';
 
-
 const useStyles = makeStyles({
   imagem: {
     maxWidth: "80%",
@@ -12,9 +11,7 @@ const useStyles = makeStyles({
   }
 });
 
-
 export default function SeletorImagem({ urlImagem, onChange }) {
-
   const classes = useStyles();
 
   const containerImagem = (
@@ -36,7 +33,7 @@ export default function SeletorImagem({ urlImagem, onChange }) {
             type="file"
             className={classes.input}
             id="logomarca"
-            onChange={onChange}
+            onChange={e=>onChange(e.target.files)}
             accept="image/*"
           />
         </Box>

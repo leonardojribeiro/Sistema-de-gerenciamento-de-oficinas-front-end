@@ -1,25 +1,23 @@
 import React, { useState } from 'react';
 import { Stepper, Step, StepLabel, Button, makeStyles, Grid, Box } from '@material-ui/core';
 
-
-
 const useStyles = makeStyles({
   fundo: {
     padding: "8px",
     backgroundColor: "inherit",
-    '& .MuiStepIcon-root':{
+    '& .MuiStepIcon-root': {
       color: "#888"
     },
     '& .MuiStepIcon-active': {
       color: "var(--cor)"
     },
-    '& .MuiStepLabel-label':{
+    '& .MuiStepLabel-label': {
       color: "var(--cor)"
     },
-    '& .MuiStepIcon-text':{
+    '& .MuiStepIcon-text': {
       fill: "var(--cor)"
     },
-    '& .MuiStepIcon-active .MuiStepIcon-text':{
+    '& .MuiStepIcon-active .MuiStepIcon-text': {
       fill: "var(--bg-cor)"
     },
     '& .MuiStepIcon-completed': {
@@ -32,7 +30,7 @@ const useStyles = makeStyles({
 });
 
 export default function Assistente({ passos, titulo }) {
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(0);
 
   const classes = useStyles();
 
@@ -58,23 +56,26 @@ export default function Assistente({ passos, titulo }) {
           })}
         </Stepper>
       </Grid>
-      <Grid xs={12} item>
-        <Box className={classes.container} display="flex" justifyContent="center" alignItems="center">
-          {
-            passos[activeStep].dados
-          }
-        </Box>
-        <Box>
-          <Grid xs={12} item>
-            <Button
-              disabled={activeStep === 0}
-              onClick={handleBack}
-            > Voltar</Button>
+      <Grid container className={classes.container} alignItems="center">
+        {
+          passos[activeStep].dados
+        }
+      </Grid>
+      <Grid container justify="space-between" spacing={2}>
+        <Grid item>
+          <Box px={2}>
+            <Button disabled={activeStep === 0} onClick={handleBack} variant="contained">
+              Voltar
+          </Button>
+          </Box>
+        </Grid>
+        <Grid item>
+          <Box px={2}>
             <Button variant="contained" color="primary" onClick={activeStep === passos.length - 1 ? null : handleNext}>
               {activeStep === passos.length - 1 ? 'Salvar' : 'Próximo'}
             </Button>
-          </Grid>
-        </Box>
+          </Box>
+        </Grid>
       </Grid>
     </Grid>
   );
