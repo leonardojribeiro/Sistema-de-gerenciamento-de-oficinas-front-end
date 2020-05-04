@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Box, Container } from '@material-ui/core';
+import { Grid, Box, Container, Typography } from '@material-ui/core';
 import Assistente from '../../componentes/Assistente';
 import FormOficina from '../../componentes/FormOficina';
 import FormEndereco from '../../componentes/FormEndereco';
+import CustomIconButton from '../../componentes/IconButton';
+import { Link } from 'react-router-dom';
+import Home from '@material-ui/icons/Home';
 
-export default function CadastroOficina() {
+export default function CadastroOficina( {setItensBarraNavegacao,}) {
   //oficina
 
   const [oficina, setOficina] = useState({
@@ -48,6 +51,15 @@ export default function CadastroOficina() {
         });
       })
     }
+    setItensBarraNavegacao({
+      itens: {
+        botoes: (
+          <CustomIconButton tooltip="Página Inicial" component={Link} to="/">
+            <Home/>
+          </CustomIconButton>
+        )
+      }
+    });
   }, []);
 
   const dadosEndereco = {
@@ -61,6 +73,15 @@ export default function CadastroOficina() {
 
   const formEndereco = (
     <FormEndereco dadosEndereco={dadosEndereco} />
+  );
+  console.log(dadosOficina)
+
+  const confirmaDados = (
+    <Grid container>
+      <Grid xs={12} item>
+        <Typography>Nome Fantasia: {oficina.nomeFantasia}</Typography>
+      </Grid>
+    </Grid>
   );
 
   return (
@@ -79,7 +100,7 @@ export default function CadastroOficina() {
               },
               {
                 label: "Confirmar",
-                dados: ""
+                dados: confirmaDados
               }]
             }
             />

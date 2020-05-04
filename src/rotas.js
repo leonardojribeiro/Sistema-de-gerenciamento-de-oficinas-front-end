@@ -3,14 +3,14 @@ import { Switch, Route } from 'react-router-dom';
 import CadastroOficina from './dominios/oficina/CadastroOficina';
 import PaginaInicial from './componentes/paginaInicial/PaginaInicial';
 
-export default function Rotas({tema}) {
+export default function Rotas(props) {
   return (
     <Switch>
       <Route path="/oficina/cadastro/" exact>
-        <CadastroOficina tema={tema}/>
+        <CadastroOficina {...props}/>
       </Route>
       <Route path="/" exact>
-        <PaginaInicial/>
+        <PaginaInicial {...props}/>
       </Route>
     </Switch>
   );

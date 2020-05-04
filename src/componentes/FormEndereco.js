@@ -85,7 +85,7 @@ export default function FormEndereco({ dadosEndereco }) {
       <Grid lg={8} item>
         <Grid container >
           <Grid xs={12} md={6} item>
-            <CampoTexto label="Logradouro" onChange={onChangeLogradouro} value={logradouro} />
+            <CampoTexto fullWidth label="Logradouro" onChange={onChangeLogradouro} value={logradouro} />
           </Grid>
           <Grid xs={12} md={6} item>
             <CampoTexto fullWidth label="Bairro" onChange={onChangeBairro} value={bairro} />

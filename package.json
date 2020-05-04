@@ -8,6 +8,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@use-hooks/interval": "^1.0.1",
     "axios": "^0.19.2",
     "google-maps-react": "^2.0.6",
     "react": "^16.13.1",
@@ -16,6 +17,7 @@
     "react-masked-text": "^0.4.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
+    "react-swipeable-views": "^0.13.9",
     "string-mask": "^0.3.0"
   },
   "scripts": {

@@ -26,10 +26,10 @@ const useStyles = makeStyles({
 });
 
 
-export default function CampoTexto({ label, value, onChange, type }) {
+export default function CampoTexto(props) {
   return (
     <Box mt={2} p={2}>
-      <TextField type={type} className={useStyles().campoTexto} fullWidth label={label} value={value} onChange={onChange} />
+      <TextField {...props}className={useStyles().campoTexto} />
     </Box>
   );
 }

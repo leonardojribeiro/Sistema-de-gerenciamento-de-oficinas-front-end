@@ -1,7 +1,7 @@
 import React from 'react';
 import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
 
-export function MapContainer({ initialCenter, onClick, icone, ...props }) {
+export function MapContainer({ initialCenter, onClick, icone, zoom, ...props }) {
   return (
     <Map
       containerStyle={{
@@ -10,9 +10,8 @@ export function MapContainer({ initialCenter, onClick, icone, ...props }) {
         height: '400px'
       }}
       google={props.google}
-      zoom={4}
+      zoom={8}
       initialCenter={initialCenter}
-      center={initialCenter}
       streetView={false}
       onClick={onClick}
     >

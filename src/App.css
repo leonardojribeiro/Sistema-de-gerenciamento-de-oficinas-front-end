@@ -92,3 +92,19 @@
 .altura-maxima{
   height: calc(100vh - 64px);
 }
+
+.fade{
+  animation: fadeIn;
+  animation-duration: 0.4s;
+  animation-fill-mode: forwards;
+  transition: all 1s;
+}
+
+@keyframes fadeIn{
+  from {
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+}
