@@ -12,33 +12,49 @@
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
   <title>React App</title>
   <style type="text/css">
+    .loader {
+      height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
     .circular {
       animation: rotate 1.5s linear infinite;
       height: 100px;
       position: relative;
       width: 100px;
     }
+
     .path {
       stroke-dasharray: 1, 200;
       stroke-dashoffset: 0;
+      -webkit-animation: dash 1.5s ease-in-out infinite;
+      -o-animation: dash 1.5s ease-in-out infinite;
+      -moz-animation: dash 1.5s ease-in-out infinite;
       animation: dash 1.5s ease-in-out infinite;
       stroke-linecap: round;
-      stroke: #33a9ff;
+      stroke: #121212;
     }
+
     @keyframes rotate {
       100% {
         transform: rotate(360deg);
       }
     }
+
     @keyframes dash {
       0% {
         stroke-dasharray: 1, 200;
         stroke-dashoffset: 0;
       }
+
       50% {
         stroke-dasharray: 89, 200;
         stroke-dashoffset: -35;
       }
+
       100% {
         stroke-dasharray: 89, 200;
         stroke-dashoffset: -124;
@@ -50,9 +66,14 @@
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root">
-    <svg class="circular">
-      <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
-    </svg>
+    <div class="loader">
+      <svg class="circular">
+        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+      </svg>
+      <div>
+        Carregando...
+      </div>
+    </div>
   </div>
 </body>
 
