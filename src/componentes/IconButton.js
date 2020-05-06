@@ -4,11 +4,11 @@ import { memo } from 'react';
 
 
 
-function CustomIconButton({tooltip, onClick, component, to, ...props}) {
+function CustomIconButton({tooltip, onClick, component, to, children}) {
   return (
     <Tooltip title={tooltip}>
       <IconButton color="inherit" onClick={onClick} component={component} to={to}>
-        {props.children}
+        {children}
       </IconButton>
     </Tooltip>
   );
