@@ -29,13 +29,14 @@ const useStyles = makeStyles({
   }
 });
 
-export default function Assistente({ passos, titulo }) {
+export default function Assistente({ passos, validar }) {
   const [activeStep, setActiveStep] = useState(0);
 
   const classes = useStyles();
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    validar();
   };
 
   const handleBack = () => {

@@ -1,7 +1,18 @@
 import React from 'react';
 import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
+import { memo } from 'react';
+import { useMemo } from 'react';
 
 export function MapContainer({ initialCenter, onClick, icone, zoom, ...props }) {
+
+
+  const marker = useMemo(() => (
+    <Marker
+      position={initialCenter}
+      draggable={true}
+      onDragend={onClick}
+    />
+  ));
   return (
     <Map
       containerStyle={{
@@ -15,11 +26,7 @@ export function MapContainer({ initialCenter, onClick, icone, zoom, ...props }) 
       streetView={false}
       onClick={onClick}
     >
-      <Marker
-        position={initialCenter}
-        draggable={true}
-        onDragend={onClick}
-      />
+      {marker}
     </Map>
   );
 }
@@ -28,4 +35,4 @@ export default GoogleApiWrapper({
   apiKey: ("AIzaSyBXHu_yyh-66CMPcXRl_73eRsGdZuiUaso"),
   language: "pt",
   region: "br",
-})(MapContainer)
+})(memo(MapContainer));

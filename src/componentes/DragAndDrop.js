@@ -4,6 +4,7 @@ import Dropzone from "react-dropzone";
 
 import { makeStyles, Box} from "@material-ui/core";
 import './arrastar e soltar/style.css';
+import { memo } from "react";
 
 const useStyles = makeStyles({
   drag: {
@@ -56,7 +57,7 @@ const useStyles = makeStyles({
 });
 
 
-export default function ArrastarESoltar({ onChange, urlImagem}) {
+function DragAndDrop({ onChange, urlImagem}) {
   const classes = useStyles();
 
   const imagemContainer = (
@@ -104,3 +105,5 @@ export default function ArrastarESoltar({ onChange, urlImagem}) {
     </Dropzone>
   );
 }
+
+export default memo(DragAndDrop);

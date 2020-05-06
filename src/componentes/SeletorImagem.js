@@ -1,5 +1,6 @@
 import React from 'react';
-import { Grid, Box, InputLabel, Button, Input, makeStyles } from '@material-ui/core';
+import { Grid, Box, InputLabel, Button, makeStyles } from '@material-ui/core';
+import { memo } from 'react';
 
 const useStyles = makeStyles({
   imagem: {
@@ -11,7 +12,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function SeletorImagem({ urlImagem, onChange }) {
+function SeletorImagem({ urlImagem, onChange }) {
   const classes = useStyles();
 
   const containerImagem = (
@@ -46,3 +47,5 @@ export default function SeletorImagem({ urlImagem, onChange }) {
     </Grid>
   );
 }
+
+export default memo(SeletorImagem);

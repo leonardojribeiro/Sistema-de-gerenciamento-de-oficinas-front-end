@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import BarraSuperior from './componentes/BarraSuperior';
 import Rodape from './componentes/rodape';
-import { BrowserRouter, Link } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import './App.css';
 import BrightnessHigh from '@material-ui/icons/BrightnessHigh';
 import BrightnessLow from '@material-ui/icons/BrightnessLow';
@@ -12,12 +12,14 @@ import Backdrop from './componentes/Backdrop';
 import Botao from './componentes/IconButton';
 import Rotas from './rotas';
 
+
 function App() {
   const [tema, setTema] = useState("");
   const [logo, setLogo] = useState({});
   const [titulo, setTitulo] = useState("");
   const [itensBarra, setItensBarra] = useState({});
   const [drawerOpen, setDrawerOpen] = useState(false);
+
   useEffect(() => {
     const t = localStorage.getItem("tema");
     if (t) {
@@ -31,7 +33,7 @@ function App() {
       alt: "Logomarca"
     });
     setTitulo("Sistema de Gerenciamento de Oficinas");
-  }, []);
+  },[]);
 
   const alterarTema = () => {
     if (tema === "claro") {
