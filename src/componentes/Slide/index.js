@@ -1,12 +1,16 @@
-import React, { useCallback } from 'react';
+import React, { memo, useState } from 'react';
 import { Container } from '@material-ui/core';
+import SwipeableViews from 'react-swipeable-views';
+import { autoPlay } from 'react-swipeable-views-utils';
+import './style.css';
 
-//import './style.css';
+
+const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const slides = [
   {
     url: "https://picstatio.com/large/8d2bb7/front-Mercedes-AMG-GT-outdoor.jpg",
-    titulo: "Titulo 1",
+    titulo: "Titulo 1 ",
   },
   {
     url: "https://picstatio.com/large/8d2bb7/front-Mercedes-AMG-GT-outdoor.jpg",
@@ -14,23 +18,32 @@ const slides = [
   },
   {
     url: "https://picstatio.com/large/8d2bb7/front-Mercedes-AMG-GT-outdoor.jpg",
-    titulo: "Titulo 3",
+    titulo: "Titulo 3 ",
   },
 ]
 
-export default function Slide() {
+function Slide() {
+  const [slideAtivo, setSlideAtivo] = useState(0);
+
+  const handleChangeIndex = index => setSlideAtivo(index);
+
   return (
-    <Container>
-      <b duration={200} >
+    <>
+      <AutoPlaySwipeableViews autoplay={true} enableMouseEvents className="slider" index={slideAtivo} onChangeIndex={handleChangeIndex}>
         {
-          slides.map((slide, index)=>(
-            <div key={index}>
-              <h2>{slide.titulo}</h2>
-              <img src={slide.url} alt=""/>
-            </div>
-          ))
+          slides.map((slide, index) => {
+            const ativo = index === slideAtivo ? "ativo" : "";
+            return (
+                <div key={index} className={`slide`}>
+                  <h2 className={`slide-titulo ${ativo}`}>{slide.titulo}</h2>
+                  <img className="slide-imagem" src={slide.url} alt="" />
+                </div>
+            )
+          })
         }
-      </b>
-    </Container>
+      </AutoPlaySwipeableViews>
+    </>
   );
 }
+
+export default memo(Slide);
