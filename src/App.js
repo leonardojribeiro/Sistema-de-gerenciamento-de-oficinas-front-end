@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import BarraSuperior from './componentes/BarraSuperior';
 import Rodape from './componentes/rodape';
 import { BrowserRouter } from 'react-router-dom';
@@ -33,7 +33,7 @@ function App() {
       alt: "Logomarca"
     });
     setTitulo("Sistema de Gerenciamento de Oficinas");
-  },[]);
+  }, []);
 
   const alterarTema = () => {
     if (tema === "claro") {
@@ -46,7 +46,7 @@ function App() {
     }
   }
 
-  const botoes = (
+  const botoesBarraNavegacao = (
     <ButtonGroup>
       {
         itensBarra.botoes
@@ -57,19 +57,24 @@ function App() {
     </ButtonGroup>
   );
 
-  const setItens = ({itens}) => {
+  const setItens = ({ itens }) => {
     setItensBarra(itens);
   }
+
+  const barraSuperior = useMemo(()=>
+    <BarraSuperior>
+      <Botao tooltip="Menu" onClick={() => { setDrawerOpen(!drawerOpen) }}>
+        <Menu />
+      </Botao>
+      {botoesBarraNavegacao}
+    </BarraSuperior>,
+    [botoesBarraNavegacao]
+  );
 
   return (
     <div className={`transicao-tema ${tema}`}>
       <BrowserRouter>
-        <BarraSuperior>
-          <Botao tooltip="Menu" onClick={() => { setDrawerOpen(!drawerOpen) }}>
-            <Menu />
-          </Botao>
-          {botoes}
-        </BarraSuperior>
+        {barraSuperior}
         <div className="h-min-barra-rodape">
           <Rotas setItensBarraNavegacao={setItens} tema={tema} />
         </div>

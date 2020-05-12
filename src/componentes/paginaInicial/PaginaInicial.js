@@ -19,10 +19,10 @@ export default function PaginaInicial({ setItensBarraNavegacao, ...props }) {
   }, []);
 
   return (
-    <Container>
-      <Box display="flex" justifyContent="center">
+    <>
+      <Box display="flex" className="h-min-barra-rodape" alignItems="center" justifyContent="center">
       <Slide/>
       </Box>
-    </Container>
+    </>
   );
 }

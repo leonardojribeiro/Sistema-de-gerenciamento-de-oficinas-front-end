@@ -1,10 +1,11 @@
-import { Box, Button, Container, Grid, Hidden, makeStyles, Step, StepButton, Stepper, Typography } from '@material-ui/core';
+import { Box, Container, Grid, Hidden, makeStyles, Step, StepButton, Stepper, Typography } from '@material-ui/core';
 import Home from '@material-ui/icons/Home';
 import React, { useEffect, useState, useCallback, memo } from 'react';
 import { Link } from 'react-router-dom';
 import CampoTexto from '../../componentes/CampoTextohook';
 import DragAndDrop from '../../componentes/DragAndDrop';
 import GoogleMaps from '../../componentes/GoogleMaps';
+import Button from "../../componentes/Button";
 import CustomIconButton from '../../componentes/IconButton';
 import SeletorImagem from '../../componentes/SeletorImagem';
 import MascaraNumererica from '../../recursos/MascaraNumerica';
@@ -82,7 +83,15 @@ function CadastroOficina({ setItensBarraNavegacao, }) {
         setLongitude(coords.longitude);
       })
     }
-    teste();
+    setItensBarraNavegacao({
+      itens: {
+        botoes: (
+          <CustomIconButton tooltip="Página Inicial" component={Link} to="/">
+            <Home />
+          </CustomIconButton>
+        )
+      }
+    });
   }, []);
 
 
@@ -399,7 +408,7 @@ function CadastroOficina({ setItensBarraNavegacao, }) {
 
   const botaoProximo = (
     <Box px={2}>
-      <Button type="submit" variant="contained" color="primary" onClick={e=>console.log(e)}>
+      <Button type="submit" variant="contained" onClick={e=>console.log(e)}>
         Próximo
       </Button>
     </Box>

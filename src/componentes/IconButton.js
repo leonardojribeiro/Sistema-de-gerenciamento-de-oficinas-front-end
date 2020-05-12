@@ -6,7 +6,7 @@ import { memo } from 'react';
 
 function CustomIconButton({tooltip, onClick, component, to, children}) {
   return (
-    <Tooltip title={tooltip}>
+    <Tooltip arrow title={tooltip}>
       <IconButton color="inherit" onClick={onClick} component={component} to={to}>
         {children}
       </IconButton>

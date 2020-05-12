@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Toolbar, AppBar, makeStyles } from '@material-ui/core';
+import { Toolbar, AppBar} from '@material-ui/core';
 
 function BarraSuperior(props) {
   return (
