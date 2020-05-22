@@ -39,7 +39,7 @@ const useStyles = makeStyles({
   }
 });
 
-function CadastroOficina({ setItensBarraNavegacao, }) {
+function CadastroOficina({ setItensBarraNavegacao, ...props}) {
   const [nomeFantasia, setNomeFantasia] = useState("");
   const [razaoSocial, setRazaoSocial] = useState("");
   const [cpfCnpj, setCpfCnpj] = useState("");
@@ -92,8 +92,11 @@ function CadastroOficina({ setItensBarraNavegacao, }) {
         )
       }
     });
+    setTimeout(() => { console.log("aaaaa"); }, 1500);
   }, []);
 
+  
+  
 
   const onChangeImagem = imagem => {
     const reader = new FileReader();
@@ -243,7 +246,7 @@ function CadastroOficina({ setItensBarraNavegacao, }) {
     <Grid xs={12} md={6} item>
       <CampoTexto
         required
-        fullWidth 
+        fullWidth
         label="Logradouro"
         onChange={e => setLogradouro(e.target.value)}
         value={logradouro}
@@ -315,7 +318,7 @@ function CadastroOficina({ setItensBarraNavegacao, }) {
     <Grid xs={12} sm={6} item>
       <CampoTexto
         required
-        fullWidth 
+        fullWidth
         label="Cidade"
         onChange={e => setCidade(e.target.value)}
         value={cidade}
@@ -408,7 +411,7 @@ function CadastroOficina({ setItensBarraNavegacao, }) {
 
   const botaoProximo = (
     <Box px={2}>
-      <Button type="submit" variant="contained" onClick={e=>console.log(e)}>
+      <Button type="submit" variant="contained" onClick={e => console.log(e)}>
         Próximo
       </Button>
     </Box>

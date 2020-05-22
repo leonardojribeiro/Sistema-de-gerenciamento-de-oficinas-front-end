@@ -13,6 +13,7 @@ import Botao from './componentes/IconButton';
 import Rotas from './rotas';
 
 
+
 function App() {
   const [tema, setTema] = useState("");
   const [logo, setLogo] = useState({});
@@ -33,6 +34,7 @@ function App() {
       alt: "Logomarca"
     });
     setTitulo("Sistema de Gerenciamento de Oficinas");
+    
   }, []);
 
   const alterarTema = () => {
