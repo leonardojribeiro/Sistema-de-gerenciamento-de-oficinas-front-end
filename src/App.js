@@ -7,7 +7,7 @@ import BrightnessHigh from '@material-ui/icons/BrightnessHigh';
 import BrightnessLow from '@material-ui/icons/BrightnessLow';
 import Menu from '@material-ui/icons/Menu';
 import Drawer from './componentes/Drawer';
-import { ButtonGroup, } from '@material-ui/core';
+import { ButtonGroup, Box, } from '@material-ui/core';
 import Backdrop from './componentes/Backdrop';
 import Botao from './componentes/IconButton';
 import Rotas from './rotas';
@@ -63,11 +63,15 @@ function App() {
     setItensBarra(itens);
   }
 
+  const linksBarraNavegacao = 
+        itensBarra.links;
+
   const barraSuperior = useMemo(()=>
     <BarraSuperior>
       <Botao tooltip="Menu" onClick={() => { setDrawerOpen(!drawerOpen) }}>
         <Menu />
       </Botao>
+      {linksBarraNavegacao}
       {botoesBarraNavegacao}
     </BarraSuperior>,
     [botoesBarraNavegacao]

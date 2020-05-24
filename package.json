@@ -17,6 +17,7 @@
     "react-masked-text": "^0.4.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
+    "react-scroll": "^1.7.16",
     "react-swipeable-views": "^0.13.9",
     "string-mask": "^0.3.0"
   },

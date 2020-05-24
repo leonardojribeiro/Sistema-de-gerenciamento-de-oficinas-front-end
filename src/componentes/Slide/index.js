@@ -11,7 +11,7 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const slides = [
   {
-    url: "https://quatrorodas.abril.com.br/wp-content/uploads/2019/08/mustang-shelby-gt500-2020-10-e1565155986301.jpg",
+    url: "https://quatrorodas.abril.com.br/wp-content/uploads/2019/08/mustang-shelby-gt500-2020-10-e1565155986301.jpg?quality=50",
     titulo: "Bem vindo ao Sistema de Gerenciamento de Oficinas!",
     botao: {
       titulo: "Solicitar Cadastro",
