@@ -1,0 +1,36 @@
+.cartao{
+  background-color: var(--cor-transparente) !important;
+  color: var(--cor) !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 192px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cartao .cartao-titulo{
+  position: absolute;
+  opacity: 1;
+  transition: opacity 0.5s;
+  word-wrap: break-word;
+  width: 100%;
+  text-align: center;
+}
+
+.cartao .cartao-descricao{
+  position: absolute;
+  margin-top: 50%;
+  transition: margin-top 0.3s;
+  word-wrap: break-word;
+  width: 100%;
+  text-align: center;
+}
+
+.cartao:hover .cartao-titulo{
+  opacity: 0;
+}
+
+.cartao:hover .cartao-descricao{
+  margin-top: 0;
+}

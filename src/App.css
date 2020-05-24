@@ -49,6 +49,14 @@
   min-height: var(--h-livre-com-barra-rodape);
 }
 
+.h-total{
+  min-height: 100vh;
+}
+
+.h-min-barra{
+  min-height: var(--h-livre-com-barra);
+}
+
 .flex{
   display: flex;
 }
@@ -87,10 +95,6 @@
     max-height: var(--h-livre-com-barra-rodape);
     overflow-y: hidden;
   }
-}
-
-.altura-maxima{
-  height: calc(100vh - 64px);
 }
 
 .fade{

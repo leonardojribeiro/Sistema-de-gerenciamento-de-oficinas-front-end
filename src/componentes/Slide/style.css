@@ -30,6 +30,7 @@
   opacity: 0.5;
   width: fit-content;
   border-radius: 3px;
+  text-align: center;
   background-color: var(--cor-transparente);
 }
 
