@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Box, Grid, Paper, Typography } from '@material-ui/core';
-import AddCircle from '@material-ui/icons/AddCircle';
-import Botao from '../IconButton';
+import React, { useEffect, useContext } from 'react';
+import { Container, Box, Grid, Typography } from '@material-ui/core';
+
 import { Link } from 'react-router-dom';
 import Slide from '../Slide/';
 import ItemFuncionalidade from './itemFuncionalidade/ItemFuncionalidade';
-import useInterval from '../../recursos/useInterval';
-import { Link as LinkScroll, Element, } from 'react-scroll';
 
-export default function PaginaInicial({ setItensBarraNavegacao, ...props }) {
+import { Link as LinkScroll, Element, } from 'react-scroll';
+import BarraSuperiorContext from '../BarraSuperiorContext';
+
+
+export default function PaginaInicial({...props}) {
+  const {setItens} = useContext(BarraSuperiorContext);
+
   useEffect(() => {
-    setItensBarraNavegacao({
+    setItens({
       itens: {
         links: (
           <>
@@ -24,7 +27,7 @@ export default function PaginaInicial({ setItensBarraNavegacao, ...props }) {
         )
       }
     });
-  }, []);
+  }, [setItens]);
 
 
   const funcionalidades = [

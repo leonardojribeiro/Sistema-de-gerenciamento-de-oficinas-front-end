@@ -7,10 +7,10 @@ function Rotas(props) {
   return (
     <Switch>
       <Route path="/oficina/cadastro/" exact>
-        <CadastroOficina {...props}/>
+        <CadastroOficina/>
       </Route>
       <Route path="/" exact>
-        <PaginaInicial {...props}/>
+        <PaginaInicial/>
       </Route>
     </Switch>
   );

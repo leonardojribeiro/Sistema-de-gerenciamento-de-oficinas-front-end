@@ -1,5 +1,5 @@
 import React from 'react';
-import { Paper, makeStyles, Grid } from '@material-ui/core';
+import { Paper, Grid } from '@material-ui/core';
 import './itemFuncionalidade.css';
 
 function ItemFuncionalidade({ titulo, descricao }) {

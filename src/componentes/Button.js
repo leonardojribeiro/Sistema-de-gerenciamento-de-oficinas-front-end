@@ -18,13 +18,13 @@ function CustomButton({ tooltip, children, ...props }) {
   return (
     <>
       {
-        tooltip && (
+        tooltip ? (
           <Tooltip arrow title={tooltip}>
             <Button className={classes.root} {...props}>
               {children}
             </Button>
           </Tooltip>
-        ) || (
+        ) : (
           <Button className={classes.root} {...props}>
             {children}
           </Button>

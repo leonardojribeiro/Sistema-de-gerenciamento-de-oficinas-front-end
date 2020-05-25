@@ -1,15 +1,16 @@
+import React, { useEffect, useState, memo, useContext, useCallback, useMemo, useRef } from 'react';
 import { Box, Container, Grid, Hidden, makeStyles, Step, StepButton, Stepper, Typography } from '@material-ui/core';
 import Home from '@material-ui/icons/Home';
-import React, { useEffect, useState, useCallback, memo } from 'react';
 import { Link } from 'react-router-dom';
-import CampoTexto from '../../componentes/CampoTextohook';
+import CampoTexto from '../../componentes/CampoTexto';
 import DragAndDrop from '../../componentes/DragAndDrop';
 import GoogleMaps from '../../componentes/GoogleMaps';
 import Button from "../../componentes/Button";
 import CustomIconButton from '../../componentes/IconButton';
 import SeletorImagem from '../../componentes/SeletorImagem';
 import MascaraNumererica from '../../recursos/MascaraNumerica';
-import { useMemo } from 'react';
+import validaCpfCnpj from '../../recursos/ValidaCpfCnplj';
+import BarraSuperiorContext from '../../componentes/BarraSuperiorContext';
 
 const useStyles = makeStyles({
   fundo: {
@@ -36,10 +37,32 @@ const useStyles = makeStyles({
   },
   container: {
     minHeight: "var(--h-livre-assistente)",
+  },
+  containerPreviaImagem: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "192px",
+    width: "80%",
+    border: "dashed 1px "
+  },
+  previaImagem: {
+    maxHeight: "192px",
+    maxWidth: "80%",
+  },
+  containerPreviaLocalizacao: {
+    height: "192px",
+    width: "100%",
+    position: "relative"
+  },
+  containerGoogleMaps: {
+    height: "400px",
+    width: "100%",
+    position: "relative"
   }
 });
 
-function CadastroOficina({ setItensBarraNavegacao, ...props}) {
+function CadastroOficina({ ...props }) {
   const [nomeFantasia, setNomeFantasia] = useState("");
   const [razaoSocial, setRazaoSocial] = useState("");
   const [cpfCnpj, setCpfCnpj] = useState("");
@@ -59,31 +82,28 @@ function CadastroOficina({ setItensBarraNavegacao, ...props}) {
   const [longitude, setLongitude] = useState("");
   const [urlLogomarca, setUrlLogomarca] = useState("");
 
+  const refCpfCnpj = useRef();
+  const [cpfCnpjValido, setCpfCnpjValido] = useState(true);
+
   const classes = useStyles();
 
   const [passoAtivo, setPassoAtivo] = useState(0);
 
-  const teste = useCallback(() => {
-    setItensBarraNavegacao({
-      itens: {
-        botoes: (
-          <CustomIconButton tooltip="Página Inicial" component={Link} to="/">
-            <Home />
-          </CustomIconButton>
-        )
-      }
-    });
-  }, [setItensBarraNavegacao]);
+  const { setItens } = useContext(BarraSuperiorContext);
 
-  useEffect(() => {
-    if (navigator && navigator.geolocation) {
+  const getLocalizacao = () => {
+    if (navigator && navigator.geolocation && latitude === "") {
       navigator.geolocation.getCurrentPosition((pos) => {
         const coords = pos.coords;
         setLatitude(coords.latitude);
         setLongitude(coords.longitude);
       })
-    }
-    setItensBarraNavegacao({
+    };
+  }
+
+
+  useEffect(() => {
+    setItens({
       itens: {
         botoes: (
           <CustomIconButton tooltip="Página Inicial" component={Link} to="/">
@@ -92,11 +112,9 @@ function CadastroOficina({ setItensBarraNavegacao, ...props}) {
         )
       }
     });
-    setTimeout(() => { console.log("aaaaa"); }, 1500);
-  }, []);
+  }, [setItens]);
 
-  
-  
+
 
   const onChangeImagem = imagem => {
     const reader = new FileReader();
@@ -111,6 +129,58 @@ function CadastroOficina({ setItensBarraNavegacao, ...props}) {
       setLogomarca(null);
     }
   };
+
+
+
+  const validarCpfCnpj = useCallback((cpfCnpj) => {
+    if (validaCpfCnpj(cpfCnpj)) {
+      setCpfCnpjValido(true);
+      return true;
+    }
+    else {
+      setCpfCnpjValido(false);
+      return false;
+    }
+  }, []);
+
+  function validarDados() {
+    if (validarCpfCnpj(cpfCnpj)) {
+      return true;
+    }
+    else {
+      refCpfCnpj.current.focus();
+      setCpfCnpjValido(false);
+      return false;
+    }
+  }
+
+  const handleNext = () => {
+    setPassoAtivo(passoAtivo + 1);
+  };
+
+  const handleBack = () => {
+    setPassoAtivo((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleStep = (passo) => () => {
+    if (passoAtivo !== passo) {
+      if (passo < passoAtivo) {
+        setPassoAtivo(passo);
+      }
+    }
+  };
+
+  const handleSubmitDados = evento => {
+    evento.preventDefault();
+    if (validarDados()) {
+      handleNext();
+    }
+  }
+
+  const handleSubmitEndereco = evento => {
+    evento.preventDefault();
+    handleNext();
+  }
 
 
   const campoNomeFantasia = useMemo(() =>
@@ -129,42 +199,55 @@ function CadastroOficina({ setItensBarraNavegacao, ...props}) {
   const campoRazaoSocial = useMemo(() =>
     <Grid xs={12} sm={12} md={6} item>
       <CampoTexto
-        required
+        required={cpfCnpj.length === 18}
         fullWidth
         label="Razão Social"
         onChange={e => setRazaoSocial(e.target.value)}
         value={razaoSocial}
       />
     </Grid>,
-    [razaoSocial]
+    [razaoSocial, cpfCnpj]
   );
 
-  const campoCpfCnpj = useMemo(() =>
-    <Grid xs={12} sm={6} md={4} item>
-      <CampoTexto
-        required
-        fullWidth
-        label="CPF/CNPJ"
-        onChange={e => setCpfCnpj(
-          MascaraNumererica(
-            e.target.value,
-            tamanho => {
-              return tamanho < 12 //se o tamanho é menor que 12 indica cpf, se não cnpj
-                ? "000.000.000-00"
-                : "00.000.000/0000-00"
-            }
-          )
-        )}
-        value={cpfCnpj}
-      />
-    </Grid>,
-    [cpfCnpj]
+  const campoCpfCnpj = useMemo(() => {
+    const handleChangeCpf = (e) => {
+      setCpfCnpj(
+        MascaraNumererica(
+          e.target.value,
+          tamanho => {
+            return tamanho < 12 //se o tamanho é menor que 12 indica cpf, se não cnpj
+              ? "000.000.000-00"
+              : "00.000.000/0000-00"
+          }
+        )
+      );
+      if (!cpfCnpjValido) {
+        validarCpfCnpj(e.target.value);
+      }
+    }
+
+    return (
+      <Grid xs={12} sm={6} md={4} item>
+        <CampoTexto
+          required
+          fullWidth
+          inputRef={refCpfCnpj}
+          error={!cpfCnpjValido}
+          helperText={!cpfCnpjValido ? "CPF/CNPJ inválido!" : ""}
+          label="CPF/CNPJ"
+          onChange={handleChangeCpf}
+          value={cpfCnpj}
+        />
+      </Grid>
+    )
+  },
+    [refCpfCnpj, cpfCnpj, cpfCnpjValido, validarCpfCnpj]
   );
 
   const campoTelefoneFixo = useMemo(() =>
     <Grid xs={12} sm={6} md={4} item>
       <CampoTexto
-        required
+        type="tel"
         fullWidth
         label="Telefone Fixo"
         onChange={e => setTelefoneFixo(
@@ -186,6 +269,7 @@ function CadastroOficina({ setItensBarraNavegacao, ...props}) {
   const campoTelefoneCelular = useMemo(() =>
     <Grid xs={12} sm={6} md={4} item>
       <CampoTexto
+        type="tel"
         required
         fullWidth
         label="Telefone Celular"
@@ -222,7 +306,6 @@ function CadastroOficina({ setItensBarraNavegacao, ...props}) {
   const campoWebsite = useMemo(() =>
     <Grid xs={12} md={8} item>
       <CampoTexto
-        required
         fullWidth
         label="Website"
         onChange={e => setWebsite(e.target.value)}
@@ -381,37 +464,23 @@ function CadastroOficina({ setItensBarraNavegacao, ...props}) {
   );
 
   const googleMaps = useMemo(() =>
-    <Box p={2}>
+    <Box className={classes.containerGoogleMaps}>
       <GoogleMaps
         initialCenter={{ lat: latitude, lng: longitude }}
+        center={{ lat: latitude, lng: longitude }}
         onClick={(x, y, e) => {
           setLatitude(e.latLng.lat());
           setLongitude(e.latLng.lng());
         }}
+        zoom={10}
       />
     </Box>,
-    [latitude, longitude]
+    [latitude, longitude, classes.containerGoogleMaps]
   );
-
-
-
-  const handleNext = () => {
-
-    setPassoAtivo(passoAtivo + 1);
-
-  };
-
-  const handleBack = () => {
-    setPassoAtivo((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleStep = (step) => () => {
-    setPassoAtivo(step);
-  };
 
   const botaoProximo = (
     <Box px={2}>
-      <Button type="submit" variant="contained" onClick={e => console.log(e)}>
+      <Button type="submit" variant="contained">
         Próximo
       </Button>
     </Box>
@@ -425,8 +494,9 @@ function CadastroOficina({ setItensBarraNavegacao, ...props}) {
     </Box>
   );
 
+
   const formOficina = (
-    <form method="post" action="" onSubmit={e => e.preventDefault()}>
+    <form method="post" action="" onSubmit={handleSubmitDados}>
       <Grid container className={classes.container} alignItems="center">
         <Grid item lg={8}>
           <Grid container justify="center" alignItems="center">
@@ -452,11 +522,10 @@ function CadastroOficina({ setItensBarraNavegacao, ...props}) {
     </form>
   );
 
-
   const formEndereco = (
-    <form method="post" action="" onSubmit={e => e.preventDefault()}>
-      <Grid container className={classes.container} alignItems="center">
-        <Grid container justify="center" alignItems="center">
+    <form method="post" action="" onSubmit={handleSubmitEndereco} onClick={() => getLocalizacao()}>
+      <>
+        <Grid container className={classes.container} justify="center" alignItems="center">
           <Grid lg={8} item>
             <Grid container >
               {campoLogradouro}
@@ -471,10 +540,12 @@ function CadastroOficina({ setItensBarraNavegacao, ...props}) {
             </Grid>
           </Grid>
           <Grid xs={12} lg={4} item>
-            {googleMaps}
+            <Box p={2}>
+              {googleMaps}
+            </Box>
           </Grid>
         </Grid>
-      </Grid>
+      </>
       <Grid container justify="space-between" spacing={2}>
         <Grid item>
           {botaoAnterior}
@@ -488,9 +559,52 @@ function CadastroOficina({ setItensBarraNavegacao, ...props}) {
 
 
   const confirmaDados = (
-    <Grid container>
-      <Grid xs={12} item>
-        <Typography>Nome Fantasia: {nomeFantasia}</Typography>
+    <Grid container className={classes.container} alignItems="center" spacing={2}>
+      <Grid xs={12} md={6} item>
+        <Box border={1} p={2}>
+          <Box display="flex" justifyContent="center">
+            <Typography variant="h6">Dados da Oficina</Typography>
+          </Box>
+          <Typography>Nome Fantasia: {nomeFantasia}</Typography>
+          <Typography>Razão Social: {razaoSocial}</Typography>
+          <Typography>CPF/CNPJ: {cpfCnpj}</Typography>
+          <Typography>Telefone Fixo: {telefoneFixo}</Typography>
+          <Typography>Telefone Celular: {telefoneCelular}</Typography>
+          <Typography>E-mail: {email}</Typography>
+          <Typography>Website: {webSite}</Typography>
+          <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
+            <Typography>Logomarca</Typography>
+            <Box className={classes.containerPreviaImagem}>
+              {urlLogomarca && (<img src={urlLogomarca} className={classes.previaImagem} alt="Logomarca" />)}
+            </Box>
+          </Box>
+        </Box>
+      </Grid>
+      <Grid xs={12} md={6} item>
+        <Box border={1} p={2}>
+          <Box display="flex" justifyContent="center">
+            <Typography variant="h6">Dados do Endereço</Typography>
+          </Box>
+          <Typography>Logradouro: {logradouro}</Typography>
+          <Typography>Bairro: {bairro}</Typography>
+          <Typography>Número: {numero}</Typography>
+          <Typography>CEP: {cep}</Typography>
+          <Typography>Complemento: {complemento}</Typography>
+          <Typography>Cidade: {cidade}</Typography>
+          <Typography>Estado: {estado}</Typography>
+          <Typography>Latitude: {latitude}</Typography>
+          <Typography>Longitude: {longitude}</Typography>
+          <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
+            <Typography>Localização</Typography>
+            <Box className={classes.containerPreviaLocalizacao}>
+              <GoogleMaps
+                initialCenter={{ lat: latitude, lng: longitude }}
+                zoom={14}
+              />
+            </Box>
+          </Box>
+        </Box>
+
       </Grid>
     </Grid>
   );
