@@ -7,17 +7,17 @@ import ItemFuncionalidade from './itemFuncionalidade/ItemFuncionalidade';
 
 import { Link as LinkScroll, Element, } from 'react-scroll';
 import BarraSuperiorContext from '../BarraSuperiorContext';
+import CustomIconButton from '../Button';
 
-
-export default function PaginaInicial({...props}) {
-  const {setItens} = useContext(BarraSuperiorContext);
+export default function PaginaInicial({ ...props }) {
+  const { setItens } = useContext(BarraSuperiorContext);
 
   useEffect(() => {
     setItens({
       itens: {
         links: (
           <>
-            <LinkScroll to="item" smooth="easeInQuad"  duration={500}>
+            <LinkScroll to="item" smooth="easeInQuad" duration={500}>
               Funcionalidades
             </LinkScroll>
             <LinkScroll to="cadastro" smooth="easeInQuad" duration={500}>
@@ -62,16 +62,27 @@ export default function PaginaInicial({...props}) {
         </Box>
       </Element>
       <Element name="cadastro">
-        <Box className="h-total" display="flex" alignItems="center" >
-          <Container maxWidth="md">
-            <Box display="flex" justifyContent="center" p={2} pb={6}>
-              <Typography variant="h4">Cadastro</Typography>
-            </Box>
-            <Grid container spacing={6} justify="center">
-              <Link to="/oficina/cadastro" >Cadastrar</Link>
+        <Container maxWidth="md">
+          <Box className="h-total" display="flex" alignItems="center">
+            <Grid container justify="center">
+              <Grid item xs={12}>
+                <Box display="flex" justifyContent="center" pb={6}>
+                  <Typography variant="h4">Cadastro</Typography>
+                </Box>
+              </Grid>
+              <Grid item xs={12}>
+                <Box display="flex" justifyContent="center" p={2}>
+                  Solicite o cadastro de sua oficina. Analisaremos as suas informações e entraremos em contato.
+                </Box>
+                <Box display="flex" justifyContent="center" p={2}>
+                  <CustomIconButton component={Link} to="/oficina/cadastro" >
+                    Solicitar cadastro
+                  </CustomIconButton>
+                </Box>
+              </Grid>
             </Grid>
-          </Container>
-        </Box>
+          </Box>
+        </Container>
       </Element>
     </>
   );

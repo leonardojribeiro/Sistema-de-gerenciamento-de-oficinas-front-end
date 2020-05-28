@@ -63,6 +63,7 @@ const useStyles = makeStyles({
 });
 
 function CadastroOficina({ ...props }) {
+  //estados que irão cotrolar os campos de texto
   const [nomeFantasia, setNomeFantasia] = useState("");
   const [razaoSocial, setRazaoSocial] = useState("");
   const [cpfCnpj, setCpfCnpj] = useState("");
@@ -81,8 +82,25 @@ function CadastroOficina({ ...props }) {
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [urlLogomarca, setUrlLogomarca] = useState("");
-
+  //referências dos campos de textos
+  const refNomeFantasia = useRef();
+  const refRazaoSocial = useRef();
   const refCpfCnpj = useRef();
+  const refTelefoneFixo = useRef();
+  const refTelefoneCelular = useRef();
+  const refEmail = useRef();
+  //const refWebSite = useRef();
+  const refLogradouro = useRef();
+  const refBairro = useRef();
+  const refNumero = useRef();
+  const refCep = useRef();
+  const refComplemento = useRef();
+  const refCidade = useRef();
+  const refEstado = useRef();
+  const refLatitude = useRef();
+  const refLongitude = useRef();
+
+
   const [cpfCnpjValido, setCpfCnpjValido] = useState(true);
 
   const classes = useStyles();
@@ -159,10 +177,12 @@ function CadastroOficina({ ...props }) {
   };
 
   const handleBack = () => {
-    setPassoAtivo((prevActiveStep) => prevActiveStep - 1);
+    setPassoAtivo(passoAtivo - 1);
   };
 
-  const handleStep = (passo) => () => {
+  console.log(passoAtivo);
+
+  const handleStep = (passo) => {
     if (passoAtivo !== passo) {
       if (passo < passoAtivo) {
         setPassoAtivo(passo);
@@ -171,7 +191,10 @@ function CadastroOficina({ ...props }) {
   };
 
   const handleSubmitDados = evento => {
+    console.log(evento);
     evento.preventDefault();
+    evento.stopPropagation();
+
     if (validarDados()) {
       handleNext();
     }
@@ -514,9 +537,23 @@ function CadastroOficina({ ...props }) {
           {dragAndDrop}
         </Hidden>
       </Grid>
-      <Grid container justify="flex-end" spacing={2}>
+      <Grid container justify="space-between" spacing={2}>
         <Grid item>
-          {botaoProximo}
+          <Button>
+            Cancelar
+          </Button>
+        </Grid>
+        <Grid item>
+          <Grid container>
+            <Grid item>
+              <Button>
+                Voltar
+              </Button>
+            </Grid>
+            <Grid item>
+              {botaoProximo}
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </form>
@@ -550,6 +587,7 @@ function CadastroOficina({ ...props }) {
         <Grid item>
           {botaoAnterior}
         </Grid>
+
         <Grid item>
           {botaoProximo}
         </Grid>
@@ -561,7 +599,7 @@ function CadastroOficina({ ...props }) {
   const confirmaDados = (
     <Grid container className={classes.container} alignItems="center" spacing={2}>
       <Grid xs={12} md={6} item>
-        <Box border={1} p={2}>
+        <Box p={2}>
           <Box display="flex" justifyContent="center">
             <Typography variant="h6">Dados da Oficina</Typography>
           </Box>
@@ -573,7 +611,7 @@ function CadastroOficina({ ...props }) {
           <Typography>E-mail: {email}</Typography>
           <Typography>Website: {webSite}</Typography>
           <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-            <Typography>Logomarca</Typography>
+            <Typography>Logomarca:</Typography>
             <Box className={classes.containerPreviaImagem}>
               {urlLogomarca && (<img src={urlLogomarca} className={classes.previaImagem} alt="Logomarca" />)}
             </Box>
@@ -581,19 +619,31 @@ function CadastroOficina({ ...props }) {
         </Box>
       </Grid>
       <Grid xs={12} md={6} item>
-        <Box border={1} p={2}>
+        <Box p={2}>
           <Box display="flex" justifyContent="center">
             <Typography variant="h6">Dados do Endereço</Typography>
           </Box>
           <Typography>Logradouro: {logradouro}</Typography>
           <Typography>Bairro: {bairro}</Typography>
-          <Typography>Número: {numero}</Typography>
-          <Typography>CEP: {cep}</Typography>
+          <Grid container>
+            <Grid xs={6} item>
+              <Typography>Número: {numero}</Typography>
+            </Grid>
+            <Grid xs={6} item>
+              <Typography>CEP: {cep}</Typography>
+            </Grid>
+          </Grid>
           <Typography>Complemento: {complemento}</Typography>
           <Typography>Cidade: {cidade}</Typography>
           <Typography>Estado: {estado}</Typography>
-          <Typography>Latitude: {latitude}</Typography>
-          <Typography>Longitude: {longitude}</Typography>
+          <Grid container>
+            <Grid xs={6} item>
+              <Typography>Latitude: {latitude}</Typography>
+            </Grid>
+            <Grid xs={6} item>
+              <Typography>Longitude: {longitude}</Typography>
+            </Grid>
+          </Grid>
           <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
             <Typography>Localização</Typography>
             <Box className={classes.containerPreviaLocalizacao}>
@@ -624,6 +674,8 @@ function CadastroOficina({ ...props }) {
       dados: confirmaDados
     }]
 
+  const etapa = [formOficina, formEndereco, confirmaDados];
+
   return (
     <Container maxWidth="lg">
       <Grid container alignItems="center">
@@ -632,13 +684,13 @@ function CadastroOficina({ ...props }) {
             {passos.map((passo, index) => {
               return (
                 <Step key={index}>
-                  <StepButton onClick={handleStep(index)}>{passo.label}</StepButton>
+                  <StepButton onClick={() => handleStep(index)}>{passo.label}</StepButton>
                 </Step>
               );
             })}
           </Stepper>
         </Grid>
-        {passos[passoAtivo].dados}
+        {etapa[passoAtivo]}
       </Grid>
     </Container>
   );

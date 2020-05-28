@@ -36,7 +36,7 @@ const useStyles = makeStyles({
 
 function CampoTexto(props) {
   return (
-    <Box mt={2} p={2}>
+    <Box mt={2} p={4}>
       <TextField {...props}className={useStyles().campoTexto} />
     </Box>
   );
