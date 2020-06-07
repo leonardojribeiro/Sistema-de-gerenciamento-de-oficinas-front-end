@@ -1,40 +1,20 @@
 import React, { useEffect, useState, memo, useContext, useCallback, useMemo, useRef } from 'react';
-import { Box, Container, Grid, Hidden, makeStyles, Step, StepButton, Stepper, Typography } from '@material-ui/core';
+import { Box, Container, Grid, Hidden, makeStyles, Step, StepButton, Stepper, FormControl, InputLabel, MenuItem, Select, Typography } from '@material-ui/core';
 import Home from '@material-ui/icons/Home';
 import { Link } from 'react-router-dom';
-import CampoTexto from '../../componentes/CampoTexto';
 import DragAndDrop from '../../componentes/DragAndDrop';
 import GoogleMaps from '../../componentes/GoogleMaps';
 import Button from "../../componentes/Button";
 import CustomIconButton from '../../componentes/IconButton';
 import SeletorImagem from '../../componentes/SeletorImagem';
-import MascaraNumererica from '../../recursos/MascaraNumerica';
-import validaCpfCnpj from '../../recursos/ValidaCpfCnplj';
 import BarraSuperiorContext from '../../componentes/BarraSuperiorContext';
+import validacao from '../../recursos/Validacao';
+import CampoTexto from './CampoTexto';
+import BackdropContext from '../../componentes/BackdropContext';
+
+import { animateScroll } from 'react-scroll';
 
 const useStyles = makeStyles({
-  fundo: {
-    padding: "8px",
-    backgroundColor: "inherit",
-    '& .MuiStepIcon-root': {
-      color: "#888"
-    },
-    '& .MuiStepIcon-active': {
-      color: "var(--cor)"
-    },
-    '& .MuiStepLabel-label': {
-      color: "var(--cor)"
-    },
-    '& .MuiStepIcon-text': {
-      fill: "var(--cor)"
-    },
-    '& .MuiStepIcon-active .MuiStepIcon-text': {
-      fill: "var(--bg-cor)"
-    },
-    '& .MuiStepIcon-completed': {
-      color: "var(--cor)"
-    }
-  },
   container: {
     minHeight: "var(--h-livre-assistente)",
   },
@@ -46,24 +26,32 @@ const useStyles = makeStyles({
     width: "80%",
     border: "dashed 1px "
   },
-  previaImagem: {
-    maxHeight: "192px",
-    maxWidth: "80%",
+  containerGoogleMaps: {
+    height: "400px",
+    width: "100%",
+    position: "relative"
+  },
+  fundo: {
+    padding: "8px",
   },
   containerPreviaLocalizacao: {
     height: "192px",
     width: "100%",
     position: "relative"
   },
-  containerGoogleMaps: {
-    height: "400px",
-    width: "100%",
-    position: "relative"
+  previaImagem: {
+    maxHeight: "192px",
+    maxWidth: "80%"
   }
 });
 
 function CadastroOficina({ ...props }) {
-  //estados que irão cotrolar os campos de texto
+  const styles = useStyles();
+  const { setItens } = useContext(BarraSuperiorContext);
+  const {setBackdropOpen} = useContext(BackdropContext);
+
+  const [passoAtivo, setPassoAtivo] = useState(0);
+
   const [nomeFantasia, setNomeFantasia] = useState("");
   const [razaoSocial, setRazaoSocial] = useState("");
   const [cpfCnpj, setCpfCnpj] = useState("");
@@ -72,6 +60,8 @@ function CadastroOficina({ ...props }) {
   const [email, setEmail] = useState("");
   const [webSite, setWebsite] = useState("");
   const [logomarca, setLogomarca] = useState("");
+  const [urlLogomarca, setUrlLogomarca] = useState("");
+
   const [logradouro, setLogradouro] = useState("");
   const [bairro, setBairro] = useState("");
   const [numero, setNumero] = useState("");
@@ -81,7 +71,7 @@ function CadastroOficina({ ...props }) {
   const [estado, setEstado] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
-  const [urlLogomarca, setUrlLogomarca] = useState("");
+
   //referências dos campos de textos
   const refNomeFantasia = useRef();
   const refRazaoSocial = useRef();
@@ -90,6 +80,7 @@ function CadastroOficina({ ...props }) {
   const refTelefoneCelular = useRef();
   const refEmail = useRef();
   //const refWebSite = useRef();
+
   const refLogradouro = useRef();
   const refBairro = useRef();
   const refNumero = useRef();
@@ -100,25 +91,22 @@ function CadastroOficina({ ...props }) {
   const refLatitude = useRef();
   const refLongitude = useRef();
 
-
+  const [nomeFantasiaValido, setNomeFantasiaValido] = useState(true);
   const [cpfCnpjValido, setCpfCnpjValido] = useState(true);
+  const [razaoSocialValido, setRazaoSocialValido] = useState(true);
+  const [telefoneCelularValido, setTelefoneCelularValido] = useState(true);
+  const [telefoneFixoValido, setTelefoneFixoValido] = useState(true);
+  const [emailValido, setEmailValido] = useState(true);
 
-  const classes = useStyles();
-
-  const [passoAtivo, setPassoAtivo] = useState(0);
-
-  const { setItens } = useContext(BarraSuperiorContext);
-
-  const getLocalizacao = () => {
-    if (navigator && navigator.geolocation && latitude === "") {
-      navigator.geolocation.getCurrentPosition((pos) => {
-        const coords = pos.coords;
-        setLatitude(coords.latitude);
-        setLongitude(coords.longitude);
-      })
-    };
-  }
-
+  const [logradouroValido, setLogradouroValido] = useState(true);
+  const [bairroValido, setBairroValido] = useState(true);
+  const [numeroValido, setNumeroValido] = useState(true);
+  const [cepValido, setCepValido] = useState(true);
+  const [complementoValido, setComplementoValido] = useState(true);
+  const [estadoValido, setEstadoValido] = useState(true);
+  const [cidadeValido, setCidadeValido] = useState(true);
+  const [latitudeValido, setLatitudeValido] = useState(true);
+  const [longitudeValido, setLongitudeValido] = useState(true);
 
   useEffect(() => {
     setItens({
@@ -132,7 +120,15 @@ function CadastroOficina({ ...props }) {
     });
   }, [setItens]);
 
-
+  const getLocalizacao = () => {
+    if (navigator && navigator.geolocation && latitude === "") {
+      navigator.geolocation.getCurrentPosition((pos) => {
+        const coords = pos.coords;
+        setLatitude(coords.latitude);
+        setLongitude(coords.longitude);
+      })
+    };
+  }
 
   const onChangeImagem = imagem => {
     const reader = new FileReader();
@@ -148,191 +144,373 @@ function CadastroOficina({ ...props }) {
     }
   };
 
+  const validarNomeFantasia = useCallback((nomeFantasiaCopia = nomeFantasia) => {
+    if (validacao.validarNome(nomeFantasiaCopia)) {
+      setNomeFantasiaValido(true);
+      return true;
+    }
+    else {
+      setNomeFantasiaValido(false);
+      refNomeFantasia.current.focus();
+      return false;
+    }
+  }, [nomeFantasia]);
 
-
-  const validarCpfCnpj = useCallback((cpfCnpj) => {
-    if (validaCpfCnpj(cpfCnpj)) {
+  const validarCpfCnpj = useCallback((cpfCnpjCopia = cpfCnpj) => {
+    if (validacao.validarCpfCnpj(cpfCnpjCopia)) {
       setCpfCnpjValido(true);
       return true;
     }
     else {
       setCpfCnpjValido(false);
+      refCpfCnpj.current.focus();
       return false;
     }
-  }, []);
+  }, [cpfCnpj]);
 
-  function validarDados() {
-    if (validarCpfCnpj(cpfCnpj)) {
+  const validarRazaoSocial = useCallback((razaoSocialCopia = razaoSocial) => {
+    if (cpfCnpj.length === 18) {
+      if (validacao.validarTexto(razaoSocialCopia)) {
+        setRazaoSocialValido(true);
+        return true;
+      }
+      else {
+        setRazaoSocialValido(false);
+        refRazaoSocial.current.focus();
+        return false;
+      }
+    }
+    return true;
+  },
+    [cpfCnpj, razaoSocial]
+  );
+
+  const validarTelefoneFixo = useCallback((telefoneFixoCopia = telefoneFixo) => {
+    if (telefoneFixo.length > 0) {
+      if (validacao.validarTelefone(telefoneFixoCopia)) {
+        setTelefoneFixoValido(true);
+        return true;
+      }
+      else {
+        setTelefoneFixoValido(false);
+        refTelefoneFixo.current.focus()
+        return false;
+      }
+    }
+    return true;
+  },
+    [telefoneFixo]
+  );
+
+  const validarTelefoneCelular = useCallback((telefoneCelularCopia = telefoneCelular) => {
+    if (validacao.validarTelefone(telefoneCelularCopia)) {
+      setTelefoneCelularValido(true);
       return true;
     }
     else {
-      refCpfCnpj.current.focus();
-      setCpfCnpjValido(false);
+      setTelefoneCelularValido(false);
+      refTelefoneCelular.current.focus();
+      return false;
+    }
+  },
+    [telefoneCelular]
+  );
+
+  const validarEmail = useCallback((emailCopia = email) => {
+    if (validacao.validarEmail(emailCopia)) {
+      setEmailValido(true);
+      return true;
+    }
+    else {
+      setEmailValido(false);
+      refEmail.current.focus();
+      return false;
+    }
+  },
+    [email]
+  );
+
+  const validarLogradouro = useCallback((logradouroCopia = logradouro) => {
+    if (validacao.validarTexto(logradouroCopia)) {
+      setLogradouroValido(true);
+      return true;
+    }
+    else {
+      setLogradouroValido(false);
+      refLogradouro.current.focus();
+      return false;
+    }
+  },
+    [logradouro]
+  );
+
+  const validarBairro = useCallback((bairroCopía = bairro) => {
+    if (validacao.validarTexto(bairroCopía)) {
+      setBairroValido(true);
+      return true;
+    }
+    else {
+      setBairroValido(false);
+      refBairro.current.focus();
+      return false;
+    }
+  },
+    [bairro]
+  );
+
+  const validarNumero = useCallback((numeroCopia = numero) => {
+    if (validacao.validarTexto(numeroCopia)) {
+      setNumeroValido(true);
+      return true;
+    }
+    else {
+      setNumeroValido(false);
+      refNumero.current.focus();
+      return false;
+    }
+  },
+    [numero]
+  );
+
+  const validarCep = useCallback((cepCopia = cep) => {
+    if (validacao.validarCep(cepCopia)) {
+      setCepValido(true);
+      return true;
+    }
+    else {
+      setCepValido(false);
+      refCep.current.focus();
+      return false;
+    }
+  }, [cep]
+  );
+
+  const validarComplemento = useCallback((complementoCopia = complemento) => {
+    if (validacao.validarTexto(complementoCopia)) {
+      setComplementoValido(true);
+      return true;
+    }
+    else {
+      setComplementoValido(false);
+      refComplemento.current.focus();
+      return false;
+    }
+  },
+    [complemento]
+  );
+
+  const validarLatitude = (latitudeCopia = latitude) => {
+    if (validacao.validarNumero(latitudeCopia)) {
+      setLatitudeValido(true);
+      return true;
+    }
+    else {
+      setLatitudeValido(false);
+      refLatitude.current.focus();
       return false;
     }
   }
 
+  const validarLongitude = (longitudeCopia = longitude) => {
+    if (validacao.validarNumero(longitudeCopia)) {
+      setLongitudeValido(true);
+      return true;
+    }
+    else {
+      setLongitudeValido(false);
+      refLongitude.current.focus();
+      return false;
+    }
+  }
+
+  function validarDados(passoAtivoCopia = passoAtivo) {
+    if (passoAtivoCopia === 0) {
+      return validarNomeFantasia()
+        && validarCpfCnpj()
+        && validarRazaoSocial()
+        && validarTelefoneFixo()
+        && validarTelefoneCelular()
+        && validarEmail();
+    }
+    if (passoAtivoCopia === 1) {
+      return validarLogradouro()
+        && validarBairro()
+        && validarNumero()
+        && validarCep()
+        && validarComplemento()
+        && validarLatitude()
+        && validarLongitude();
+    }
+    return true;
+  }
+
   const handleNext = () => {
     setPassoAtivo(passoAtivo + 1);
+    animateScroll.scrollToTop({duration: 300});
   };
 
   const handleBack = () => {
-    setPassoAtivo(passoAtivo - 1);
+    if (passoAtivo > 0) {
+      setPassoAtivo(passoAtivo - 1);
+      animateScroll.scrollToTop({duration: 300});
+    }
   };
-
-  console.log(passoAtivo);
 
   const handleStep = (passo) => {
     if (passoAtivo !== passo) {
       if (passo < passoAtivo) {
         setPassoAtivo(passo);
       }
+      else {
+        if (passoAtivo === passo - 1) {
+          if (validarDados()) {
+            handleNext();
+          }
+        }
+      }
     }
   };
 
-  const handleSubmitDados = evento => {
-    console.log(evento);
-    evento.preventDefault();
-    evento.stopPropagation();
-
+  function handleSubmit() {
     if (validarDados()) {
-      handleNext();
-    }
-  }
-
-  const handleSubmitEndereco = evento => {
-    evento.preventDefault();
-    handleNext();
-  }
-
-
-  const campoNomeFantasia = useMemo(() =>
-    <Grid xs={12} sm={12} md={6} item>
-      <CampoTexto
-        required
-        fullWidth
-        label="Nome Fantasia / Nome"
-        onChange={e => setNomeFantasia(e.target.value)}
-        value={nomeFantasia}
-      />
-    </Grid>,
-    [nomeFantasia]
-  );
-
-  const campoRazaoSocial = useMemo(() =>
-    <Grid xs={12} sm={12} md={6} item>
-      <CampoTexto
-        required={cpfCnpj.length === 18}
-        fullWidth
-        label="Razão Social"
-        onChange={e => setRazaoSocial(e.target.value)}
-        value={razaoSocial}
-      />
-    </Grid>,
-    [razaoSocial, cpfCnpj]
-  );
-
-  const campoCpfCnpj = useMemo(() => {
-    const handleChangeCpf = (e) => {
-      setCpfCnpj(
-        MascaraNumererica(
-          e.target.value,
-          tamanho => {
-            return tamanho < 12 //se o tamanho é menor que 12 indica cpf, se não cnpj
-              ? "000.000.000-00"
-              : "00.000.000/0000-00"
-          }
-        )
-      );
-      if (!cpfCnpjValido) {
-        validarCpfCnpj(e.target.value);
+      if (passoAtivo < 2) {
+        handleNext();
+      }
+      else{
+        setBackdropOpen(true);
       }
     }
+  }
 
-    return (
-      <Grid xs={12} sm={6} md={4} item>
-        <CampoTexto
-          required
-          fullWidth
-          inputRef={refCpfCnpj}
-          error={!cpfCnpjValido}
-          helperText={!cpfCnpjValido ? "CPF/CNPJ inválido!" : ""}
-          label="CPF/CNPJ"
-          onChange={handleChangeCpf}
-          value={cpfCnpj}
-        />
-      </Grid>
-    )
-  },
-    [refCpfCnpj, cpfCnpj, cpfCnpjValido, validarCpfCnpj]
+  function handleKeyDown(e) {
+    if (e.keyCode === 13) {
+      handleSubmit();
+    }
+  }
+
+  const campoNomeFantasia = (
+    <Grid item xs={12}>
+      <CampoTexto
+        ref={refNomeFantasia}
+        obrigatorio
+        label="Nome / Nome fantasia"
+        valor={nomeFantasia}
+        valido={nomeFantasiaValido}
+        onChange={setNomeFantasia}
+        validar={validarNomeFantasia}
+        erroInvalido="O nome / nome fantasia deve ter pelo menos 3 caracteres."
+        erroObrigatorio={"O nome / nome fantasia é obrigatório."}
+      />
+    </Grid>
   );
 
-  const campoTelefoneFixo = useMemo(() =>
-    <Grid xs={12} sm={6} md={4} item>
+
+  const campoCpfCnpj = (
+    <Grid xs={12} md={4} item>
       <CampoTexto
+        ref={refCpfCnpj}
+        obrigatorio
+        label="CPF/CNPJ"
+        valor={cpfCnpj}
+        onChange={setCpfCnpj}
+        validar={validarCpfCnpj}
+        valido={cpfCnpjValido}
+        erroInvalido="CPF/CNPJ inválido."
+        erroObrigatorio="O CPF/CNPJ é obrigatório."
+        mascara={
+          tamanho =>
+            tamanho < 12 //se o tamanho é menor que 12 indica cpf, se não cnpj
+              ? "000.000.000-00"
+              : "00.000.000/0000-00"
+        }
         type="tel"
-        fullWidth
+      />
+    </Grid>
+  );
+
+  const campoRazaoSocial = (
+    <Grid xs={12} md={8} item>
+      <CampoTexto
+        ref={refRazaoSocial}
+        obrigatorio={cpfCnpj.length === 18}
+        label="Razão Social"
+        onChange={setRazaoSocial}
+        validar={validarRazaoSocial}
+        valor={razaoSocial}
+        valido={razaoSocialValido}
+        erroInvalido="A razão social deve ter pelo menos 1 caractere."
+        erroObrigatorio="A razão social é obrigatória."
+      />
+    </Grid>
+  );
+
+  const campoTelefoneFixo = (
+    <Grid xs={12} sm={6} item>
+      <CampoTexto
+        ref={refTelefoneFixo}
+        type="tel"
         label="Telefone Fixo"
-        onChange={e => setTelefoneFixo(
-          MascaraNumererica(
-            e.target.value,
-            tamanho => {
-              return tamanho < 11
-                ? "(00) 0000-0000"
-                : "(00) 00000-0000"
-            }
-          )
-        )}
-        value={telefoneFixo}
+        onChange={setTelefoneFixo}
+        validar={validarTelefoneFixo}
+        valor={telefoneFixo}
+        valido={telefoneFixoValido}
+        erroInvalido="Número de telefone fixo inválido."
+        mascara={
+          tamanho =>
+            tamanho < 11
+              ? "(00) 0000-0000"
+              : "(00) 00000-0000"
+        }
       />
-    </Grid>,
-    [telefoneFixo]
+    </Grid>
   );
 
-  const campoTelefoneCelular = useMemo(() =>
-    <Grid xs={12} sm={6} md={4} item>
+  const campoTelefoneCelular = (
+    <Grid xs={12} sm={6} item>
       <CampoTexto
         type="tel"
-        required
-        fullWidth
+        ref={refTelefoneCelular}
+        obrigatorio
         label="Telefone Celular"
-        onChange={e => setTelefoneCelular(
-          MascaraNumererica(
-            e.target.value,
-            tamanho => {
-              return tamanho < 11
-                ? "(00) 0000-0000"
-                : "(00) 00000-0000"
-            }
-          )
-        )}
-        value={telefoneCelular}
+        onChange={setTelefoneCelular}
+        validar={validarTelefoneCelular}
+        valor={telefoneCelular}
+        valido={telefoneCelularValido}
+        erroInvalido="Número de telefone celular inválido."
+        erroObrigatorio="O número de telefone celular é obrigatório."
+        mascara={
+          tamanho =>
+            tamanho < 11
+              ? "(00) 0000-0000"
+              : "(00) 00000-0000"
+        }
       />
-    </Grid>,
-    [telefoneCelular]
+    </Grid>
   );
 
-  const campoEmail = useMemo(() =>
-    <Grid xs={12} sm={6} md={4} item>
+  const campoEmail = (
+    <Grid xs={12} md={4} item>
       <CampoTexto
-        required
+        ref={refEmail}
+        obrigatorio
         type="email"
-        fullWidth
         label="E-mail"
-        onChange={e => setEmail(e.target.value)}
-        value={email}
+        onChange={setEmail}
+        valor={email}
+        valido={emailValido}
+        validar={validarEmail}
+        erroInvalido="E-mail inválido."
+        erroObrigatorio="O E-mail é obrigatório."
       />
-    </Grid>,
-    [email]
+    </Grid>
   );
 
   const campoWebsite = useMemo(() =>
     <Grid xs={12} md={8} item>
       <CampoTexto
-        fullWidth
         label="Website"
-        onChange={e => setWebsite(e.target.value)}
-        value={webSite}
+        onChange={setWebsite}
+        valor={webSite}
       />
     </Grid>,
     [webSite]
@@ -348,130 +526,160 @@ function CadastroOficina({ ...props }) {
     [urlLogomarca]
   );
 
-  const campoLogradouro = useMemo(() =>
+  const campoLogradouro = (
     <Grid xs={12} md={6} item>
       <CampoTexto
-        required
-        fullWidth
+        ref={refLogradouro}
+        obrigatorio
         label="Logradouro"
-        onChange={e => setLogradouro(e.target.value)}
-        value={logradouro}
+        onChange={setLogradouro}
+        validar={validarLogradouro}
+        valor={logradouro}
+        valido={logradouroValido}
+        erroInvalido="O logradouro deve ter pelo menos 3 caracteres."
+        erroObrigatorio="O logradouro é obrigatório."
       />
-    </Grid>,
-    [logradouro]
+    </Grid>
   );
 
-  const campoBairro = useMemo(() =>
+  const campoBairro = (
     <Grid xs={12} md={6} item>
       <CampoTexto
-        required
-        fullWidth
+        ref={refBairro}
+        obrigatorio
         label="Bairro"
-        onChange={e => setBairro(e.target.value)}
-        value={bairro}
+        onChange={setBairro}
+        validar={validarBairro}
+        valor={bairro}
+        valido={bairroValido}
+        erroInvalido="O bairro deve ter pelo menos 3 caracteres."
+        erroObrigatorio="O bairro é obrigatório."
       />
-    </Grid>,
-    [bairro]
+    </Grid>
   );
 
-  const campoNumero = useMemo(() =>
+  const campoNumero = (
     <Grid xs={6} sm={6} md={3} item>
       <CampoTexto
-        required
-        fullWidth
+        ref={refNumero}
+        obrigatorio
         label="Número"
-        onChange={e => setNumero(e.target.value)}
-        value={numero}
+        onChange={setNumero}
+        validar={validarNumero}
+        valor={numero}
+        valido={numeroValido}
+        erroObrigatorio="O número é obrigatório."
+        erroInvalido="Número inválido"
       />
-    </Grid>,
-    [numero]
+    </Grid>
   );
 
-  const campoCep = useMemo(() =>
+  const campoCep = (
     <Grid xs={6} md={3} item>
       <CampoTexto
-        required
-        fullWidth
+        ref={refCep}
+        obrigatorio
         label="CEP"
-        onChange={e => setCep(
-          MascaraNumererica(
-            e.target.value,
-            () => {
-              return "00000-000"
-            }
-          )
-        )}
-        value={cep}
+        onChange={setCep}
+        validar={validarCep}
+        valor={cep}
+        valido={cepValido}
+        erroInvalido="CEP inválido."
+        erroObrigatorio="O CEP é obrigatório."
+        mascara={() => "00000-000"}
+        type="tel"
       />
-    </Grid>,
-    [cep]
+    </Grid>
   );
 
-  const campoComplemento = useMemo(() =>
+  const campoComplemento = (
     <Grid xs={12} md={6} item>
       <CampoTexto
-        required
-        fullWidth
+        ref={refComplemento}
+        obrigatorio
         label="Complemento"
-        onChange={e => setComplemento(e.target.value)}
-        value={complemento}
+        onChange={setComplemento}
+        validar={validarComplemento}
+        valor={complemento}
+        valido={complementoValido}
+        erroInvalido="O complemento deve ter pelo menos 3 caracteres"
+        erroObrigatorio="O complemento é obrigatório"
       />
-    </Grid>,
-    [complemento]
-  )
+    </Grid>
+  );
 
-  const campoCidade = useMemo(() =>
+  const campoCidade = (
     <Grid xs={12} sm={6} item>
       <CampoTexto
-        required
-        fullWidth
+        ref={refCidade}
+        obrigatorio
         label="Cidade"
-        onChange={e => setCidade(e.target.value)}
-        value={cidade}
+        onChange={setCidade}
+        valor={cidade}
       />
-    </Grid>,
-    [cidade]
+    </Grid>
   );
+
 
   const campoEstado = useMemo(() =>
     <Grid xs={12} sm={6} item>
-      <CampoTexto
-        required
-        fullWidth
-        label="Estado"
-        onChange={e => setEstado(e.target.value)}
-        value={estado}
-      />
+      <Box mt={2} p={2}>
+        <FormControl fullWidth>
+          <InputLabel className={styles.label} id="estado">Estado</InputLabel>
+          <Select className={styles.select} labelId="estado" id="estado" fullWidth value={estado} onChange={(e) => setEstado(e.target.value)}>
+            <MenuItem value={10}>Goiás</MenuItem>
+            <MenuItem value={20}>São Paulo</MenuItem>
+            <MenuItem value={30}>Minas Gerais</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
     </Grid>,
-    [estado]
+    [styles.label, styles.select, estado]
   );
 
-  const campoLatitude = useMemo(() =>
+  const campoLatitude = (
     <Grid xs={12} sm={6} item>
       <CampoTexto
-        required
-        fullWidth
+        ref={refLatitude}
+        obrigatorio
         label="Latitude"
-        onChange={e => setLatitude(e.target.value)}
-        value={latitude}
+        onChange={setLatitude}
+        validar={validarLatitude}
+        valor={latitude}
+        valido={latitudeValido}
         type="number"
       />
-    </Grid>,
-    [latitude]
+    </Grid>
   );
 
-  const campoLongitude = useMemo(() =>
+  const campoLongitude = (
     <Grid xs={12} sm={6} item>
       <CampoTexto
-        required
-        fullWidth
+        ref={refLongitude}
+        obrigatorio
         label="Longitude"
-        onChange={e => setLongitude(e.target.value)}
-        value={longitude}
+        onChange={setLongitude}
+        validar={validarLongitude}
+        valor={longitude}
+        valido={longitudeValido}
         type="number"
       />
-    </Grid>,
-    [longitude]
+    </Grid>
+  );
+
+  const googleMaps = useMemo(() =>
+    <Box className={styles.containerGoogleMaps}>
+      <GoogleMaps
+        initialCenter={{ lat: latitude, lng: longitude }}
+        center={{ lat: latitude, lng: longitude }}
+        onClick={(x, y, e) => {
+          setLatitude(e.latLng.lat());
+          setLongitude(e.latLng.lng());
+        }}
+        zoom={10}
+      />
+    </Box>,
+    [latitude, longitude, styles.containerGoogleMaps]
   );
 
   const dragAndDrop = useMemo(() =>
@@ -486,46 +694,30 @@ function CadastroOficina({ ...props }) {
     [urlLogomarca]
   );
 
-  const googleMaps = useMemo(() =>
-    <Box className={classes.containerGoogleMaps}>
-      <GoogleMaps
-        initialCenter={{ lat: latitude, lng: longitude }}
-        center={{ lat: latitude, lng: longitude }}
-        onClick={(x, y, e) => {
-          setLatitude(e.latLng.lat());
-          setLongitude(e.latLng.lng());
-        }}
-        zoom={10}
-      />
-    </Box>,
-    [latitude, longitude, classes.containerGoogleMaps]
+  const botaoAnterior = (
+    <Box px={2}>
+      <Button onClick={handleBack} variant="outlined">
+        {passoAtivo === 0 ? "Cancelar" : "Voltar"}
+      </Button>
+    </Box>
   );
 
   const botaoProximo = (
     <Box px={2}>
-      <Button type="submit" variant="contained">
-        Próximo
+      <Button onClick={handleSubmit} variant="outlined">
+        {passoAtivo === 2 ? "Salvar" : "Próximo"}
       </Button>
     </Box>
   );
-
-  const botaoAnterior = (
-    <Box px={2}>
-      <Button onClick={handleBack} variant="contained">
-        Voltar
-      </Button>
-    </Box>
-  );
-
 
   const formOficina = (
-    <form method="post" action="" onSubmit={handleSubmitDados}>
-      <Grid container className={classes.container} alignItems="center">
+    <form method="post" action="" onKeyDown={handleKeyDown}>
+      <Grid container className={styles.container} alignItems="center">
         <Grid item lg={8}>
           <Grid container justify="center" alignItems="center">
             {campoNomeFantasia}
-            {campoRazaoSocial}
             {campoCpfCnpj}
+            {campoRazaoSocial}
             {campoTelefoneFixo}
             {campoTelefoneCelular}
             {campoEmail}
@@ -537,67 +729,36 @@ function CadastroOficina({ ...props }) {
           {dragAndDrop}
         </Hidden>
       </Grid>
-      <Grid container justify="space-between" spacing={2}>
-        <Grid item>
-          <Button>
-            Cancelar
-          </Button>
-        </Grid>
-        <Grid item>
-          <Grid container>
-            <Grid item>
-              <Button>
-                Voltar
-              </Button>
-            </Grid>
-            <Grid item>
-              {botaoProximo}
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
     </form>
   );
 
   const formEndereco = (
-    <form method="post" action="" onSubmit={handleSubmitEndereco} onClick={() => getLocalizacao()}>
-      <>
-        <Grid container className={classes.container} justify="center" alignItems="center">
-          <Grid lg={8} item>
-            <Grid container >
-              {campoLogradouro}
-              {campoBairro}
-              {campoNumero}
-              {campoCep}
-              {campoComplemento}
-              {campoCidade}
-              {campoEstado}
-              {campoLatitude}
-              {campoLongitude}
-            </Grid>
-          </Grid>
-          <Grid xs={12} lg={4} item>
-            <Box p={2}>
-              {googleMaps}
-            </Box>
+    <form method="post" action="" onClick={() => getLocalizacao()} onKeyDown={handleKeyDown}>
+      <Grid container className={styles.container} justify="center" alignItems="center">
+        <Grid lg={8} item>
+          <Grid container >
+            {campoLogradouro}
+            {campoBairro}
+            {campoNumero}
+            {campoCep}
+            {campoComplemento}
+            {campoEstado}
+            {campoCidade}
+            {campoLatitude}
+            {campoLongitude}
           </Grid>
         </Grid>
-      </>
-      <Grid container justify="space-between" spacing={2}>
-        <Grid item>
-          {botaoAnterior}
-        </Grid>
-
-        <Grid item>
-          {botaoProximo}
+        <Grid xs={12} lg={4} item>
+          <Box p={2}>
+            {googleMaps}
+          </Box>
         </Grid>
       </Grid>
     </form>
   );
 
-
-  const confirmaDados = (
-    <Grid container className={classes.container} alignItems="center" spacing={2}>
+  const frameConfirma = (
+    <Grid container className={styles.container} alignItems="center" spacing={2}>
       <Grid xs={12} md={6} item>
         <Box p={2}>
           <Box display="flex" justifyContent="center">
@@ -612,8 +773,8 @@ function CadastroOficina({ ...props }) {
           <Typography>Website: {webSite}</Typography>
           <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
             <Typography>Logomarca:</Typography>
-            <Box className={classes.containerPreviaImagem}>
-              {urlLogomarca && (<img src={urlLogomarca} className={classes.previaImagem} alt="Logomarca" />)}
+            <Box className={styles.containerPreviaImagem}>
+              {urlLogomarca && (<img src={urlLogomarca} className={styles.previaImagem} alt="Logomarca" />)}
             </Box>
           </Box>
         </Box>
@@ -646,7 +807,7 @@ function CadastroOficina({ ...props }) {
           </Grid>
           <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
             <Typography>Localização</Typography>
-            <Box className={classes.containerPreviaLocalizacao}>
+            <Box className={styles.containerPreviaLocalizacao}>
               <GoogleMaps
                 initialCenter={{ lat: latitude, lng: longitude }}
                 zoom={14}
@@ -659,28 +820,26 @@ function CadastroOficina({ ...props }) {
     </Grid>
   );
 
-
   const passos =
     [{
       label: "Dados",
-      dados: formOficina
+      componente: formOficina
     },
     {
       label: "Endereço",
-      dados: formEndereco
+      componente: formEndereco
     },
     {
       label: "Confirmar",
-      dados: confirmaDados
+      componente: frameConfirma
     }]
 
-  const etapa = [formOficina, formEndereco, confirmaDados];
 
   return (
     <Container maxWidth="lg">
       <Grid container alignItems="center">
         <Grid xs={12} item>
-          <Stepper className={classes.fundo} nonLinear activeStep={passoAtivo} orientation="horizontal" >
+          <Stepper nonLinear color="primary" activeStep={passoAtivo} orientation="horizontal" >
             {passos.map((passo, index) => {
               return (
                 <Step key={index}>
@@ -690,7 +849,15 @@ function CadastroOficina({ ...props }) {
             })}
           </Stepper>
         </Grid>
-        {etapa[passoAtivo]}
+        {passos[passoAtivo].componente}
+        <Grid container justify="space-between" spacing={2}>
+          <Grid item>
+            {botaoAnterior}
+          </Grid>
+          <Grid item>
+            {botaoProximo}
+          </Grid>
+        </Grid>
       </Grid>
     </Container>
   );

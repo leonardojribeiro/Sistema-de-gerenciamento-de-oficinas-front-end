@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { Container, Box, Grid, Typography } from '@material-ui/core';
+import { Container, Box, Grid, Typography, Button } from '@material-ui/core';
 
 import { Link } from 'react-router-dom';
 import Slide from '../Slide/';
@@ -7,7 +7,6 @@ import ItemFuncionalidade from './itemFuncionalidade/ItemFuncionalidade';
 
 import { Link as LinkScroll, Element, } from 'react-scroll';
 import BarraSuperiorContext from '../BarraSuperiorContext';
-import CustomIconButton from '../Button';
 
 export default function PaginaInicial({ ...props }) {
   const { setItens } = useContext(BarraSuperiorContext);
@@ -75,9 +74,9 @@ export default function PaginaInicial({ ...props }) {
                   Solicite o cadastro de sua oficina. Analisaremos as suas informações e entraremos em contato.
                 </Box>
                 <Box display="flex" justifyContent="center" p={2}>
-                  <CustomIconButton component={Link} to="/oficina/cadastro" >
+                  <Button component={Link} to="/oficina/cadastro" >
                     Solicitar cadastro
-                  </CustomIconButton>
+                  </Button>
                 </Box>
               </Grid>
             </Grid>

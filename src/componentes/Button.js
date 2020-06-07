@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { Button, makeStyles, Tooltip } from '@material-ui/core';
 
 const useStyles = makeStyles({
-  root: {
+  /*root: {
     color: "inherit",
     backgroundColor: "var(--cor-transparente)",
     border: "1px solid var(--cor-borda)",
@@ -10,7 +10,7 @@ const useStyles = makeStyles({
       border: "1px solid var(--cor-borda-after)",
       backgroundColor: "var(--cor-transparente)",
     }
-  }
+  }*/
 });
 
 function CustomButton({ tooltip, children, ...props }) {

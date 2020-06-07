@@ -7,12 +7,13 @@ import BrightnessHigh from '@material-ui/icons/BrightnessHigh';
 import BrightnessLow from '@material-ui/icons/BrightnessLow';
 import Menu from '@material-ui/icons/Menu';
 import Drawer from './componentes/Drawer';
-import { ButtonGroup, } from '@material-ui/core';
+import { ButtonGroup, createMuiTheme, ThemeProvider, } from '@material-ui/core';
 import Backdrop from './componentes/Backdrop';
 import Botao from './componentes/IconButton';
 import Rotas from './rotas';
 import BarraSuperiorContext from './componentes/BarraSuperiorContext';
 import { useCallback } from 'react';
+import BackdropContext from './componentes/BackdropContext';
 
 
 
@@ -20,6 +21,7 @@ function App() {
   const [tema, setTema] = useState("");
   const [itensBarra, setItensBarra] = useState({});
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [backdropOpen, setBackdropOpen] = useState(false);
 
   useEffect(() => {
     const t = localStorage.getItem("tema");
@@ -29,7 +31,6 @@ function App() {
     else {
       setTema("claro");
     }
-
   }, []);
 
   const alterarTema = () => {
@@ -56,7 +57,7 @@ function App() {
 
   const setItens = useCallback(({ itens }) => {
     setItensBarra(itens);
-  },[]);
+  }, []);
 
   const linksBarraNavegacao = itensBarra.links;
 
@@ -71,19 +72,31 @@ function App() {
     [botoesBarraNavegacao, linksBarraNavegacao, drawerOpen]
   );
 
+  const darkTheme = createMuiTheme({
+    palette: {
+      type: tema === "claro" ? "light" : "dark",
+      contrastThreshold: 3
+    },
+
+  });
+
   return (
-    <div className={`transicao-tema ${tema}`}>
-      <BrowserRouter>
-        {barraSuperior}
-        <BarraSuperiorContext.Provider value={{setItens}}>
-          <div className="h-min-barra-rodape">
-            <Rotas/>
-          </div>
-        </BarraSuperiorContext.Provider>
-        <Rodape />
-        <Drawer open={drawerOpen} onOpen={() => { setDrawerOpen(true) }} onClose={() => { setDrawerOpen(false) }} />
-      </BrowserRouter>
-      <Backdrop />
+    <div className={`${tema}`}>
+      <ThemeProvider theme={darkTheme}>
+        <BackdropContext.Provider value={{ setBackdropOpen}}>
+          <BrowserRouter>
+            {barraSuperior}
+            <BarraSuperiorContext.Provider value={{ setItens }}>
+              <div className="h-min-barra-rodape">
+                <Rotas />
+              </div>
+            </BarraSuperiorContext.Provider>
+            <Rodape />
+            <Drawer open={drawerOpen} onOpen={() => { setDrawerOpen(true) }} onClose={() => { setDrawerOpen(false) }} />
+          </BrowserRouter>
+        </BackdropContext.Provider>
+        <Backdrop open={backdropOpen}/>
+      </ThemeProvider>
     </div>
   );
 }

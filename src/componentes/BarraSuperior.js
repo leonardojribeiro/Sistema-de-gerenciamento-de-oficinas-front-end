@@ -4,7 +4,7 @@ import { Toolbar, AppBar} from '@material-ui/core';
 function BarraSuperior(props) {
   return (
     <AppBar position="static" color="transparent">
-      <Toolbar className="flex justify-between" >
+      <Toolbar className="flex justify-between" color="primary">
         {props.children}
       </Toolbar>
     </AppBar>

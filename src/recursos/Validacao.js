@@ -78,7 +78,7 @@ function validaCnpj(cnpj) {
   return (dv1 === parseInt(cnpj.charAt(12)) && dv2 === parseInt(cnpj.charAt(13)));
 }
 
-export default function validaCpfCnpj(cpfCnpj) {
+function validarCpfCnpj(cpfCnpj) {
   if(!cpfCnpj){
     return false;
   }
@@ -91,5 +91,43 @@ export default function validaCpfCnpj(cpfCnpj) {
     return validaCnpj(cpfCnpjFinal);
   }
   return false;
+};
+
+
+function validarNome(nome){
+  return nome.length > 2;
 }
 
+function validarEmail(email){
+  let regex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+  return regex.test(email);
+}
+
+function validarTelefone(telefone){
+  return telefone.length === 14 || telefone.length === 15 
+}
+
+function validarTexto(texto){
+  return texto.length > 0;
+}
+
+function validarCep(cep){
+  return cep.length === 9;
+}
+
+function validarNumero(numero){
+  return numero != "";
+}
+
+const validacao = {
+  validarCpfCnpj,
+  validarNome,
+  validarEmail,
+  validarTelefone,
+  validarTexto,
+  validarCep,
+  validarNumero,
+
+}
+
+export default validacao;
