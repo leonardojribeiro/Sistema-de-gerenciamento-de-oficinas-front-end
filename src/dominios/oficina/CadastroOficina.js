@@ -787,10 +787,10 @@ function CadastroOficina({ ...props }) {
           <Typography>Logradouro: {logradouro}</Typography>
           <Typography>Bairro: {bairro}</Typography>
           <Grid container>
-            <Grid xs={6} item>
+            <Grid xs={12} sm={6} item>
               <Typography>Número: {numero}</Typography>
             </Grid>
-            <Grid xs={6} item>
+            <Grid xs={12} sm={6} item>
               <Typography>CEP: {cep}</Typography>
             </Grid>
           </Grid>
@@ -798,10 +798,10 @@ function CadastroOficina({ ...props }) {
           <Typography>Cidade: {cidade}</Typography>
           <Typography>Estado: {estado}</Typography>
           <Grid container>
-            <Grid xs={6} item>
+            <Grid xs={12} sm={6} item>
               <Typography>Latitude: {latitude}</Typography>
             </Grid>
-            <Grid xs={6} item>
+            <Grid xs={12} sm={6} item>
               <Typography>Longitude: {longitude}</Typography>
             </Grid>
           </Grid>
