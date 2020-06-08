@@ -10,7 +10,6 @@ const useStyles = makeStyles({
   drag: {
     transition: "border 0.3s",
     border: "3px dashed var(--cor-borda)",
-    borderRadius: "4px",
     cursor: "pointer",
     display: "flex",
     alignItems: "center",
@@ -22,7 +21,6 @@ const useStyles = makeStyles({
     transition: "all 0.3s",
     border: "3px solid #0f0",
     backgroundColor: "rgba(0, 255, 0, 0.1) ",
-    borderRadius: "4px",
     cursor: "pointer",
     textAlign: "center",
     height: "256px",
@@ -31,7 +29,6 @@ const useStyles = makeStyles({
     transition: "all 0.3s",
     border: "3px dashed #f00",
     backgroundColor: "rgba(255, 0, 0, 0.1) ",
-    borderRadius: "4px",
     cursor: "pointer",
     textAlign: "center",
     height: "256px",

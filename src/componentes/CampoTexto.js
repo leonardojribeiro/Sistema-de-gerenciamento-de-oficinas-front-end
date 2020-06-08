@@ -1,14 +1,52 @@
-import React from 'react';
-import { TextField, Box, makeStyles } from '@material-ui/core';
-import { memo } from 'react';
+import React, { memo, forwardRef } from 'react';
+import MascaraNumererica from '../recursos/MascaraNumerica';
+import { TextField, Box } from '@material-ui/core';
 
 
-function CampoTexto(props) {
+const CampoTexto = forwardRef(({ valor, valido = true, validar, onChange, label, obrigatorio, erroInvalido, erroObrigatorio, type, mascara }, ref) => {
+  function handleChange(e) {
+    if (mascara) {
+      onChange(
+        MascaraNumererica(
+          e.target.value,
+          mascara
+        )
+      );
+    }
+    else {
+      onChange(e.target.value);
+    }
+    if (!valido) {
+      validar(e.target.value);
+    }
+  }
   return (
-    <Box mt={2} p={2}>
-      <TextField {...props} />
+    <Box mt={1} p={3}>
+      <TextField
+        inputRef={ref}
+        required={obrigatorio}
+        type={type}
+        fullWidth
+        label={label}
+        onChange={handleChange}
+        value={valor}
+        error={!valido}
+        helperText={
+          obrigatorio
+            ? valido
+              ? ""
+              : valor.length
+                ? erroInvalido
+                : erroObrigatorio
+            : valor.length
+              ? valido
+                ? null
+                : erroInvalido
+              : null
+        }
+      />
     </Box>
-  );
-}
+  )
+});
 
 export default memo(CampoTexto);

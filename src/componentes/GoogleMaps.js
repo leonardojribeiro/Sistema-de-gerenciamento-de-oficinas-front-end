@@ -25,7 +25,7 @@ export function MapContainer({ initialCenter, center, onClick, icone, zoom, ...p
 }
 
 export default GoogleApiWrapper({
-  apiKey: ("AIzaSyBXHu_yyh-66CMPcXRl_73eRsGdZuiUaso"),
+  apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
   language: "pt",
   region: "br",
 })(memo(MapContainer));
