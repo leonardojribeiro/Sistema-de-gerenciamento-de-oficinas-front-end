@@ -57,6 +57,10 @@
   min-height: var(--h-livre-com-barra);
 }
 
+.h-min-rodape{
+  min-height: var(--h-livre-com-rodape);
+}
+
 .flex{
   display: flex;
 }

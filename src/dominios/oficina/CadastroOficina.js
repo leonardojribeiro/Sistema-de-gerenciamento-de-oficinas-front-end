@@ -6,29 +6,13 @@ import BarraSuperiorContext from '../../componentes/BarraSuperiorContext';
 import CustomIconButton from '../../componentes/IconButton';
 import Home from '@material-ui/icons/Home';
 import { Link } from 'react-router-dom';
-
+import { animateScroll } from 'react-scroll';
 
 function CadastroOficina({ ...props }) {
 
-  const { setItens } = useContext(BarraSuperiorContext);
   const {setBackdropOpen} = useContext(BackdropContext);
 
-  useEffect(() => {
-    setItens({
-      itens: {
-        botoes: (
-          <CustomIconButton tooltip="Página Inicial" component={Link} to="/">
-            <Home />
-          </CustomIconButton>
-        )
-      }
-    });
-    setBackdropOpen(true);
-    setTimeout(()=>setBackdropOpen(false),500);
-  }, [setBackdropOpen, setItens]);
-
-
-
+  
   function handleSubmit(dados) {
     
     console.log(dados)

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React from 'react';
 import { Container, Box, Grid, Typography, Button } from '@material-ui/core';
 
 import { Link } from 'react-router-dom';
@@ -6,28 +6,9 @@ import Slide from '../Slide/';
 import ItemFuncionalidade from './itemFuncionalidade/ItemFuncionalidade';
 
 import { Link as LinkScroll, Element, } from 'react-scroll';
-import BarraSuperiorContext from '../BarraSuperiorContext';
+import BarraSuperior from '../BarraSuperior';
 
 export default function PaginaInicial({ ...props }) {
-  const { setItens } = useContext(BarraSuperiorContext);
-
-  useEffect(() => {
-    setItens({
-      itens: {
-        links: (
-          <>
-            <LinkScroll to="item" smooth="easeInQuad" duration={500}>
-              Funcionalidades
-            </LinkScroll>
-            <LinkScroll to="cadastro" smooth="easeInQuad" duration={500}>
-              Cadastro
-            </LinkScroll>
-          </>
-        )
-      }
-    });
-  }, [setItens]);
-
 
   const funcionalidades = [
     "Gestão de veículos",
@@ -41,6 +22,14 @@ export default function PaginaInicial({ ...props }) {
 
   return (
     <>
+      <BarraSuperior>
+        <LinkScroll to="item" smooth="easeInQuad" duration={500}>
+          Funcionalidades
+            </LinkScroll>
+        <LinkScroll to="cadastro" smooth="easeInQuad" duration={500}>
+          Cadastro
+            </LinkScroll>
+      </BarraSuperior>
       <Box display="flex" className="h-min-barra" alignItems="center" justifyContent="center">
         <Slide />
       </Box>

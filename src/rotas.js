@@ -1,21 +1,33 @@
-import React, { memo } from 'react';
+import React, { memo, useContext } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import CadastroOficina from './dominios/oficina/CadastroOficina';
 import PaginaInicial from './componentes/paginaInicial/PaginaInicial';
 import Teste from './componentes/teste';
+import AuthContext from './contexts/AuthContext';
+import PaginaInicialOficina from './componentes/paginaInicialOficina/PaginaInicialOficina';
 
 
 function Rotas(props) {
+  const { usuario } = useContext(AuthContext);
   return (
     <Switch>
       <Route path="/oficina/cadastro/" exact>
-        <CadastroOficina/>
+        <CadastroOficina />
       </Route>
-      <Route path="/" exact>
-        <PaginaInicial/>
-      </Route>
+      {
+        !usuario ? (
+          <Route path="/" exact>
+            <PaginaInicial />
+          </Route>
+        )
+        : (
+          <Route path="/" exact>
+            <PaginaInicialOficina />
+          </Route>
+        )
+      }
       <Route path="/t" exact>
-        <Teste/>
+        <Teste />
       </Route>
     </Switch>
   );

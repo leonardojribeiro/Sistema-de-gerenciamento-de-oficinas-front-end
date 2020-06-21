@@ -21,7 +21,7 @@ const CampoTexto = forwardRef(({ valor, valido = true, validar, onChange, label,
     }
   }
   return (
-    <Box mt={1} p={3}>
+    <Box p={2}>
       <TextField
         inputRef={ref}
         required={obrigatorio}
