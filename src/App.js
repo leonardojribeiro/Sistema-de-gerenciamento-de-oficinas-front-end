@@ -4,12 +4,12 @@ import { BrowserRouter, } from 'react-router-dom';
 import './App.css';
 import Drawer from './componentes/Drawer';
 import { createMuiTheme, ThemeProvider, } from '@material-ui/core';
-import Backdrop from './componentes/Backdrop';
 import Rotas from './rotas';
 import BackdropContext from './componentes/BackdropContext';
 import DialogoLogin from './componentes/DialogoLogin';
 import api from "./servicos/api";
 import AuthContext from './contexts/AuthContext';
+import ProgressoIndefinidoCircular from './componentes/ProgressoIndefinidoCircular';
 
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
 
   async function efetuarLoginPorToken(token) {
     setProgressoAtivo(true);
-    const resposta = await api.post(`${process.env.REACT_APP_API_URL}/usuario/loginPorToken`, { token });
+    const resposta = await api.post(`${process.env.REACT_APP_API_URL}/usuario/loginPorToken`, { token }).catch(err=>console.log(err));
     if (resposta) {
       if (resposta.status === 200) {
         setUsuario(resposta.data);
@@ -61,22 +61,13 @@ function App() {
       type: tema === "claro" ? "light" : "dark",
       contrastThreshold: 3
     },
+    zIndex:{
+      modal: 10000
+    }
   });
 
-  async function login(usuario) {
-    setProgressoAtivo(true);
-    const resposta = await api.post(`${process.env.REACT_APP_API_URL}/usuario/login`, usuario);
-    if (resposta) {
-      if (resposta.status === 200) {
-        setDialogLoginAberto(false);
-        setUsuario(resposta.data);
-        localStorage.setItem("tokenUsuario", resposta.data.token);
-      }
-    }
-    setProgressoAtivo(false);
-  }
 
-  function abrirDialogoLogin() {
+  function logar() {
     if (!usuario) {
       setDialogLoginAberto(true);
     }
@@ -84,6 +75,11 @@ function App() {
 
   function fecharDialogoLogin(){
     setDialogLoginAberto(false);
+  }
+
+  function deslogar(){
+    localStorage.removeItem("tokenUsuario");
+    setUsuario(null);
   }
 
   const actionsContext = {
@@ -94,7 +90,9 @@ function App() {
 
   const authContextValue = {
     usuario,
-    abrirDialogoLogin
+    setUsuario,
+    logar,
+    deslogar,
   }
 
   return (
@@ -109,10 +107,14 @@ function App() {
               <Rodape />
               <Drawer open={drawerAberto} onOpen={() => { setDrawerAberto(true) }} onClose={() => { setDrawerAberto(false) }} />
             </BrowserRouter>
-            <DialogoLogin open={dialogLoginAberto} onSubmit={login} onClose={fecharDialogoLogin} />
+            {
+              dialogLoginAberto && (
+                <DialogoLogin open={dialogLoginAberto} onClose={fecharDialogoLogin} />
+              )
+            }
           </BackdropContext.Provider>
         </AuthContext.Provider>
-        <Backdrop open={progressoAtivo} />
+        <ProgressoIndefinidoCircular open={progressoAtivo} />
       </ThemeProvider>
     </div>
   );

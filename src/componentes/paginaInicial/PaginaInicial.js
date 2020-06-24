@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Container, Box, Grid, Typography, Button } from '@material-ui/core';
 
 import { Link } from 'react-router-dom';
@@ -7,8 +7,11 @@ import ItemFuncionalidade from './itemFuncionalidade/ItemFuncionalidade';
 
 import { Link as LinkScroll, Element, } from 'react-scroll';
 import BarraSuperior from '../BarraSuperior';
+import AuthContext from '../../contexts/AuthContext';
 
 export default function PaginaInicial({ ...props }) {
+
+  const {logar} = useContext(AuthContext);
 
   const funcionalidades = [
     "Gestão de veículos",
@@ -29,6 +32,7 @@ export default function PaginaInicial({ ...props }) {
         <LinkScroll to="cadastro" smooth="easeInQuad" duration={500}>
           Cadastro
             </LinkScroll>
+            <Button onClick={logar}>Login</Button>
       </BarraSuperior>
       <Box display="flex" className="h-min-barra" alignItems="center" justifyContent="center">
         <Slide />

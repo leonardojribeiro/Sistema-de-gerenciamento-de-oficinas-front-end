@@ -3,7 +3,7 @@ import MascaraNumererica from '../recursos/MascaraNumerica';
 import { TextField, Box } from '@material-ui/core';
 
 
-const CampoTexto = forwardRef(({ valor, valido = true, validar, onChange, label, obrigatorio, erroInvalido, erroObrigatorio, type, mascara }, ref) => {
+const CampoTexto = forwardRef(({ valor, valido = true, validar, onChange, label, obrigatorio, erroInvalido, erroObrigatorio, type, mascara, autoFocus }, ref) => {
   function handleChange(e) {
     if (mascara) {
       onChange(
@@ -23,6 +23,7 @@ const CampoTexto = forwardRef(({ valor, valido = true, validar, onChange, label,
   return (
     <Box p={2}>
       <TextField
+        autoFocus={autoFocus}
         inputRef={ref}
         required={obrigatorio}
         type={type}
