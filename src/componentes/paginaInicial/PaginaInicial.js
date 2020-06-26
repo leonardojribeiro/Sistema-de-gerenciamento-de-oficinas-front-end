@@ -32,8 +32,9 @@ export default function PaginaInicial({ ...props }) {
         <LinkScroll to="cadastro" smooth="easeInQuad" duration={500}>
           Cadastro
             </LinkScroll>
-            <Button onClick={logar}>Login</Button>
+            <Button component={Link} to={"/login"}>Login</Button>
       </BarraSuperior>
+      
       <Box display="flex" className="h-min-barra" alignItems="center" justifyContent="center">
         <Slide />
       </Box>

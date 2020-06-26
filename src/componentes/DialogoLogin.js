@@ -1,15 +1,10 @@
-import React, { useRef, useContext } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Snackbar, CircularProgress, } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+import React, { useRef } from 'react';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core';
 import CampoTexto from './CampoTexto';
 import { useState } from 'react';
-import api from '../servicos/api';
-import AuthContext from '../contexts/AuthContext';
-import ProgressoIndefinidoCircular from './ProgressoIndefinidoCircular';
 
 
-function DialogoLogin({ open, onClose }) {
-  const { setUsuario } = useContext(AuthContext);
+function DialogoLogin({ aberto, fechar, enviar }) {
 
   const [nomeUsuario, setNomeUsuario] = useState("");
   const [senha, setSenha] = useState("");
@@ -19,12 +14,7 @@ function DialogoLogin({ open, onClose }) {
 
   const refUsuario = useRef();
   const refSenha = useRef();
-
-  const [snackBarAberta, setSnackbarAberta] = useState(false);
-  const [mensagemSnackbar, setMensagemSnackbar] = useState("");
-
-  const [progressoIndefinidoAberto, setProgressoIndefinidoAtivo] = useState(false);
-
+  
   function validarUsuario(usuarioCopia = nomeUsuario) {
     if (usuarioCopia.length) {
       setUsuarioValido(true);
@@ -49,97 +39,57 @@ function DialogoLogin({ open, onClose }) {
     }
   }
 
-  async function login() {
-    setProgressoIndefinidoAtivo(true);
-    const resposta = await api
-      .post(
-        `${process.env.REACT_APP_API_URL}/usuario/login`,
-        {
-          usuario: nomeUsuario,
-          senha
-        }
-      )
-      .catch(e => {
-        if (e.response) {
-          const { mensagem } = JSON.parse(e.response.request.response);
-          setMensagemSnackbar(
-            Array.isArray(mensagem)
-              ? mensagem.map((a, i) => <p key={i}>{a}</p>)
-              : mensagem
-          )
-        }
-        else {
-          setMensagemSnackbar(e.message === "Network Error" ? "Erro ao se conectar com o servidor." : e.message);
-        }
-        setSnackbarAberta(true);
-      });
-
-    if (resposta) {
-      if (resposta.status === 200) {
-        onClose();
-        setUsuario(resposta.data);
-        localStorage.setItem("tokenUsuario", resposta.data.token);
-      }
-    }
-    setProgressoIndefinidoAtivo(false);
-  }
-
   function handleSubmit() {
     if (validarUsuario() && validarSenha()) {
-      login();
+      enviar({
+        nomeUsuario,
+        senha
+      });
     }
   }
 
   function handleKeyDown(e) {
-    if(e.keyCode === 27){
-      onClose();
+    if (e.keyCode === 27) {
+      fechar();
     }
     if (e.keyCode === 13) {
       handleSubmit();
     }
   }
 
-  function handleCloseSnackBar() {
-    setSnackbarAberta(false);
-  }
-
   return (
-    <Dialog open={open} onClose={onClose} disableBackdropClick onKeyDown={handleKeyDown}>
+    <Dialog open={aberto} onClose={fechar} disableBackdropClick onKeyDown={handleKeyDown}>
       <DialogTitle>Login</DialogTitle>
       <DialogContent>
-        <CampoTexto
-          autoFocus
-          obrigatorio
-          ref={refUsuario}
-          label="Usuário"
-          valor={nomeUsuario}
-          onChange={setNomeUsuario}
-          valido={usuarioValido}
-          erroObrigatorio="Usuário é obrigatório."
-          validar={validarUsuario}
-        />
-        <CampoTexto
-          obrigatorio
-          ref={refSenha}
-          label="Senha"
-          valor={senha}
-          type="password"
-          onChange={setSenha}
-          valido={senhaValida}
-          erroObrigatorio="Senha é obrigatória."
-          validar={validarSenha}
-        />
+        <form >
+          <CampoTexto
+            autoFocus
+            obrigatorio
+            ref={refUsuario}
+            label="Usuário"
+            valor={nomeUsuario}
+            onChange={setNomeUsuario}
+            valido={usuarioValido}
+            erroObrigatorio="Usuário é obrigatório."
+            validar={validarUsuario}
+          />
+          <CampoTexto
+            obrigatorio
+            ref={refSenha}
+            label="Senha"
+            valor={senha}
+            type="password"
+            onChange={setSenha}
+            valido={senhaValida}
+            erroObrigatorio="Senha é obrigatória."
+            validar={validarSenha}
+          />
+        </form>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Cancelar</Button>
+        <Button onClick={fechar}>Cancelar</Button>
         <Button onClick={handleSubmit}>Login</Button>
       </DialogActions>
-      <Snackbar open={snackBarAberta} autoHideDuration={5000} onClose={handleCloseSnackBar}>
-        <Alert severity="error" onClose={handleCloseSnackBar} closeText="Fechar">
-          {mensagemSnackbar}
-        </Alert>
-      </Snackbar>
-      <ProgressoIndefinidoCircular open={progressoIndefinidoAberto}/>
     </Dialog>
   );
 }

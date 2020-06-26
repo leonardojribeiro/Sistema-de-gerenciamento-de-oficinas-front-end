@@ -116,7 +116,7 @@ function validarCep(cep){
 }
 
 function validarNumero(numero){
-  return numero != "";
+  return numero !== "";
 }
 
 const validacao = {

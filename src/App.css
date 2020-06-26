@@ -1,6 +1,6 @@
 :root{
   --h-barra-nav: 64px;
-  --h-rodape: 75px;
+  --h-rodape: 64px;
   --h-assistente: 24px;
   --h-livre-com-barra: calc(100vh - var(--h-barra-nav));
   --h-livre-com-barra-rodape: calc(100vh - var(--h-barra-nav) - var(--h-rodape));

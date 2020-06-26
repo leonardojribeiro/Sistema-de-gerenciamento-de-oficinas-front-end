@@ -11,21 +11,24 @@ function PaginaInicialOficina() {
 
   const open = Boolean(anchorEl);
 
-  
-
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
-    deslogar();
+  };
+
+  const handleClick = () => {
+    handleClose();
+    deslogar()
   };
   return (
     <>
       <AppBar color="transparent">
         <Toolbar className="flex justify-between">
           <Avatar src={`http://localhost:3333/files/${usuario.idOficina.uriLogo}`} />
+          <div>{usuario.idOficina.nomeFantasia}</div>
           <IconButton
             aria-label="account of current user"
             aria-controls="menu-appbar"
@@ -49,8 +52,9 @@ function PaginaInicialOficina() {
             }}
             open={open}
             onClose={handleClose}
-          >
-            <MenuItem onClick={handleClose}>Deslogar</MenuItem>
+          > 
+          <MenuItem>{usuario.nomeUsuario}</MenuItem>
+            <MenuItem onClick={handleClick} >Deslogar</MenuItem>
           </Menu>
         </Toolbar>
       </AppBar>

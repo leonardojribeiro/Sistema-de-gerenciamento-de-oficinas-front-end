@@ -1,5 +1,5 @@
 import React, { memo, useContext } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route,} from 'react-router-dom';
 import CadastroOficina from './dominios/oficina/CadastroOficina';
 import PaginaInicial from './componentes/paginaInicial/PaginaInicial';
 import Teste from './componentes/teste';
@@ -16,7 +16,7 @@ function Rotas(props) {
       </Route>
       {
         !usuario ? (
-          <Route path="/" exact>
+          <Route path="/" >
             <PaginaInicial />
           </Route>
         )
