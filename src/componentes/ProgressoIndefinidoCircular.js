@@ -10,11 +10,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ProgressoIndefinidoCircular({ open }) {
+export default function ProgressoIndefinidoCircular({ open, value  }) {
   const classes = useStyles();
   return (
     <Backdrop className={classes.backdrop} open={open}>
-      <CircularProgress/>
+      <CircularProgress variant={value > 0 ? "static" : "indeterminate" } value={value}/>
     </Backdrop>
   );
 }

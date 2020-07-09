@@ -5,9 +5,6 @@ import AuthContext from '../contexts/AuthContext';
 
 const useStyles = makeStyles({
   rodape: {
-    top: "auto",
-    bottom: 0,
-    height: "64px"
   }
 })
 
@@ -15,7 +12,7 @@ function ItemRodape({ usuario }) {
   const oficina = usuario.idOficina;
   const endereco = oficina.endereco;
   return (
-    <Grid flex justify="space-around" container spacing={3}>
+    <Grid display="flex" justify="space-around" container spacing={3}>
       <Grid item>
         {`Telefone celular: ${oficina.telefoneCelular}`}
       </Grid>

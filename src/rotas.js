@@ -1,35 +1,49 @@
 import React, { memo, useContext } from 'react';
-import { Switch, Route,} from 'react-router-dom';
-import CadastroOficina from './dominios/oficina/CadastroOficina';
+import { Switch, Route, Redirect, } from 'react-router-dom';
 import PaginaInicial from './componentes/paginaInicial/PaginaInicial';
 import Teste from './componentes/teste';
 import AuthContext from './contexts/AuthContext';
 import PaginaInicialOficina from './componentes/paginaInicialOficina/PaginaInicialOficina';
+import DialgoMarcas from './componentes/marca/DialogMarcas';
+import DialogoLogin from './componentes/DialogoLogin';
+import DialogInserirMarca from './componentes/marca/DialogoInserirMarca';
 
 
-function Rotas(props) {
+function Rotas() {
   const { usuario } = useContext(AuthContext);
   return (
-    <Switch>
-      <Route path="/oficina/cadastro/" exact>
-        <CadastroOficina />
-      </Route>
+    <>
+      <Switch>
+        <Route path="/login" exact>
+          <DialogoLogin/>
+        </Route>
+        <Route path="/t" exact>
+          <Teste />
+        </Route>
+      </Switch>
       {
         !usuario ? (
-          <Route path="/" >
-            <PaginaInicial />
-          </Route>
+          <PaginaInicial />
         )
-        : (
-          <Route path="/" exact>
-            <PaginaInicialOficina />
-          </Route>
-        )
+          : (
+            <>
+              <PaginaInicialOficina />
+              <Switch>
+                <Route path="/marcas" exact>
+                  <DialgoMarcas />
+                </Route>
+                <Route path="/marcas/inserir" exact>
+                  <DialogInserirMarca />
+                </Route>
+                <Route path="/login" exact>
+                  <Redirect to="/" />
+                </Route>
+              </Switch>
+            </>
+          )
       }
-      <Route path="/t" exact>
-        <Teste />
-      </Route>
-    </Switch>
+
+    </>
   );
 }
 

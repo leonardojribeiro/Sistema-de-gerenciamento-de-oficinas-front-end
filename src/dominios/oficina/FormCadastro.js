@@ -1,5 +1,5 @@
 import React, { useState, memo, useCallback, useMemo, useRef } from 'react';
-import { Box, Container, Grid, Hidden, makeStyles, Step, StepButton, Stepper, FormControl, InputLabel, MenuItem, Select, Typography } from '@material-ui/core';
+import { Box, Container, Grid, Hidden, makeStyles, Step, StepButton, Stepper, FormControl, InputLabel, MenuItem, Select, Typography, Dialog, DialogTitle } from '@material-ui/core';
 import DragAndDrop from '../../componentes/DragAndDrop';
 import GoogleMaps from '../../componentes/GoogleMaps';
 import Button from "../../componentes/Button";
@@ -8,6 +8,7 @@ import validacao from '../../recursos/Validacao';
 import CampoTexto from '../../componentes/CampoTexto';
 
 import { animateScroll } from 'react-scroll';
+import { Redirect, useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
   container: {
@@ -40,7 +41,7 @@ const useStyles = makeStyles({
   }
 });
 
-function CadastroOficina({dadosOficina, onSubmit, ...props }) {
+function CadastroOficina({ dadosOficina, onSubmit, ...props }) {
   const styles = useStyles();
 
   const [passoAtivo, setPassoAtivo] = useState(0);
@@ -327,13 +328,18 @@ function CadastroOficina({dadosOficina, onSubmit, ...props }) {
 
   const handleNext = () => {
     setPassoAtivo(passoAtivo + 1);
-    animateScroll.scrollToTop({duration: 300});
+    animateScroll.scrollToTop({ duration: 300 });
   };
+
+  const history = useHistory();
 
   const handleBack = () => {
     if (passoAtivo > 0) {
       setPassoAtivo(passoAtivo - 1);
-      animateScroll.scrollToTop({duration: 300});
+      animateScroll.scrollToTop({ duration: 300 });
+    }
+    else{
+      history.push("/");
     }
   };
 
@@ -357,7 +363,7 @@ function CadastroOficina({dadosOficina, onSubmit, ...props }) {
       if (passoAtivo < 2) {
         handleNext();
       }
-      else{
+      else {
         onSubmit({
           nomeFantasia,
           cpfCnpj,
@@ -380,7 +386,7 @@ function CadastroOficina({dadosOficina, onSubmit, ...props }) {
         });
       }
     }
-    
+
   }
 
   function handleKeyDown(e) {
@@ -837,7 +843,8 @@ function CadastroOficina({dadosOficina, onSubmit, ...props }) {
 
 
   return (
-    <Container maxWidth="lg">
+    <Dialog open maxWidth="lg">
+      <DialogTitle>Cadastrar Oficina Candidata</DialogTitle>
       <Grid container alignItems="center">
         <Grid xs={12} item>
           <Stepper nonLinear color="primary" activeStep={passoAtivo} orientation="horizontal" >
@@ -850,17 +857,23 @@ function CadastroOficina({dadosOficina, onSubmit, ...props }) {
             })}
           </Stepper>
         </Grid>
-        {passos[passoAtivo].componente}
-        <Grid container justify="space-between" spacing={2}>
-          <Grid item>
-            {botaoAnterior}
-          </Grid>
-          <Grid item>
-            {botaoProximo}
-          </Grid>
+        <Grid item xs={12}>
+          {passos[passoAtivo].componente}
+        </Grid>
+        <Grid item xs={12}>
+          <Box pb={2}>
+            <Grid container justify="space-between">
+              <Grid item>
+                {botaoAnterior}
+              </Grid>
+              <Grid item>
+                {botaoProximo}
+              </Grid>
+            </Grid>
+          </Box>
         </Grid>
       </Grid>
-    </Container>
+    </Dialog>
   );
 };
 export default memo(CadastroOficina);

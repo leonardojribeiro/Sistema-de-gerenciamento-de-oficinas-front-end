@@ -1,41 +1,31 @@
 import React from 'react';
 import { useRef } from 'react';
-import { useState } from 'react';
-import { forwardRef } from 'react';
-
-// import { Container } from './styles';
-
-const Text = forwardRef((props, ref)=>{
-  const [v, setV] = useState("");
-  const validar = () =>{
-
-  }
-  
-  return(
-    <input ref={ref} value={v} onChange={(e)=>setV(e.target.value)}/>
-  )
-});
+import { Button } from '@material-ui/core';
+import Scope from './Formulario/Scope';
+import CampoTelefone from './Formulario/Campos/CampoTelefone';
+import Form from './Formulario/Form';
+import CampoTexto from './Formulario/Campos/CampoTexto';
+import CampoSenha from './Formulario/Campos/CampoSenha';
 
 function Teste() {
   const ref = useRef();
 
-  const focar = ()=>{
-    ref.current.focus();
-  }
-
-  const validar = ()=>{
-    console.log(ref.current);
+  function click() {
+    ref.current.validar();
+    console.log(ref.current.parseFormData())
   }
 
   return (
     <>
-    <Text ref={ref}/>
-    <button onClick={focar}>
-      focar
-    </button>
-    <button onClick={validar}>
-      validar
-    </button>
+      <Form ref={ref}>
+        <CampoTexto nome="nome" />
+        <CampoTexto nome="cpf " required />
+        <Scope path="contato">
+          <CampoTelefone nome="telefone" />
+        </Scope>
+        <CampoSenha nome="senha" required/>
+        <Button onClick={() => click()} >enviar</Button>
+      </Form>
     </>
   );
 }

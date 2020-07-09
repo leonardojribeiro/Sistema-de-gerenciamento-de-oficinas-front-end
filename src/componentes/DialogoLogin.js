@@ -1,90 +1,61 @@
 import React, { useRef } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core';
-import CampoTexto from './CampoTexto';
-import { useState } from 'react';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Box } from '@material-ui/core';
+import CampoTexto from './Formulario/Campos/CampoTexto';
+import { useHistory } from 'react-router-dom';
+import { useContext } from 'react';
+import AuthContext from '../contexts/AuthContext';
+import Form from './Formulario/Form';
+import CampoSenha from './Formulario/Campos/CampoSenha';
 
 
-function DialogoLogin({ aberto, fechar, enviar }) {
+function DialogoLogin() {
+  const history = useHistory();
 
-  const [nomeUsuario, setNomeUsuario] = useState("");
-  const [senha, setSenha] = useState("");
+  const { efetuarLogin } = useContext(AuthContext);
 
-  const [usuarioValido, setUsuarioValido] = useState(true);
-  const [senhaValida, setSenhaValida] = useState(true);
-
-  const refUsuario = useRef();
-  const refSenha = useRef();
-  
-  function validarUsuario(usuarioCopia = nomeUsuario) {
-    if (usuarioCopia.length) {
-      setUsuarioValido(true);
-      return true;
-    }
-    else {
-      setUsuarioValido(false);
-      refUsuario.current.focus();
-      return false;
-    }
-  }
-
-  function validarSenha(senhaCopia = senha) {
-    if (senhaCopia.length) {
-      setSenhaValida(true);
-      return true;
-    }
-    else {
-      setSenhaValida(false)
-      refSenha.current.focus();
-      return false;
-    }
-  }
+  const ref = useRef();
 
   function handleSubmit() {
-    if (validarUsuario() && validarSenha()) {
-      enviar({
-        nomeUsuario,
-        senha
-      });
+    const usuario = ref.current.submitForm()
+
+    if(usuario){
+      efetuarLogin(usuario);
     }
+  }
+
+  function fechar() {
+    history.goBack();
   }
 
   function handleKeyDown(e) {
-    if (e.keyCode === 27) {
-      fechar();
-    }
     if (e.keyCode === 13) {
       handleSubmit();
     }
   }
 
   return (
-    <Dialog open={aberto} onClose={fechar} disableBackdropClick onKeyDown={handleKeyDown}>
+    <Dialog open onClose={fechar} disableBackdropClick >
       <DialogTitle>Login</DialogTitle>
-      <DialogContent>
-        <form >
-          <CampoTexto
-            autoFocus
-            obrigatorio
-            ref={refUsuario}
-            label="Usuário"
-            valor={nomeUsuario}
-            onChange={setNomeUsuario}
-            valido={usuarioValido}
-            erroObrigatorio="Usuário é obrigatório."
-            validar={validarUsuario}
-          />
-          <CampoTexto
-            obrigatorio
-            ref={refSenha}
-            label="Senha"
-            valor={senha}
-            type="password"
-            onChange={setSenha}
-            valido={senhaValida}
-            erroObrigatorio="Senha é obrigatória."
-            validar={validarSenha}
-          />
-        </form>
+      <DialogContent onKeyDown={handleKeyDown} >
+        <Form ref={ref} dadosIniciais={{}}>
+          <Box p={2}>
+            <CampoTexto
+              autoFocus
+              nome="nomeUsuario"
+              fullWidth
+              required
+              label="Usuário"
+            />
+          </Box>
+          <Box p={2}>
+            <CampoSenha
+              nome="senha"
+              fullWidth
+              required
+              label="Senha"
+            />
+          </Box>
+        </Form>
       </DialogContent>
       <DialogActions>
         <Button onClick={fechar}>Cancelar</Button>
@@ -93,6 +64,5 @@ function DialogoLogin({ aberto, fechar, enviar }) {
     </Dialog>
   );
 }
-
 
 export default DialogoLogin;
