@@ -75,7 +75,7 @@ function DialgoMarcas() {
             </TableHead>
             <TableBody>
               {
-                marcas?.map((marca, index) => (
+                marcas.length && marcas.map((marca, index) => (
                   <TableRow className={classes.linhaTabela} key={index} hover>
                     <TableCell>{marca.descricao}</TableCell>
                     <TableCell align="right">
