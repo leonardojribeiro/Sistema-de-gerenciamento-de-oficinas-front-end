@@ -1,5 +1,6 @@
 build
 node_modules
 .env
+app.yaml
 src/tmp/uploads
 ! src/tmp/uploads/.gitkeep

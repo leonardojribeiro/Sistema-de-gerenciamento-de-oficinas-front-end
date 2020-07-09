@@ -19,3 +19,8 @@ handlers:
   - url: /.*
     static_files: build/index.html
     upload: build/index.html
+env_variables:
+  REACT_APP_API_URL: https://universal-valve-275012.nn.r.appspot.com
+  REACT_APP_IMAGENS_URL: https://storage.googleapis.com/sistemadegerenciamentodeoficinas
+  APP_SECRET_IV: L25N06E15C04E06A
+  GCLOUD_STORAGE_BUCKET: sistemadegerenciamentodeoficinas
