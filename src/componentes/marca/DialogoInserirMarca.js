@@ -8,20 +8,20 @@ import ApiContext from '../../contexts/ApiContext';
 import AuthContext from '../../contexts/AuthContext';
 
 function DialogInserirMarca() {
-  const {multipartPost} = useContext(ApiContext);
-  const {usuario} = useContext(AuthContext);
+  const { multipartPost } = useContext(ApiContext);
+  const { usuario } = useContext(AuthContext);
   const ref = useRef();
   function handleSubmit() {
     const marca = ref.current.submitForm();
-    if(marca){
+    if (marca) {
       marca.idOficina = usuario.idOficina._id;
       const formDados = new FormData();
       // formDados.append("descricao", marca.descricao);
       // formDados.append("idOficina", usuario.idOficina._id);
       // formDados.append("logomarca", marca.logomarca, marca.logomarca.name)
       // console.log( marca.logomarca instanceof File);
-     // post("/marca", formDados);
-     multipartPost("/marca", marca);
+      // post("/marca", formDados);
+      multipartPost("/marca", marca);
     }
   }
 

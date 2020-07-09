@@ -32,7 +32,7 @@ function DialgoMarcas() {
   const { usuario } = useContext(AuthContext);
   const apiUrl = process.env.REACT_APP_API_URL
   const imagensUrl = process.env.REACT_APP_IMAGENS_URL;
-  const [marcas, setMarcas] = useState(null);
+  const [marcas, setMarcas] = useState([]);
 
   const listar = useCallback(async()=> {
     const marcas = await api.get(`${apiUrl}/marca?idOficina=${usuario.idOficina._id}`);
