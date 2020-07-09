@@ -37,7 +37,6 @@ export const FormProvider = forwardRef(({dadosIniciais = {}, onSubmit, children 
     if(getValor){
 
     }
-    console.log(ref, caminho)
     return caminho && dot.pick(caminho, ref);
   }
 

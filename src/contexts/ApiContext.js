@@ -39,8 +39,7 @@ export function ApiProvider({ children }) {
         );
     }
     catch (e) {
-      setTipoAlerta("Error")
-      console.log(e.response.request.response)
+      setTipoAlerta("error")
       if (e.response) {
         const { mensagem } = JSON.parse(e.response.request.response);
         setMensagemSnackbar(
@@ -59,7 +58,7 @@ export function ApiProvider({ children }) {
     if (resposta) {
       if (resposta.status === 201) {
         if (resposta.data.mensagem) {
-          setTipoAlerta("Success")
+          setTipoAlerta("success")
           setMensagemSnackbar(resposta.data.mensagem);
           setSnackbarAberta(true);
         }

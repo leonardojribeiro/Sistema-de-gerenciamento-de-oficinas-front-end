@@ -34,11 +34,11 @@ function DialgoMarcas() {
   const imagensUrl = process.env.REACT_APP_IMAGENS_URL;
   const [marcas, setMarcas] = useState([]);
 
-  const listar = useCallback(async()=> {
+  const listar = useCallback(async () => {
     const marcas = await api.get(`${apiUrl}/marca?idOficina=${usuario.idOficina._id}`);
     console.log(marcas.data);
     setMarcas(marcas.data);
-  },[apiUrl, usuario])
+  }, [apiUrl, usuario])
 
   useEffect(() => {
     listar();
@@ -49,7 +49,7 @@ function DialgoMarcas() {
       <Form >
         <Box display="flex" justifyContent="space-between" alignItems="flex-end">
           <CampoDeBusca
-            nome = "marca"
+            nome="marca"
             label="Buscar"
           />
           <Box ml={1}>
@@ -75,7 +75,7 @@ function DialgoMarcas() {
             </TableHead>
             <TableBody>
               {
-                marcas ? marcas.map((marca, index) => (
+                marcas?.map((marca, index) => (
                   <TableRow className={classes.linhaTabela} key={index} hover>
                     <TableCell>{marca.descricao}</TableCell>
                     <TableCell align="right">
@@ -94,11 +94,6 @@ function DialgoMarcas() {
                     </TableCell>
                   </TableRow>
                 ))
-                  : (
-                    <>
-
-                    </>
-                  )
               }
             </TableBody>
           </Table>
