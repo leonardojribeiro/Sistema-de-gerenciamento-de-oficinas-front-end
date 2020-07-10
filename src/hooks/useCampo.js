@@ -1,7 +1,7 @@
 import { useContext, useEffect, useMemo } from 'react';
 
 import dot from 'dot-object';
-import FormContext from '../../contexts/FormContext';
+import FormContext from '../contexts/FormContext';
 
 export default function useCampo(nome) {
   const {

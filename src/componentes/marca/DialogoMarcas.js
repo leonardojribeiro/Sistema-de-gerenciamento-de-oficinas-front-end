@@ -1,13 +1,13 @@
 import React, { useState, useCallback } from 'react';
-import { IconButton, makeStyles, Box, Table, TableHead, TableRow, TableCell, TableBody, TableContainer, Paper, Button } from '@material-ui/core';
+import { IconButton, makeStyles, Box, Table, TableHead, TableRow, TableCell, TableBody, TableContainer, Paper, Button, Tooltip } from '@material-ui/core';
 import { useEffect } from 'react';
 import api from '../../servicos/api';
 import { useContext } from 'react';
 import AuthContext from '../../contexts/AuthContext';
 import EditIcon from '@material-ui/icons/Edit';
 import Dialogo from '../Dialogo';
-import { Link } from 'react-router-dom';
-import CampoDeBusca from '../CampoDeBusca';
+import { Link, NavLink } from 'react-router-dom';
+import CampoDeBusca from '../Formulario/Campos/CampoDeBusca';
 import Form from '../Formulario/Form';
 
 const useStyles = makeStyles((theme) => ({
@@ -49,6 +49,7 @@ function DialgoMarcas() {
       <Form >
         <Box display="flex" justifyContent="space-between" alignItems="flex-end">
           <CampoDeBusca
+            fullWidth
             nome="marca"
             label="Buscar"
           />
@@ -75,7 +76,7 @@ function DialgoMarcas() {
             </TableHead>
             <TableBody>
               {
-                marcas.length && marcas.map((marca, index) => (
+                !!marcas.length && marcas.map((marca, index) => (
                   <TableRow className={classes.linhaTabela} key={index} hover>
                     <TableCell>{marca.descricao}</TableCell>
                     <TableCell align="right">
@@ -88,9 +89,11 @@ function DialgoMarcas() {
                       </Box>
                     </TableCell>
                     <TableCell>
-                      <IconButton>
-                        <EditIcon />
+                      <Tooltip title={`Editar a marca ${marca.descricao}`}>
+                      <IconButton component={Link} to={`/marcas/editar?id=${marca._id}`}>
+                        <EditIcon/>
                       </IconButton>
+                      </Tooltip>
                     </TableCell>
                   </TableRow>
                 ))

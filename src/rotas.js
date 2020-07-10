@@ -1,12 +1,12 @@
 import React, { memo, useContext } from 'react';
 import { Switch, Route, Redirect, } from 'react-router-dom';
 import PaginaInicial from './componentes/paginaInicial/PaginaInicial';
-import Teste from './componentes/teste';
 import AuthContext from './contexts/AuthContext';
 import PaginaInicialOficina from './componentes/paginaInicialOficina/PaginaInicialOficina';
-import DialgoMarcas from './componentes/marca/DialogMarcas';
+import DialgoMarcas from './componentes/marca/DialogoMarcas';
 import DialogoLogin from './componentes/DialogoLogin';
 import DialogInserirMarca from './componentes/marca/DialogoInserirMarca';
+import DialogoEditarMarca from './componentes/marca/DialogEditarMarca';
 
 
 function Rotas() {
@@ -18,7 +18,6 @@ function Rotas() {
           <DialogoLogin/>
         </Route>
         <Route path="/t" exact>
-          <Teste />
         </Route>
       </Switch>
       {
@@ -34,6 +33,9 @@ function Rotas() {
                 </Route>
                 <Route path="/marcas/inserir" exact>
                   <DialogInserirMarca />
+                </Route>
+                <Route path="/marcas/editar" exact>
+                  <DialogoEditarMarca />
                 </Route>
                 <Route path="/login" exact>
                   <Redirect to="/" />

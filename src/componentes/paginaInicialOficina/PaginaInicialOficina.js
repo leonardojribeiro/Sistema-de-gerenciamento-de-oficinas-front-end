@@ -52,7 +52,7 @@ function PaginaInicialOficina() {
           <IconButton onClick={() => setOpen(!open)}>
             {open ? <ChevronLeftIcon /> : <MenuIcon />}
           </IconButton>
-          <div>{usuario.idOficina.nomeFantasia}</div>
+          <Typography>{usuario.idOficina.nomeFantasia}</Typography>
           <IconButton
             aria-label="account of current user"
             aria-controls="menu-appbar"
@@ -90,13 +90,15 @@ function PaginaInicialOficina() {
                 <FolderIcon />
               </ListItemIcon>
               <ListItemText>
+              <Typography variant="body2">
                 Marcas
+              </Typography>
               </ListItemText>
             </ListItem>
           </List>
         </MiniDrawer>
         <Container className="h-min-barra-rodape">
-          <Typography paragraph>
+          <Typography variant="body1">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
             ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
             facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit

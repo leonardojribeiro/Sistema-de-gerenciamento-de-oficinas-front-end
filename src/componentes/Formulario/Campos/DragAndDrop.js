@@ -1,11 +1,8 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useEffect, useCallback, useState, useRef,  memo } from "react";
 
 import { useDropzone } from "react-dropzone";
-
-import { makeStyles, Box } from "@material-ui/core";
-import './arrastar e soltar/style.css';
-import { memo } from "react";
-import useCampo from "./Formulario/useCampo";
+import { makeStyles, Box, Typography } from "@material-ui/core";
+import useCampo from '../../../hooks/useCampo';
 
 const useStyles = makeStyles((theme) => ({
   drag: {
@@ -64,9 +61,10 @@ const useStyles = makeStyles((theme) => ({
   container: {
     position: "relative",
     height: "256px",
-    minWidth: "256px",
+    [theme.breakpoints.up("xs")]: {
+      minWidth: "256px"
+    },
     width: "100%",
-    maxWidth: "512px"
   },
 }));
 
@@ -76,33 +74,32 @@ function DragAndDrop({ nome, ...props }) {
 
   const [urlImagem, setUrlImagem] = useState(null);
   const [valido, setValido] = useState(true);
+  let inputRef = useRef({ current: {} });
 
   const onDrop = useCallback(async imagem => {
-    const reader = new FileReader();
     if (imagem[0]) {
-      reader.readAsDataURL(imagem[0]);
-      reader.onloadend = () => {
-        setUrlImagem(reader.result)
-      }
+      inputRef.current.files = imagem;
+      setUrlImagem(URL.createObjectURL(imagem[0]))
     }
     else {
       setUrlImagem("");
     }
   }, [])
 
+  const { getRootProps, getInputProps, isDragActive, isDragReject, rootRef } = useDropzone({ onDrop, accept: "image/*", multiple: false })
 
+  const { registrarCampo, nomeCampo } = useCampo(nome);
 
-  const { getRootProps, getInputProps, isDragActive, isDragReject, inputRef  } = useDropzone({ onDrop, accept: "image/*" })
+  useEffect(() => {
+    console.log(isDragReject)
 
-  const { registrarCampo, valorPadrao, nomeCampo } = useCampo(nome);
+  }, [isDragReject, rootRef])
 
   const validar = useCallback(() => {
     if (props.required) {
-      if (inputRef.current) {
-        if (!inputRef.current.files[0]) {
-          setValido(false)
-          return false
-        }
+      if (!(inputRef.current && inputRef.current.files)) {
+        setValido(false)
+        return false
       }
     }
     setValido(true)
@@ -116,8 +113,7 @@ function DragAndDrop({ nome, ...props }) {
       nome: nomeCampo,
       caminho: "files[0]"
     });
-    inputRef.current.defaultValue = valorPadrao;
-  }, [inputRef, nomeCampo, registrarCampo, validar, valorPadrao])
+  }, [inputRef, nomeCampo, registrarCampo, validar])
 
   const imagemContainer = (
     <Box p={1}>
@@ -128,7 +124,7 @@ function DragAndDrop({ nome, ...props }) {
   const drag = (
     <Box className={classes.drag} display="flex" alignItems="center" justifyContent="center">
       <div className={classes.mensagem}>
-        Clique ou arraste uma logomarca aqui.
+        <Typography>Clique ou arraste a logomarca aqui.</Typography>
       </div>
       <div>
         {urlImagem ? imagemContainer : ""}
@@ -138,19 +134,19 @@ function DragAndDrop({ nome, ...props }) {
 
   const dragActive = (
     <Box className={classes.dragActive} display="flex" alignItems="center" justifyContent="center">
-      Solte a logomarca!
+      <Typography>Solte a logomarca!</Typography>
     </Box>
   );
 
   const dragReject = (
     <Box className={classes.dragReject} display="flex" alignItems="center" justifyContent="center">
-      Somente arquivos de imagem!
+      <Typography>Somente arquivos de imagem!</Typography>
     </Box>
   );
 
   const erro = (
     <Box className={classes.mensagemErro}>
-      <span>A logomarca é obrigatória</span>
+      <Typography>A logomarca é obrigatória</Typography>
     </Box>
   );
 

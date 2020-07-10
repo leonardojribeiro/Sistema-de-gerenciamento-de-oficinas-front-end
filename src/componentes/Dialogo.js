@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dialog, DialogTitle, IconButton, DialogContent, makeStyles, useTheme, useMediaQuery } from '@material-ui/core';
+import { Dialog, DialogTitle, IconButton, DialogContent, makeStyles, useTheme, useMediaQuery, Typography } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -23,10 +23,10 @@ function Dialogo({ titulo, children }) {
   }
 
   return (
-    <Dialog fullScreen={fullScreen} maxWidth="lg" open onClose={handleClose} disableBackdropClick>
+    <Dialog fullScreen={fullScreen} maxWidth="lg" open onClose={handleClose} disableBackdropClick aria-labelledby="dialogo-titulo">
       <DialogTitle>
-        {titulo}
-        <IconButton aria-label="close" className={classes.botaofechar} onClick={handleClose}>
+        <Typography id="dialogo-titulo">{titulo}</Typography>
+        <IconButton aria-label="Fechar" className={classes.botaofechar} onClick={handleClose}>
           <CloseIcon />
         </IconButton>
       </DialogTitle>

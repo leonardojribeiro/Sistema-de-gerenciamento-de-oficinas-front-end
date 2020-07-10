@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef, memo } from 'react';
 import { TextField, InputAdornment, IconButton, Tooltip } from '@material-ui/core';
 import { useEffect } from 'react';
-import useCampo from '../useCampo';
+import useCampo from '../../../hooks/useCampo';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 

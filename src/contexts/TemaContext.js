@@ -29,6 +29,11 @@ export const TemaProvider = ({ children }) => {
     palette: {
       type: temaEscuro ? "dark" : "light",
     },
+    typography:{
+      allVariants:{
+        fontSize: 16
+      }
+    }
   });
   
   return (

@@ -1,17 +1,13 @@
-import React, { useContext } from 'react';
-import { Container, Box, Grid, Typography, Button } from '@material-ui/core';
+import React from 'react';
+import { Container, Box, Grid, Typography, Button, AppBar, Toolbar } from '@material-ui/core';
 
 import { Link } from 'react-router-dom';
 import Slide from '../Slide/';
 import ItemFuncionalidade from './itemFuncionalidade/ItemFuncionalidade';
 
 import { Link as LinkScroll, Element, } from 'react-scroll';
-import BarraSuperior from '../BarraSuperior';
-import AuthContext from '../../contexts/AuthContext';
 
 export default function PaginaInicial({ ...props }) {
-
-  const {logar} = useContext(AuthContext);
 
   const funcionalidades = [
     "Gestão de veículos",
@@ -25,16 +21,18 @@ export default function PaginaInicial({ ...props }) {
 
   return (
     <>
-      <BarraSuperior>
-        <LinkScroll to="item" smooth="easeInQuad" duration={500}>
-          Funcionalidades
+      <AppBar color="primary" position="relative" >
+        <Toolbar className="flex justify-between">
+          <LinkScroll to="item" smooth="easeInQuad" duration={500}>
+            Funcionalidades
             </LinkScroll>
-        <LinkScroll to="cadastro" smooth="easeInQuad" duration={500}>
-          Cadastro
+          <LinkScroll to="cadastro" smooth="easeInQuad" duration={500}>
+            Cadastro
             </LinkScroll>
-            <Button component={Link} to={"/login"}>Login</Button>
-      </BarraSuperior>
-      
+          <Button component={Link} to={"/login"}>Login</Button>
+        </Toolbar>
+      </AppBar>
+
       <Box display="flex" className="h-min-barra" alignItems="center" justifyContent="center">
         <Slide />
       </Box>

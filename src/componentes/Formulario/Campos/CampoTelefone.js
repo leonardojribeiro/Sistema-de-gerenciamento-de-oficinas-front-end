@@ -3,7 +3,7 @@ import { TextField } from '@material-ui/core';
 import MascaraNumererica from '../../../recursos/MascaraNumerica';
 import validacao from '../../../recursos/Validacao';
 import { useEffect } from 'react';
-import useCampos from '../useCampo';
+import useCampo from '../../../hooks/useCampo';
 
 
 function CampoTelefone({ nome, ...props }) {
@@ -11,7 +11,7 @@ function CampoTelefone({ nome, ...props }) {
 
   const ref = useRef();
 
-  const { registrarCampo, nomeCampo, valorPadrao } = useCampos(nome);
+  const { registrarCampo, nomeCampo, valorPadrao } = useCampo(nome);
 
   const validar = useCallback(() => {
     if (!props.required && !ref.current.value.length) {

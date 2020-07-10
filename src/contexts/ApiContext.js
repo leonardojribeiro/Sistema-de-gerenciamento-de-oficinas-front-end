@@ -1,6 +1,6 @@
 import React, { createContext, useCallback, useState } from "react";
 import api from "../servicos/api";
-import { Snackbar } from "@material-ui/core";
+import { Snackbar, Typography } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import ProgressoIndefinidoCircular from "../componentes/ProgressoIndefinidoCircular";
 import dot from "dot-object";
@@ -40,7 +40,7 @@ export function ApiProvider({ children }) {
     }
     catch (e) {
       setTipoAlerta("error")
-      if (e.response) {
+      if (e.response && e.response.request && e.response.request.response) {
         const { mensagem } = JSON.parse(e.response.request.response);
         setMensagemSnackbar(
           Array.isArray(mensagem)
@@ -63,24 +63,26 @@ export function ApiProvider({ children }) {
           setSnackbarAberta(true);
         }
       }
-      return resposta.data
+      if (resposta.data) {
+        return resposta.data
+      }
     }
 
     return null;
   }, []);
 
-  const multipartPost = useCallback((url, dados)=>{
+  const multipartPost = useCallback((url, dados) => {
     const formDados = new FormData();
-    for(let key in dados){
-      if(dot.pick(key, dados) instanceof File){
-        formDados.append(key, dot.pick(key, dados), dot.pick(key, dados).name )
+    for (let key in dados) {
+      if (dot.pick(key, dados) instanceof File) {
+        formDados.append(key, dot.pick(key, dados), dot.pick(key, dados).name)
       }
-      else{
+      else {
         formDados.append(key, dot.pick(key, dados));
       }
     }
     return post(url, formDados);
-  },[post]);
+  }, [post]);
 
   function handleCloseSnackBar() {
     setSnackbarAberta(false);
@@ -97,7 +99,7 @@ export function ApiProvider({ children }) {
       {children}
       <Snackbar open={snackBarAberta} autoHideDuration={5000} onClose={handleCloseSnackBar}>
         <Alert severity={tipoAlerta} onClose={handleCloseSnackBar} closeText="Fechar">
-          {mensagemSnackbar}
+          <Typography>{mensagemSnackbar}</Typography>
         </Alert>
       </Snackbar>
       <ProgressoIndefinidoCircular open={progressoIndefinidoAberto} value={progresso} />

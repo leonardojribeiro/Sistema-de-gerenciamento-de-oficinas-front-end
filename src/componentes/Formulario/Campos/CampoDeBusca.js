@@ -1,8 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { TextField, InputAdornment, IconButton, Tooltip } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import useCampo from './Formulario/useCampo';
-// import { Container } from './styles';
+import useCampo from '../../../hooks/useCampo';
 
 function CampoDeBusca({nome, ...props }) {
 
