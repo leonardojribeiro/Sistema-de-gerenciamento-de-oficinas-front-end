@@ -72,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
 function DragAndDrop({ nome, ...props }) {
   const classes = useStyles();
 
-  const [urlImagem, setUrlImagem] = useState(null);
+  const [urlImagem, setUrlImagem] = useState("");
   const [valido, setValido] = useState(true);
   let inputRef = useRef({ current: {} });
 
@@ -84,16 +84,15 @@ function DragAndDrop({ nome, ...props }) {
     else {
       setUrlImagem("");
     }
-  }, [])
+  }, [setUrlImagem])
 
-  const { getRootProps, getInputProps, isDragActive, isDragReject, rootRef } = useDropzone({ onDrop, accept: "image/*", multiple: false })
+  const { getRootProps, getInputProps, isDragActive, isDragReject, } = useDropzone({ 
+    onDrop, 
+    accept: "image/jpeg, image/png, image/gif, image/jpg, image/pjpeg" ,
+     multiple: false, 
+  })
 
-  const { registrarCampo, nomeCampo } = useCampo(nome);
-
-  useEffect(() => {
-    console.log(isDragReject)
-
-  }, [isDragReject, rootRef])
+  const { registrarCampo, nomeCampo, valorPadrao } = useCampo(nome);
 
   const validar = useCallback(() => {
     if (props.required) {
@@ -113,7 +112,10 @@ function DragAndDrop({ nome, ...props }) {
       nome: nomeCampo,
       caminho: "files[0]"
     });
-  }, [inputRef, nomeCampo, registrarCampo, validar])
+    if(valorPadrao ){
+      onDrop(valorPadrao);
+    }
+  }, [inputRef, nomeCampo, onDrop, registrarCampo, validar, valorPadrao])
 
   const imagemContainer = (
     <Box p={1}>
@@ -152,7 +154,7 @@ function DragAndDrop({ nome, ...props }) {
 
   return (
     <div className={classes.container} {...getRootProps()}>
-      <input {...getInputProps()} />
+      <input {...getInputProps()} defaultValue={valorPadrao}/>
       {
         isDragReject ? dragReject : isDragActive ? dragActive : drag
       }

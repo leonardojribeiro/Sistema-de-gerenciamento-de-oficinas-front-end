@@ -1,4 +1,4 @@
-import React, { useEffect, createContext, useRef, forwardRef, useImperativeHandle } from "react";
+import React, { useEffect, createContext, useRef, forwardRef, useImperativeHandle, memo } from "react";
 import dot from 'dot-object';
 
 const FormContext = createContext();
@@ -9,10 +9,6 @@ export const FormProvider = forwardRef(({dadosIniciais = {}, onSubmit, children 
   function registrarCampo(campo){
     campos.current.push(campo);
   }
-
-  useEffect(() => {
-    console.log(campos);
-  }, [campos])
 
   function desregistrarCampo(nomeCampo){
     const indiceCampo = campos.current.findIndex(

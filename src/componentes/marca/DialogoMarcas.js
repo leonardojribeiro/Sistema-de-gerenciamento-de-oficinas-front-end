@@ -1,14 +1,15 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, memo } from 'react';
 import { IconButton, makeStyles, Box, Table, TableHead, TableRow, TableCell, TableBody, TableContainer, Paper, Button, Tooltip } from '@material-ui/core';
 import { useEffect } from 'react';
-import api from '../../servicos/api';
 import { useContext } from 'react';
 import AuthContext from '../../contexts/AuthContext';
 import EditIcon from '@material-ui/icons/Edit';
 import Dialogo from '../Dialogo';
-import { Link, NavLink } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import CampoDeBusca from '../Formulario/Campos/CampoDeBusca';
 import Form from '../Formulario/Form';
+import useApi  from '../../hooks/useApi';
+import ApiContext from '../../contexts/ApiContext';
 
 const useStyles = makeStyles((theme) => ({
   listagem: {
@@ -30,15 +31,17 @@ const useStyles = makeStyles((theme) => ({
 function DialgoMarcas() {
   const classes = useStyles();
   const { usuario } = useContext(AuthContext);
-  const apiUrl = process.env.REACT_APP_API_URL
   const imagensUrl = process.env.REACT_APP_IMAGENS_URL;
   const [marcas, setMarcas] = useState([]);
 
+  const {get} = useContext(ApiContext);
+
   const listar = useCallback(async () => {
-    const marcas = await api.get(`${apiUrl}/marca?idOficina=${usuario.idOficina._id}`);
-    console.log(marcas.data);
-    setMarcas(marcas.data);
-  }, [apiUrl, usuario])
+    const marcas = await get(`/marca?idOficina=${usuario.idOficina._id}`);
+    if(marcas){
+      setMarcas(marcas);
+    }
+  }, [get, usuario.idOficina._id])
 
   useEffect(() => {
     listar();
@@ -83,16 +86,16 @@ function DialgoMarcas() {
                       <Box display="flex" alignItems="center" justifyContent="center">
                         <img
                           className={classes.imgLogomarca}
-                          src={`${imagensUrl}/${marca.uriLogo}`}
+                          src={marca.uriLogo && `${imagensUrl}/${marca.uriLogo}`}
                           alt={`logomarca da marca ${marca.descricao}`}
                         />
                       </Box>
                     </TableCell>
                     <TableCell>
                       <Tooltip title={`Editar a marca ${marca.descricao}`}>
-                      <IconButton component={Link} to={`/marcas/editar?id=${marca._id}`}>
-                        <EditIcon/>
-                      </IconButton>
+                        <IconButton component={Link} to={`/marcas/editar?id=${marca._id}`}>
+                          <EditIcon />
+                        </IconButton>
                       </Tooltip>
                     </TableCell>
                   </TableRow>
@@ -106,4 +109,4 @@ function DialgoMarcas() {
   );
 }
 
-export default DialgoMarcas;
+export default memo(DialgoMarcas);

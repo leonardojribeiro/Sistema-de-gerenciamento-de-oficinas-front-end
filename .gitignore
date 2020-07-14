@@ -1,6 +1,7 @@
 build
 node_modules
 .env
+cors.json
 app.yaml
 src/tmp/uploads
 ! src/tmp/uploads/.gitkeep

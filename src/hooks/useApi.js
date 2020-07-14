@@ -1,53 +1,43 @@
 import React, { createContext, useCallback, useState } from "react";
 import api from "../servicos/api";
+import { Snackbar, Typography } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import ProgressoCircular from "../componentes/ProgressoCircular";
 import dot from "dot-object";
-import Alerta from "../componentes/Alerta";
-import { useRef } from "react";
 
-const ApiContext = createContext();
-
-export function ApiProvider({ children }) {
-  const refAlerta = useRef();
-  const refProgresso = useRef();
+export default function ApiProvider() {
 
   function handleProgresso(e) {
-    const progresso = (e.loaded * 100 / e.total);
-    refProgresso.current.setValor(progresso === 100 ? 0 : progresso);
+    return (e.loaded * 100 / e.total);
   }
 
   function handleErro(erro) {
-    refAlerta.current.setTipo("error")
+
     if (erro.response && erro.response.data) {
       const mensagem = (erro.response.data.mensagem);
-      refAlerta.current.setMensagem(
-        Array.isArray(mensagem)
-          ? mensagem.map((mensagem, index) => <p key={index}>{mensagem}</p>)
-          : mensagem
-      )
+      return Array.isArray(mensagem)
+        ? mensagem.map((mensagem, index) => <p key={index}>{mensagem}</p>)
+        : mensagem
     }
     else if (erro.response && erro.response.request && erro.response.request.response && erro.response.request.response.mensagem) {
       const { mensagem } = JSON.parse(erro.response.request.response);
-      refAlerta.current.setMensagem(
-        Array.isArray(mensagem)
-          ? mensagem.map((mensagem, index) => <p key={index}>{mensagem}</p>)
-          : mensagem
-      )
+      return Array.isArray(mensagem)
+        ? mensagem.map((mensagem, index) => <p key={index}>{mensagem}</p>)
+        : mensagem
     }
     else {
-      refAlerta.current.setMensagem(erro.message === "Network Error" ? "Erro ao se conectar com o servidor." : erro.message);
+      return erro.message === "Network Error" ? "Erro ao se conectar com o servidor." : erro.message;
     }
-    refAlerta.current.setAberto(true);
   }
 
   function handleResposta(resposta) {
     if (resposta) {
       if (resposta.status === 201) {
-        if (resposta.data.mensagem) {
-          refAlerta.current.setTipo("success")
-          refAlerta.current.setMensagem(resposta.data.mensagem);
-          refAlerta.current.setAberto(true);
-        }
+        // if (resposta.data.mensagem) {
+        //   setTipoAlerta("success")
+        //   setMensagemSnackbar(resposta.data.mensagem);
+        //   setSnackbarAberta(true);
+        // }
       }
       if (resposta.data) {
         return resposta.data
@@ -56,22 +46,22 @@ export function ApiProvider({ children }) {
     return null;
   }
 
-  const get = useCallback(async (url) => {
+  const get = useCallback(async (url, erro = null) => {
     let resposta = null;
     try {
       resposta = await api.get(url);
     }
     catch (e) {
-      handleErro(e)
+      erro && erro(handleErro(e));
     }
     return handleResposta(resposta);
   }, []);
 
-  const getComApiUrl = useCallback(async (url) => {
-    return get(`${process.env.REACT_APP_API_URL}${url}`);
+  const getComApiUrl = useCallback(async (url, erro=null) => {
+    return get(`${process.env.REACT_APP_API_URL}${url}`, erro);
   }, [get]);
 
-  const getTipoBlob = useCallback(async (url) => {
+  const getTipoBlob = useCallback(async (url, erro) => {
     let resposta = null;
     try {
       resposta = await api.get(url, {
@@ -79,13 +69,13 @@ export function ApiProvider({ children }) {
       });
     }
     catch (e) {
-      handleErro(e)
+      erro && erro(handleErro(e));
     }
     return handleResposta(resposta);
   }, []);
 
+
   const post = useCallback(async (url, dados) => {
-    refProgresso.current.setAberto(true);
     let resposta = null;
     try {
       resposta = await api
@@ -100,12 +90,11 @@ export function ApiProvider({ children }) {
     catch (e) {
       handleErro(e)
     }
-    refProgresso.current.setAberto(false);
     return handleResposta(resposta)
   }, []);
 
-  const put = useCallback(async (url, dados) => {
-    refProgresso.current.setAberto(true);
+  const put = useCallback(async (url, dados, emProgresso, emErro=null) => {
+    
     let resposta = null;
     try {
       resposta = await api
@@ -113,14 +102,13 @@ export function ApiProvider({ children }) {
           `${process.env.REACT_APP_API_URL}${url}`,
           dados,
           {
-            onUploadProgress: handleProgresso
+            onUploadProgress: emProgresso && emProgresso(handleProgresso)
           }
         );
     }
     catch (e) {
-      handleErro(e)
+      emErro && emErro(handleErro(e));
     }
-    refProgresso.current.setAberto(false);
     return handleResposta(resposta)
   }, []);
 
@@ -142,29 +130,17 @@ export function ApiProvider({ children }) {
     return post(url, formDados);
   }, [post, prepararDados]);
 
-  const multipartPut = useCallback((url, dados) => {
+  const multipartPut = useCallback((url, dados, emProgresso, emErro=null) => {
     const formDados = prepararDados(dados);
-    return put(url, formDados);
+    return put(url, formDados, emProgresso, emErro);
   }, [prepararDados, put]);
 
-  return (
-    <>
-      <ApiContext.Provider
-        value={{
-          get,
-          getComApiUrl,
-          getTipoBlob,
-          post,
-          multipartPost,
-          multipartPut,
-        }}
-      >
-        {children}
-      </ApiContext.Provider>
-      <Alerta ref={refAlerta} />
-      <ProgressoCircular ref={refProgresso}/>
-    </>
-  )
+  return {
+    get,
+    getComApiUrl,
+    getTipoBlob,
+    post,
+    multipartPost,
+    multipartPut,
+  }
 }
-
-export default ApiContext;

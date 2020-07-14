@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Dialog, DialogTitle, IconButton, DialogContent, makeStyles, useTheme, useMediaQuery, Typography } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import CloseIcon from '@material-ui/icons/Close';
@@ -39,4 +39,4 @@ function Dialogo({ titulo, children }) {
   );
 }
 
-export default Dialogo;
+export default memo(Dialogo);

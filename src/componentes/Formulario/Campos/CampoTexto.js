@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, memo} from 'react';
+import React, { useState, useCallback, useRef, memo } from 'react';
 import { TextField } from '@material-ui/core';
 import { useEffect } from 'react';
 import useCampo from '../../../hooks/useCampo';
@@ -8,8 +8,7 @@ function CampoTexto({ nome, ...props }) {
   const [valido, setValido] = useState(true);
 
   const ref = useRef();
-
-  const { registrarCampo, nomeCampo, valorPadrao  } = useCampo(nome);
+  const { registrarCampo, nomeCampo, valorPadrao } = useCampo(nome);
 
   const validar = useCallback(() => {
     if (!props.required && !ref.current.value.length) {
@@ -37,7 +36,11 @@ function CampoTexto({ nome, ...props }) {
     });
   }, [nomeCampo, registrarCampo, validar]);
 
-  function handleChange() {
+  useEffect(() => {
+    ref.current.value = valorPadrao ? valorPadrao : ""
+  }, [valorPadrao]);
+
+  function handleChange(e) {
     if (!valido) {
       validar();
     }
@@ -46,16 +49,18 @@ function CampoTexto({ nome, ...props }) {
   return (
     <TextField
       onChange={handleChange}
-      defaultValue={valorPadrao}
       error={!valido}
       inputRef={ref}
       helperText={
         ref.current &&
         props.required
         && !ref.current.value.length
+        && !valido
         && "Campo obrigatório."
       }
       {...props}
+      defaultValue={valorPadrao}
+      
     />
   );
 }

@@ -3,7 +3,7 @@ import { Box } from '@material-ui/core';
 import Button from "../Button";
 import './style.css';
 import { Link } from 'react-router-dom';
-import useInterval from '../../recursos/useInterval';
+import useInterval from '../../hooks/useInterval';
 
 
 

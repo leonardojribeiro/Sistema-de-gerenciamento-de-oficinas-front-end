@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
     if (resposta) {
       setUsuario(resposta);
     }
-  },[post]);
+  }, [post]);
 
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, [efetuarLoginPorToken]);
 
-  async function efetuarLogin({ nomeUsuario, senha }) {
+  const efetuarLogin = useCallback(async ({ nomeUsuario, senha }) => {
     const resposta = await post(
       "/usuario/login",
       {
@@ -40,12 +40,12 @@ export const AuthProvider = ({ children }) => {
       setUsuario(resposta);
       localStorage.setItem("tokenUsuario", resposta.token);
     }
-  }
+  }, [post]);
 
-  function deslogar() {
+  const deslogar = useCallback(() => {
     localStorage.removeItem("tokenUsuario");
     setUsuario(null);
-  }
+  }, []);
 
 
   return (

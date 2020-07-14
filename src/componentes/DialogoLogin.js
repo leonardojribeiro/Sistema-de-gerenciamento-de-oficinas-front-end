@@ -45,6 +45,7 @@ function DialogoLogin() {
               fullWidth
               required
               label="Usuário"
+              autoComplete="username"
             />
           </Box>
           <Box p={2}>
@@ -53,6 +54,7 @@ function DialogoLogin() {
               fullWidth
               required
               label="Senha"
+              autoComplete="current-password"
             />
           </Box>
         </Form>
