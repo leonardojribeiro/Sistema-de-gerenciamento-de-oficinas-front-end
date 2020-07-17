@@ -1,48 +1,49 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef, useContext, useCallback, memo } from 'react';
 import Dialogo from '../Dialogo';
-import Form from '../Formulario/Form';
+import Formulario from '../Formulario/Formulario';
 import CampoTexto from '../Formulario/Campos/CampoTexto';
 import DragAndDrop from '../Formulario/Campos/DragAndDrop';
 import { Button, DialogActions } from '@material-ui/core';
 import ApiContext from '../../contexts/ApiContext';
-import AuthContext from '../../contexts/AuthContext';
+import useAuth from '../../hooks/useAuth';
 import { useHistory } from 'react-router-dom';
 
-function DialogInserirMarca() {
+function DialogInserirMarca({aberto}) {
   const { multipartPost } = useContext(ApiContext);
-  const { usuario } = useContext(AuthContext);
-  const ref = useRef();
+  const { idOficina } = useAuth();
+  const formularioReferencia = useRef();
   const history = useHistory();
-  async function handleSubmit() {
-    const marca = ref.current.submitForm();
+
+  const manipularEnvio = useCallback(async (marca)=>{
     if (marca) {
-      marca.idOficina = usuario.idOficina._id;
+      marca.idOficina = idOficina
       const resposta = await multipartPost("/marca", marca);
-      if(resposta){
+      if (resposta) {
         history.goBack();
       }
     }
-  }
+  },[history, idOficina, multipartPost])
 
   return (
-    <Dialogo titulo="Inserir marca">
-      <Form ref={ref} >
+    <Dialogo aberto={aberto} titulo="Inserir marca">
+      <Formulario ref={formularioReferencia} aoEnviar={manipularEnvio}>
         <CampoTexto
           nome="descricao"
           label="Descrição"
           fullWidth
           required
+          autoFocus
         />
         <DragAndDrop
           nome="logomarca"
           required
         />
-      </Form>
-      <DialogActions >
-        <Button onClick={handleSubmit}>Salvar</Button>
-      </DialogActions>
+        <DialogActions >
+          <Button type="submit">Salvar</Button>
+        </DialogActions>
+      </Formulario>
     </Dialogo>
   );
 }
 
-export default DialogInserirMarca;
+export default memo(DialogInserirMarca);

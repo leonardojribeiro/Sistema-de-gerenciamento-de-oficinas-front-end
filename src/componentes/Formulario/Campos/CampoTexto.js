@@ -6,7 +6,7 @@ import useCampo from '../../../hooks/useCampo';
 
 function CampoTexto({ nome, ...props }) {
   const [valido, setValido] = useState(true);
-
+  const [valor, setValor] = useState("");
   const ref = useRef();
   const { registrarCampo, nomeCampo, valorPadrao } = useCampo(nome);
 
@@ -37,18 +37,22 @@ function CampoTexto({ nome, ...props }) {
   }, [nomeCampo, registrarCampo, validar]);
 
   useEffect(() => {
-    ref.current.value = valorPadrao ? valorPadrao : ""
+    if (valorPadrao) {
+      setValor(valorPadrao);
+    }
   }, [valorPadrao]);
 
-  function handleChange(e) {
+  function manipularAlteracao(evento) {
     if (!valido) {
       validar();
     }
+    setValor(evento.target.value)
   }
 
   return (
     <TextField
-      onChange={handleChange}
+      onChange={manipularAlteracao}
+      value={valor}
       error={!valido}
       inputRef={ref}
       helperText={
@@ -60,7 +64,7 @@ function CampoTexto({ nome, ...props }) {
       }
       {...props}
       defaultValue={valorPadrao}
-      
+
     />
   );
 }

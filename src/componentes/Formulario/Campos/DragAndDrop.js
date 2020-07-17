@@ -1,5 +1,4 @@
 import React, { useEffect, useCallback, useState, useRef,  memo } from "react";
-
 import { useDropzone } from "react-dropzone";
 import { makeStyles, Box, Typography } from "@material-ui/core";
 import useCampo from '../../../hooks/useCampo';
@@ -112,7 +111,7 @@ function DragAndDrop({ nome, ...props }) {
       nome: nomeCampo,
       caminho: "files[0]"
     });
-    if(valorPadrao ){
+    if(valorPadrao){
       onDrop(valorPadrao);
     }
   }, [inputRef, nomeCampo, onDrop, registrarCampo, validar, valorPadrao])
@@ -154,7 +153,7 @@ function DragAndDrop({ nome, ...props }) {
 
   return (
     <div className={classes.container} {...getRootProps()}>
-      <input {...getInputProps()} defaultValue={valorPadrao}/>
+      <input {...getInputProps()}/>
       {
         isDragReject ? dragReject : isDragActive ? dragActive : drag
       }

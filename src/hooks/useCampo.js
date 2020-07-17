@@ -1,24 +1,24 @@
 import { useContext, useEffect, useMemo } from 'react';
 
 import dot from 'dot-object';
-import FormContext from '../contexts/FormContext';
+import FormularioContexto from '../contexts/FormularioContexto';
 
 export default function useCampo(nome) {
   const {
     dadosIniciais,
-    scopePath,
+    caminho,
     desregistrarCampo,
     registrarCampo,
     handleSubmit,
-  } = useContext(FormContext);
+  } = useContext(FormularioContexto);
 
   if (!nome) {
     throw new Error("Você precisa fornecer a propriedade nome");
   }
 
   const nomeCampo = useMemo(() => {
-    return scopePath ? `${scopePath}.${nome}` : nome;
-  }, [nome, scopePath]);
+    return caminho? `${caminho}.${nome}` : nome;
+  }, [nome, caminho]);
 
   const valorPadrao = useMemo(() => {
     return dot.pick(nomeCampo, dadosIniciais);

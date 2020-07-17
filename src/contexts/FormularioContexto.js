@@ -1,9 +1,9 @@
-import React, { useEffect, createContext, useRef, forwardRef, useImperativeHandle, memo } from "react";
+import React, { createContext, useRef, forwardRef, useImperativeHandle} from "react";
 import dot from 'dot-object';
 
-const FormContext = createContext();
+const FormularioContexto = createContext();
 
-export const FormProvider = forwardRef(({dadosIniciais = {}, onSubmit, children }, formRef) => {
+export const FormularioProvedor = forwardRef(({dadosIniciais = {}, aoEnviar, children }, formRef) => {
   const campos = useRef([]);
 
   function registrarCampo(campo){
@@ -14,7 +14,6 @@ export const FormProvider = forwardRef(({dadosIniciais = {}, onSubmit, children 
     const indiceCampo = campos.current.findIndex(
       campo => campo.nome === nomeCampo,
     );
-
     if (indiceCampo > -1) {
       campos.current.splice(indiceCampo, 1);
     }
@@ -45,38 +44,38 @@ export const FormProvider = forwardRef(({dadosIniciais = {}, onSubmit, children 
     return dados;
   }
 
-  function handleSubmit(evento) {
+  function manipularEnvio(evento) {
     if (evento) {
       evento.preventDefault();
     }
     if (!validar()) {
       return null;
     }
-    return converterDados();
+    aoEnviar(converterDados(), evento);
   }
 
   useImperativeHandle(formRef, () => ({
     validar,
     converterDados,
-    submitForm() {
-      return handleSubmit();
+    enviarFormulario() {
+      return manipularEnvio();
     }
   }));
 
   return (
-    <FormContext.Provider
+    <FormularioContexto.Provider
       value={{
         dadosIniciais,
         registrarCampo,
         desregistrarCampo,
-        scopePath: '',
-        handleSubmit,
+        caminho: '',
+        manipularEnvio,
       }}
     >
       {children}
-    </FormContext.Provider>
+    </FormularioContexto.Provider>
   );
 
 });
 
-export default FormContext;
+export default FormularioContexto;

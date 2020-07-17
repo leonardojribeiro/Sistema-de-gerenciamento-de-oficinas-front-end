@@ -1,43 +1,41 @@
-import React, { useState, useCallback, memo, useRef, useEffect, useContext } from 'react';
-import { Box, Button, } from '@material-ui/core';
-
+import React, { useState, useContext, useRef, useCallback, useEffect } from 'react';
 import Dialogo from '../Dialogo';
-import { Link, useLocation } from 'react-router-dom';
-import CampoDeBusca from '../Formulario/Campos/CampoDeBusca';
+import { Box, Button } from '@material-ui/core';
 import Formulario from '../Formulario/Formulario';
-import ApiContext from '../../contexts/ApiContext';
+import CampoDeBusca from '../Formulario/Campos/CampoDeBusca';
 import useAuth from '../../hooks/useAuth';
-import DialogoInserirMarca from './DialogoInserirMarca';
-import DialogoAlterarMarca from './DialogoAlterarMarca';
-import Listagem from './ListagemMarcas';
+import ApiContext from '../../contexts/ApiContext';
+import { Link, useLocation } from 'react-router-dom';
+import DialogoInserirModelo from './DialogoInserirModelo';
+import DialogoAlterarModelo from './DialogoAlterarModelo';
 import { useMemo } from 'react';
+import ListagemModelos from './ListagemModelos';
 
 
-
-function DialgoMarcas() {
+function DialogoModelos() {
   const { idOficina } = useAuth();
-  const [marcas, setMarcas] = useState([]);
+  const [modelos, setModelos] = useState([]);
   const formularioBuscaReferencia = useRef();
   const { get } = useContext(ApiContext);
   const { pathname } = useLocation();
 
   const listar = useCallback(async () => {
-    const marcas = await get(`/marca?idOficina=${idOficina}`);
-    if (marcas) {
-      setMarcas(marcas);
+    const modelos = await get(`/modelo?idOficina=${idOficina}`);
+    if (modelos) {
+      setModelos(modelos);
     }
   }, [get, idOficina]);
 
   useEffect(() => {
-    if (pathname === "/marcas") {
+    if (pathname === "/modelos") {
       listar();
     }
   }, [listar, pathname]);
 
   const manipularBusca = useCallback(async ({ descricao }) => {
-    const marcas = await get(`/marca/descricao?idOficina=${idOficina}&descricao=${descricao}`);
-    if (marcas) {
-      setMarcas(marcas);
+    const modelos = await get(`/modelo/descricao?idOficina=${idOficina}&descricao=${descricao}`);
+    if (modelos) {
+      setModelos(modelos);
     }
   }, [get, idOficina]);
 
@@ -56,22 +54,23 @@ function DialgoMarcas() {
             style={{ whiteSpace: 'nowrap' }}
             variant="outlined"
             component={Link}
-            to={"/marcas/inserir"}
-          >Inserir marca</Button>
+            to={"/modelos/inserir"}
+          >Inserir modelo</Button>
         </Box>
       </Box>
       <Box display="flex" justifyContent="center" pt={2}>Listagem</Box>
-      <Listagem marcas={marcas} />
+      <ListagemModelos modelos={modelos} />
     </>
-  ), [manipularBusca, marcas])
+  ), [manipularBusca, modelos])
+
 
   return (
-    <Dialogo aberto titulo="Marcas">
+    <Dialogo aberto titulo="Modelos">
       {conteudo}
-      <DialogoInserirMarca aberto={pathname === "/marcas/inserir"} />
-      <DialogoAlterarMarca aberto={pathname === "/marcas/alterar"} />
+      <DialogoInserirModelo aberto={pathname === "/modelos/inserir"} />
+      <DialogoAlterarModelo aberto={pathname === "/modelos/alterar"} />
     </Dialogo>
   );
 }
 
-export default memo(DialgoMarcas);
+export default DialogoModelos;

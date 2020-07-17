@@ -17,13 +17,13 @@ const Alerta = forwardRef((props, ref) => {
     setTipo,
   }))
 
-  function handleCloseSnackBar() {
+  function manipularFechamento() {
     setAberto(false);
   }
 
   return (
-    <Snackbar open={aberto} autoHideDuration={5000} onClose={handleCloseSnackBar}>
-      <Alert severity={tipo} onClose={handleCloseSnackBar} closeText="Fechar">
+    <Snackbar open={aberto} autoHideDuration={5000} onClose={manipularFechamento}>
+      <Alert severity={tipo} onClose={manipularFechamento} closeText="Fechar">
         <Typography>{mensagem}</Typography>
       </Alert>
     </Snackbar>

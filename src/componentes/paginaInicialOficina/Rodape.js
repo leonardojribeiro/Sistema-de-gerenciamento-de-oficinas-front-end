@@ -1,5 +1,5 @@
 import React, { memo, useContext } from 'react';
-import { AppBar, Toolbar, Grid, makeStyles } from '@material-ui/core';
+import { Toolbar, Grid, makeStyles } from '@material-ui/core';
 import AuthContext from '../../contexts/AuthContext';
 
 const useStyles = makeStyles((theme) => ({

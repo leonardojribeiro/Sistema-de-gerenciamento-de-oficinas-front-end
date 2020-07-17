@@ -6,7 +6,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import MenuIcon from '@material-ui/icons/Menu';
 import Rodape from './Rodape.js';
 import FolderIcon from '@material-ui/icons/Folder';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -21,14 +21,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 function PaginaInicialOficina() {
-  const navigator = useHistory();
-
   const classes = useStyles();
   const { usuario, deslogar } = useContext(AuthContext);
-
   const [anchorEl, setAnchorEl] = React.useState(null);
-
-
   const [open, setOpen] = useState(false);
   const opend = Boolean(anchorEl);
 
@@ -85,13 +80,23 @@ function PaginaInicialOficina() {
       <Box display="flex">
         <MiniDrawer open={open} setOpen={setOpen}>
           <List onClick={()=>setOpen(false)}>
-            <ListItem button onClick={()=>navigator.push("/marcas")}>
+            <ListItem button component={Link} to="/marcas">
               <ListItemIcon>
                 <FolderIcon />
               </ListItemIcon>
               <ListItemText>
               <Typography variant="body2">
                 Marcas
+              </Typography>
+              </ListItemText>
+            </ListItem>
+            <ListItem button component={Link} to="/modelos">
+              <ListItemIcon>
+                <FolderIcon />
+              </ListItemIcon>
+              <ListItemText>
+              <Typography variant="body2">
+                Modelos
               </Typography>
               </ListItemText>
             </ListItem>

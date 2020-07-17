@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import { Dialog, DialogTitle, IconButton, DialogContent, makeStyles, useTheme, useMediaQuery, Typography } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import CloseIcon from '@material-ui/icons/Close';
@@ -12,21 +12,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Dialogo({ titulo, children }) {
+function Dialogo({aberto, titulo, children }) {
   const classes = useStyles();
-  const navigator = useHistory();
+  const history = useHistory();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
 
-  function handleClose() {
-    navigator.goBack();
-  }
+  const manipularFechamento = useCallback(() => {
+    history.goBack();
+  },[history]);
 
   return (
-    <Dialog fullScreen={fullScreen} maxWidth="lg" open onClose={handleClose} disableBackdropClick aria-labelledby="dialogo-titulo">
+    <Dialog fullScreen={fullScreen} maxWidth="lg" open={aberto} onClose={manipularFechamento} disableBackdropClick aria-labelledby="dialogo-titulo">
       <DialogTitle>
         <Typography id="dialogo-titulo">{titulo}</Typography>
-        <IconButton aria-label="Fechar" className={classes.botaofechar} onClick={handleClose}>
+        <IconButton aria-label="Fechar" className={classes.botaofechar} onClick={manipularFechamento}>
           <CloseIcon />
         </IconButton>
       </DialogTitle>

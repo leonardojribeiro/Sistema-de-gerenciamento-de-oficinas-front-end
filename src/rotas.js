@@ -5,8 +5,7 @@ import AuthContext from './contexts/AuthContext';
 import PaginaInicialOficina from './componentes/paginaInicialOficina/PaginaInicialOficina';
 import DialgoMarcas from './componentes/marca/DialogoMarcas';
 import DialogoLogin from './componentes/DialogoLogin';
-import DialogInserirMarca from './componentes/marca/DialogoInserirMarca';
-import DialogoEditarMarca from './componentes/marca/DialogEditarMarca';
+import DialogoModelos from './componentes/modelo/DialogoModelos';
 
 
 function Rotas() {
@@ -28,15 +27,15 @@ function Rotas() {
             <>
               <PaginaInicialOficina />
               <Switch>
-                <Route path="/marcas" exact>
-                  <DialgoMarcas />
+                <Route path="/marcas">
+                  <DialgoMarcas/>
                 </Route>
-                <Route path="/marcas/inserir" exact>
-                  <DialogInserirMarca />
+
+                <Route path="/modelos"> 
+                  <DialogoModelos/>
                 </Route>
-                <Route path="/marcas/editar" exact>
-                  <DialogoEditarMarca />
-                </Route>
+
+
                 <Route path="/login" exact>
                   <Redirect to="/" />
                 </Route>

@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useState } from "react";
+import React, { createContext, useCallback } from "react";
 import api from "../servicos/api";
 import ProgressoCircular from "../componentes/ProgressoCircular";
 import dot from "dot-object";
@@ -67,10 +67,6 @@ export function ApiProvider({ children }) {
     return handleResposta(resposta);
   }, []);
 
-  const getComApiUrl = useCallback(async (url) => {
-    return get(`${process.env.REACT_APP_API_URL}${url}`);
-  }, [get]);
-
   const getTipoBlob = useCallback(async (url) => {
     let resposta = null;
     try {
@@ -110,7 +106,7 @@ export function ApiProvider({ children }) {
     try {
       resposta = await api
         .put(
-          `${process.env.REACT_APP_API_URL}${url}`,
+          url,
           dados,
           {
             onUploadProgress: handleProgresso
@@ -152,9 +148,9 @@ export function ApiProvider({ children }) {
       <ApiContext.Provider
         value={{
           get,
-          getComApiUrl,
           getTipoBlob,
           post,
+          put,
           multipartPost,
           multipartPut,
         }}
