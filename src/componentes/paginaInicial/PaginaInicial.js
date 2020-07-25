@@ -4,7 +4,6 @@ import { Container, Box, Grid, Typography, Button, AppBar, Toolbar } from '@mate
 import { Link } from 'react-router-dom';
 import Slide from '../Slide/';
 import ItemFuncionalidade from './itemFuncionalidade/ItemFuncionalidade';
-
 import { Link as LinkScroll, Element, } from 'react-scroll';
 import Rodape from './Rodape';
 
@@ -52,29 +51,6 @@ export default function PaginaInicial({ ...props }) {
             </Grid>
           </Container>
         </Box>
-      </Element>
-      <Element name="cadastro">
-        <Container maxWidth="md">
-          <Box className="h-total" display="flex" alignItems="center">
-            <Grid container justify="center">
-              <Grid item xs={12}>
-                <Box display="flex" justifyContent="center" pb={6}>
-                  <Typography variant="h4">Cadastro</Typography>
-                </Box>
-              </Grid>
-              <Grid item xs={12}>
-                <Box display="flex" justifyContent="center" p={2}>
-                  Solicite o cadastro de sua oficina. Analisaremos as suas informações e entraremos em contato.
-                </Box>
-                <Box display="flex" justifyContent="center" p={2}>
-                  <Button component={Link} to="/oficina/cadastro" >
-                    Solicitar cadastro
-                  </Button>
-                </Box>
-              </Grid>
-            </Grid>
-          </Box>
-        </Container>
       </Element>
       <Rodape/>
     </>

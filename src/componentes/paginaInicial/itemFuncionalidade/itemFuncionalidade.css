@@ -19,6 +19,7 @@
 }
 
 .cartao .cartao-descricao{
+  opacity: 0;
   position: absolute;
   margin-top: 50%;
   transition: margin-top 0.3s;
@@ -33,4 +34,5 @@
 
 .cartao:hover .cartao-descricao{
   margin-top: 0;
+  opacity: 1;
 }
