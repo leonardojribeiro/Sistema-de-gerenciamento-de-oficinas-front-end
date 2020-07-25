@@ -6,6 +6,7 @@ import Slide from '../Slide/';
 import ItemFuncionalidade from './itemFuncionalidade/ItemFuncionalidade';
 
 import { Link as LinkScroll, Element, } from 'react-scroll';
+import Rodape from './Rodape';
 
 export default function PaginaInicial({ ...props }) {
 
@@ -75,6 +76,7 @@ export default function PaginaInicial({ ...props }) {
           </Box>
         </Container>
       </Element>
+      <Rodape/>
     </>
   );
 }

@@ -1,6 +1,5 @@
 import React, { memo, useState, } from 'react';
-import { Box } from '@material-ui/core';
-import Button from "../Button";
+import { Box, Button } from '@material-ui/core';
 import './style.css';
 import { Link } from 'react-router-dom';
 import useInterval from '../../hooks/useInterval';

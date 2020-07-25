@@ -1,12 +1,17 @@
 import React, { useContext, useState } from 'react';
-import { Avatar, AppBar, Toolbar, IconButton, Menu, MenuItem, Box, Typography, makeStyles, Container, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { Avatar, AppBar, Toolbar, IconButton, Menu, MenuItem, Box, Typography, makeStyles, Container, List, ListItem, ListItemIcon, ListItemText, Grid } from '@material-ui/core';
 import AuthContext from '../../contexts/AuthContext';
 import MiniDrawer from '../Drawer';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import MenuIcon from '@material-ui/icons/Menu';
 import Rodape from './Rodape.js';
+import Cartao from './Cartao.js';
 import FolderIcon from '@material-ui/icons/Folder';
 import { Link } from 'react-router-dom';
+import SettingsIcon from '@material-ui/icons/Settings';
+import DriveEtaIcon from '@material-ui/icons/DriveEta';
+import ExtensionIcon from '@material-ui/icons/Extension';
+import PersonIcon from '@material-ui/icons/Person';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -47,7 +52,7 @@ function PaginaInicialOficina() {
           <IconButton onClick={() => setOpen(!open)}>
             {open ? <ChevronLeftIcon /> : <MenuIcon />}
           </IconButton>
-          <Typography>{usuario.idOficina.nomeFantasia}</Typography>
+          <Typography>{usuario.oficina.nomeFantasia}</Typography>
           <IconButton
             aria-label="account of current user"
             aria-controls="menu-appbar"
@@ -55,7 +60,7 @@ function PaginaInicialOficina() {
             onClick={handleMenu}
             color="inherit"
           >
-            <Avatar src={`${process.env.REACT_APP_API_URL}/files/${usuario.idOficina.uriLogo}`} />
+            <Avatar src={`${process.env.REACT_APP_API_URL}/files/${usuario.oficina.uriLogo}`} />
           </IconButton>
           <Menu
             id="menu-appbar"
@@ -79,14 +84,14 @@ function PaginaInicialOficina() {
       </AppBar>
       <Box display="flex">
         <MiniDrawer open={open} setOpen={setOpen}>
-          <List onClick={()=>setOpen(false)}>
+          <List onClick={() => setOpen(false)}>
             <ListItem button component={Link} to="/marcas">
               <ListItemIcon>
                 <FolderIcon />
               </ListItemIcon>
               <ListItemText>
-              <Typography variant="body2">
-                Marcas
+                <Typography variant="body2">
+                  Marcas
               </Typography>
               </ListItemText>
             </ListItem>
@@ -95,26 +100,74 @@ function PaginaInicialOficina() {
                 <FolderIcon />
               </ListItemIcon>
               <ListItemText>
-              <Typography variant="body2">
-                Modelos
+                <Typography variant="body2">
+                  Modelos
+              </Typography>
+              </ListItemText>
+            </ListItem>
+            <ListItem button component={Link} to="/pecas">
+              <ListItemIcon>
+                <ExtensionIcon/>
+              </ListItemIcon>
+              <ListItemText>
+                <Typography variant="body2">
+                  Peças
+              </Typography>
+              </ListItemText>
+            </ListItem>
+            <ListItem button component={Link} to="/clientes">
+              <ListItemIcon>
+                <PersonIcon />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography variant="body2">
+                  Clientes
+              </Typography>
+              </ListItemText>
+            </ListItem>
+            <ListItem button component={Link} to="/veiculos">
+              <ListItemIcon>
+                <DriveEtaIcon/>
+              </ListItemIcon>
+              <ListItemText>
+                <Typography variant="body2">
+                  Veículos
+              </Typography>
+              </ListItemText>
+            </ListItem>
+            <ListItem button component={Link} to="/opcoes">
+              <ListItemIcon>
+                <SettingsIcon/>
+              </ListItemIcon>
+              <ListItemText>
+                <Typography variant="body2">
+                  Opções
               </Typography>
               </ListItemText>
             </ListItem>
           </List>
         </MiniDrawer>
         <Container className="h-min-barra-rodape">
-          <Typography variant="body1">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-            ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
-            facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-            gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id
-            donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-            adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-            Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis
-            imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
-            arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-            donec massa sapien faucibus et molestie ac.
-            </Typography>
+          <Grid container spacing={2} justify="space-around">
+            <Grid item>
+              <Cartao/>
+            </Grid>
+            <Grid item>
+              <Cartao/>
+            </Grid>
+            <Grid item>
+              <Cartao/>
+            </Grid>
+            <Grid item>
+              <Cartao/>
+            </Grid>
+            <Grid item>
+              <Cartao/>
+            </Grid>
+            <Grid item>
+              <Cartao/>
+            </Grid>
+          </Grid>
         </Container>
       </Box>
       <Rodape />

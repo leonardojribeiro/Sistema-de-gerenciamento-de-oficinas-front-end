@@ -3,7 +3,7 @@ import dot from 'dot-object';
 
 const FormularioContexto = createContext();
 
-export const FormularioProvedor = forwardRef(({dadosIniciais = {}, aoEnviar, children }, formRef) => {
+export const FormularioProvedor = forwardRef(({dadosIniciais = {},limparAoEnviar, aoEnviar, children }, formRef) => {
   const campos = useRef([]);
 
   function registrarCampo(campo){
@@ -44,6 +44,14 @@ export const FormularioProvedor = forwardRef(({dadosIniciais = {}, aoEnviar, chi
     return dados;
   }
 
+  function limpar(){
+    campos.current.forEach(campo => {
+      if(campo.limpar){
+        campo.limpar();
+      }
+    })
+  }
+
   function manipularEnvio(evento) {
     if (evento) {
       evento.preventDefault();
@@ -51,7 +59,11 @@ export const FormularioProvedor = forwardRef(({dadosIniciais = {}, aoEnviar, chi
     if (!validar()) {
       return null;
     }
-    aoEnviar(converterDados(), evento);
+    const dados = converterDados()
+    if(limparAoEnviar){
+      limpar()
+    }
+    aoEnviar(dados, evento);
   }
 
   useImperativeHandle(formRef, () => ({
@@ -59,7 +71,8 @@ export const FormularioProvedor = forwardRef(({dadosIniciais = {}, aoEnviar, chi
     converterDados,
     enviarFormulario() {
       return manipularEnvio();
-    }
+    },
+    limpar
   }));
 
   return (
@@ -70,6 +83,7 @@ export const FormularioProvedor = forwardRef(({dadosIniciais = {}, aoEnviar, chi
         desregistrarCampo,
         caminho: '',
         manipularEnvio,
+        limpar
       }}
     >
       {children}

@@ -1,13 +1,16 @@
 import React, { createContext, useState, useEffect } from "react";
-import { ThemeProvider, createMuiTheme } from "@material-ui/core";
+import { ThemeProvider, createMuiTheme, Dialog } from "@material-ui/core";
 
 
 const TemaContexto = createContext();
 
 export const TemaProvider = ({ children }) => {
   const [temaEscuro, setTemaEscuro] = useState(false);
+  const [tamanhoFonte, setTamanhoFonte] = useState(16);
+
 
   const alterarTema = () => {
+    console.log("alterando tema")
     if (temaEscuro) {
       setTemaEscuro(false);
       localStorage.setItem("temaEscuro", false);
@@ -18,10 +21,24 @@ export const TemaProvider = ({ children }) => {
     }
   }
 
+  console.log(temaEscuro)
+
+  function alterarTamanhoFonte(novoTamanho) {
+    if (novoTamanho >= 10 && novoTamanho <= 30) {
+      setTamanhoFonte(novoTamanho);
+      localStorage.setItem("tamanhoFonte", novoTamanho);
+    }
+  }
+
   useEffect(() => {
     const temaEscuro = localStorage.getItem("temaEscuro");
+    console.log(temaEscuro)
     if (temaEscuro) {
-      setTemaEscuro(temaEscuro);
+      setTemaEscuro(JSON.parse(temaEscuro));
+    }
+    const tamanhoFonte = localStorage.getItem("tamanhoFonte");
+    if (tamanhoFonte) {
+      setTamanhoFonte(Number(tamanhoFonte));
     }
   }, []);
 
@@ -29,17 +46,20 @@ export const TemaProvider = ({ children }) => {
     palette: {
       type: temaEscuro ? "dark" : "light",
     },
-    typography:{
-      allVariants:{
-        fontSize: 16
+    typography: {
+      allVariants: {
+        fontSize: tamanhoFonte
       }
-    }
+    },
+    
   });
-  
+
   return (
-    <TemaContexto.Provider value={alterarTema}>
+    <TemaContexto.Provider value={{ alterarTema, alterarTamanhoFonte, temaEscuro, tamanhoFonte }}>
       <ThemeProvider theme={tema}>
-        {children}
+        <Dialog disablePortal fullScreen fullWidth open>
+          {children}
+        </Dialog>
       </ThemeProvider>
     </TemaContexto.Provider>
   )

@@ -143,6 +143,7 @@ export function ApiProvider({ children }) {
     return put(url, formDados);
   }, [prepararDados, put]);
 
+
   return (
     <>
       <ApiContext.Provider
@@ -157,8 +158,8 @@ export function ApiProvider({ children }) {
       >
         {children}
       </ApiContext.Provider>
+      <ProgressoCircular ref={refProgresso} />
       <Alerta ref={refAlerta} />
-      <ProgressoCircular ref={refProgresso}/>
     </>
   )
 }

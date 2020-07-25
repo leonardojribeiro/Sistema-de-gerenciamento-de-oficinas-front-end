@@ -1,5 +1,5 @@
 import React, { memo, useContext } from 'react';
-import { Toolbar, Grid, makeStyles } from '@material-ui/core';
+import { Toolbar, Grid, makeStyles, Paper } from '@material-ui/core';
 import AuthContext from '../../contexts/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
@@ -14,12 +14,12 @@ function Rodape() {
   const classes = useStyles();
   const { usuario } = useContext(AuthContext);
 
-  const oficina = usuario.idOficina;
+  const oficina = usuario.oficina;
 
   const endereco = oficina.endereco;
   return (
   <div className={classes.appBar}>
-    <Toolbar>
+    <Toolbar component={Paper} square >
       <Grid display="flex" justify="space-around" container >
         <Grid item>
           {`Telefone celular: ${oficina.telefoneCelular}`}

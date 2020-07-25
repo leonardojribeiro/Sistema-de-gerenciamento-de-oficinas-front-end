@@ -16,16 +16,16 @@ const ProgressoCircular = forwardRef((props, ref) => {
   const [aberto, setAberto] = useState(false);
   const [valor, setValor] = useState(0);
 
-  useImperativeHandle(ref, ()=>({
+  useImperativeHandle(ref, () => ({
     setValor,
     setAberto,
   }));
 
-  return (
+  return aberto && (
     <Backdrop className={classes.backdrop} open={aberto}>
-      <CircularProgress variant={valor > 0 ? "static" : "indeterminate" } value={valor}/>
+      <CircularProgress variant={valor > 0 ? "static" : "indeterminate"} value={valor} />
     </Backdrop>
-  );
+  )
 });
 
 export default ProgressoCircular;

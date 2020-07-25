@@ -10,13 +10,13 @@ import { ApiProvider } from './contexts/ApiContext';
 function App() {
   return (
     <BrowserRouter>
-      <ApiProvider>
-        <TemaProvider>
+      <TemaProvider>
+        <ApiProvider>
           <AuthProvider>
             <Rotas />
           </AuthProvider>
-        </TemaProvider>
-      </ApiProvider>
+        </ApiProvider>
+      </TemaProvider>
     </BrowserRouter>
   );
 }

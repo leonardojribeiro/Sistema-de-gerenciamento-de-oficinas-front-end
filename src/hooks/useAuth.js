@@ -3,7 +3,7 @@ const { default: AuthContext } = require("../contexts/AuthContext");
 
 export default function useAuth() {
   const { usuario } = useContext(AuthContext);
-  const idOficina = usuario ? usuario.idOficina._id : null;
+  const idOficina = usuario ? usuario.oficina._id : null;
   const token = usuario ? usuario.token : null;
 
   // function teste() {

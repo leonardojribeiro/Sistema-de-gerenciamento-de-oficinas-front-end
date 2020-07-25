@@ -39,7 +39,9 @@ export const AuthProvider = ({ children }) => {
     if (resposta) {
       setUsuario(resposta);
       localStorage.setItem("tokenUsuario", resposta.token);
+      return true;
     }
+    return false;
   }, [post]);
 
   const deslogar = useCallback(() => {

@@ -1,21 +1,17 @@
-import React, { useRef, memo } from 'react';
+import React, { memo } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Box } from '@material-ui/core';
-import CampoTexto from './Formulario/Campos/CampoTexto';
 import { useHistory } from 'react-router-dom';
 import { useContext } from 'react';
 import AuthContext from '../contexts/AuthContext';
-import Formulario from './Formulario/Formulario';
-import CampoSenha from './Formulario/Campos/CampoSenha';
-
+import { Formulario, CampoDeTexto, CampoDeSenha } from './Formulario';
 
 function DialogoLogin() {
   const history = useHistory();
   const { efetuarLogin } = useContext(AuthContext);
-  const ref = useRef();
 
   function manipularEnvio(usuario) {
     if (usuario) {
-      efetuarLogin(usuario);
+      efetuarLogin(usuario)
     }
   }
 
@@ -26,10 +22,10 @@ function DialogoLogin() {
   return (
     <Dialog open onClose={fechar} disableBackdropClick >
       <DialogTitle>Login</DialogTitle>
-      <Formulario ref={ref} dadosIniciais={{}} aoEnviar={manipularEnvio}>
+      <Formulario limparAoEnviar aoEnviar={manipularEnvio}>
         <DialogContent>
           <Box p={2}>
-            <CampoTexto
+            <CampoDeTexto
               autoFocus
               nome="nomeUsuario"
               fullWidth
@@ -39,7 +35,7 @@ function DialogoLogin() {
             />
           </Box>
           <Box p={2}>
-            <CampoSenha
+            <CampoDeSenha
               nome="senha"
               fullWidth
               required
@@ -49,6 +45,7 @@ function DialogoLogin() {
         </DialogContent>
         <DialogActions>
           <Button onClick={fechar}>Cancelar</Button>
+          <Button type="reset">limpar</Button>
           <Button type="submit">Login</Button>
         </DialogActions>
       </Formulario>

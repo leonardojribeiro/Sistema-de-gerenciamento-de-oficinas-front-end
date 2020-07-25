@@ -99,7 +99,7 @@ function validarNome(nome){
 }
 
 function validarEmail(email){
-  let regex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+  let regex = new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
   return regex.test(email);
 }
 
@@ -119,6 +119,10 @@ function validarNumero(numero){
   return numero !== "";
 }
 
+function validarStringData(data){
+  return !!new Date(data).getTime();
+}
+
 const validacao = {
   validarCpfCnpj,
   validarNome,
@@ -127,7 +131,7 @@ const validacao = {
   validarTexto,
   validarCep,
   validarNumero,
-
+  validarStringData,
 }
 
 export default validacao;
