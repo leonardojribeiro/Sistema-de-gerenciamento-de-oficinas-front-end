@@ -6,7 +6,7 @@ const TemaContexto = createContext();
 
 export const TemaProvider = ({ children }) => {
   const [temaEscuro, setTemaEscuro] = useState(false);
-  const [tamanhoFonte, setTamanhoFonte] = useState(16);
+  const [tamanhoFonte, setTamanhoFonte] = useState(13);
 
 
   const alterarTema = () => {
@@ -21,8 +21,6 @@ export const TemaProvider = ({ children }) => {
     }
   }
 
-  console.log(temaEscuro)
-
   function alterarTamanhoFonte(novoTamanho) {
     if (novoTamanho >= 10 && novoTamanho <= 30) {
       setTamanhoFonte(novoTamanho);
@@ -32,7 +30,6 @@ export const TemaProvider = ({ children }) => {
 
   useEffect(() => {
     const temaEscuro = localStorage.getItem("temaEscuro");
-    console.log(temaEscuro)
     if (temaEscuro) {
       setTemaEscuro(JSON.parse(temaEscuro));
     }
@@ -51,7 +48,6 @@ export const TemaProvider = ({ children }) => {
         fontSize: tamanhoFonte
       }
     },
-    
   });
 
   return (

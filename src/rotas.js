@@ -10,6 +10,8 @@ import DialogoPecas from './dominios/Peca/DialogoPecas';
 import DialogoClientes from './dominios/Cliente/DialogoClientes';
 import DialogoOpcoes from './componentes/DialogoOpcoes';
 import DialogoVeiculos from './dominios/Veiculo/DialogoVeiculos';
+import DialogoEspecialidades from './dominios/Especialidade/DialogoEspecialidades';
+import DialogoFornecedores from './dominios/Fornecedores/DialogoFornecedores';
 
 
 function Rotas() {
@@ -49,6 +51,14 @@ function Rotas() {
 
                 <Route path="/veiculos"> 
                   <DialogoVeiculos/>
+                </Route>
+
+                <Route path="/especialidades">
+                  <DialogoEspecialidades/>
+                </Route>
+
+                <Route path="/fornecedores">
+                  <DialogoFornecedores/>
                 </Route>
 
                 <Route path="/login" exact>

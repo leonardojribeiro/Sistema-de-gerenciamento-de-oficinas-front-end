@@ -42,7 +42,7 @@ export function ApiProvider({ children }) {
 
   function handleResposta(resposta) {
     if (resposta) {
-      if (resposta.status === 201) {
+      if (resposta.status === 201 || resposta.status === 200) {
         if (resposta.data.mensagem) {
           refAlerta.current.setTipo("success")
           refAlerta.current.setMensagem(resposta.data.mensagem);
@@ -59,7 +59,7 @@ export function ApiProvider({ children }) {
   const get = useCallback(async (url) => {
     let resposta = null;
     try {
-      resposta = await api.get(url);
+      resposta = await api.get(url, );
     }
     catch (e) {
       handleErro(e)
@@ -71,7 +71,7 @@ export function ApiProvider({ children }) {
     let resposta = null;
     try {
       resposta = await api.get(url, {
-        responseType: "blob"
+        responseType: "blob",
       });
     }
     catch (e) {

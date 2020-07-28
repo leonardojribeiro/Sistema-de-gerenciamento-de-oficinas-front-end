@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function ListagemModelos({pecas}) {
+function ListagemModelos({pecas = []}) {
   const classes = useStyles();
   const imagensUrl = process.env.REACT_APP_IMAGENS_URL;
 

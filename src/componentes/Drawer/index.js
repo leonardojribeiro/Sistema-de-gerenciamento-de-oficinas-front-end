@@ -59,7 +59,8 @@ export default function MiniDrawer({open, setOpen, children}) {
   return (
     <>
       <Hidden smUp>
-        <SwipeableDrawer
+        <SwipeableDrawer 
+          swipeAreaWidth={50}
           open={open}
           onOpen={() => setOpen(true)}
           onClose={() => setOpen(false)}

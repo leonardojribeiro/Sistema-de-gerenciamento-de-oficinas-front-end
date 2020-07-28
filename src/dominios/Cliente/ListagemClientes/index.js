@@ -3,7 +3,7 @@ import {  Box, Table, TableHead, TableRow, TableCell, TableBody, TableContainer,
 import ClienteItem from '../ClienteItem';
 
 
-function ListagemClientes({ clientes }) {
+function ListagemClientes({ clientes =[] }) {
 
   return (
     <Box mb={2}>

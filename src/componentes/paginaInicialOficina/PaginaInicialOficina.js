@@ -12,6 +12,8 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import DriveEtaIcon from '@material-ui/icons/DriveEta';
 import ExtensionIcon from '@material-ui/icons/Extension';
 import PersonIcon from '@material-ui/icons/Person';
+import SchoolIcon from '@material-ui/icons/School';
+import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -107,7 +109,7 @@ function PaginaInicialOficina() {
             </ListItem>
             <ListItem button component={Link} to="/pecas">
               <ListItemIcon>
-                <ExtensionIcon/>
+                <ExtensionIcon />
               </ListItemIcon>
               <ListItemText>
                 <Typography variant="body2">
@@ -127,7 +129,7 @@ function PaginaInicialOficina() {
             </ListItem>
             <ListItem button component={Link} to="/veiculos">
               <ListItemIcon>
-                <DriveEtaIcon/>
+                <DriveEtaIcon />
               </ListItemIcon>
               <ListItemText>
                 <Typography variant="body2">
@@ -135,9 +137,29 @@ function PaginaInicialOficina() {
               </Typography>
               </ListItemText>
             </ListItem>
+            <ListItem button component={Link} to="/fornecedores">
+              <ListItemIcon>
+                <LocalShippingIcon />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography variant="body2">
+                  Fornecedores
+              </Typography>
+              </ListItemText>
+            </ListItem>
+            <ListItem button component={Link} to="/especialidades">
+              <ListItemIcon>
+                <SchoolIcon />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography variant="body2">
+                  Especialidades
+              </Typography>
+              </ListItemText>
+            </ListItem>
             <ListItem button component={Link} to="/opcoes">
               <ListItemIcon>
-                <SettingsIcon/>
+                <SettingsIcon />
               </ListItemIcon>
               <ListItemText>
                 <Typography variant="body2">
@@ -150,22 +172,40 @@ function PaginaInicialOficina() {
         <Container className="h-min-barra-rodape">
           <Grid container spacing={2} justify="space-around">
             <Grid item>
-              <Cartao/>
+              <Cartao />
             </Grid>
             <Grid item>
-              <Cartao/>
+              <Cartao />
             </Grid>
             <Grid item>
-              <Cartao/>
+              <Cartao />
             </Grid>
             <Grid item>
-              <Cartao/>
+              <Cartao />
             </Grid>
             <Grid item>
-              <Cartao/>
+              <Cartao />
             </Grid>
             <Grid item>
-              <Cartao/>
+              <Cartao />
+            </Grid>
+            <Grid item>
+              <Cartao />
+            </Grid>
+            <Grid item>
+              <Cartao />
+            </Grid>
+            <Grid item>
+              <Cartao />
+            </Grid>
+            <Grid item>
+              <Cartao />
+            </Grid>
+            <Grid item>
+              <Cartao />
+            </Grid>
+            <Grid item>
+              <Cartao />
             </Grid>
           </Grid>
         </Container>

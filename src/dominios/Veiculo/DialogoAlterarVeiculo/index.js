@@ -3,45 +3,30 @@ import Dialogo from '../../../componentes/Dialogo';
 import ApiContext from '../../../contexts/ApiContext';
 import useAuth from '../../../hooks/useAuth';
 import { useHistory } from 'react-router-dom';
-import { DialogActions, Button, MenuItem, Typography, makeStyles, Grid } from '@material-ui/core';
+import { DialogActions, Button, MenuItem, } from '@material-ui/core';
 import { useState } from 'react';
 import useQuery from '../../../hooks/useQuery';
 import Alerta from '../../../componentes/Alerta';
 import { useMemo } from 'react';
-import { Formulario, CampoDeTexto, CampoDeSelecao } from '../../../componentes/Formulario';
-
-const useStyles = makeStyles((theme) => ({
-  listagem: {
-    minHeight: "50vh",
-  },
-  imgLogomarca: {
-    maxHeight: "32px",
-    maxWidth: "32px",
-    objectFit: "scale-down"
-  },
-  itemMenu: {
-    display: "flex",
-    justifyContent: "space-between"
-  }
-}));
+import { Formulario, CampoDeTexto, CampoDeSelecao, CampoDeData } from '../../../componentes/Formulario';
+import comparar from '../../../recursos/Comparar';
 
 function DialogoAlterarVeiculo({ aberto }) {
-  const classes = useStyles();
-  const imagensUrl = process.env.REACT_APP_IMAGENS_URL;
   const { get, put } = useContext(ApiContext);
   const { idOficina } = useAuth();
   const history = useHistory();
-  const [marcas, setMarcas] = useState([]);
-  const [peca, setPeca] = useState({});
+  const [veiculo, setVeiculo] = useState({});
   const refAlerta = useRef();
   const id = useQuery("id");
+  const [clientes, setClientes] = useState([]);
+  const [modelos, setModelos] = useState([]);
 
-  const manipularEnvio = useCallback(async (pecaASerAlterada) => {
-    if (pecaASerAlterada) {
-      if (!(pecaASerAlterada.descricao === peca.descricao) || !(pecaASerAlterada.idMarca === peca.idMarca)) {
-        pecaASerAlterada._id = peca._id
-        pecaASerAlterada.idOficina = idOficina;
-        const resposta = await put("/peca", pecaASerAlterada);
+  const manipularEnvio = useCallback(async (veiculoASerAlterado) => {
+    if (veiculoASerAlterado) {
+      if (!comparar(veiculo, veiculoASerAlterado)) {
+        veiculoASerAlterado._id = veiculo._id
+        veiculoASerAlterado.idOficina = idOficina;
+        const resposta = await put("/veiculo", veiculoASerAlterado);
         if (resposta) {
           history.goBack();
         }
@@ -54,53 +39,59 @@ function DialogoAlterarVeiculo({ aberto }) {
         }
       }
     }
-  }, [history, idOficina, peca, put]);
+  }, [history, idOficina, veiculo, put]);
 
 
   const popular = useCallback(async () => {
-    const resposta = await get(`/peca/id?idOficina=${idOficina}&_id=${id}`)
+    const resposta = await get(`/veiculo/id?idOficina=${idOficina}&_id=${id}`)
+    console.log(resposta);
     if (resposta) {
-      setPeca(resposta)
+      setVeiculo(resposta)
     }
   }, [get, id, idOficina]);
 
-  const listarMarcas = useCallback(async () => {
-    const marcas = await get(`/marca?idOficina=${idOficina}`);
-    if (marcas) {
-      setMarcas(marcas);
+  const listarClientes = useCallback(async () => {
+    const cliente = await get(`/cliente?idOficina=${idOficina}`);
+    if (cliente) {
+      setClientes(cliente);
     }
-    popular()
-  }, [get, idOficina, popular]);
+  }, [get, idOficina]);
+
+  const listarModelos = useCallback(async () => {
+    const modelos = await get(`/modelo?idOficina=${idOficina}`);
+    if (modelos) {
+      setModelos(modelos);
+    }
+  }, [get, idOficina]);
 
   useEffect(() => {
     if (aberto) {
-      listarMarcas();
+      listarClientes();
+      listarModelos();
+      popular();
     }
-    return () => {
-      setPeca({});
-    }
-  }, [popular, listarMarcas, aberto])
+  }, [aberto, listarClientes, listarModelos, popular]);
 
   const conteudo = useMemo(() => (
-    <Formulario aoEnviar={manipularEnvio} dadosIniciais={peca}>
-      <CampoDeTexto nome="descricao" label="Descrição" fullWidth required autoFocus />
-      <CampoDeSelecao nome="idMarca" label="Marca" fullWidth required >
+    <Formulario aoEnviar={manipularEnvio} dadosIniciais={veiculo}>
+      <CampoDeTexto nome="placa" label="Placa" fullWidth required autoFocus />
+      <CampoDeData nome="anoFabricacao" label="Ano de fabricação" fullWidth required />
+      <CampoDeData nome="anoModelo" label="Ano de modelo" fullWidth required />
+      <CampoDeSelecao nome="idModelo" label="Modelo" required fullWidth>
         {
-          marcas.map((marca, index) => (
-            <MenuItem key={index} value={marca._id} className={classes.itemMenu}>
-              <Grid container justify="space-between">
-                <Typography>{marca.descricao}</Typography>
-                <img src={`${imagensUrl}/${marca.uriLogo}`} alt="" className={classes.imgLogomarca} />
-              </Grid>
-            </MenuItem>
-          ))
+          modelos.map((modelo, indice) => <MenuItem key={indice} value={modelo._id}>{modelo.descricao}</MenuItem>)
+        }
+      </CampoDeSelecao>
+      <CampoDeSelecao nome="idCliente" label="Cliente" required fullWidth >
+        {
+          clientes.map((cliente, indice) => <MenuItem key={indice} value={cliente._id}>{cliente.nome}</MenuItem>)
         }
       </CampoDeSelecao>
       <DialogActions >
         <Button type="submit">Salvar</Button>
       </DialogActions>
     </Formulario>
-  ), [classes, imagensUrl, manipularEnvio, marcas, peca])
+  ), [clientes, manipularEnvio, modelos, veiculo])
 
   return (
     <Dialogo aberto={aberto} titulo="Alterar peça">

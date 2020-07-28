@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function ListagemVeiculos({ veiculos }) {
+function ListagemVeiculos({ veiculos = []}) {
   const classes = useStyles();
   //const imagensUrl = process.env.REACT_APP_IMAGENS_URL;
 

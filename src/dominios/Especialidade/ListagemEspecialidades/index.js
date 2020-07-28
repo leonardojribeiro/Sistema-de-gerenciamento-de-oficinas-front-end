@@ -9,52 +9,40 @@ const useStyles = makeStyles((theme) => ({
   },
   imgLogomarca: {
     backgroundSize: "100%",
-    maxHeight: "48px",
-    maxWidth: "64px",
-    borderRadius: "5px",
+    maxHeight: "64px",
+    maxWidth: "96px",
+    objectFit: "scale-down"
   },
   linhaTabela: {
-    '&:hover': {
+    '&:hover':{
       backgroundColor: theme.palette.action.hover
     },
-    borderTop: `1px solid ${theme.palette.divider}`,
-    height: "64px",
+    borderTop: `1px solid ${theme.palette.divider}`
   }
 }));
 
-function Listagem({ marcas = [] }) {
+function Listagem({ especialidades = [] }) {
   const classes = useStyles();
-  const imagensUrl = process.env.REACT_APP_IMAGENS_URL;
 
   return (
     <Box mb={2}>
       <Grid container justify="space-between">
-        <Grid item xs={6}>
-          <Typography>Descrição</Typography>
-        </Grid>
         <Grid item>
-          <Typography>Logomarca</Typography>
+          <Typography>Descrição</Typography>
         </Grid>
         <Grid item>
           <Typography>Alterar</Typography>
         </Grid>
       </Grid>
       {
-        !!marcas.length && marcas.map((marca, index) => (
+        !!especialidades.length && especialidades.map((especialidade, index) => (
           <Grid container justify="space-between" alignItems="center" className={classes.linhaTabela} key={index} >
-            <Grid item xs={6}>
-              <Typography>{marca.descricao}</Typography>
+            <Grid item>
+              <Typography>{especialidade.descricao}</Typography>
             </Grid>
             <Grid item>
-              <img
-                className={classes.imgLogomarca}
-                src={marca.uriLogo && `${imagensUrl}/${marca.uriLogo}`}
-                alt={`logomarca da marca ${marca.descricao}`}
-              />
-            </Grid>
-            <Grid item>
-              <Tooltip title={`Alterar a marca ${marca.descricao}`}>
-                <IconButton component={Link} to={`/marcas/alterar?id=${marca._id}`}>
+              <Tooltip title={`Alterar a especialidade ${especialidade.descricao}`}>
+                <IconButton component={Link} to={`/especialidades/alterar?id=${especialidade._id}`}>
                   <EditIcon />
                 </IconButton>
               </Tooltip>

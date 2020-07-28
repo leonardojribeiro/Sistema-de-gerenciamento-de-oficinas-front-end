@@ -62,7 +62,7 @@ function DialogoAlterarMarca({ aberto }) {
   }, [popular, aberto])
 
   return (
-    <Dialogo aberto={aberto} titulo="Editar marca">
+    <Dialogo aberto={aberto} titulo="Alterar marca">
       <Formulario dadosIniciais={marca} aoEnviar={manipularEnvio}>
         <CampoDeTexto nome="descricao" label="Descrição" fullWidth required autoFocus/>
         <DragAndDrop nome="logomarca" required/>

@@ -6,7 +6,7 @@ import SearchIcon from '@material-ui/icons/Search';
 function FormularioConsulta({ aoEnviar, filtros = [] }) {
   return (
     <Formulario aoEnviar={aoEnviar} dadosIniciais={{ tipo: "0" }}>
-      <Grid container spacing={2} justify="space-between" alignItems="end">
+      <Grid container spacing={2} justify="space-between" alignItems="flex-end">
         <Grid item xs={12} sm={filtros.length ? 6 : 12}>
           <CampoDeBusca
             desabilitarBusca={filtros.length}

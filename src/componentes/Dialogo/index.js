@@ -26,7 +26,12 @@ function Dialogo({ aberto, titulo, children, ...props }) {
   const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
 
   const manipularFechamento = useCallback(() => {
-    history.goBack();
+    if(history.length > 1){
+      history.goBack();
+    }
+    else{
+      history.replace("/")
+    }
   }, [history]);
 
   return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Tooltip, IconButton, makeStyles, Typography } from '@material-ui/core';
+import { Box, Tooltip, IconButton, makeStyles, Typography, Grid } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import { Link } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
@@ -13,62 +13,66 @@ const useStyles = makeStyles((theme) => ({
     objectFit: "scale-down",
   },
   linhaTabela: {
-    maxHeight: "78px",
-    padding: 0,
-    position: "relative",
+    '&:hover': {
+      backgroundColor: theme.palette.action.hover
+    },
+    borderTop: `1px solid ${theme.palette.divider}`,
+    height: "64px",
   }
 }));
 
-function ListagemModelos({modelos}) {
+function ListagemModelos({ modelos = [] }) {
   const classes = useStyles();
   const imagensUrl = process.env.REACT_APP_IMAGENS_URL;
 
   return (
     <Box mb={2}>
-      <TableContainer >
-        <Table spacing={0} size="small">
-          <TableHead>
-            <TableRow >
-              <TableCell padding="none">Descrição</TableCell>
-              <TableCell padding="none">Marca</TableCell>
-              <TableCell padding="none" align="center">Alterar</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {
-              !!modelos.length && modelos.map((modelo, index) => (
-                <TableRow className={classes.linhaTabela} key={index} hover >
-                  <TableCell padding="none">
-                    <Typography>
-                      {modelo.descricao}
-                    </Typography>
-                  </TableCell>
-                  <TableCell padding="none">
-                    <Box display="flex" alignItems="center" justifyContent="space-between">
-                      <Typography>
-                        {modelo.marca ? modelo.marca.descricao : ""}
-                      </Typography>
-                      <img
-                        className={classes.imgLogomarca}
-                        src={modelo.marca && modelo.marca.uriLogo && `${imagensUrl}/${modelo.marca.uriLogo}`}
-                        alt={`logomarca da marca ${modelo.marca ? modelo.marca.descricao : ""}`}
-                      />
-                    </Box>
-                  </TableCell>
-                  <TableCell padding="none" align="center">
-                    <Tooltip title={`Alterar o modelo ${modelo.descricao}`}>
-                      <IconButton component={Link} to={`/modelos/alterar?id=${modelo._id}`}>
-                        <EditIcon />
-                      </IconButton>
-                    </Tooltip>
-                  </TableCell>
-                </TableRow>
-              ))
-            }
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Box>
+      <Grid container justify="space-between">
+        <Grid item xs={5}>
+          <Typography>Descrição</Typography>
+        </Grid>
+        <Grid item>
+          <Typography>Marca</Typography>
+        </Grid>
+        <Grid item>
+          <Typography>Editar</Typography>
+        </Grid>
+      </Grid>
+      {
+        !!modelos.length && modelos.map((modelo, index) => (
+          <Grid container alignItems="center" justify="space-between" className={classes.linhaTabela} key={index}>
+            <Grid item xs={4}>
+              <Typography>
+                {modelo.descricao}
+              </Typography>
+            </Grid>
+            <Grid item xs={5}>
+              <Grid container alignItems="center" justify="space-between">
+                <Grid item >
+                  <Typography>
+                    {modelo.marca ? modelo.marca.descricao : ""}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <img
+                    className={classes.imgLogomarca}
+                    src={modelo.marca && modelo.marca.uriLogo && `${imagensUrl}/${modelo.marca.uriLogo}`}
+                    alt={`logomarca da marca ${modelo.marca ? modelo.marca.descricao : ""}`}
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item padding="none" align="center">
+              <Tooltip title={`Alterar o modelo ${modelo.descricao}`}>
+                <IconButton component={Link} to={`/modelos/alterar?id=${modelo._id}`}>
+                  <EditIcon />
+                </IconButton>
+              </Tooltip>
+            </Grid>
+          </Grid >
+        ))
+      }
+    </Box >
   );
 }
 
