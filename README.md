@@ -13,7 +13,7 @@ Tabela de conteúdos
 
 ## Sobre
 
-Esse projeto está sendo desenvolvido como requisito parcial de avaliação do trabalho de conclusão de curso de Sistemas de Informação da [Universidade Estadual de Goiás](http://www.itaberai.ueg.br/).<br/>
+Esse projeto está sendo desenvolvido como requisito parcial de avaliação do trabalho de conclusão de curso de Sistemas de Informação da [Universidade Estadual de Goiás - Unidade de Itaberaí](http://www.itaberai.ueg.br/).<br/>
 Tendo como principal objetivo auxiliar no cotidiano das oficinas automobilísticas.
 
 Esse projeto foi criado através do [Create React App](https://github.com/facebook/create-react-app).
@@ -44,3 +44,48 @@ Veja a sessão [deployment](https://facebook.github.io/create-react-app/docs/dep
     - [x] Alteração de Marcas
     - [x] Listagem de Marcas
     - [x] Consulta de Marcas
+  - [X] Modelos
+    - [x] Cadastro de Modelos
+    - [x] Alteração de Modelos
+    - [x] Listagem de Modelos
+    - [x] Consulta de Modelos
+  - [ ] Peças
+    - [x] Cadastro de Peças
+    - [x] Alteração de Peças
+    - [x] Listagem de Peças
+    - [ ] Consulta de Peças
+  - [ ] Clientes
+    - [x] Cadastro de Clientes
+    - [x] Alteração de Clientes
+    - [x] Listagem de Clientes
+    - [ ] Consulta de Clientes
+  - [ ] Veículos
+    - [x] Cadastro de Veículos
+    - [x] Alteração de Veículos
+    - [x] Listagem de Veículos
+    - [ ] Consulta de Veículos
+  - [ ] Fornecedores
+    - [x] Cadastro de Fornecedores
+    - [x] Alteração de Fornecedores
+    - [x] Listagem de Fornecedores
+    - [ ] Consulta de Fornecedores
+  - [ ] Especialidades
+    - [x] Cadastro de Especialidades
+    - [x] Alteração de Especialidades
+    - [x] Listagem de Especialidades
+    - [ ] Consulta de Especialidades
+  - [ ] Funcionários
+    - [ ] Cadastro de Funcionários
+    - [ ] Alteração de Funcionários
+    - [ ] Listagem de Funcionários
+    - [ ] Consulta de Funcionários
+  - [ ] Serviços
+    - [ ] Cadastro de Serviços
+    - [ ] Alteração de Serviços
+    - [ ] Listagem de Serviços
+    - [ ] Consulta de Serviços
+  - [ ] Ordens de Serviço
+    - [ ] Cadastro de Ordens de Serviço
+    - [ ] Alteração de Ordens de Serviço
+    - [ ] Listagem de Ordens de Serviço
+    - [ ] Consulta de Ordens de Serviço
