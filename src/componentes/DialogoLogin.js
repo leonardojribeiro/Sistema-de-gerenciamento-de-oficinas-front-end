@@ -1,13 +1,32 @@
-import React, { memo } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Box } from '@material-ui/core';
+import React, { memo, useCallback, useContext  } from 'react';
+import { DialogActions, Button, Box } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { useContext } from 'react';
 import AuthContext from '../contexts/AuthContext';
 import { Formulario, CampoDeTexto, CampoDeSenha } from './Formulario';
+import Dialogo from './Dialogo';
+import ApiContext from '../contexts/ApiContext';
 
 function DialogoLogin() {
   const history = useHistory();
-  const { efetuarLogin } = useContext(AuthContext);
+  const { setUsuario } = useContext(AuthContext);
+  const {post} = useContext(ApiContext);
+  
+  const efetuarLogin = useCallback(async ({ nomeUsuario, senha }) => {
+    const resposta = await post(
+      "/usuario/login",
+      {
+        nomeUsuario,
+        senha
+      }
+    );
+
+    if (resposta) {
+      setUsuario(resposta);
+      localStorage.setItem("tokenUsuario", resposta.token);
+      return true;
+    }
+    return false;
+  }, [post, setUsuario]);
 
   function manipularEnvio(usuario) {
     if (usuario) {
@@ -20,12 +39,12 @@ function DialogoLogin() {
   }
 
   return (
-    <Dialog open onClose={fechar} disableBackdropClick >
-      <DialogTitle>Login</DialogTitle>
+    <Dialogo aberto titulo="Login" >
       <Formulario limparAoEnviar aoEnviar={manipularEnvio}>
-        <DialogContent>
           <Box p={2}>
             <CampoDeTexto
+              autocapitalize="off"
+              autoCorrect={false}
               autoFocus
               nome="nomeUsuario"
               fullWidth
@@ -42,14 +61,13 @@ function DialogoLogin() {
               label="Senha"
             />
           </Box>
-        </DialogContent>
         <DialogActions>
           <Button onClick={fechar}>Cancelar</Button>
           <Button type="reset">limpar</Button>
           <Button type="submit">Login</Button>
         </DialogActions>
       </Formulario>
-    </Dialog>
+    </Dialogo>
   );
 }
 

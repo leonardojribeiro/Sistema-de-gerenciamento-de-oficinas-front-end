@@ -1,7 +1,6 @@
 import React, { useContext, useCallback, useEffect, memo } from 'react';
 import Dialogo from '../../../componentes/Dialogo';
 import ApiContext from '../../../contexts/ApiContext';
-import useAuth from '../../../hooks/useAuth';
 import { useHistory } from 'react-router-dom';
 import { DialogActions, Button, MenuItem, Typography, makeStyles, Grid } from '@material-ui/core';
 import { useState } from 'react';
@@ -26,26 +25,24 @@ function DialogoInserirModelo({ aberto }) {
   const classes = useStyles();
   const imagensUrl = process.env.REACT_APP_IMAGENS_URL;
   const { get, post} = useContext(ApiContext);
-  const { idOficina } = useAuth();
   const history = useHistory();
   const [marcas, setMarcas] = useState([]);
 
   const manipularEnvio = useCallback(async (peca) => {
     if (peca) {
-      peca.idOficina = idOficina;
       const resposta = await post("/peca", peca);
       if (resposta) {
         history.goBack();
       }
     }
-  },[history, idOficina, post]);
+  },[history, post]);
 
   const listarMarcas = useCallback(async () => {
-    const marcas = await get(`/marca?idOficina=${idOficina}`);
+    const marcas = await get("/marca");
     if (marcas) {
       setMarcas(marcas);
     }
-  }, [get, idOficina]);
+  }, [get,]);
 
   useEffect(() => {
     listarMarcas();

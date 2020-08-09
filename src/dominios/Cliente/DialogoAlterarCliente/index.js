@@ -1,7 +1,6 @@
 import React, { useContext, useRef, memo, useEffect, useCallback, useState } from 'react';
 import Dialogo from '../../../componentes/Dialogo';
 import ApiContext from '../../../contexts/ApiContext';
-import useAuth from '../../../hooks/useAuth';
 import { useHistory } from 'react-router-dom';
 import { DialogActions, Button, Grid, FormControlLabel, Radio } from '@material-ui/core';
 import useQuery from '../../../hooks/useQuery';
@@ -11,7 +10,6 @@ import { Formulario, CampoDeTexto, CampoDeCpfOuCnpj, CampoDeData, CampoDeRadio, 
 
 function DialogoAlterarCliente({ aberto }) {
   const { get, put, } = useContext(ApiContext);
-  const { idOficina } = useAuth();
   const history = useHistory();
   const [cliente, setCliente] = useState({});
   const id = useQuery("id");
@@ -20,7 +18,6 @@ function DialogoAlterarCliente({ aberto }) {
   const manipularEnvio = useCallback(async (dados) => {
     if (dados) {
       if (!comparar(cliente, dados)) {
-        dados.idOficina = idOficina;
         dados._id = cliente._id;
         console.log(dados);
         const resposta = await put("/cliente", dados);
@@ -36,14 +33,14 @@ function DialogoAlterarCliente({ aberto }) {
         }
       }
     }
-  }, [cliente, history, idOficina, put]);
+  }, [cliente, history, put]);
 
   const popular = useCallback(async () => {
-    const resposta = await get(`/cliente/id?idOficina=${idOficina}&_id=${id}`)
+    const resposta = await get(`/cliente/id?_id=${id}`)
     if (resposta) {
       setCliente(resposta)
     }
-  }, [get, id, idOficina]);
+  }, [get, id,]);
 
   useEffect(() => {
     if (aberto) {

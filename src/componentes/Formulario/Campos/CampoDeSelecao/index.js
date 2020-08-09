@@ -1,6 +1,6 @@
 import React, { memo, useRef, useCallback, useEffect, useState } from 'react';
 import { Select, FormControl, InputLabel, FormHelperText } from '@material-ui/core';
-import useCampo from "../../../../hooks/useCampo"
+import useCampo from '../../Hooks/useCampo';
 
 
 function CampoDeSelecao({ nome, ...props }) {

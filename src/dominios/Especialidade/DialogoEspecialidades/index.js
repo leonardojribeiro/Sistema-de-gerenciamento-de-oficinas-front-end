@@ -3,7 +3,6 @@ import { Box, } from '@material-ui/core';
 import Dialogo from '../../../componentes/Dialogo';
 import { useLocation, Link } from 'react-router-dom';
 import ApiContext from '../../../contexts/ApiContext';
-import useAuth from '../../../hooks/useAuth';
 import DialogoInserirEspecialidade from '../DialogoInserirEspecialidade';
 import DialogoAlterarEspecialidade from '../DialogoAlterarEspecialidade';
 import Listagem from '../ListagemEspecialidades';
@@ -12,17 +11,16 @@ import FormularioConsulta from '../../../componentes/FormularioConsulta';
 
 
 function DialgoEspecialidades() {
-  const { idOficina } = useAuth();
   const [especialidades, setEspecialidades] = useState([]);
   const { get } = useContext(ApiContext);
   const { pathname } = useLocation();
 
   const listar = useCallback(async () => {
-    const especialidades = await get(`/especialidade?idOficina=${idOficina}`);
+    const especialidades = await get("/especialidade");
     if (especialidades) {
       setEspecialidades(especialidades);
     }
-  }, [get, idOficina]);
+  }, [get,]);
 
   useEffect(() => {
     if (pathname === "/especialidades") {
@@ -31,11 +29,11 @@ function DialgoEspecialidades() {
   }, [listar, pathname]);
 
   const manipularBusca = useCallback(async ({ consulta }) => {
-    const especialidades = await get(`/especialidade/descricao?idOficina=${idOficina}&descricao=${consulta}`);
+    const especialidades = await get(`/especialidade/descricao?descricao=${consulta}`);
     if (especialidades) {
       setEspecialidades(especialidades);
     }
-  }, [get, idOficina]);
+  }, [get,]);
 
   const conteudo = useMemo(() => (
     <>

@@ -2,7 +2,7 @@ import React, { useState, useCallback, useRef, memo } from 'react';
 import { TextField } from '@material-ui/core';
 import validacao from '../../../../recursos/Validacao';
 import { useEffect } from 'react';
-import useCampo from '../../../../hooks/useCampo';
+import useCampo from '../../Hooks/useCampo';
 
 
 function CampoDeEmail({ nome, ...props }) {

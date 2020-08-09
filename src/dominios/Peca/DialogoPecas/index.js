@@ -1,7 +1,6 @@
 import React, { useState, useContext, useCallback, useEffect } from 'react';
 import Dialogo from '../../../componentes/Dialogo';
 import { Box, } from '@material-ui/core';
-import useAuth from '../../../hooks/useAuth';
 import ApiContext from '../../../contexts/ApiContext';
 import { Link, useLocation } from 'react-router-dom';
 import DialogoInserirPeca from '../DialogoInserirPeca';
@@ -13,17 +12,16 @@ import FormularioConsulta from '../../../componentes/FormularioConsulta';
 
 
 function DialogoPecas() {
-  const { idOficina } = useAuth();
   const [pecas, setPecas] = useState([]);
   const { get } = useContext(ApiContext);
   const { pathname } = useLocation();
   const filtros = ["Descricao", "Marca"]
   const listar = useCallback(async () => {
-    const pecas = await get(`/peca?idOficina=${idOficina}`);
+    const pecas = await get("/peca");
     if (pecas) {
       setPecas(pecas);
     }
-  }, [get, idOficina]);
+  }, [get,]);
 
   useEffect(() => {
     if (pathname === "/pecas") {
@@ -32,15 +30,15 @@ function DialogoPecas() {
   }, [listar, pathname]);
 
   const manipularBusca = useCallback(async ({ consulta, tipo }) => {
-    const pecas = await get(`/peca/consulta?idOficina=${idOficina}&consulta=${consulta}&tipo=${tipo}`);
+    const pecas = await get(`/peca/consulta?consulta=${consulta}&tipo=${tipo}`);
     if (pecas) {
       setPecas(pecas);
     }
-  }, [get, idOficina]);
+  }, [get,]);
 
   const conteudo = useMemo(() => (
     <>
-      <FormularioConsulta aoEnviar={manipularBusca} filtros={filtros}/>
+      <FormularioConsulta aoEnviar={manipularBusca} filtros={filtros} />
       <Box display="flex" justifyContent="center" pt={2}>Listagem</Box>
       <ListagemPeca pecas={pecas} />
       <BotaoInserir titulo="Inserir peça" component={Link} to="/pecas/inserir" />

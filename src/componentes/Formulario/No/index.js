@@ -1,5 +1,5 @@
 import React, { useContext, memo } from 'react';
-import FormularioContexto from '../../../contexts/FormularioContexto';
+import FormularioContexto from '../Contexto/FormularioContexto';
 import PropTypes from 'prop-types';
 
 function No({ no, children }) {

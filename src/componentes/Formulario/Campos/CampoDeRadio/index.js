@@ -1,6 +1,6 @@
 import React, { memo, useRef, useCallback, useEffect, useState } from 'react';
 import { FormControl, FormLabel, RadioGroup, FormHelperText } from '@material-ui/core';
-import useCampo from "../../../../hooks/useCampo"
+import useCampo from '../../Hooks/useCampo';
 
 
 function CampoDeRadio({ nome, ...props }) {

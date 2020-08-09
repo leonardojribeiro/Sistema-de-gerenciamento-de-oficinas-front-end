@@ -3,7 +3,7 @@ import { TextField } from '@material-ui/core';
 import MascaraNumererica from '../../../../recursos/MascaraNumerica';
 import validacao from '../../../../recursos/Validacao';
 import { useEffect } from 'react';
-import useCampo from '../../../../hooks/useCampo';
+import useCampo from '../../Hooks/useCampo';
 
 
 function CampoDeCep({ nome, ...props }) {

@@ -1,7 +1,6 @@
 import React, { useContext, useRef, useCallback, useEffect, memo } from 'react';
 import Dialogo from '../../../componentes/Dialogo';
 import ApiContext from '../../../contexts/ApiContext';
-import useAuth from '../../../hooks/useAuth';
 import { useHistory } from 'react-router-dom';
 import { DialogActions, Button, MenuItem, Typography, makeStyles, Grid } from '@material-ui/core';
 import { useState } from 'react';
@@ -30,7 +29,6 @@ function DialogoAlterarModelo({ aberto }) {
   const classes = useStyles();
   const imagensUrl = process.env.REACT_APP_IMAGENS_URL;
   const { get, put } = useContext(ApiContext);
-  const { idOficina } = useAuth();
   const history = useHistory();
   const [marcas, setMarcas] = useState([]);
   const [modelo, setModelo] = useState({});
@@ -40,7 +38,6 @@ function DialogoAlterarModelo({ aberto }) {
     if (modeloASerAlterado) {
       if (!comparar(modelo, modeloASerAlterado)) {
         modeloASerAlterado._id = modelo._id
-        modeloASerAlterado.idOficina = idOficina;
         const resposta = await put("/modelo", modeloASerAlterado);
         if (resposta) {
           history.goBack();
@@ -49,29 +46,29 @@ function DialogoAlterarModelo({ aberto }) {
       else {
         if (refAlerta.current) {
           refAlerta.current.setTipo("warning");
-          refAlerta.current.setMensagem("Nenuma alteração foi efetuada.");
+          refAlerta.current.setMensagem("Nenhuma alteração foi efetuada.");
           refAlerta.current.setAberto(true);
         }
       }
     }
-  }, [history, idOficina, modelo, put]);
+  }, [history, modelo, put]);
 
   const id = useQuery("id");
 
   const popular = useCallback(async () => {
-    const resposta = await get(`/modelo/id?idOficina=${idOficina}&_id=${id}`)
+    const resposta = await get(`/modelo/id?_id=${id}`)
     if (resposta) {
       setModelo(resposta)
     }
-  }, [get, id, idOficina]);
+  }, [get, id]);
 
   const listarMarcas = useCallback(async () => {
-    const marcas = await get(`/marca?idOficina=${idOficina}`);
+    const marcas = await get(`/marca`);
     if (marcas) {
       setMarcas(marcas);
     }
     popular()
-  }, [get, idOficina, popular]);
+  }, [get, popular]);
 
   useEffect(() => {
     if (aberto) {

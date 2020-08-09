@@ -3,7 +3,6 @@ import { Box, } from '@material-ui/core';
 import Dialogo from '../../../componentes/Dialogo';
 import { useLocation, Link } from 'react-router-dom';
 import ApiContext from '../../../contexts/ApiContext';
-import useAuth from '../../../hooks/useAuth';
 import DialogoInserirMarca from '../DialogoInserirMarca';
 import DialogoAlterarMarca from '../DialogoAlterarMarca';
 import Listagem from '../ListagemMarcas';
@@ -12,17 +11,16 @@ import FormularioConsulta from '../../../componentes/FormularioConsulta';
 
 
 function DialgoMarcas() {
-  const { idOficina } = useAuth();
   const [marcas, setMarcas] = useState([]);
   const { get } = useContext(ApiContext);
   const { pathname } = useLocation();
 
   const listar = useCallback(async () => {
-    const marcas = await get(`/marca?idOficina=${idOficina}`);
+    const marcas = await get(`/marca`);
     if (marcas) {
       setMarcas(marcas);
     }
-  }, [get, idOficina]);
+  }, [get,]);
 
   useEffect(() => {
     if (pathname === "/marcas") {
@@ -31,11 +29,11 @@ function DialgoMarcas() {
   }, [listar, pathname]);
 
   const manipularBusca = useCallback(async ({ consulta }) => {
-    const marcas = await get(`/marca/descricao?idOficina=${idOficina}&descricao=${consulta}`);
+    const marcas = await get(`/marca/descricao?descricao=${consulta}`);
     if (marcas) {
       setMarcas(marcas);
     }
-  }, [get, idOficina]);
+  }, [get,]);
 
   const conteudo = useMemo(() => (
     <>

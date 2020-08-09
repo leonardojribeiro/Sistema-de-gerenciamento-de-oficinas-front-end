@@ -1,7 +1,6 @@
 import React, { useContext, useCallback, useEffect, memo } from 'react';
 import Dialogo from '../../../componentes/Dialogo';
 import ApiContext from '../../../contexts/ApiContext';
-import useAuth from '../../../hooks/useAuth';
 import { useHistory } from 'react-router-dom';
 import { DialogActions, Button, MenuItem, } from '@material-ui/core';
 import { useState } from 'react';
@@ -10,34 +9,32 @@ import { Formulario, CampoDeTexto, CampoDeData, CampoDeSelecao } from '../../../
 
 function DialogoInserirVeiculo({ aberto }) {
   const { get, post, } = useContext(ApiContext);
-  const { idOficina } = useAuth();
   const history = useHistory();
   const [clientes, setClientes] = useState([]);
   const [modelos, setModelos] = useState([]);
 
   const manipularEnvio = useCallback(async (veiculo) => {
     if (veiculo) {
-      veiculo.idOficina = idOficina;
       const resposta = await post("/veiculo", veiculo);
       if (resposta) {
         history.goBack();
       }
     }
-  }, [history, idOficina, post]);
+  }, [history, post]);
 
   const listarClientes = useCallback(async () => {
-    const cliente = await get(`/cliente?idOficina=${idOficina}`);
+    const cliente = await get("/cliente");
     if (cliente) {
       setClientes(cliente);
     }
-  }, [get, idOficina]);
+  }, [get]);
 
   const listarModelos = useCallback(async () => {
-    const modelos = await get(`/modelo?idOficina=${idOficina}`);
+    const modelos = await get("/modelo");
     if (modelos) {
       setModelos(modelos);
     }
-  }, [get, idOficina]);
+  }, [get,]);
 
   useEffect(() => {
     listarClientes();

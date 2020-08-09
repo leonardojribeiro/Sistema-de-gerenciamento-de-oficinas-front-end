@@ -11,11 +11,11 @@ function App() {
   return (
     <BrowserRouter>
       <TemaProvider>
-        <ApiProvider>
-          <AuthProvider>
+        <AuthProvider>
+          <ApiProvider>
             <Rotas />
-          </AuthProvider>
-        </ApiProvider>
+          </ApiProvider>
+        </AuthProvider>
       </TemaProvider>
     </BrowserRouter>
   );

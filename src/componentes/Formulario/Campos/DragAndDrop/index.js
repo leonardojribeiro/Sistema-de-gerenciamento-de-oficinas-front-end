@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useState, useRef, memo } from "react";
 import { useDropzone } from "react-dropzone";
 import { makeStyles, Box, Typography } from "@material-ui/core";
-import useCampo from '../../../../hooks/useCampo';
+import useCampo from '../../Hooks/useCampo';
 
 const useStyles = makeStyles((theme) => ({
   drag: {

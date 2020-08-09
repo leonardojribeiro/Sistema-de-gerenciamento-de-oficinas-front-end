@@ -1,7 +1,6 @@
 import React, { useState, useContext, useCallback, useEffect } from 'react';
 import Dialogo from '../../../componentes/Dialogo';
 import { Box,} from '@material-ui/core';
-import useAuth from '../../../hooks/useAuth';
 import ApiContext from '../../../contexts/ApiContext';
 import { Link, useLocation } from 'react-router-dom';
 import DialogoInserirVeiculo from '../DialogoInserirVeiculo';
@@ -13,17 +12,16 @@ import FormularioConsulta from '../../../componentes/FormularioConsulta';
 
 
 function DialogoVeiculos() {
-  const { idOficina } = useAuth();
   const [veiculos, setVeiculos] = useState([]);
   const { get } = useContext(ApiContext);
   const { pathname } = useLocation();
 
   const listar = useCallback(async () => {
-    const veiculos = await get(`/veiculo?idOficina=${idOficina}`);
+    const veiculos = await get("/veiculo");
     if (veiculos) {
       setVeiculos(veiculos);
     }
-  }, [get, idOficina]);
+  }, [get,]);
 
   useEffect(() => {
     if (pathname === "/veiculos") {
@@ -32,11 +30,11 @@ function DialogoVeiculos() {
   }, [listar, pathname]);
 
   const manipularBusca = useCallback(async ({ consulta, tipo }) => {
-    const pecas = await get(`/peca/consulta?idOficina=${idOficina}&consulta=${consulta}&tipo=${tipo}`);
+    const pecas = await get(`/peca/consulta?consulta=${consulta}&tipo=${tipo}`);
     if (pecas) {
       setVeiculos(pecas);
     }
-  }, [get, idOficina]);
+  }, [get,]);
 
   const conteudo = useMemo(() => (
     <>

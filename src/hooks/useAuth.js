@@ -1,10 +1,10 @@
-const { useContext } = require("react");
-const { default: AuthContext } = require("../contexts/AuthContext");
+import AuthContext from "../contexts/AuthContext";
+import { useContext } from "react";
 
 export default function useAuth() {
-  const { usuario } = useContext(AuthContext);
-  const idOficina = usuario ? usuario.oficina._id : null;
-  const token = usuario ? usuario.token : null;
+  const { usuario, } = useContext(AuthContext);
+
+
 
   // function teste() {
   //   String(token).split(".")
@@ -20,9 +20,12 @@ export default function useAuth() {
   // test.setTime(teste().iat*1000)
   // console.log(test, teste())
 
+  const logado = !!usuario && usuario._id;
+  const auth = `Bearer ${usuario && usuario.token}`;
+
   return {
     usuario,
-    idOficina,
-    token,
+    token: auth,
+    logado
   }
 }

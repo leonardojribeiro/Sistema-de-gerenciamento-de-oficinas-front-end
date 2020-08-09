@@ -2,17 +2,17 @@ import React, { useContext, memo, useCallback } from 'react';
 import Dialogo from '../../../componentes/Dialogo';
 import ApiContext from '../../../contexts/ApiContext';
 import { useHistory } from 'react-router-dom';
-import { DialogActions, Button, Grid, FormControlLabel, Radio } from '@material-ui/core';
-import { CampoDeCpfOuCnpj, Formulario, CampoDeTexto, CampoDeData, CampoDeRadio, CampoDeTelefone, CampoDeEmail, CampoDeCep, No } from '../../../componentes/Formulario';
+import { DialogActions, Button, Grid, } from '@material-ui/core';
+import { CampoDeCpfOuCnpj, Formulario, CampoDeTexto, CampoDeTelefone, CampoDeEmail, CampoDeCep, No } from '../../../componentes/Formulario';
 
-function DialogoInserirCliente({ aberto }) {
+function DialogoInserirFornecedor({ aberto }) {
   const { post } = useContext(ApiContext);
   const history = useHistory();
 
-  const manipularEnvio = useCallback(async (cliente) => {
-    if (cliente) {
-      console.log(cliente);
-      const resposta = await post("/cliente", cliente);
+  const manipularEnvio = useCallback(async (fornecedorASerInserido) => {
+    if (fornecedorASerInserido) {
+      console.log(fornecedorASerInserido);
+      const resposta = await post("/fornecedor", fornecedorASerInserido);
       if (resposta) {
         history.goBack();
       }
@@ -20,23 +20,17 @@ function DialogoInserirCliente({ aberto }) {
   },[history, post]);
 
   return (
-    <Dialogo maxWidth="md" fullWidth aberto={aberto} titulo="Inserir cliente">
+    <Dialogo maxWidth="md" fullWidth aberto={aberto} titulo="Inserir fornecedor">
       <Formulario aoEnviar={manipularEnvio}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8} md={8}>
-            <CampoDeTexto nome="nome" label="Nome" fullWidth required autoFocus />
+            <CampoDeTexto nome="nomeFantasia" label="Nome fantasia" fullWidth required autoFocus />
           </Grid>
           <Grid item xs={12} sm={4} md={4}>
             <CampoDeCpfOuCnpj nome="cpfCnpj" label="CPF/CNPJ" fullWidth required />
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <CampoDeData nome="dataNascimento" label="Data de nascimento" fullWidth required />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <CampoDeRadio nome="sexo" label="Sexo" fullWidth required>
-              <FormControlLabel value="f" control={<Radio color="primary" />} label="Feminino" />
-              <FormControlLabel value="m" control={<Radio color="primary" />} label="Masculino" />
-            </CampoDeRadio>
+          <Grid item xs={12} sm={12} md={8}>
+            <CampoDeTexto nome="razaoSocial" label="RazaoSocial" fullWidth required />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <CampoDeTelefone nome="telefoneFixo" label="Telefone fixo" fullWidth />
@@ -79,4 +73,4 @@ function DialogoInserirCliente({ aberto }) {
   );
 }
 
-export default memo(DialogoInserirCliente);
+export default memo(DialogoInserirFornecedor);

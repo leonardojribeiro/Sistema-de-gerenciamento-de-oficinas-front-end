@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { DialogActions, Button, Grid, FormControlLabel, Radio } from '@material-ui/core';
 import { CampoDeCpfOuCnpj, Formulario, CampoDeTexto, CampoDeData, CampoDeRadio, CampoDeTelefone, CampoDeEmail, CampoDeCep, No } from '../../../componentes/Formulario';
 
-function DialogoInserirCliente({ aberto }) {
+function DialogoInserirFuncionario({ aberto }) {
   const { post } = useContext(ApiContext);
   const history = useHistory();
 
@@ -20,7 +20,7 @@ function DialogoInserirCliente({ aberto }) {
   },[history, post]);
 
   return (
-    <Dialogo maxWidth="md" fullWidth aberto={aberto} titulo="Inserir cliente">
+    <Dialogo maxWidth="md" fullWidth aberto={aberto} titulo="Inserir funcionário">
       <Formulario aoEnviar={manipularEnvio}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8} md={8}>
@@ -79,4 +79,4 @@ function DialogoInserirCliente({ aberto }) {
   );
 }
 
-export default memo(DialogoInserirCliente);
+export default memo(DialogoInserirFuncionario);

@@ -1,7 +1,6 @@
 import React, { useContext, useRef, useCallback, useEffect, memo } from 'react';
 import Dialogo from '../../../componentes/Dialogo';
 import ApiContext from '../../../contexts/ApiContext';
-import useAuth from '../../../hooks/useAuth';
 import { useHistory } from 'react-router-dom';
 import { DialogActions, Button, MenuItem, Typography, makeStyles, Grid } from '@material-ui/core';
 import CampoDeSelecao from '../../../componentes/Formulario/Campos/CampoDeSelecao';
@@ -30,7 +29,6 @@ function DialogoAlterarModelo({ aberto }) {
   const classes = useStyles();
   const imagensUrl = process.env.REACT_APP_IMAGENS_URL;
   const { get, put } = useContext(ApiContext);
-  const { idOficina } = useAuth();
   const history = useHistory();
   const [marcas, setMarcas] = useState([]);
   const [peca, setPeca] = useState({});
@@ -40,8 +38,7 @@ function DialogoAlterarModelo({ aberto }) {
   const manipularEnvio = useCallback(async (pecaASerAlterada) => {
     if (pecaASerAlterada) {
       if (!(pecaASerAlterada.descricao === peca.descricao) || !(pecaASerAlterada.idMarca === peca.idMarca)) {
-        pecaASerAlterada._id = peca._id
-        pecaASerAlterada.idOficina = idOficina;
+        pecaASerAlterada._id = peca._id;
         const resposta = await put("/peca", pecaASerAlterada);
         if (resposta) {
           history.goBack();
@@ -55,23 +52,23 @@ function DialogoAlterarModelo({ aberto }) {
         }
       }
     }
-  }, [history, idOficina, peca, put]);
+  }, [history, peca, put]);
 
 
   const popular = useCallback(async () => {
-    const resposta = await get(`/peca/id?idOficina=${idOficina}&_id=${id}`)
+    const resposta = await get(`/peca/id?_id=${id}`)
     if (resposta) {
       setPeca(resposta)
     }
-  }, [get, id, idOficina]);
+  }, [get, id,]);
 
   const listarMarcas = useCallback(async () => {
-    const marcas = await get(`/marca?idOficina=${idOficina}`);
+    const marcas = await get("/marca");
     if (marcas) {
       setMarcas(marcas);
     }
     popular()
-  }, [get, idOficina, popular]);
+  }, [get,  popular]);
 
   useEffect(() => {
     if (aberto) {

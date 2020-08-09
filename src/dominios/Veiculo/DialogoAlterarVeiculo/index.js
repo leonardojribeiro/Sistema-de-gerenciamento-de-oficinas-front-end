@@ -1,7 +1,6 @@
 import React, { useContext, useRef, useCallback, useEffect, memo } from 'react';
 import Dialogo from '../../../componentes/Dialogo';
 import ApiContext from '../../../contexts/ApiContext';
-import useAuth from '../../../hooks/useAuth';
 import { useHistory } from 'react-router-dom';
 import { DialogActions, Button, MenuItem, } from '@material-ui/core';
 import { useState } from 'react';
@@ -13,7 +12,6 @@ import comparar from '../../../recursos/Comparar';
 
 function DialogoAlterarVeiculo({ aberto }) {
   const { get, put } = useContext(ApiContext);
-  const { idOficina } = useAuth();
   const history = useHistory();
   const [veiculo, setVeiculo] = useState({});
   const refAlerta = useRef();
@@ -25,7 +23,6 @@ function DialogoAlterarVeiculo({ aberto }) {
     if (veiculoASerAlterado) {
       if (!comparar(veiculo, veiculoASerAlterado)) {
         veiculoASerAlterado._id = veiculo._id
-        veiculoASerAlterado.idOficina = idOficina;
         const resposta = await put("/veiculo", veiculoASerAlterado);
         if (resposta) {
           history.goBack();
@@ -39,30 +36,30 @@ function DialogoAlterarVeiculo({ aberto }) {
         }
       }
     }
-  }, [history, idOficina, veiculo, put]);
+  }, [history, veiculo, put]);
 
 
   const popular = useCallback(async () => {
-    const resposta = await get(`/veiculo/id?idOficina=${idOficina}&_id=${id}`)
+    const resposta = await get(`/veiculo/id?_id=${id}`)
     console.log(resposta);
     if (resposta) {
       setVeiculo(resposta)
     }
-  }, [get, id, idOficina]);
+  }, [get, id,]);
 
   const listarClientes = useCallback(async () => {
-    const cliente = await get(`/cliente?idOficina=${idOficina}`);
+    const cliente = await get("/cliente");
     if (cliente) {
       setClientes(cliente);
     }
-  }, [get, idOficina]);
+  }, [get, ]);
 
   const listarModelos = useCallback(async () => {
-    const modelos = await get(`/modelo?idOficina=${idOficina}`);
+    const modelos = await get("/modelo");
     if (modelos) {
       setModelos(modelos);
     }
-  }, [get, idOficina]);
+  }, [get,]);
 
   useEffect(() => {
     if (aberto) {

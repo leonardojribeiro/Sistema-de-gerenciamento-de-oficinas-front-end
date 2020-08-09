@@ -14,6 +14,7 @@ import ExtensionIcon from '@material-ui/icons/Extension';
 import PersonIcon from '@material-ui/icons/Person';
 import SchoolIcon from '@material-ui/icons/School';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
+import BuildIcon from '@material-ui/icons/Build';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -154,6 +155,16 @@ function PaginaInicialOficina() {
               <ListItemText>
                 <Typography variant="body2">
                   Especialidades
+              </Typography>
+              </ListItemText>
+            </ListItem>
+            <ListItem button component={Link} to="/funcionarios">
+              <ListItemIcon>
+                <BuildIcon/>
+              </ListItemIcon>
+              <ListItemText>
+                <Typography variant="body2">
+                  Funcionários
               </Typography>
               </ListItemText>
             </ListItem>

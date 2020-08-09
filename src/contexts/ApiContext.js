@@ -4,12 +4,17 @@ import ProgressoCircular from "../componentes/ProgressoCircular";
 import dot from "dot-object";
 import Alerta from "../componentes/Alerta";
 import { useRef } from "react";
+import useAuth from "../hooks/useAuth";
 
 const ApiContext = createContext();
 
 export function ApiProvider({ children }) {
   const refAlerta = useRef();
   const refProgresso = useRef();
+  const {token} = useAuth();
+  const headers = {
+    authorization: token,
+  }
 
   function handleProgresso(e) {
     const progresso = (e.loaded * 100 / e.total);
@@ -40,7 +45,7 @@ export function ApiProvider({ children }) {
     refAlerta.current.setAberto(true);
   }
 
-  function handleResposta(resposta) {
+  const handleResposta = useCallback((resposta) => {
     if (resposta) {
       if (resposta.status === 201 || resposta.status === 200) {
         if (resposta.data.mensagem) {
@@ -54,18 +59,18 @@ export function ApiProvider({ children }) {
       }
     }
     return null;
-  }
+  },[]);
 
   const get = useCallback(async (url) => {
     let resposta = null;
     try {
-      resposta = await api.get(url, );
+      resposta = await api.get(url, {headers});
     }
     catch (e) {
       handleErro(e)
     }
     return handleResposta(resposta);
-  }, []);
+  }, [handleResposta, headers]);
 
   const getTipoBlob = useCallback(async (url) => {
     let resposta = null;
@@ -78,7 +83,7 @@ export function ApiProvider({ children }) {
       handleErro(e)
     }
     return handleResposta(resposta);
-  }, []);
+  }, [handleResposta]);
 
   const post = useCallback(async (url, dados) => {
     refProgresso.current.setAberto(true);
@@ -86,10 +91,11 @@ export function ApiProvider({ children }) {
     try {
       resposta = await api
         .post(
-          `${process.env.REACT_APP_API_URL}${url}`,
+          url,
           dados,
           {
-            onUploadProgress: handleProgresso
+            onUploadProgress: handleProgresso,
+            headers,
           }
         );
     }
@@ -98,7 +104,7 @@ export function ApiProvider({ children }) {
     }
     refProgresso.current.setAberto(false);
     return handleResposta(resposta)
-  }, []);
+  }, [handleResposta, headers]);
 
   const put = useCallback(async (url, dados) => {
     refProgresso.current.setAberto(true);
@@ -109,7 +115,8 @@ export function ApiProvider({ children }) {
           url,
           dados,
           {
-            onUploadProgress: handleProgresso
+            onUploadProgress: handleProgresso,
+            headers,
           }
         );
     }
@@ -118,7 +125,7 @@ export function ApiProvider({ children }) {
     }
     refProgresso.current.setAberto(false);
     return handleResposta(resposta)
-  }, []);
+  }, [handleResposta, headers]);
 
   const prepararDados = useCallback((dados) => {
     const formDados = new FormData();

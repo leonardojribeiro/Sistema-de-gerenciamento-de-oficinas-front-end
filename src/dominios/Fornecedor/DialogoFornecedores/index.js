@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState, useContext, useMemo } from 'react';
 import Dialogo from '../../../componentes/Dialogo';
 import { Box,} from '@material-ui/core';
-import useAuth from '../../../hooks/useAuth';
 import ApiContext from '../../../contexts/ApiContext';
 import { useLocation, Link } from 'react-router-dom';
 import DialogoInserirCliente from '../DialogoInserirFornecedor';
@@ -11,30 +10,30 @@ import BotaoInserir from '../../../componentes/BotaoInserir';
 import FormularioConsulta from '../../../componentes/FormularioConsulta';
 
 function DialogoFornecedores() {
-  const { idOficina } = useAuth();
   const [fornecedores, setFornecedores] = useState([]);
   const { get } = useContext(ApiContext);
   const { pathname } = useLocation();
 
   const listar = useCallback(async () => {
-    const fornecedores = await get(`/fornecedor?idOficina=${idOficina}`);
+    const fornecedores = await get("/fornecedor");
     if (fornecedores) {
       setFornecedores(fornecedores);
     }
-  }, [get, idOficina]);
+  }, [get]);
 
   useEffect(() => {
     if (pathname === "/fornecedores") {
+      document.title = "Fornecedores"
       listar();
     }
   }, [listar, pathname]);
 
   const manipularBusca = useCallback(async ({ consulta, tipo }) => {
-    const modelos = await get(`/cliente/consulta?idOficina=${idOficina}&consulta=${consulta}&tipo=${tipo}`);
+    const modelos = await get(`/cliente/consulta?consulta=${consulta}&tipo=${tipo}`);
     if (modelos) {
       setFornecedores(modelos);
     }
-  }, [get, idOficina]);
+  }, [get,]);
 
   const conteudo = useMemo(() => (
     <>

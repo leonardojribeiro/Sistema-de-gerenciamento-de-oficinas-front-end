@@ -4,7 +4,6 @@ import useQuery from '../../../hooks/useQuery';
 import { DialogActions, Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import ApiContext from '../../../contexts/ApiContext';
-import useAuth from '../../../hooks/useAuth';
 import Alerta from '../../../componentes/Alerta';
 import { Formulario, CampoDeTexto, } from '../../../componentes/Formulario';
 
@@ -12,7 +11,6 @@ function DialogoAlterarEspecialidade({ aberto }) {
   const id = useQuery("id");
   const [especialidade, setEspecialidade] = useState({});
   const { get, put } = useContext(ApiContext);
-  const { idOficina } = useAuth();
   const history = useHistory();
   const refAlerta = useRef();
 
@@ -20,24 +18,23 @@ function DialogoAlterarEspecialidade({ aberto }) {
     if (especialidadeASerAlterada) {
       if (!(especialidadeASerAlterada.descricao === especialidade.descricao)) {
         especialidadeASerAlterada._id = especialidade._id
-        especialidadeASerAlterada.idOficina = idOficina;
         const resposta = await put("/especialidade", especialidadeASerAlterada);
         if (resposta) { history.goBack();
         }
       }
       else {
-        if (refAlerta.current) { refAlerta.current.setTipo("warning"); refAlerta.current.setMensagem("Nenuma alteração foi efetuada."); refAlerta.current.setAberto(true);
+        if (refAlerta.current) { refAlerta.current.setTipo("warning"); refAlerta.current.setMensagem("Nenhuma alteração foi efetuada."); refAlerta.current.setAberto(true);
         }
       }
     }
-  }, [especialidade.descricao, especialidade._id, idOficina, put, history]);
+  }, [especialidade.descricao, especialidade._id, put, history]);
 
   const popular = useCallback(async () => {
-    const resposta = await get(`/especialidade/id?idOficina=${idOficina}&_id=${id}`)
+    const resposta = await get(`/especialidade/id?_id=${id}`)
     if (resposta) {
       setEspecialidade(resposta)
     }
-  }, [get, id, idOficina]);
+  }, [get, id,]);
 
   useEffect(() => {
     if (aberto) {

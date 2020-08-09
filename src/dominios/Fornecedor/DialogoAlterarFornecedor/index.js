@@ -1,39 +1,65 @@
-import React, { useContext, memo, useCallback } from 'react';
+import React, { useContext, useRef, memo, useEffect, useCallback, useState } from 'react';
 import Dialogo from '../../../componentes/Dialogo';
 import ApiContext from '../../../contexts/ApiContext';
-import useAuth from '../../../hooks/useAuth';
 import { useHistory } from 'react-router-dom';
 import { DialogActions, Button, Grid, } from '@material-ui/core';
-import { CampoDeCpfOuCnpj, Formulario, CampoDeTexto, CampoDeTelefone, CampoDeEmail, CampoDeCep, No } from '../../../componentes/Formulario';
+import useQuery from '../../../hooks/useQuery';
+import comparar from '../../../recursos/Comparar';
+import Alerta from '../../../componentes/Alerta';
+import { Formulario, CampoDeTexto, CampoDeCpfOuCnpj, CampoDeTelefone, CampoDeEmail, CampoDeCep, No } from '../../../componentes/Formulario';
 
-function DialogoInserirFornecedor({ aberto }) {
-  const { post } = useContext(ApiContext);
-  const { idOficina } = useAuth();
+function DialogoAlterarFornecedor({ aberto }) {
+  const { get, put, } = useContext(ApiContext);
   const history = useHistory();
+  const [fornecedor, setFornecedor] = useState({});
+  const id = useQuery("id");
+  const refAlerta = useRef();
 
-  const manipularEnvio = useCallback(async (fornecedorASerInserido) => {
-    if (fornecedorASerInserido) {
-      fornecedorASerInserido.idOficina = idOficina;
-      console.log(fornecedorASerInserido);
-      const resposta = await post("/fornecedor", fornecedorASerInserido);
-      if (resposta) {
-        history.goBack();
+  const manipularEnvio = useCallback(async (dados) => {
+    if (dados) {
+      if (!comparar(fornecedor, dados)) {
+        dados._id = fornecedor._id;
+        console.log(dados);
+        const resposta = await put("/fornecedor", dados);
+        if (resposta) {
+          history.goBack();
+        }
+      }
+      else {
+        if (refAlerta.current) {
+          refAlerta.current.setTipo("warning");
+          refAlerta.current.setMensagem("Nenhuma alteração foi efetuada.");
+          refAlerta.current.setAberto(true);
+        }
       }
     }
-  },[history, idOficina, post]);
+  }, [fornecedor, history,  put]);
+
+  const popular = useCallback(async () => {
+    const resposta = await get(`/fornecedor/id?_id=${id}`)
+    if (resposta) {
+      setFornecedor(resposta)
+    }
+  }, [get, id,]);
+
+  useEffect(() => {
+    if (aberto) {
+      popular();
+    }
+  }, [popular, aberto])
 
   return (
-    <Dialogo maxWidth="md" fullWidth aberto={aberto} titulo="Inserir fornecedor">
-      <Formulario aoEnviar={manipularEnvio}>
+    <Dialogo maxWidth="md" fullWidth aberto={aberto} titulo="Alterar cliente">
+      <Formulario dadosIniciais={fornecedor} aoEnviar={manipularEnvio}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8} md={8}>
             <CampoDeTexto nome="nomeFantasia" label="Nome fantasia" fullWidth required autoFocus />
           </Grid>
           <Grid item xs={12} sm={4} md={4}>
-            <CampoDeCpfOuCnpj nome="cpfCnpj" label="CPF/CNPJ" fullWidth required />
+            <CampoDeCpfOuCnpj nome="cpfCnpj" label="CPF/CNPJ" disabled fullWidth required />
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
-            <CampoDeTexto nome="razaoSocial" label="RazaoSocial" fullWidth required />
+            <CampoDeTexto nome="razaoSocial" label="Razão Social" fullWidth required />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <CampoDeTelefone nome="telefoneFixo" label="Telefone fixo" fullWidth />
@@ -72,8 +98,9 @@ function DialogoInserirFornecedor({ aberto }) {
           <Button type="submit">Salvar</Button>
         </DialogActions>
       </Formulario>
+      <Alerta ref={refAlerta} />
     </Dialogo>
   );
 }
 
-export default memo(DialogoInserirFornecedor);
+export default memo(DialogoAlterarFornecedor);
