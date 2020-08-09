@@ -39,7 +39,8 @@ O app estará pronto para o deploy.
 Veja a sessão [deployment](https://facebook.github.io/create-react-app/docs/deployment) para mais informações.
 
 ## Recursos 
-  - [x] Cadastro de Marcas
-  - [x] Alteração de Marcas
-  - [x] Listagem de Marcas
-  - - [x] Consulta de Marcas
+  - [X] Marcas
+    - [x] Cadastro de Marcas
+    - [x] Alteração de Marcas
+    - [x] Listagem de Marcas
+    - [x] Consulta de Marcas
