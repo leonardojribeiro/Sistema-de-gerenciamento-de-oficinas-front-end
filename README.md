@@ -5,15 +5,15 @@ Tabela de conteúdos
 <!--ts-->
    * [Sobre](#Sobre)
    * [Tabela de Conteudo](#tabela-de-conteudo)
-   * [Scripts disponíveis](#Scripts disponíveis)
-      * [Executar em modo de desenvolvimento](#yarn start)
-      * [Compilar para o modo de produção](#yarn build)
+   * [Scripts disponíveis](#Scripts-disponíveis)
+      * [Executar em modo de desenvolvimento](#yarn-start)
+      * [Compilar para o modo de produção](#yarn-build)
    * [Recursos](#recursos)
 <!--te-->
 
 ## Sobre
 
-Esse projeto está sendo desenvolido como requisito parcial de avaliação do trabalho de conclusão curso de Sistemas de Informação da [Universidade Estadual de Goías](http://www.itaberai.ueg.br/).<br/>
+Esse projeto está sendo desenvolvido como requisito parcial de avaliação do trabalho de conclusão de curso de Sistemas de Informação da [Universidade Estadual de Goiás](http://www.itaberai.ueg.br/).<br/>
 Tendo como principal objetivo auxiliar no cotidiano das oficinas automobilísticas.
 
 Esse projeto foi criado através do [Create React App](https://github.com/facebook/create-react-app).
@@ -42,4 +42,4 @@ Veja a sessão [deployment](https://facebook.github.io/create-react-app/docs/dep
   - [x] Cadastro de Marcas
   - [x] Alteração de Marcas
   - [x] Listagem de Marcas
-  - [x] Consulta de Marcas
+  - - [x] Consulta de Marcas
