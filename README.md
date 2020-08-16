@@ -35,6 +35,11 @@ Compila o app para o modo de produção para o diretório `build`.<br />
 O app estará pronto para o deploy.
 Veja a sessão [deployment](https://facebook.github.io/create-react-app/docs/deployment) para mais informações.
 
+## Tecnologias
+
+
+
+
 ## Recursos 
   - [X] Marcas
     - [x] Cadastro de Marcas

@@ -5,12 +5,14 @@ import Rotas from './rotas';
 import { AuthProvider } from './contexts/AuthContext';
 import { TemaProvider } from './contexts/TemaContext';
 import { ApiProvider } from './contexts/ApiContext';
+import Teste from './Teste';
 
 
 function App() {
   return (
     <BrowserRouter>
       <TemaProvider>
+          <Teste/>
         <AuthProvider>
           <ApiProvider>
             <Rotas />
