@@ -48,6 +48,9 @@
     ]
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/google-maps-react": "^2.0.5",
+    "@types/react-dropzone": "^5.1.0",
     "@types/react-router-dom": "^5.1.5",
     "@types/react-scroll": "^1.5.5"
   }

@@ -36,7 +36,6 @@ const DialogInserirOrdemDeServico: React.FC = () => {
   const calcularValorTotal = useCallback((event)=>{
     const valorUnitario = Number(formRef.current.getFieldValue('valorUnitario'));
     const quantidade = Number(formRef.current.getFieldValue('quantidade'));
-    console.log(quantidade*valorUnitario)
     formRef.current.setFieldValue('valorTotal', quantidade*valorUnitario)
   },[]);
 
