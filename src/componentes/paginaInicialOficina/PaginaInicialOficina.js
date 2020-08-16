@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 function PaginaInicialOficina() {
   const classes = useStyles();
-  const { usuario, deslogar } = useContext(AuthContext);
+  const { usuario, logout } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = useState(false);
   const opend = Boolean(anchorEl);
@@ -45,7 +45,7 @@ function PaginaInicialOficina() {
 
   const handleClick = () => {
     handleClose();
-    deslogar()
+    logout()
   };
 
   return (
@@ -165,6 +165,16 @@ function PaginaInicialOficina() {
               <ListItemText>
                 <Typography variant="body2">
                   Funcionários
+              </Typography>
+              </ListItemText>
+            </ListItem>
+            <ListItem button component={Link} to="/servicos">
+              <ListItemIcon>
+                <BuildIcon/>
+              </ListItemIcon>
+              <ListItemText>
+                <Typography variant="body2">
+                  Serviços
               </Typography>
               </ListItemText>
             </ListItem>

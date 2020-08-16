@@ -120,7 +120,10 @@ function validarNumero(numero){
 }
 
 function validarStringData(data){
-  return !!new Date(data).getTime();
+  if(/([0-9]{4})-([0-9]{2})-([0-9]{2})/.test(data)){
+    return !!new Date(data).getTime();
+  }
+  return false;
 }
 
 const validacao = {

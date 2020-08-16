@@ -1,17 +1,17 @@
 import React, { memo } from 'react';
-import { Formulario, CampoDeBusca, CampoDeSelecao } from '../Formulario';
+import { Form, CampoDeBusca, CampoDeSelecao } from '../Form';
 import { Grid, Box, MenuItem, Tooltip, IconButton } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
-function FormularioConsulta({ aoEnviar, filtros = [] }) {
+function FormularioConsulta({ onSubmit, filtros = [] }) {
   return (
-    <Formulario aoEnviar={aoEnviar} dadosIniciais={{ tipo: "0" }}>
+    <Form onSubmit={onSubmit} initialData={{ tipo: "0" }}>
       <Grid container spacing={2} justify="space-between" alignItems="flex-end">
         <Grid item xs={12} sm={filtros.length ? 6 : 12}>
           <CampoDeBusca
-            desabilitarBusca={filtros.length}
+            disableButtonSearch={filtros.length}
             fullWidth
-            nome="consulta"
+            name="consulta"
             label="Consulta"
           />
         </Grid>
@@ -38,7 +38,7 @@ function FormularioConsulta({ aoEnviar, filtros = [] }) {
           </Grid>
         }
       </Grid>
-    </Formulario>
+    </Form>
   );
 }
 

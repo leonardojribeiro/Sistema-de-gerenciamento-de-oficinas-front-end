@@ -1,6 +1,6 @@
 import StringMask from 'string-mask';
 
-export default function MascaraNumererica(valor, mascara) {
+export default function MascaraNumererica(valor , mascara ) {
   let regex = new RegExp(/[^\d]+/g); //somente números
   valor = valor.replace(regex, ""); //valores não numéricos são substituídos
   let formato = mascara(valor.length);//chama o método que irá retornar a máscara
@@ -9,5 +9,5 @@ export default function MascaraNumererica(valor, mascara) {
     final = final.substr(0, final.length - 1);                             //caractere não numérico
     regex = new RegExp(/[^\d]+/g);
   }
-  return final;
+  return final ;
 }

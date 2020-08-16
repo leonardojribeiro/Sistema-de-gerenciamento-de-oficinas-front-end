@@ -8,8 +8,13 @@
   --h-livre-assistente: calc(var(--h-livre-com-barra-rodape) - (40px) - (48px));
 }
 
-.sem-outline:focus{
-  outline: none;
+body {
+  margin: 0;
+  font-family: 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .transicao-tema{
