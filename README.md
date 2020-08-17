@@ -49,7 +49,6 @@ Veja a sessão [deployment](https://facebook.github.io/create-react-app/docs/dep
   * TypeScript
   * MaterailUI Icons
 
-
 ## Recursos 
   - [X] Marcas
     - [x] Cadastro de Marcas
