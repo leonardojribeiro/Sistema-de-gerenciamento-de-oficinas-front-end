@@ -1,4 +1,4 @@
-:root{
+:root {
   --h-barra-nav: 64px;
   --h-rodape: 64px;
   --h-assistente: 24px;
@@ -10,115 +10,120 @@
 
 body {
   margin: 0;
-  font-family: 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.transicao-tema{
+.transicao-tema {
   transition: all 3.s;
   -webkit-transition: all .3s;
   -moz-transition: all .3s;
   -o-transition: all .3s;
 }
 
-.claro{
+.claro {
   background-color: #efefef !important;
   color: #121212 !important;
   --bg-cor: #efefef !important;
   --cor: #121212 !important;
   --cor-borda: rgba(0, 0, 0, 0.42) !important;
-  --cor-transparente: rgba(255,255,255, 0.4);
+  --cor-transparente: rgba(255, 255, 255, 0.4);
   --cor-borda-hover: #888888 !important;
   --cor-borda-after: #121212 !important;
   --cor-label: #121212 !important;
   --cor-label-focado: #121212 !important;
 }
 
-.escuro{
+.escuro {
   color: #efefef !important;
   background-color: #121212 !important;
   --bg-cor: #121212 !important;
   --cor: #efefef !important;
   --cor-borda: rgba(255, 255, 255, 0.4) !important;
-  --cor-transparente: rgba(0,0,0, 0.4);
-  --cor-borda-hover:  #888888 !important;
+  --cor-transparente: rgba(0, 0, 0, 0.4);
+  --cor-borda-hover: #888888 !important;
   --cor-borda-after: #efefef !important;
   --cor-label: #efefef !important;
   --cor-label-focado: #efefef !important;
 }
 
-.h-min-barra-rodape{
+.h-min-barra-rodape {
   min-height: var(--h-livre-com-barra-rodape);
 }
 
-.h-total{
+.tabela > div:nth-child(2n+2) {
+  background: #aaaaff;
+}
+
+
+
+.h-total {
   min-height: 100vh;
 }
 
-.h-min-barra{
+.h-min-barra {
   min-height: var(--h-livre-com-barra);
 }
 
-.h-min-rodape{
+.h-min-rodape {
   min-height: var(--h-livre-com-rodape);
 }
 
-.flex{
+.flex {
   display: flex;
 }
 
-.align-center{
+.align-center {
   align-items: center;
 }
 
-.justify-center{
+.justify-center {
   justify-content: center;
 }
 
-.justify-around{
+.justify-around {
   justify-content: space-around;
 }
 
-.justify-between{
+.justify-between {
   justify-content: space-between;
 }
 
-.layout{
+.layout {
   display: flex;
   flex-direction: row;
   transition: filter .5s;
 }
-.conteudo{
+
+.conteudo {
   min-height: var(--h-livre-com-barra-rodape);
 }
-.conteudo-light{
+
+.conteudo-light {
   overflow-block: hidden;
 }
 
-@media (max-width:575px){
-  .conteudo-light-blur{
+@media (max-width:575px) {
+  .conteudo-light-blur {
     filter: blur(2px);
     max-height: var(--h-livre-com-barra-rodape);
     overflow-y: hidden;
   }
 }
 
-.fade{
+.fade {
   animation: fadeIn;
   animation-duration: 0.4s;
   animation-fill-mode: forwards;
   transition: all 1s;
 }
 
-@keyframes fadeIn{
+@keyframes fadeIn {
   from {
     opacity: 0;
   }
-  to{
+  to {
     opacity: 1;
   }
 }
-

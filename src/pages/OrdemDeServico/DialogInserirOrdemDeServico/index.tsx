@@ -1,66 +1,60 @@
-import React, { useCallback, useState, useContext, useEffect, useRef } from 'react';
+import React, { useCallback, useState, } from 'react';
 import Dialog from '../../../componentes/Dialog';
-import { Form, MoneyField, CampoDeTexto } from '../../../componentes/Form';
-import Peca from '../../../Types/Peca';
-import ApiContext from '../../../contexts/ApiContext';
-import SelectField from '../../../componentes/Form/Fields/SelectField';
-import { Grid, MenuItem } from '@material-ui/core';
-import { FormProviderHandles } from '../../../componentes/Form/types';
+import FormItensDePeca from '../ItensDePeca/FormItensDePeca';
+import ItemDePeca from '../../../Types/ItemDePeca';
+import { Box, Grid, Typography, makeStyles } from '@material-ui/core';
 
-// import { Container } from './styles';
+
+const useStyles = makeStyles((theme)=>({
+  root:{
+    '&:nth-child(odd)':{
+      background: theme.palette.background.default,
+    },
+    '&:nth-child(even)':{
+      background: theme.palette.background.paper,
+    },
+  }
+}));
 
 const DialogInserirOrdemDeServico: React.FC = () => {
-  const [pecas, setPecas] = useState<Peca[] | undefined>(undefined);
+  const classes = useStyles();
+  const [itensDePeca, setItensDePeca] = useState<ItemDePeca[]>([]);
 
-  const { get } = useContext(ApiContext);
-  const formRef = useRef<FormProviderHandles>({} as FormProviderHandles);
-
-  const popularPecas = useCallback(async () => {
-    const pecas = await get('peca') as Peca[];
-    if (pecas) {
-      setPecas(pecas);
-    }
-  }, [get]);
-
-  useEffect(() => {
-    popularPecas();
-  }, [popularPecas]);
-
-
-  console.log(pecas)
-
-  const handleSubmit = useCallback((dados) => {
-    console.log(dados)
-  }, []);
-
-  const calcularValorTotal = useCallback((event)=>{
-    const valorUnitario = Number(formRef.current.getFieldValue('valorUnitario'));
-    const quantidade = Number(formRef.current.getFieldValue('quantidade'));
-    formRef.current.setFieldValue('valorTotal', quantidade*valorUnitario)
-  },[]);
+  const handleSubmitItemDePeca = useCallback((itemDePeca) => {
+    setItensDePeca([...itensDePeca, itemDePeca]);
+  }, [itensDePeca]);
 
   return (
     <Dialog title="Nova ordem de serviço" open maxWidth="lg" fullWidth>
-      <Form onSubmit={handleSubmit} ref={formRef}>
-        <Grid container spacing={2}>
-          <Grid item md={4} lg={3}>
-            <SelectField name="peca" fullWidth required label="Peça">
-              {pecas?.map((peca, indice) => (
-                <MenuItem key={indice} value={indice}>{peca.descricao}</MenuItem>
-              ))}
-            </SelectField>
-          </Grid>
-          <Grid item md={2}>
-            <MoneyField  name="valorUnitario" fullWidth required label="Valor unitário" onChange={calcularValorTotal}/>
-          </Grid>
-          <Grid item md={2}>
-            <CampoDeTexto type="number" name="quantidade" fullWidth required label="Quantidade" onChange={calcularValorTotal}/>
-          </Grid>
-          <Grid item md={2}>
-            <MoneyField name="valorTotal" fullWidth required label="ValorTotal" disabled/>
+      <Box>
+        <Grid container justify="center">
+          <Grid item>
+            <Typography variant="h5">Itens de Peça</Typography>
           </Grid>
         </Grid>
-      </Form>
+        <Box mt={2} className="tabela">
+          {itensDePeca.map((itemDePeca, indice) => (
+            <Grid key={indice} container justify="space-between" spacing={2}>
+              <Grid item>
+                <Typography>Peça: {itemDePeca.peca.descricao}</Typography>
+              </Grid>
+              <Grid item>
+                <Typography>Fornecedor: {itemDePeca.fornecedor.nomeFantasia}</Typography>
+              </Grid>
+              <Grid item>
+                <Typography>Valor unitário: {itemDePeca.valorUnitario}</Typography>
+              </Grid>
+              <Grid item>
+                <Typography>Quantidade: {itemDePeca.quantidade}</Typography>
+              </Grid>
+              <Grid item>
+                <Typography>Valor total: {itemDePeca.valorTotal}</Typography>
+              </Grid>
+            </Grid>
+          ))}
+        </Box>
+      </Box>
+      <FormItensDePeca onSubmit={handleSubmitItemDePeca} />
     </Dialog>
   )
 }

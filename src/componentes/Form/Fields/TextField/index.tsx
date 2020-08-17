@@ -5,9 +5,11 @@ import useField from '../../Hooks/useField';
 
 interface TextFieldProps extends TextFieldPropsMUI {
   name: string,
+  min?: number;
+  max?: number;
 }
 
-const TextField: React.FC<TextFieldProps> = ({ name, ...props }) => {
+const TextField: React.FC<TextFieldProps> = ({ name, max, min, ...props }) => {
   const [valid, setValid] = useState<boolean>(true);
   const [value, setValue] = useState<string>("");
   const ref = useRef<HTMLInputElement | undefined>(undefined);
@@ -42,12 +44,12 @@ const TextField: React.FC<TextFieldProps> = ({ name, ...props }) => {
     setValid(true);
   }, []);
 
-  const setFieldValue = useCallback((ref, value)=>{
+  const setFieldValue = useCallback((ref, value) => {
     setValue(value as string);
-    if(ref.current){
+    if (ref.current) {
       ref.current.value = value;
     }
-  },[]);
+  }, []);
 
   useEffect(() => {
     registerField({
@@ -67,14 +69,32 @@ const TextField: React.FC<TextFieldProps> = ({ name, ...props }) => {
   }, [defaultValue]);
 
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setValue(event.target.value)
-    if (!valid) {
-      validate();
+    const value = event.target.value;
+    if (props.type === 'number' || min || max) {
+      const valueNumeric = Number(value);
+      if (
+        (max && valueNumeric <= max && min && valueNumeric >= min)
+        || (min === undefined && max !== undefined && valueNumeric <= max)
+        || (max === undefined && min !== undefined && valueNumeric >= min)) {
+        setValue(value)
+        if (!valid) {
+          validate();
+        }
+        if (props.onChange) {
+          props.onChange(event);
+        }
+      }
     }
-    if (props.onChange) {
-      props.onChange(event);
+    else {
+      setValue(value)
+      if (!valid) {
+        validate();
+      }
+      if (props.onChange) {
+        props.onChange(event);
+      }
     }
-  }, [valid, props, validate]);
+  }, [props, max, min, valid, validate]);
 
   return (
     <TextFieldMUI
