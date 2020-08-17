@@ -4,12 +4,17 @@ Tabela de conteúdos
 =================
 <!--ts-->
    * [Sobre](#Sobre)
+   * [Status](#Status)
    * [Tabela de Conteudo](#tabela-de-conteudo)
    * [Scripts disponíveis](#Scripts-disponíveis)
       * [Executar em modo de desenvolvimento](#yarn-start)
       * [Compilar para o modo de produção](#yarn-build)
    * [Recursos](#recursos)
 <!--te-->
+
+## Status
+
+#### :construction:  Em construção  :construction:
 
 ## Sobre
 
@@ -37,7 +42,12 @@ Veja a sessão [deployment](https://facebook.github.io/create-react-app/docs/dep
 
 ## Tecnologias
 
-
+  * ReatJS
+  * MaterialUI
+  * React-Router-Dom
+  * React-Dropzone
+  * TypeScript
+  * MaterailUI Icons
 
 
 ## Recursos 
