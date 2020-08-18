@@ -4,14 +4,16 @@ import ApiContext from '../../../contexts/ApiContext';
 import { useHistory } from 'react-router-dom';
 import { DialogActions, Button, MenuItem, } from '@material-ui/core';
 import { useState } from 'react';
-import { Formulario, CampoDeTexto, CampoDeData, CampoDeSelecao } from '../../../componentes/Form';
+import { Form, CampoDeTexto, DateField, CampoDeSelecao } from '../../../componentes/Form';
+import Modelo from '../../../Types/Modelo';
+import Cliente from '../../../Types/Cliente';
 
 
-function DialogoInserirVeiculo({ aberto }) {
+const DialogoInserirVeiculo: React.FC = () => {
   const { get, post, } = useContext(ApiContext);
   const history = useHistory();
-  const [clientes, setClientes] = useState([]);
-  const [modelos, setModelos] = useState([]);
+  const [clientes, setClientes] = useState<Cliente[]>([]);
+  const [modelos, setModelos] = useState<Modelo[]>([]);
 
   const manipularEnvio = useCallback(async (veiculo) => {
     if (veiculo) {
@@ -23,14 +25,14 @@ function DialogoInserirVeiculo({ aberto }) {
   }, [history, post]);
 
   const listarClientes = useCallback(async () => {
-    const cliente = await get("/cliente");
+    const cliente = await get("/cliente") as Cliente[];
     if (cliente) {
       setClientes(cliente);
     }
   }, [get]);
 
   const listarModelos = useCallback(async () => {
-    const modelos = await get("/modelo");
+    const modelos = await get("/modelo") as Modelo[];
     if (modelos) {
       setModelos(modelos);
     }
@@ -42,17 +44,17 @@ function DialogoInserirVeiculo({ aberto }) {
   }, [listarClientes, listarModelos]);
 
   return (
-    <Dialogo aberto={aberto} titulo="Inserir veículo">
-      <Formulario aoEnviar={manipularEnvio}>
-        <CampoDeTexto nome="placa" label="Placa" fullWidth required autoFocus />
-        <CampoDeData nome="anoFabricacao" label="Ano de fabricação" fullWidth required />
-        <CampoDeData nome="anoModelo" label="Ano de modelo" fullWidth required />
-        <CampoDeSelecao nome="idModelo" label="Modelo" required fullWidth>
+    <Dialogo open title="Inserir veículo">
+      <Form onSubmit={manipularEnvio}>
+        <CampoDeTexto name="placa" label="Placa" fullWidth required autoFocus />
+        <DateField name="anoFabricacao" label="Ano de fabricação" fullWidth required />
+        <DateField name="anoModelo" label="Ano de modelo" fullWidth required />
+        <CampoDeSelecao name="idModelo" label="Modelo" required fullWidth>
           {
             modelos.map((modelo, indice) => <MenuItem key={indice} value={modelo._id}>{modelo.descricao}</MenuItem>)
           }
         </CampoDeSelecao>
-        <CampoDeSelecao nome="idCliente" label="Cliente" required fullWidth >
+        <CampoDeSelecao name="idCliente" label="Cliente" required fullWidth >
           {
             clientes.map((cliente, indice) => <MenuItem key={indice} value={cliente._id}>{cliente.nome}</MenuItem>)
           }
@@ -60,7 +62,7 @@ function DialogoInserirVeiculo({ aberto }) {
         <DialogActions >
           <Button type="submit">Salvar</Button>
         </DialogActions>
-      </Formulario>
+      </Form>
     </Dialogo>
   );
 }

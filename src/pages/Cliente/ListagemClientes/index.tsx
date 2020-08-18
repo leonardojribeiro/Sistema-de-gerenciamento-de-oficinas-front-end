@@ -1,14 +1,17 @@
 import React, { memo } from 'react';
 import {  Box, Table, TableHead, TableRow, TableCell, TableBody, TableContainer, Hidden } from '@material-ui/core';
 import ClienteItem from '../ClienteItem';
+import Cliente from '../../../Types/Cliente';
 
+interface ListagemClientesProps{
+  clientes: Cliente[];
+}
 
-function ListagemClientes({ clientes =[] }) {
-
+const ListagemClientes: React.FC<ListagemClientesProps> = ({ clientes }) => {
   return (
     <Box mb={2}>
       <TableContainer >
-        <Table spacing={0} size="small">
+        <Table size="small">
           <TableHead>
             <TableRow >
               <TableCell >Nome</TableCell>

@@ -7,6 +7,8 @@ import { FormProviderHandles } from '../../../../componentes/Form/types';
 import Servico from '../../../../Types/Servico';
 import Funcionario from '../../../../Types/Funcionario';
 import OrdemDeServicoContext from '../../OrdemDeServicoContext';
+import ItemDeServico from '../../../../Types/ItemDeServico';
+import comparar from '../../../../recursos/Comparar';
 
 
 const FormItensDeServico: React.FC = () => {
@@ -14,7 +16,7 @@ const FormItensDeServico: React.FC = () => {
   const [funcionarios, setFuncionarios] = useState<Funcionario[] | undefined>(undefined);
   const { get } = useContext(ApiContext);
   const formRef = useRef<FormProviderHandles>({} as FormProviderHandles);
-  const { setItensDeServico } = useContext(OrdemDeServicoContext);
+  const { itensDeServico, setItensDeServico } = useContext(OrdemDeServicoContext);
 
   const popularServicos = useCallback(async () => {
     const servicos = await get('servico') as Servico[];
@@ -38,22 +40,30 @@ const FormItensDeServico: React.FC = () => {
     popularFuncionarios();
   }, [popularFuncionarios]);
 
+  const validar = useCallback((dados: ItemDeServico) => {
+    let igual = false;
+    itensDeServico.forEach(itemDeServico => {
+      if (comparar(itemDeServico, dados)) {
+        igual = true;
+      }
+    })
+    return igual;
+  }, [itensDeServico]);
+
   const handleSubmit = useCallback((dados) => {
     if (servicos && funcionarios) {
-      const servico = servicos[Number(dados.servico)];
-      const funcionario = funcionarios[Number(dados.funcionario)];
-      const valorUnitario = Number(dados.valorUnitario);
-      const quantidade = Number(dados.quantidade);
-      const valorTotal = valorUnitario * quantidade;
-      setItensDeServico((ItensDeServico) => [...ItensDeServico, {
-        servico,
-        funcionario,
-        valorTotal,
-        valorUnitario,
-        quantidade,
-      }])
+      const itemDeServico = {
+        servico: servicos[Number(dados.servico)],
+        funcionario: funcionarios[Number(dados.funcionario)],
+        valorUnitario: Number(dados.valorUnitario),
+        quantidade: Number(dados.quantidade),
+        valorTotal: Number(dados.valorUnitario) * Number(dados.quantidade),
+      } as ItemDeServico;
+      if (!validar(itemDeServico)) {
+        setItensDeServico((ItensDeServico) => [...ItensDeServico, itemDeServico])
+      }
     }
-  }, [funcionarios, servicos, setItensDeServico]);
+  }, [validar, funcionarios, servicos, setItensDeServico]);
 
   const calcularValorTotal = useCallback((event) => {
     const valorUnitario = Number(formRef.current.getFieldValue('valorUnitario'));
@@ -65,14 +75,14 @@ const FormItensDeServico: React.FC = () => {
     <Form onSubmit={handleSubmit} ref={formRef}>
       <Container maxWidth="xl">
         <Grid container spacing={2}>
-          <Grid item md={4} lg={3}>
+          <Grid item sm={6} md={4} lg={3}>
             <SelectField name="servico" fullWidth required label="Serviço">
               {servicos?.map((servico, indice) => (
                 <MenuItem key={indice} value={indice}>{servico.descricao}</MenuItem>
               ))}
             </SelectField>
           </Grid>
-          <Grid item md={4} lg={3}>
+          <Grid item sm={6} md={4} lg={3}>
             <SelectField name="funcionario" fullWidth required label="Funcionário">
               {funcionarios?.map((funcionario, indice) => (
                 <MenuItem key={indice} value={indice}>{funcionario.nome}</MenuItem>

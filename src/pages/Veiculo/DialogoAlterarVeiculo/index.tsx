@@ -5,22 +5,25 @@ import { useHistory } from 'react-router-dom';
 import { DialogActions, Button, MenuItem, } from '@material-ui/core';
 import { useState } from 'react';
 import useQuery from '../../../hooks/useQuery';
-import Alerta from '../../../componentes/Alerta';
+import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
 import { useMemo } from 'react';
-import { Formulario, CampoDeTexto, CampoDeSelecao, CampoDeData } from '../../../componentes/Form';
+import { Form, CampoDeTexto, CampoDeSelecao, DateField } from '../../../componentes/Form';
 import comparar from '../../../recursos/Comparar';
+import Cliente from '../../../Types/Cliente';
+import Modelo from '../../../Types/Modelo';
+import Veiculo from '../../../Types/Veiculo';
 
-function DialogoAlterarVeiculo({ aberto }) {
+const DialogAlterarVeiculo: React.FC = () => {
   const { get, put } = useContext(ApiContext);
   const history = useHistory();
-  const [veiculo, setVeiculo] = useState({});
-  const refAlerta = useRef();
+  const [veiculo, setVeiculo] = useState<Veiculo | undefined>();
+  const refAlerta = useRef<AlertaHandles>();
   const id = useQuery("id");
-  const [clientes, setClientes] = useState([]);
-  const [modelos, setModelos] = useState([]);
+  const [clientes, setClientes] = useState<Cliente[]>([]);
+  const [modelos, setModelos] = useState<Modelo[]>([]);
 
   const manipularEnvio = useCallback(async (veiculoASerAlterado) => {
-    if (veiculoASerAlterado) {
+    if (veiculoASerAlterado && veiculo) {
       if (!comparar(veiculo, veiculoASerAlterado)) {
         veiculoASerAlterado._id = veiculo._id
         const resposta = await put("/veiculo", veiculoASerAlterado);
@@ -40,46 +43,43 @@ function DialogoAlterarVeiculo({ aberto }) {
 
 
   const popular = useCallback(async () => {
-    const resposta = await get(`/veiculo/id?_id=${id}`)
-    console.log(resposta);
+    const resposta = await get(`/veiculo/id?_id=${id}`) as Veiculo;
     if (resposta) {
       setVeiculo(resposta)
     }
   }, [get, id,]);
 
   const listarClientes = useCallback(async () => {
-    const cliente = await get("/cliente");
+    const cliente = await get("/cliente") as Cliente[];
     if (cliente) {
       setClientes(cliente);
     }
-  }, [get, ]);
+  }, [get,]);
 
   const listarModelos = useCallback(async () => {
-    const modelos = await get("/modelo");
+    const modelos = await get("/modelo") as Modelo[];
     if (modelos) {
       setModelos(modelos);
     }
   }, [get,]);
 
   useEffect(() => {
-    if (aberto) {
-      listarClientes();
-      listarModelos();
-      popular();
-    }
-  }, [aberto, listarClientes, listarModelos, popular]);
+    listarClientes();
+    listarModelos();
+    popular();
+  }, [listarClientes, listarModelos, popular]);
 
   const conteudo = useMemo(() => (
-    <Formulario aoEnviar={manipularEnvio} dadosIniciais={veiculo}>
-      <CampoDeTexto nome="placa" label="Placa" fullWidth required autoFocus />
-      <CampoDeData nome="anoFabricacao" label="Ano de fabricação" fullWidth required />
-      <CampoDeData nome="anoModelo" label="Ano de modelo" fullWidth required />
-      <CampoDeSelecao nome="idModelo" label="Modelo" required fullWidth>
+    <Form onSubmit={manipularEnvio} initialData={veiculo}>
+      <CampoDeTexto name="placa" label="Placa" fullWidth required autoFocus />
+      <DateField name="anoFabricacao" label="Ano de fabricação" fullWidth required />
+      <DateField name="anoModelo" label="Ano de modelo" fullWidth required />
+      <CampoDeSelecao name="idModelo" label="Modelo" required fullWidth>
         {
           modelos.map((modelo, indice) => <MenuItem key={indice} value={modelo._id}>{modelo.descricao}</MenuItem>)
         }
       </CampoDeSelecao>
-      <CampoDeSelecao nome="idCliente" label="Cliente" required fullWidth >
+      <CampoDeSelecao name="idCliente" label="Cliente" required fullWidth >
         {
           clientes.map((cliente, indice) => <MenuItem key={indice} value={cliente._id}>{cliente.nome}</MenuItem>)
         }
@@ -87,15 +87,15 @@ function DialogoAlterarVeiculo({ aberto }) {
       <DialogActions >
         <Button type="submit">Salvar</Button>
       </DialogActions>
-    </Formulario>
+    </Form>
   ), [clientes, manipularEnvio, modelos, veiculo])
 
   return (
-    <Dialogo aberto={aberto} titulo="Alterar peça">
+    <Dialogo open title="Alterar peça">
       {conteudo}
       <Alerta ref={refAlerta} />
     </Dialogo>
   );
 }
 
-export default memo(DialogoAlterarVeiculo);
+export default memo(DialogAlterarVeiculo);

@@ -18,8 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ListagemItensDeServico: React.FC = () => {
   const classes = useStyles();
-  const {itensDeServico} = useContext(OrdemDeServicoContext);
-
+  const { itensDeServico } = useContext(OrdemDeServicoContext);
   return (
     <Box className={classes.root}>
       {itensDeServico.map((itemDeServico, indice) => (

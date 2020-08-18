@@ -4,7 +4,7 @@ import Dialogo from '../../../componentes/Dialog';
 import { useLocation, Link } from 'react-router-dom';
 import ApiContext from '../../../contexts/ApiContext';
 import DialogoInserirEspecialidade from '../DialogoInserirEspecialidade';
-import DialogoAlterarEspecialidade from '../DialogoAlterarEspecialidade';
+import DialogAlterarEspecialidade from '../DialogoAlterarEspecialidade';
 import Listagem from '../ListagemEspecialidades';
 import BotaoInserir from '../../../componentes/BotaoInserir';
 import FormularioConsulta from '../../../componentes/FormularioConsulta';
@@ -48,7 +48,7 @@ function DialgoEspecialidades() {
     <Dialogo aberto fullWidth maxWidth="xs" titulo="Especialidades">
       {conteudo}
       <DialogoInserirEspecialidade aberto={pathname === "/especialidades/inserir"} />
-      <DialogoAlterarEspecialidade aberto={pathname === "/especialidades/alterar"} />
+      <DialogAlterarEspecialidade aberto={pathname === "/especialidades/alterar"} />
     </Dialogo>
   );
 }

@@ -1,14 +1,17 @@
 import React, { memo, useRef, useCallback, useEffect, useState } from 'react';
-import { TextField, StandardTextFieldProps } from '@material-ui/core';
 import useField from '../../Hooks/useField';
+import { DatePicker, BaseDatePickerProps} from '@material-ui/pickers';
 
-interface DateFieldProps extends StandardTextFieldProps {
+interface DateFieldProps extends BaseDatePickerProps {
   name: string,
+  required?: boolean;
+  label?: string;
+  fullWidth?: boolean;
 }
 
 const DateField: React.FC<DateFieldProps> = ({ name, ...props }) => {
   const [valid, setValid] = useState<boolean>(true);
-  const [value, setValue] = useState<string>("");
+  const [value, setValue] = useState<Date>(new Date());
   const ref = useRef<HTMLInputElement | undefined>(undefined);
   const { registerField, fieldName, defaultValue } = useField(name);
 
@@ -36,7 +39,7 @@ const DateField: React.FC<DateFieldProps> = ({ name, ...props }) => {
   }, [props.required]);
 
   const clear = useCallback(() => {
-    setValue("");
+    setValue(new Date());
     setValid(true);
   }, [])
 
@@ -57,30 +60,23 @@ const DateField: React.FC<DateFieldProps> = ({ name, ...props }) => {
   }, [defaultValue]);
 
   const handleChange = useCallback((evento) => {
+    console.log(ref.current && ref.current.value.toString())
     if (!valid) {
       validate();
     }
-    setValue(evento.target.value);
+    setValue(evento);
   }, [validate, valid]);
 
   return (
-    <TextField
-      inputRef={ref}
-      type="date"
+    <DatePicker
       value={value}
+      inputRef={ref}
       onChange={handleChange}
-      error={!valid}
-      helperText={
-        ref.current &&
-        props.required
-        && !ref.current.value.length
-        && !valid
-        && "Campo obrigatório."
+      format="dd/MM/yyyy"
+      lang="pt"
+      {
+        ...props
       }
-      InputLabelProps={{
-        shrink: true,
-      }}
-      {...props}
     />
   );
 }

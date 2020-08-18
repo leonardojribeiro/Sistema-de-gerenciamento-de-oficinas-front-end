@@ -18,6 +18,10 @@ import useAuth from './hooks/useAuth';
 import Usuario from './Types/Usuario';
 import DialogServicos from './pages/Servico/DialogServicos';
 import DialogOrdensDeServico from './pages/OrdemDeServico/DialogOrdensDeServico';
+import DialogoVeiculos from './pages/Veiculo/DialogoVeiculos';
+import DialogoModelos from './pages/Modelo/DialogoModelos';
+import DialogoPecas from './pages/Peca/DialogoPecas';
+import DialogoClientes from './pages/Cliente/DialogoClientes';
 
 
 const Routes: React.FC = () => {
@@ -31,7 +35,7 @@ const Routes: React.FC = () => {
       )
       if (resposta) {
         if (authContext) {
-          authContext.setUsuario({...authContext.usuario, ...resposta }as Usuario);
+          authContext.setUsuario({ ...authContext.usuario, ...resposta } as Usuario);
         }
         else {
           throw new Error("Esse componente deve estar em uma sub-árvore depois do <AuthContext.Provider>.");
@@ -70,16 +74,20 @@ const Routes: React.FC = () => {
                 </Route>
 
 
+                <Route path="/veiculos">
+                  <DialogoVeiculos />
+                </Route>
+
                 <Route path="/funcionarios">
                   <DialogoFuncionarios />
                 </Route>
 
                 <Route path="/servicos">
-                  <DialogServicos/>
+                  <DialogServicos />
                 </Route>
 
                 <Route path="/ordensdeservico">
-                  <DialogOrdensDeServico/>
+                  <DialogOrdensDeServico />
                 </Route>
 
                 <Route path="/login" exact>

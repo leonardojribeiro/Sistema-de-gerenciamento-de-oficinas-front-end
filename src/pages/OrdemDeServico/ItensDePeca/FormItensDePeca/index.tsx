@@ -6,15 +6,16 @@ import SelectField from '../../../../componentes/Form/Fields/SelectField';
 import { Grid, MenuItem, Button, Container } from '@material-ui/core';
 import { FormProviderHandles } from '../../../../componentes/Form/types';
 import Fornecedor from '../../../../Types/Fornecedor';
-import ItemDePeca from '../../../../Types/ItemDePeca';
 import OrdemDeServicoContext from '../../OrdemDeServicoContext';
+import ItemDePeca from '../../../../Types/ItemDePeca';
+import comparar from '../../../../recursos/Comparar';
 
 const FormItensDePeca: React.FC = () => {
   const [pecas, setPecas] = useState<Peca[] | undefined>(undefined);
   const [fornecedores, setForncedores] = useState<Fornecedor[] | undefined>(undefined);
   const { get } = useContext(ApiContext);
   const formRef = useRef<FormProviderHandles>({} as FormProviderHandles);
-  const { setItensDePeca } = useContext(OrdemDeServicoContext);
+  const { itensDePeca, setItensDePeca } = useContext(OrdemDeServicoContext);
 
   const popularPecas = useCallback(async () => {
     const pecas = await get('peca') as Peca[];
@@ -38,62 +39,70 @@ const FormItensDePeca: React.FC = () => {
     popularFornecedores();
   }, [popularFornecedores]);
 
+  const validar = useCallback((dados: ItemDePeca) => {
+    let igual = false;
+    itensDePeca.forEach(itemDePeca => {
+      if (comparar(itemDePeca, dados)) {
+        igual = true;
+      }
+    })
+    return igual;
+  }, [itensDePeca]);
+
   const handleSubmit = useCallback((dados) => {
     if (pecas && fornecedores) {
-      const peca = pecas[Number(dados.peca)];
-      const fornecedor = fornecedores[Number(dados.fornecedor)];
-      const valorUnitario = Number(dados.valorUnitario);
-      const quantidade = Number(dados.quantidade);
-      const valorTotal = valorUnitario * quantidade;
-      setItensDePeca((ItensDePeca) => [...ItensDePeca, {
-        peca,
-        fornecedor,
-        valorTotal,
-        valorUnitario,
-        quantidade,
-      }])
-    }
-  }, [fornecedores, pecas, setItensDePeca]);
+      const itemDePeca = {
+        peca: pecas[Number(dados.peca)],
+        fornecedor: fornecedores[Number(dados.fornecedor)],
+        valorUnitario: Number(dados.valorUnitario),
+        quantidade: Number(dados.quantidade),
+        valorTotal:  Number(dados.valorUnitario) * Number(dados.quantidade),
+      } as ItemDePeca;
+      if(!validar(itemDePeca)){
+        setItensDePeca((ItensDePeca) => [...ItensDePeca, itemDePeca])
+      }
+}
+  }, [fornecedores, pecas, setItensDePeca, validar]);
 
-  const calcularValorTotal = useCallback((event) => {
-    const valorUnitario = Number(formRef.current.getFieldValue('valorUnitario'));
-    const quantidade = Number(formRef.current.getFieldValue('quantidade'));
-    formRef.current.setFieldValue('valorTotal', quantidade * valorUnitario);
-  }, []);
-  return (
-    <Form onSubmit={handleSubmit} ref={formRef}>
-      <Container maxWidth="xl">
-        <Grid container spacing={3}>
-          <Grid item md={4} lg={3}>
-            <SelectField name="peca" fullWidth required label="Peça">
-              {pecas?.map((peca, indice) => (
-                <MenuItem key={indice} value={indice}>{peca.descricao}</MenuItem>
-              ))}
-            </SelectField>
-          </Grid>
-          <Grid item md={4} lg={3}>
-            <SelectField name="fornecedor" fullWidth required label="Fornecedor">
-              {fornecedores?.map((fornecedor, indice) => (
-                <MenuItem key={indice} value={indice}>{fornecedor.nomeFantasia}</MenuItem>
-              ))}
-            </SelectField>
-          </Grid>
-          <Grid item md={2}>
-            <MoneyField name="valorUnitario" fullWidth required label="Valor unitário" onChange={calcularValorTotal} />
-          </Grid>
-          <Grid item md={2}>
-            <CampoDeTexto type="number" min={0} name="quantidade" fullWidth required label="Quantidade" onChange={calcularValorTotal} />
-          </Grid>
-          <Grid item md={1}>
-            <MoneyField name="valorTotal" fullWidth required label="ValorTotal" />
-          </Grid>
-          <Grid item md={1}>
-            <Button type="submit" variant="outlined">Adicionar</Button>
-          </Grid>
+const calcularValorTotal = useCallback((event) => {
+  const valorUnitario = Number(formRef.current.getFieldValue('valorUnitario'));
+  const quantidade = Number(formRef.current.getFieldValue('quantidade'));
+  formRef.current.setFieldValue('valorTotal', quantidade * valorUnitario);
+}, []);
+return (
+  <Form onSubmit={handleSubmit} ref={formRef} >
+    <Container maxWidth="xl">
+      <Grid container spacing={3}>
+        <Grid item md={4} lg={3}>
+          <SelectField name="peca" fullWidth required label="Peça">
+            {pecas?.map((peca, indice) => (
+              <MenuItem key={indice} value={indice}>{peca.descricao}</MenuItem>
+            ))}
+          </SelectField>
         </Grid>
-      </Container>
-    </Form>
-  );
+        <Grid item md={4} lg={3}>
+          <SelectField name="fornecedor" fullWidth required label="Fornecedor">
+            {fornecedores?.map((fornecedor, indice) => (
+              <MenuItem key={indice} value={indice}>{fornecedor.nomeFantasia}</MenuItem>
+            ))}
+          </SelectField>
+        </Grid>
+        <Grid item md={2}>
+          <MoneyField name="valorUnitario" fullWidth required label="Valor unitário" onChange={calcularValorTotal} />
+        </Grid>
+        <Grid item md={2}>
+          <CampoDeTexto type="number" min={0} name="quantidade" fullWidth required label="Quantidade" onChange={calcularValorTotal} />
+        </Grid>
+        <Grid item md={1}>
+          <MoneyField name="valorTotal" fullWidth required label="ValorTotal" />
+        </Grid>
+        <Grid item md={1}>
+          <Button type="submit" variant="outlined">Adicionar</Button>
+        </Grid>
+      </Grid>
+    </Container>
+  </Form>
+);
 }
 
 export default memo(FormItensDePeca);

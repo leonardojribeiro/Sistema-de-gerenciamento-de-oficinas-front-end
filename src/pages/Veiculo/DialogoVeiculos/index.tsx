@@ -1,23 +1,24 @@
 import React, { useState, useContext, useCallback, useEffect } from 'react';
 import Dialogo from '../../../componentes/Dialog';
-import { Box,} from '@material-ui/core';
+import { Box, } from '@material-ui/core';
 import ApiContext from '../../../contexts/ApiContext';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation, Switch, Route } from 'react-router-dom';
 import DialogoInserirVeiculo from '../DialogoInserirVeiculo';
-import DialogoAlterarVeiculo from '../DialogoAlterarVeiculo';
+import DialogAlterarVeiculo from '../DialogoAlterarVeiculo';
 import ListagemVeiculos from '../ListagemVeiculos';
 import { useMemo } from 'react';
 import BotaoInserir from '../../../componentes/BotaoInserir';
 import FormularioConsulta from '../../../componentes/FormularioConsulta';
+import Veiculo from '../../../Types/Veiculo';
 
 
-function DialogoVeiculos() {
-  const [veiculos, setVeiculos] = useState([]);
+const DialogoVeiculos: React.FC = () => {
+  const [veiculos, setVeiculos] = useState<Veiculo[]>([]);
   const { get } = useContext(ApiContext);
   const { pathname } = useLocation();
 
   const listar = useCallback(async () => {
-    const veiculos = await get("/veiculo");
+    const veiculos = await get("/veiculo") as Veiculo[];
     if (veiculos) {
       setVeiculos(veiculos);
     }
@@ -30,7 +31,7 @@ function DialogoVeiculos() {
   }, [listar, pathname]);
 
   const manipularBusca = useCallback(async ({ consulta, tipo }) => {
-    const pecas = await get(`/peca/consulta?consulta=${consulta}&tipo=${tipo}`);
+    const pecas = await get(`/peca/consulta?consulta=${consulta}&tipo=${tipo}`) as Veiculo[];
     if (pecas) {
       setVeiculos(pecas);
     }
@@ -38,18 +39,20 @@ function DialogoVeiculos() {
 
   const conteudo = useMemo(() => (
     <>
-      <FormularioConsulta aoEnviar={manipularBusca} />
+      <FormularioConsulta onSubmit={manipularBusca} />
       <Box display="flex" justifyContent="center" pt={2}>Listagem</Box>
       <ListagemVeiculos veiculos={veiculos} />
-      <BotaoInserir titulo="Inserir veiculo" component={Link} to="veiculos/inserir"/>
+      <BotaoInserir titulo="Inserir veiculo" linkTo="/veiculos/inserir" />
     </>
   ), [manipularBusca, veiculos])
 
   return (
-    <Dialogo maxWidth="sm" fullWidth aberto titulo="Veículos">
+    <Dialogo maxWidth="sm" fullWidth open title="Veículos">
       {conteudo}
-      <DialogoInserirVeiculo aberto={pathname === "/veiculos/inserir"} />
-      <DialogoAlterarVeiculo aberto={pathname === "/veiculos/alterar"} />
+      <Switch>
+        <Route path="/veiculos/inserir" component={DialogoInserirVeiculo} />
+        <Route path="/veiculos/alterar"  component={DialogAlterarVeiculo} />
+      </Switch>
     </Dialogo>
   );
 }

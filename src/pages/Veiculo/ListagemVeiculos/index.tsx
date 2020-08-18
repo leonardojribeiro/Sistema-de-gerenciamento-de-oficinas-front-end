@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import { Box, TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Tooltip, IconButton, makeStyles, Typography } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import { Link } from 'react-router-dom';
+import Veiculo from '../../../Types/Veiculo';
 const useStyles = makeStyles((theme) => ({
   listagem: {
     minHeight: "50vh",
@@ -19,14 +20,16 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function ListagemVeiculos({ veiculos = []}) {
-  const classes = useStyles();
-  //const imagensUrl = process.env.REACT_APP_IMAGENS_URL;
+interface ListagemVeiculosProps{
+  veiculos: Veiculo[];
+}
 
+const ListagemVeiculos: React.FC<ListagemVeiculosProps> = ({ veiculos }) => {
+  const classes = useStyles();
   return (
     <Box mb={2}>
       <TableContainer >
-        <Table spacing={0} size="small">
+        <Table size="small">
           <TableHead>
             <TableRow >
               <TableCell padding="none">Placa</TableCell>
@@ -37,7 +40,7 @@ function ListagemVeiculos({ veiculos = []}) {
           </TableHead>
           <TableBody>
             {
-              !!veiculos.length && veiculos.map((veiculo, index) => (
+              veiculos.map((veiculo, index) => (
                 <TableRow className={classes.linhaTabela} key={index} hover >
                   <TableCell padding="none">
                     <Typography>
@@ -46,12 +49,12 @@ function ListagemVeiculos({ veiculos = []}) {
                   </TableCell>
                   <TableCell padding="none">
                     <Typography>
-                      {veiculo.modelo.descricao}
+                      {veiculo?.modelo?.descricao}
                     </Typography>
                   </TableCell>
                   <TableCell padding="none">
                     <Typography>
-                      {veiculo.marca.descricao}
+                      {veiculo?.modelo?.marca?.descricao}
                     </Typography>
                   </TableCell>
                   <TableCell padding="none" align="center">
