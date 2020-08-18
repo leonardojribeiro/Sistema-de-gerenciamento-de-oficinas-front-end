@@ -15,6 +15,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import SchoolIcon from '@material-ui/icons/School';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import BuildIcon from '@material-ui/icons/Build';
+import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -157,10 +158,11 @@ function PaginaInicialOficina() {
                   Especialidades
               </Typography>
               </ListItemText>
+              
             </ListItem>
             <ListItem button component={Link} to="/funcionarios">
               <ListItemIcon>
-                <BuildIcon/>
+                <BuildIcon />
               </ListItemIcon>
               <ListItemText>
                 <Typography variant="body2">
@@ -170,7 +172,7 @@ function PaginaInicialOficina() {
             </ListItem>
             <ListItem button component={Link} to="/servicos">
               <ListItemIcon>
-                <BuildIcon/>
+                <BuildIcon />
               </ListItemIcon>
               <ListItemText>
                 <Typography variant="body2">
@@ -178,6 +180,16 @@ function PaginaInicialOficina() {
               </Typography>
               </ListItemText>
             </ListItem>
+            <ListItem button component={Link} to="/ordensdeservico">
+                <ListItemIcon>
+                  <FormatAlignJustifyIcon />
+                </ListItemIcon>
+                <ListItemText>
+                  <Typography variant="body2">
+                    Ordens de serviço
+                </Typography>
+                </ListItemText>
+              </ListItem>
             <ListItem button component={Link} to="/opcoes">
               <ListItemIcon>
                 <SettingsIcon />

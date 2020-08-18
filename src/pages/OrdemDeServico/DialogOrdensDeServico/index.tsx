@@ -4,11 +4,11 @@ import DialogInserirOrdemDeServico from '../DialogInserirOrdemDeServico';
 import Dialog from '../../../componentes/Dialog';
 import BotaoInserir from '../../../componentes/BotaoInserir';
 
-// import { Container } from './styles';
 
 const DialogOrdensDeServico: React.FC = () => {
+  
   return (
-    <Dialog open title="Ordens de serviço">
+    <Dialog open title="Ordens de serviço" >
       <BotaoInserir titulo="Nova ordem de serviço" linkTo="/ordensdeservico/inserir"/>
       <Switch>
         <Route path="/ordensdeservico/inserir">

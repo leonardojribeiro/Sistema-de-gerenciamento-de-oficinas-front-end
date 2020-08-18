@@ -1,62 +1,34 @@
-import React, { useCallback, useState, } from 'react';
+import React, { useState } from 'react';
 import Dialog from '../../../componentes/Dialog';
-import FormItensDePeca from '../ItensDePeca/FormItensDePeca';
-import ItemDePeca from '../../../Types/ItemDePeca';
-import { Box, Grid, Typography, makeStyles } from '@material-ui/core';
-
-
-const useStyles = makeStyles((theme)=>({
-  root:{
-    '&:nth-child(odd)':{
-      background: theme.palette.background.default,
-    },
-    '&:nth-child(even)':{
-      background: theme.palette.background.paper,
-    },
-  }
-}));
+import SwipeableViews from 'react-swipeable-views';
+import {Toolbar, Tabs, Tab } from '@material-ui/core';
+import ListagemItensDePeca from '../ItensDePeca/ListagemItensDePeca/index';
+import ItensDePeca from '../ItensDePeca';
+import { OrdemDeServicoProvider } from '../OrdemDeServicoContext';
+import ItensDeServico from '../ItensDeServico';
+// import { Container } from './styles';
 
 const DialogInserirOrdemDeServico: React.FC = () => {
-  const classes = useStyles();
-  const [itensDePeca, setItensDePeca] = useState<ItemDePeca[]>([]);
-
-  const handleSubmitItemDePeca = useCallback((itemDePeca) => {
-    setItensDePeca([...itensDePeca, itemDePeca]);
-  }, [itensDePeca]);
+  const [index, serIndex] = useState(0);
 
   return (
-    <Dialog title="Nova ordem de serviço" open maxWidth="lg" fullWidth>
-      <Box>
-        <Grid container justify="center">
-          <Grid item>
-            <Typography variant="h5">Itens de Peça</Typography>
-          </Grid>
-        </Grid>
-        <Box mt={2} className="tabela">
-          {itensDePeca.map((itemDePeca, indice) => (
-            <Grid key={indice} container justify="space-between" spacing={2}>
-              <Grid item>
-                <Typography>Peça: {itemDePeca.peca.descricao}</Typography>
-              </Grid>
-              <Grid item>
-                <Typography>Fornecedor: {itemDePeca.fornecedor.nomeFantasia}</Typography>
-              </Grid>
-              <Grid item>
-                <Typography>Valor unitário: {itemDePeca.valorUnitario}</Typography>
-              </Grid>
-              <Grid item>
-                <Typography>Quantidade: {itemDePeca.quantidade}</Typography>
-              </Grid>
-              <Grid item>
-                <Typography>Valor total: {itemDePeca.valorTotal}</Typography>
-              </Grid>
-            </Grid>
-          ))}
-        </Box>
-      </Box>
-      <FormItensDePeca onSubmit={handleSubmitItemDePeca} />
+    <Dialog title="Nova ordem de serviço" open maxWidth="lg" fullWidth fullScreen>
+      <Toolbar>
+        <Tabs value={index} onChange={(e, v) => serIndex(v)} indicatorColor="primary">
+          <Tab label="Peças" />
+          <Tab label="Ordem de serviço" />
+          <Tab label="Serviço" />
+        </Tabs>
+      </Toolbar>
+      <OrdemDeServicoProvider>
+        <SwipeableViews style={{ height: "calc(100% - 64px)" }} containerStyle={{ height: "calc(100% - 64px)" }} enableMouseEvents index={index} onChangeIndex={(e) => serIndex(e)} resistance animateTransitions >
+          <ItensDePeca/>
+          <span/>
+          <ItensDeServico/>
+        </SwipeableViews>
+      </OrdemDeServicoProvider>
     </Dialog>
-  )
+  );
 }
 
 export default DialogInserirOrdemDeServico;

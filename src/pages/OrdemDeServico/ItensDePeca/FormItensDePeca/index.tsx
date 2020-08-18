@@ -1,81 +1,80 @@
 import React, { useCallback, useState, useContext, useEffect, useRef, memo } from 'react';
 import { Form, MoneyField, CampoDeTexto } from '../../../../componentes/Form';
+import Peca from '../../../../Types/Peca';
 import ApiContext from '../../../../contexts/ApiContext';
 import SelectField from '../../../../componentes/Form/Fields/SelectField';
 import { Grid, MenuItem, Button, Container } from '@material-ui/core';
 import { FormProviderHandles } from '../../../../componentes/Form/types';
-import Servico from '../../../../Types/Servico';
-import Funcionario from '../../../../Types/Funcionario';
+import Fornecedor from '../../../../Types/Fornecedor';
+import ItemDePeca from '../../../../Types/ItemDePeca';
 import OrdemDeServicoContext from '../../OrdemDeServicoContext';
 
-
-const FormItensDeServico: React.FC = () => {
-  const [servicos, setServicos] = useState<Servico[] | undefined>(undefined);
-  const [funcionarios, setFuncionarios] = useState<Funcionario[] | undefined>(undefined);
+const FormItensDePeca: React.FC = () => {
+  const [pecas, setPecas] = useState<Peca[] | undefined>(undefined);
+  const [fornecedores, setForncedores] = useState<Fornecedor[] | undefined>(undefined);
   const { get } = useContext(ApiContext);
   const formRef = useRef<FormProviderHandles>({} as FormProviderHandles);
-  const { setItensDeServico } = useContext(OrdemDeServicoContext);
+  const { setItensDePeca } = useContext(OrdemDeServicoContext);
 
-  const popularServicos = useCallback(async () => {
-    const servicos = await get('servico') as Servico[];
-    if (servicos) {
-      setServicos(servicos);
+  const popularPecas = useCallback(async () => {
+    const pecas = await get('peca') as Peca[];
+    if (pecas) {
+      setPecas(pecas);
     }
   }, [get]);
 
-  const popularFuncionarios = useCallback(async () => {
-    const funcionarios = await get('funcionario') as Funcionario[];
-    if (funcionarios) {
-      setFuncionarios(funcionarios);
+  const popularFornecedores = useCallback(async () => {
+    const fornecedores = await get('fornecedor') as Fornecedor[];
+    if (fornecedores) {
+      setForncedores(fornecedores);
     }
   }, [get]);
 
   useEffect(() => {
-    popularServicos();
-  }, [popularServicos]);
+    popularPecas();
+  }, [popularPecas]);
 
   useEffect(() => {
-    popularFuncionarios();
-  }, [popularFuncionarios]);
+    popularFornecedores();
+  }, [popularFornecedores]);
 
   const handleSubmit = useCallback((dados) => {
-    if (servicos && funcionarios) {
-      const servico = servicos[Number(dados.servico)];
-      const funcionario = funcionarios[Number(dados.funcionario)];
+    if (pecas && fornecedores) {
+      const peca = pecas[Number(dados.peca)];
+      const fornecedor = fornecedores[Number(dados.fornecedor)];
       const valorUnitario = Number(dados.valorUnitario);
       const quantidade = Number(dados.quantidade);
       const valorTotal = valorUnitario * quantidade;
-      setItensDeServico((ItensDeServico) => [...ItensDeServico, {
-        servico,
-        funcionario,
+      setItensDePeca((ItensDePeca) => [...ItensDePeca, {
+        peca,
+        fornecedor,
         valorTotal,
         valorUnitario,
         quantidade,
       }])
     }
-  }, [funcionarios, servicos, setItensDeServico]);
+  }, [fornecedores, pecas, setItensDePeca]);
 
   const calcularValorTotal = useCallback((event) => {
     const valorUnitario = Number(formRef.current.getFieldValue('valorUnitario'));
     const quantidade = Number(formRef.current.getFieldValue('quantidade'));
     formRef.current.setFieldValue('valorTotal', quantidade * valorUnitario);
   }, []);
-
   return (
     <Form onSubmit={handleSubmit} ref={formRef}>
       <Container maxWidth="xl">
-        <Grid container spacing={2}>
+        <Grid container spacing={3}>
           <Grid item md={4} lg={3}>
-            <SelectField name="servico" fullWidth required label="Serviço">
-              {servicos?.map((servico, indice) => (
-                <MenuItem key={indice} value={indice}>{servico.descricao}</MenuItem>
+            <SelectField name="peca" fullWidth required label="Peça">
+              {pecas?.map((peca, indice) => (
+                <MenuItem key={indice} value={indice}>{peca.descricao}</MenuItem>
               ))}
             </SelectField>
           </Grid>
           <Grid item md={4} lg={3}>
-            <SelectField name="funcionario" fullWidth required label="Funcionário">
-              {funcionarios?.map((funcionario, indice) => (
-                <MenuItem key={indice} value={indice}>{funcionario.nome}</MenuItem>
+            <SelectField name="fornecedor" fullWidth required label="Fornecedor">
+              {fornecedores?.map((fornecedor, indice) => (
+                <MenuItem key={indice} value={indice}>{fornecedor.nomeFantasia}</MenuItem>
               ))}
             </SelectField>
           </Grid>
@@ -97,4 +96,4 @@ const FormItensDeServico: React.FC = () => {
   );
 }
 
-export default memo(FormItensDeServico);
+export default memo(FormItensDePeca);
