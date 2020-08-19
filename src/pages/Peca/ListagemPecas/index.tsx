@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import { Box, TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Tooltip, IconButton, makeStyles, Typography } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import { Link } from 'react-router-dom';
+import Peca from '../../../Types/Peca';
 
 const useStyles = makeStyles((theme) => ({
   imgLogomarca: {
@@ -17,14 +18,18 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function ListagemModelos({pecas = []}) {
+interface ListagemPecasProps {
+  pecas: Peca[];
+}
+
+const ListagemPecas: React.FC<ListagemPecasProps> = ({ pecas }) => {
   const classes = useStyles();
   const imagensUrl = process.env.REACT_APP_IMAGENS_URL;
 
   return (
     <Box mb={2}>
       <TableContainer >
-        <Table spacing={0} size="small">
+        <Table size="small">
           <TableHead>
             <TableRow >
               <TableCell padding="none">Descrição</TableCell>
@@ -34,28 +39,28 @@ function ListagemModelos({pecas = []}) {
           </TableHead>
           <TableBody>
             {
-              !!pecas.length && pecas.map((modelo, index) => (
+              pecas.map((peca, index) => (
                 <TableRow className={classes.linhaTabela} key={index} hover >
                   <TableCell padding="none">
                     <Typography>
-                      {modelo.descricao}
+                      {peca.descricao}
                     </Typography>
                   </TableCell>
                   <TableCell padding="none">
                     <Box display="flex" alignItems="center" justifyContent="space-between">
                       <Typography>
-                        {modelo.marca ? modelo.marca.descricao : ""}
+                        {peca.marca ? peca.marca.descricao : ""}
                       </Typography>
                       <img
                         className={classes.imgLogomarca}
-                        src={modelo.marca && modelo.marca.uriLogo && `${imagensUrl}/${modelo.marca.uriLogo}`}
-                        alt={`logomarca da marca ${modelo.marca ? modelo.marca.descricao : ""}`}
+                        src={peca.marca && peca.marca.uriLogo && `${imagensUrl}/${peca.marca.uriLogo}`}
+                        alt={`logomarca da marca ${peca.marca ? peca.marca.descricao : ""}`}
                       />
                     </Box>
                   </TableCell>
                   <TableCell padding="none" align="center">
-                    <Tooltip title={`Alterar a peça ${modelo.descricao}`}>
-                      <IconButton component={Link} to={`/pecas/alterar?id=${modelo._id}`}>
+                    <Tooltip title={`Alterar a peça ${peca.descricao}`}>
+                      <IconButton component={Link} to={`/pecas/alterar?id=${peca._id}`}>
                         <EditIcon />
                       </IconButton>
                     </Tooltip>
@@ -70,4 +75,4 @@ function ListagemModelos({pecas = []}) {
   );
 }
 
-export default memo(ListagemModelos);
+export default memo(ListagemPecas);

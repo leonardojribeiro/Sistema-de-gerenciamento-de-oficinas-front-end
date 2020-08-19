@@ -30,6 +30,9 @@ const ListagemItensDeServico: React.FC = () => {
             <Typography>Fornecedor: {itemDeServico.funcionario.nome}</Typography>
           </Grid>
           <Grid item>
+            <Typography>Garantia: {itemDeServico.garantia}</Typography>
+          </Grid>
+          <Grid item>
             <Typography>Valor unitário: {itemDeServico.valorUnitario}</Typography>
           </Grid>
           <Grid item>

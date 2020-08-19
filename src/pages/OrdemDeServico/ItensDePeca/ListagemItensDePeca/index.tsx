@@ -31,6 +31,9 @@ const ListagemItensDePeca: React.FC = () => {
             <Typography>Fornecedor: {itemDePeca.fornecedor.nomeFantasia}</Typography>
           </Grid>
           <Grid item>
+            <Typography>Garantia: {itemDePeca.garantia}</Typography>
+          </Grid>
+          <Grid item>
             <Typography>Valor unitário: {itemDePeca.valorUnitario}</Typography>
           </Grid>
           <Grid item>

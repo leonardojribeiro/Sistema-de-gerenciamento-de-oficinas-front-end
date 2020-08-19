@@ -2,20 +2,21 @@ import React, { useState, useContext, useCallback, useEffect, useMemo } from 're
 import Dialogo from '../../../componentes/Dialog';
 import { Box,} from '@material-ui/core';
 import ApiContext from '../../../contexts/ApiContext';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation,  Switch, Route } from 'react-router-dom';
 import DialogoInserirModelo from '../DialogoInserirModelo';
 import DialogoAlterarModelo from '../DialogoAlterarModelo';
 import ListagemModelos from '../ListagemModelos';
 import BotaoInserir from '../../../componentes/BotaoInserir';
 import FormularioConsulta from '../../../componentes/FormularioConsulta';
+import Modelo from '../../../Types/Modelo';
 
-function DialogoModelos() {
-  const [modelos, setModelos] = useState([]);
+const DialogoModelos: React.FC = () => {
+  const [modelos, setModelos] = useState<Modelo[]>([]);
   const { get } = useContext(ApiContext);
   const { pathname } = useLocation();
   const filtros = ["Descrição", "Marca"]
   const listar = useCallback(async () => {
-    const modelos = await get(`/modelo`);
+    const modelos = await get(`/modelo`) as Modelo[];
     if (modelos) {
       setModelos(modelos);
     }
@@ -28,7 +29,7 @@ function DialogoModelos() {
   }, [listar, pathname]);
 
   const manipularBusca = useCallback(async ({ consulta, tipo }) => {
-    const modelos = await get(`/modelo/consulta?consulta=${consulta}&tipo=${tipo}`);
+    const modelos = await get(`/modelo/consulta?consulta=${consulta}&tipo=${tipo}`) as Modelo[];
     if (modelos) {
       setModelos(modelos);
     }
@@ -36,19 +37,21 @@ function DialogoModelos() {
 
   const conteudo = useMemo(() => (
     <>
-      <FormularioConsulta aoEnviar={manipularBusca} filtros={filtros}/>
+      <FormularioConsulta onSubmit={manipularBusca} filtros={filtros}/>
       <Box display="flex" justifyContent="center" pt={2}>Listagem</Box>
       <ListagemModelos modelos={modelos} />
-      <BotaoInserir titulo="Inserir modelo" component={Link} to="modelos/inserir" />
+      <BotaoInserir titulo="Inserir modelo" linkTo="modelos/inserir" />
     </>
   ), [filtros, manipularBusca, modelos])
 
 
   return (
-    <Dialogo maxWidth="sm" fullWidth aberto titulo="Modelos">
+    <Dialogo maxWidth="sm" fullWidth open title="Modelos">
       {conteudo}
-      <DialogoInserirModelo aberto={pathname === "/modelos/inserir"} />
-      <DialogoAlterarModelo aberto={pathname === "/modelos/alterar"} />
+      <Switch>
+        <Route path="/modelos/inserir" component={DialogoInserirModelo} />
+        <Route path="/modelos/alterar" component={DialogoAlterarModelo} />
+      </Switch>
     </Dialogo>
   );
 }

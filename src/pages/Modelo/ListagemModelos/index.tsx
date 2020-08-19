@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Tooltip, IconButton, makeStyles, Typography, Grid } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import { Link } from 'react-router-dom';
+import Modelo from '../../../Types/Modelo';
 const useStyles = makeStyles((theme) => ({
   listagem: {
     minHeight: "50vh",
@@ -21,7 +22,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function ListagemModelos({ modelos = [] }) {
+interface ListagemModelosProps {
+  modelos: Modelo[];
+}
+
+const ListagemModelos: React.FC<ListagemModelosProps> = ({ modelos }) => {
   const classes = useStyles();
   const imagensUrl = process.env.REACT_APP_IMAGENS_URL;
 
@@ -39,7 +44,7 @@ function ListagemModelos({ modelos = [] }) {
         </Grid>
       </Grid>
       {
-        !!modelos.length && modelos.map((modelo, index) => (
+        modelos.map((modelo, index) => (
           <Grid container alignItems="center" justify="space-between" className={classes.linhaTabela} key={index}>
             <Grid item xs={4}>
               <Typography>
@@ -62,7 +67,7 @@ function ListagemModelos({ modelos = [] }) {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item padding="none" align="center">
+            <Grid item>
               <Tooltip title={`Alterar o modelo ${modelo.descricao}`}>
                 <IconButton component={Link} to={`/modelos/alterar?id=${modelo._id}`}>
                   <EditIcon />

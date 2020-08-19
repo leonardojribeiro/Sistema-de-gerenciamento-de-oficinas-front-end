@@ -19,9 +19,7 @@ import Usuario from './Types/Usuario';
 import DialogServicos from './pages/Servico/DialogServicos';
 import DialogOrdensDeServico from './pages/OrdemDeServico/DialogOrdensDeServico';
 import DialogoVeiculos from './pages/Veiculo/DialogoVeiculos';
-import DialogoModelos from './pages/Modelo/DialogoModelos';
 import DialogoPecas from './pages/Peca/DialogoPecas';
-import DialogoClientes from './pages/Cliente/DialogoClientes';
 
 
 const Routes: React.FC = () => {
@@ -73,6 +71,9 @@ const Routes: React.FC = () => {
                   <DialgoMarcas />
                 </Route>
 
+                <Route path="/pecas">
+                  <DialogoPecas />
+                </Route>
 
                 <Route path="/veiculos">
                   <DialogoVeiculos />

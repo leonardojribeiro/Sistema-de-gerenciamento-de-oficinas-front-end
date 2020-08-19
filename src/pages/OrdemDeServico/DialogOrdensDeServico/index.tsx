@@ -4,7 +4,6 @@ import DialogInserirOrdemDeServico from '../DialogInserirOrdemDeServico';
 import Dialog from '../../../componentes/Dialog';
 import BotaoInserir from '../../../componentes/BotaoInserir';
 
-
 const DialogOrdensDeServico: React.FC = () => {
   
   return (

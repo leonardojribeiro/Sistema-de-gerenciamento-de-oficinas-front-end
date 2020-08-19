@@ -6,9 +6,11 @@ import { DialogActions, Button, MenuItem, Typography, makeStyles, Grid } from '@
 import CampoDeSelecao from '../../../componentes/Form/Fields/SelectField';
 import { useState } from 'react';
 import useQuery from '../../../hooks/useQuery';
-import Alerta from '../../../componentes/Alerta';
+import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
 import { useMemo } from 'react';
-import { Formulario, CampoDeTexto } from '../../../componentes/Form';
+import { Form, CampoDeTexto } from '../../../componentes/Form';
+import Marca from '../../../Types/Marca';
+import Peca from '../../../Types/Peca';
 
 const useStyles = makeStyles((theme) => ({
   listagem: {
@@ -25,18 +27,18 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function DialogoAlterarModelo({ aberto }) {
+const DialogoAlterarModelo: React.FC = () => {
   const classes = useStyles();
   const imagensUrl = process.env.REACT_APP_IMAGENS_URL;
   const { get, put } = useContext(ApiContext);
   const history = useHistory();
-  const [marcas, setMarcas] = useState([]);
-  const [peca, setPeca] = useState({});
-  const refAlerta = useRef();
+  const [marcas, setMarcas] = useState<Marca[]>([]);
+  const [peca, setPeca] = useState<Peca | undefined>();
+  const refAlerta = useRef<AlertaHandles>();
   const id = useQuery("id");
 
   const manipularEnvio = useCallback(async (pecaASerAlterada) => {
-    if (pecaASerAlterada) {
+    if (pecaASerAlterada && peca) {
       if (!(pecaASerAlterada.descricao === peca.descricao) || !(pecaASerAlterada.idMarca === peca.idMarca)) {
         pecaASerAlterada._id = peca._id;
         const resposta = await put("/peca", pecaASerAlterada);
@@ -56,33 +58,29 @@ function DialogoAlterarModelo({ aberto }) {
 
 
   const popular = useCallback(async () => {
-    const resposta = await get(`/peca/id?_id=${id}`)
+    const resposta = await get(`/peca/id?_id=${id}`) as Peca;
     if (resposta) {
       setPeca(resposta)
     }
   }, [get, id,]);
 
   const listarMarcas = useCallback(async () => {
-    const marcas = await get("/marca");
+    const marcas = await get("/marca") as Marca[];
     if (marcas) {
       setMarcas(marcas);
     }
     popular()
-  }, [get,  popular]);
+  }, [get, popular]);
 
   useEffect(() => {
-    if (aberto) {
-      listarMarcas();
-    }
-    return () => {
-      setPeca({});
-    }
-  }, [popular, listarMarcas, aberto])
+    popular();
+    listarMarcas();
+  }, [popular, listarMarcas])
 
   const conteudo = useMemo(() => (
-    <Formulario aoEnviar={manipularEnvio} dadosIniciais={peca}>
-      <CampoDeTexto nome="descricao" label="Descrição" fullWidth required autoFocus />
-      <CampoDeSelecao nome="idMarca" label="Marca" fullWidth required >
+    <Form onSubmit={manipularEnvio} initialData={peca}>
+      <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
+      <CampoDeSelecao name="idMarca" label="Marca" fullWidth required >
         {
           marcas.map((marca, index) => (
             <MenuItem key={index} value={marca._id} className={classes.itemMenu}>
@@ -97,11 +95,11 @@ function DialogoAlterarModelo({ aberto }) {
       <DialogActions >
         <Button type="submit">Salvar</Button>
       </DialogActions>
-    </Formulario>
+    </Form>
   ), [classes, imagensUrl, manipularEnvio, marcas, peca])
 
   return (
-    <Dialogo aberto={aberto} titulo="Alterar peça">
+    <Dialogo open title="Alterar peça">
       {conteudo}
       <Alerta ref={refAlerta} />
     </Dialogo>

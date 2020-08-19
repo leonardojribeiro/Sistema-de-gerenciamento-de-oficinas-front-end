@@ -6,6 +6,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import formato from '../../../recursos/Formato';
 import { Link } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
+import Fornecedor from '../../../Types/Fornecedor';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,8 +24,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function FornecedorItem({ fornecedor }) {
-  const [aberto, setAberto] = useState(false);
+interface FornecedorItemProps{
+  fornecedor: Fornecedor;
+}
+
+const FornecedorItem: React.FC<FornecedorItemProps> = ({ fornecedor }) => {
+  const [aberto, setAberto] = useState<boolean>(false);
   const classes = useStyles();
   return (
     <>
@@ -47,7 +52,7 @@ function FornecedorItem({ fornecedor }) {
               </Tooltip>
             </Grid>
             <Grid item>
-              <Tooltip title={`Alterar o cliente ${fornecedor.nome}`}>
+              <Tooltip title={`Alterar o fornecedor ${fornecedor.nomeFantasia}`}>
                 <IconButton component={Link} to={`/fornecedores/alterar?id=${fornecedor._id}`}>
                   <EditIcon />
                 </IconButton>

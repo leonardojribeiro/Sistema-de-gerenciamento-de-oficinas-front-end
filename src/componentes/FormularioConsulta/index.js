@@ -20,7 +20,7 @@ function FormularioConsulta({ onSubmit, filtros = [] }) {
           <Grid item xs={12} sm={6}>
             <Box display="flex" flexDirection="row" alignItems="flex-end">
               <CampoDeSelecao
-                nome="tipo"
+                name="tipo"
                 fullWidth
                 label="Filtrar por"
                 required

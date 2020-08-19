@@ -1,9 +1,11 @@
-import React, { useContext, useState, useCallback, useEffect, memo } from 'react';
+import React, { useContext, useCallback, useEffect, memo } from 'react';
 import Dialogo from '../../../componentes/Dialog';
 import ApiContext from '../../../contexts/ApiContext';
 import { useHistory } from 'react-router-dom';
 import { DialogActions, Button, MenuItem, Typography, makeStyles, Grid } from '@material-ui/core';
-import { Formulario, CampoDeSelecao, CampoDeTexto } from '../../../componentes/Form';
+import { useState } from 'react';
+import { Form, CampoDeTexto, CampoDeSelecao } from '../../../componentes/Form';
+import Marca from '../../../Types/Marca';
 
 const useStyles = makeStyles((theme) => ({
   listagem: {
@@ -20,16 +22,16 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function DialogoInserirModelo({ aberto }) {
+const DialogoInserirPeca: React.FC = () => {
   const classes = useStyles();
   const imagensUrl = process.env.REACT_APP_IMAGENS_URL;
-  const { get, post } = useContext(ApiContext);
+  const { get, post} = useContext(ApiContext);
   const history = useHistory();
-  const [marcas, setMarcas] = useState([]);
+  const [marcas, setMarcas] = useState<Marca[]>([]);
 
-  const manipularEnvio = useCallback(async (modelo) => {
-    if (modelo) {
-      const resposta = await post("/modelo", modelo);
+  const manipularEnvio = useCallback(async (peca) => {
+    if (peca) {
+      const resposta = await post("/peca", peca);
       if (resposta) {
         history.goBack();
       }
@@ -37,7 +39,7 @@ function DialogoInserirModelo({ aberto }) {
   },[history, post]);
 
   const listarMarcas = useCallback(async () => {
-    const marcas = await get(`/marca`);
+    const marcas = await get("/marca") as Marca[];
     if (marcas) {
       setMarcas(marcas);
     }
@@ -48,10 +50,10 @@ function DialogoInserirModelo({ aberto }) {
   }, [listarMarcas]);
 
   return (
-    <Dialogo aberto={aberto} titulo="Inserir modelo">
-      <Formulario aoEnviar={manipularEnvio}>
-        <CampoDeTexto nome="descricao" label="Descrição" fullWidth required autoFocus /> 
-        <CampoDeSelecao  nome="idMarca" label="Marca" nfullWidth required>
+    <Dialogo open title="Inserir peça">
+      <Form onSubmit={manipularEnvio}>
+        <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
+        <CampoDeSelecao name="idMarca" label="Marca" fullWidth required  >
           <MenuItem value="" className={classes.itemMenu}>Nenhum</MenuItem>
           {
             marcas.map((marca, index) => (
@@ -67,9 +69,9 @@ function DialogoInserirModelo({ aberto }) {
         <DialogActions >
           <Button type="submit">Salvar</Button>
         </DialogActions>
-      </Formulario>
+      </Form>
     </Dialogo>
   );
 }
 
-export default memo(DialogoInserirModelo);
+export default memo(DialogoInserirPeca);

@@ -7,4 +7,6 @@ export default interface ItemDePeca{
   valorUnitario: number;
   quantidade: number;
   valorTotal: number;
+  garantia: number;
+  unidadeDeGarantia: string;
 }

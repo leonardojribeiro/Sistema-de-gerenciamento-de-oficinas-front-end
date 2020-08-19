@@ -51,12 +51,8 @@ const DialogServicos: React.FC = () => {
     <Dialogo maxWidth="sm" fullWidth open title="Serviços">
       {conteudo}
       <Switch>
-        <Route path="/servicos/inserir">
-          <DialogInserirServico/>
-        </Route>
-        <Route path="/servicos/alterar">
-          <DialogAlterarServico/>
-        </Route>
+        <Route path="/servicos/inserir" component={DialogInserirServico}/>
+        <Route path="/servicos/alterar" component={DialogAlterarServico}/>
       </Switch>
     </Dialogo>
   );

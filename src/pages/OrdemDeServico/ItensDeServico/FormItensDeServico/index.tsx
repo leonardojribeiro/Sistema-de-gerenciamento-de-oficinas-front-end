@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useContext, useEffect, useRef, memo } from 'react';
-import { Form, MoneyField, CampoDeTexto } from '../../../../componentes/Form';
+import { Form, MoneyField, CampoDeTexto, CampoDeSelecao } from '../../../../componentes/Form';
 import ApiContext from '../../../../contexts/ApiContext';
 import SelectField from '../../../../componentes/Form/Fields/SelectField';
 import { Grid, MenuItem, Button, Container } from '@material-ui/core';
@@ -56,6 +56,8 @@ const FormItensDeServico: React.FC = () => {
         servico: servicos[Number(dados.servico)],
         funcionario: funcionarios[Number(dados.funcionario)],
         valorUnitario: Number(dados.valorUnitario),
+        garantia: Number(dados.garantia),
+        unidadeDeGarantia: dados.unidadeDeGarantia,
         quantidade: Number(dados.quantidade),
         valorTotal: Number(dados.valorUnitario) * Number(dados.quantidade),
       } as ItemDeServico;
@@ -88,6 +90,15 @@ const FormItensDeServico: React.FC = () => {
                 <MenuItem key={indice} value={indice}>{funcionario.nome}</MenuItem>
               ))}
             </SelectField>
+          </Grid>
+          <Grid item md={2}>
+            <CampoDeTexto type="number" min={0} name="garantia" fullWidth required label="Garantia" onChange={calcularValorTotal} />
+          </Grid>
+          <Grid item md={1}>
+            <CampoDeSelecao name="unidadeDeGarantia" label="Tipo" fullWidth required>
+              <MenuItem value="0">Km</MenuItem>
+              <MenuItem value="1">Dias</MenuItem>
+            </CampoDeSelecao>
           </Grid>
           <Grid item md={2}>
             <MoneyField name="valorUnitario" fullWidth required label="Valor unitário" onChange={calcularValorTotal} />

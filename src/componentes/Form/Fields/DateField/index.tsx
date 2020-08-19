@@ -1,6 +1,6 @@
 import React, { memo, useRef, useCallback, useEffect, useState } from 'react';
 import useField from '../../Hooks/useField';
-import { DatePicker, BaseDatePickerProps} from '@material-ui/pickers';
+import {  BaseDatePickerProps, KeyboardDatePicker } from '@material-ui/pickers';
 
 interface DateFieldProps extends BaseDatePickerProps {
   name: string,
@@ -9,24 +9,32 @@ interface DateFieldProps extends BaseDatePickerProps {
   fullWidth?: boolean;
 }
 
+
+interface Ref {
+  value: Date | string;
+}
+
 const DateField: React.FC<DateFieldProps> = ({ name, ...props }) => {
   const [valid, setValid] = useState<boolean>(true);
   const [value, setValue] = useState<Date>(new Date());
-  const ref = useRef<HTMLInputElement | undefined>(undefined);
+  const ref = useRef<Ref>({} as Ref);
+  const inputRef = useRef<HTMLInputElement>();
   const { registerField, fieldName, defaultValue } = useField(name);
+
+  ref.current.value = value;
 
   const validate = useCallback(() => {
     if (ref && ref.current) {
-      if (!props.required && !ref.current.value.length) {
+      if (!props.required && !Number.isNaN(new Date(ref.current.value).getTime())) {
         return true;
       }
-      if (ref.current.value.length) {
+      if (!Number.isNaN(new Date(ref.current.value).getTime()) && ref.current.value) {
         setValid(true);
         return (true);
       }
       else {
-        if (ref) {
-          ref.current.focus();
+        if (inputRef.current) {
+          inputRef.current.focus();
         }
         setValid(false);
         return (false);
@@ -55,28 +63,29 @@ const DateField: React.FC<DateFieldProps> = ({ name, ...props }) => {
 
   useEffect(() => {
     if (defaultValue) {
-      setValue(defaultValue.split('T')[0]);
+      const value = new Date(defaultValue)
+      setValue(value);
+      ref.current.value = value;
     }
   }, [defaultValue]);
 
-  const handleChange = useCallback((evento) => {
-    console.log(ref.current && ref.current.value.toString())
+  const handleChange = useCallback((valor) => {
+    ref.current.value = value;
     if (!valid) {
       validate();
     }
-    setValue(evento);
-  }, [validate, valid]);
+    setValue(valor);
+  }, [value, valid, validate]);
 
   return (
-    <DatePicker
+    <KeyboardDatePicker
       value={value}
-      inputRef={ref}
       onChange={handleChange}
       format="dd/MM/yyyy"
-      lang="pt"
-      {
-        ...props
-      }
+      error={!valid}
+      invalidDateMessage="Formato de data inválido."
+      inputRef={inputRef}
+      {...props}
     />
   );
 }

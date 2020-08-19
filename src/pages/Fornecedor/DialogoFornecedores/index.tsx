@@ -1,21 +1,22 @@
 import React, { useCallback, useEffect, useState, useContext, useMemo } from 'react';
 import Dialogo from '../../../componentes/Dialog';
-import { Box,} from '@material-ui/core';
+import { Box, } from '@material-ui/core';
 import ApiContext from '../../../contexts/ApiContext';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Switch, Route } from 'react-router-dom';
 import DialogoInserirCliente from '../DialogoInserirFornecedor';
 import ListagemFornecedores from '../ListagemFornecedores';
 import DialogoAlterarCilente from '../DialogoAlterarFornecedor';
 import BotaoInserir from '../../../componentes/BotaoInserir';
 import FormularioConsulta from '../../../componentes/FormularioConsulta';
+import Fornecedor from '../../../Types/Fornecedor';
 
-function DialogoFornecedores() {
-  const [fornecedores, setFornecedores] = useState([]);
+const DialogoFornecedores: React.FC = () => {
+  const [fornecedores, setFornecedores] = useState<Fornecedor[]>([]);
   const { get } = useContext(ApiContext);
   const { pathname } = useLocation();
 
   const listar = useCallback(async () => {
-    const fornecedores = await get("/fornecedor");
+    const fornecedores = await get("/fornecedor") as Fornecedor[];
     if (fornecedores) {
       setFornecedores(fornecedores);
     }
@@ -29,27 +30,29 @@ function DialogoFornecedores() {
   }, [listar, pathname]);
 
   const manipularBusca = useCallback(async ({ consulta, tipo }) => {
-    const modelos = await get(`/cliente/consulta?consulta=${consulta}&tipo=${tipo}`);
-    if (modelos) {
-      setFornecedores(modelos);
+    const fornecedores = await get(`/cliente/consulta?consulta=${consulta}&tipo=${tipo}`) as Fornecedor[];
+    if (fornecedores) {
+      setFornecedores(fornecedores);
     }
   }, [get,]);
 
   const conteudo = useMemo(() => (
     <>
-      <FormularioConsulta aoEnviar={manipularBusca}/>
+      <FormularioConsulta onSubmit={manipularBusca} />
       <Box display="flex" justifyContent="center" pt={2}>Listagem</Box>
-      <ListagemFornecedores fornecedores={fornecedores}/>
-      <BotaoInserir titulo="Inserir fornecedor" component={Link} to="fornecedores/inserir"/>
+      <ListagemFornecedores fornecedores={fornecedores} />
+      <BotaoInserir titulo="Inserir fornecedor" linkTo="fornecedores/inserir" />
     </>
   ), [fornecedores, manipularBusca])
 
 
   return (
-    <Dialogo maxWidth="md" fullWidth aberto titulo="Fornecedor">
+    <Dialogo maxWidth="md" fullWidth open title="Fornecedores">
       {conteudo}
-      <DialogoInserirCliente aberto={pathname === "/fornecedores/inserir"}/>
-      <DialogoAlterarCilente aberto={pathname === "/fornecedores/alterar"} />
+      <Switch>
+        <Route path="/fornecedores/inserir" component={DialogoInserirCliente} />
+        <Route path="/fornecedores/alterar" component={DialogoAlterarCilente} />
+      </Switch>
     </Dialogo>
   );
 }

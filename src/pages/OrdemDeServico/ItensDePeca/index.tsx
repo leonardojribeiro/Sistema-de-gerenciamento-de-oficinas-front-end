@@ -1,7 +1,8 @@
-import React, { memo } from 'react';
-import { Box, makeStyles } from '@material-ui/core';
+import React, { memo, useContext } from 'react';
+import { Box, makeStyles, Grid, Typography } from '@material-ui/core';
 import ListagemItensDePeca from './ListagemItensDePeca';
 import FormItensDePeca from './FormItensDePeca';
+import OrdemDeServicoContext from '../OrdemDeServicoContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,9 +16,15 @@ const useStyles = makeStyles((theme) => ({
 
 const ItensDePeca: React.FC = () => {
   const classes = useStyles();
+  const {valorTotalPecas} = useContext(OrdemDeServicoContext)
   return (
     <Box className={classes.root}>
       <ListagemItensDePeca />
+      <Grid container>
+        <Grid item>
+          <Typography>Valor Total:{valorTotalPecas()}</Typography>
+        </Grid>
+      </Grid>
       <FormItensDePeca />
     </Box>
   );

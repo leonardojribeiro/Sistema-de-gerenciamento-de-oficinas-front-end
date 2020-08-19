@@ -5,18 +5,19 @@ import { useHistory } from 'react-router-dom';
 import { DialogActions, Button, Grid, } from '@material-ui/core';
 import useQuery from '../../../hooks/useQuery';
 import comparar from '../../../recursos/Comparar';
-import Alerta from '../../../componentes/Alerta';
-import { Formulario, CampoDeTexto, CampoDeCpfOuCnpj, CampoDeTelefone, CampoDeEmail, CampoDeCep, No } from '../../../componentes/Form';
+import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
+import { Form, CampoDeTexto, CampoDeCpfOuCnpj, PhoneField, CampoDeEmail, CepField, Node } from '../../../componentes/Form';
+import Fornecedor from '../../../Types/Fornecedor';
 
-function DialogoAlterarFornecedor({ aberto }) {
+const DialogoAlterarFornecedor: React.FC = () => {
   const { get, put, } = useContext(ApiContext);
   const history = useHistory();
-  const [fornecedor, setFornecedor] = useState({});
+  const [fornecedor, setFornecedor] = useState<Fornecedor | undefined>();
   const id = useQuery("id");
-  const refAlerta = useRef();
+  const refAlerta = useRef<AlertaHandles>();
 
   const manipularEnvio = useCallback(async (dados) => {
-    if (dados) {
+    if (dados && fornecedor) {
       if (!comparar(fornecedor, dados)) {
         dados._id = fornecedor._id;
         console.log(dados);
@@ -33,71 +34,69 @@ function DialogoAlterarFornecedor({ aberto }) {
         }
       }
     }
-  }, [fornecedor, history,  put]);
+  }, [fornecedor, history, put]);
 
   const popular = useCallback(async () => {
-    const resposta = await get(`/fornecedor/id?_id=${id}`)
+    const resposta = await get(`/fornecedor/id?_id=${id}`) as Fornecedor;
     if (resposta) {
       setFornecedor(resposta)
     }
   }, [get, id,]);
 
   useEffect(() => {
-    if (aberto) {
-      popular();
-    }
-  }, [popular, aberto])
+    popular();
+  }, [popular,])
 
   return (
-    <Dialogo maxWidth="md" fullWidth aberto={aberto} titulo="Alterar cliente">
-      <Formulario dadosIniciais={fornecedor} aoEnviar={manipularEnvio}>
+    <Dialogo maxWidth="md" fullWidth open title="Alterar cliente">
+      <Form initialData={fornecedor} onSubmit={manipularEnvio}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8} md={8}>
-            <CampoDeTexto nome="nomeFantasia" label="Nome fantasia" fullWidth required autoFocus />
+            <CampoDeTexto name="nomeFantasia" label="Nome fantasia" fullWidth required autoFocus />
           </Grid>
           <Grid item xs={12} sm={4} md={4}>
-            <CampoDeCpfOuCnpj nome="cpfCnpj" label="CPF/CNPJ" disabled fullWidth required />
+            <CampoDeCpfOuCnpj name="cpfCnpj" label="CPF/CNPJ" disabled fullWidth required />
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
-            <CampoDeTexto nome="razaoSocial" label="Razão Social" fullWidth required />
+            <CampoDeTexto name="razaoSocial" label="Razão Social" fullWidth required />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <CampoDeTelefone nome="telefoneFixo" label="Telefone fixo" fullWidth />
+            <PhoneField name="telefoneFixo" label="Telefone fixo" fullWidth />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <CampoDeTelefone nome="telefoneCelular" label="Telefone celular" fullWidth required />
+            <PhoneField name="telefoneCelular" label="Telefone celular" fullWidth required />
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
-            <CampoDeEmail nome="email" label="E-mail" fullWidth />
+            <CampoDeEmail name="email" label="E-mail" fullWidth />
           </Grid>
-          <No no="endereco">
+          <Node node="endereco">
             <Grid item xs={12} sm={12} md={6}>
-              <CampoDeTexto nome="logradouro" label="Logradouro" fullWidth required />
+              <CampoDeTexto name="logradouro" label="Logradouro" fullWidth required />
             </Grid>
             <Grid item xs={12} sm={9} md={6}>
-              <CampoDeTexto nome="bairro" label="Bairro" fullWidth required />
+              <CampoDeTexto name="bairro" label="Bairro" fullWidth required />
             </Grid>
             <Grid item xs={12} sm={3} md={2}>
-              <CampoDeTexto nome="numero" label="Número" fullWidth required />
+              <CampoDeTexto name="numero" label="Número" fullWidth required />
             </Grid>
             <Grid item xs={12} sm={9} md={7}>
-              <CampoDeTexto nome="complemento" label="Complemento" fullWidth />
+              <CampoDeTexto name="complemento" label="Complemento" fullWidth />
             </Grid>
             <Grid item xs={12} sm={3} md={3}>
-              <CampoDeCep nome="cep" label="CEP" fullWidth required />
+              <CepField name="cep" label="CEP" fullWidth required />
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
-              <CampoDeTexto nome="estado" label="Estado" fullWidth required />
+              <CampoDeTexto name="estado" label="Estado" fullWidth required />
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
-              <CampoDeTexto nome="cidade" label="Cidade" fullWidth required />
+              <CampoDeTexto name="cidade" label="Cidade" fullWidth required />
             </Grid>
-          </No>
+          </Node>
         </Grid>
         <DialogActions >
           <Button type="submit">Salvar</Button>
         </DialogActions>
-      </Formulario>
+      </Form>
       <Alerta ref={refAlerta} />
     </Dialogo>
   );

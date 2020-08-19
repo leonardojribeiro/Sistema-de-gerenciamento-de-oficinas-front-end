@@ -5,10 +5,12 @@ import { useHistory } from 'react-router-dom';
 import { DialogActions, Button, MenuItem, Typography, makeStyles, Grid } from '@material-ui/core';
 import { useState } from 'react';
 import useQuery from '../../../hooks/useQuery';
-import Alerta from '../../../componentes/Alerta';
+import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
 import { useMemo } from 'react';
 import comparar from '../../../recursos/Comparar';
-import { Formulario, CampoDeSelecao, CampoDeTexto } from '../../../componentes/Form';
+import { Form, CampoDeSelecao, CampoDeTexto } from '../../../componentes/Form';
+import Marca from '../../../Types/Marca';
+import Modelo from '../../../Types/Modelo';
 
 const useStyles = makeStyles((theme) => ({
   listagem: {
@@ -25,17 +27,17 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function DialogoAlterarModelo({ aberto }) {
+const DialogoAlterarModelo: React.FC = () => {
   const classes = useStyles();
   const imagensUrl = process.env.REACT_APP_IMAGENS_URL;
   const { get, put } = useContext(ApiContext);
   const history = useHistory();
-  const [marcas, setMarcas] = useState([]);
-  const [modelo, setModelo] = useState({});
-  const refAlerta = useRef();
+  const [marcas, setMarcas] = useState<Marca[]>([]);
+  const [modelo, setModelo] = useState<Modelo | undefined>();
+  const refAlerta = useRef<AlertaHandles>();
 
   const manipularEnvio = useCallback(async (modeloASerAlterado) => {
-    if (modeloASerAlterado) {
+    if (modeloASerAlterado && modelo) {
       if (!comparar(modelo, modeloASerAlterado)) {
         modeloASerAlterado._id = modelo._id
         const resposta = await put("/modelo", modeloASerAlterado);
@@ -56,14 +58,14 @@ function DialogoAlterarModelo({ aberto }) {
   const id = useQuery("id");
 
   const popular = useCallback(async () => {
-    const resposta = await get(`/modelo/id?_id=${id}`)
+    const resposta = await get(`/modelo/id?_id=${id}`) as Modelo
     if (resposta) {
       setModelo(resposta)
     }
   }, [get, id]);
 
   const listarMarcas = useCallback(async () => {
-    const marcas = await get(`/marca`);
+    const marcas = await get(`/marca`) as Marca[];
     if (marcas) {
       setMarcas(marcas);
     }
@@ -71,18 +73,13 @@ function DialogoAlterarModelo({ aberto }) {
   }, [get, popular]);
 
   useEffect(() => {
-    if (aberto) {
-      listarMarcas();
-    }
-    return () => {
-      setModelo({});
-    }
-  }, [popular, listarMarcas, aberto])
+    listarMarcas();
+  }, [popular, listarMarcas]);
 
   const conteudo = useMemo(() => (
-    <Formulario aoEnviar={manipularEnvio} dadosIniciais={modelo}>
-      <CampoDeTexto nome="descricao" label="Descrição" fullWidth required autoFocus />
-      <CampoDeSelecao nome="idMarca" label="Marca" fullWidth required>
+    <Form onSubmit={manipularEnvio} initialData={modelo}>
+      <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
+      <CampoDeSelecao name="idMarca" label="Marca" fullWidth required>
         {
           marcas.map((marca, index) => (
             <MenuItem key={index} value={marca._id} className={classes.itemMenu}>
@@ -97,11 +94,11 @@ function DialogoAlterarModelo({ aberto }) {
       <DialogActions >
         <Button type="submit">Salvar</Button>
       </DialogActions>
-    </Formulario>
+    </Form>
   ), [classes, imagensUrl, manipularEnvio, marcas, modelo])
 
   return (
-    <Dialogo aberto={aberto} titulo="Alterar modelo">
+    <Dialogo open title="Alterar modelo">
       {conteudo}
       <Alerta ref={refAlerta} />
     </Dialogo>
