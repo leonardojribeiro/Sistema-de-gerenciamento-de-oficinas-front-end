@@ -5,8 +5,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 interface DrawerProps{
-  open: boolean,
-  setOpen: React.Dispatch<SetStateAction<boolean>>,
+  open: boolean;
+  setOpen: React.Dispatch<SetStateAction<boolean>>;
+  children: React.ReactNode;
 }
 
 const drawerWidth = 240;

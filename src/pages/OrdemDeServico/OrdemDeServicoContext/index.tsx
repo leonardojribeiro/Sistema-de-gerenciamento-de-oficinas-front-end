@@ -61,7 +61,7 @@ export const OrdemDeServicoProvider: React.FC = ({children}) => {
       await post('ordemdeservico', dados);
 
     }
-  },[itensDePeca, itensDeServico, validar]);
+  },[itensDePeca, itensDeServico, post, validar]);
 
   const valorTotalPecas = useCallback(()=>{
     let valorTotal = 0;

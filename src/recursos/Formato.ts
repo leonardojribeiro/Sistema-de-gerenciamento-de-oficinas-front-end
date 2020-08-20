@@ -1,16 +1,16 @@
-import MascaraNumererica from "./MascaraNumerica";
+import numberMask from "./NumberMask";
 
 export default {
-  formatarData(data) {
+  formatarData(data: Date | string) {
     if (data) {
       const dataC = new Date(data)
       return `${("0" + dataC.getUTCDate()).slice(-2)}/${("0" + (dataC.getUTCMonth() + 1)).slice(-2)}/${dataC.getUTCFullYear()}`
     }
     return "";
   },
-  formatarTelefone(telefone) {
+  formatarTelefone(telefone: string) {
     if (telefone) {
-      return MascaraNumererica(
+      return numberMask(
         telefone,
         tamanho => tamanho < 11
           ? "(00) 0000-0000"
@@ -19,7 +19,7 @@ export default {
     }
     return "";
   },
-  formatarSexo(sexo) {
+  formatarSexo(sexo: string) {
     if (sexo) {
       return sexo === "f" || sexo === "feminino" || sexo === "Feminino"
         ? "Feminino"
@@ -29,9 +29,9 @@ export default {
     }
     return "";
   },
-  formatarCpfCnpj(cpfCnpj) {
+  formatarCpfCnpj(cpfCnpj: string) {
     if (cpfCnpj) {
-      return MascaraNumererica(
+      return numberMask(
         cpfCnpj,
         tamanho =>
           tamanho < 12

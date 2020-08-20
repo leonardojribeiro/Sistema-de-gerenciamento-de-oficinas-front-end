@@ -50,6 +50,7 @@ body {
 
 .h-min-barra-rodape {
   min-height: var(--h-livre-com-barra-rodape);
+  position: relative;
 }
 
 .tabela > div:nth-child(2n+2) {

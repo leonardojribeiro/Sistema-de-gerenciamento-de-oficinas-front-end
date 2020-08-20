@@ -3,9 +3,9 @@ import Dialogo from '../../../componentes/Dialog';
 import { Button, DialogActions } from '@material-ui/core';
 import ApiContext from '../../../contexts/ApiContext';
 import { useHistory } from 'react-router-dom';
-import { CampoDeTexto, Formulario, } from '../../../componentes/Form';
+import { CampoDeTexto, Form, } from '../../../componentes/Form';
 
-function DialogInserirEspecialidade({ aberto }) {
+function DialogInserirEspecialidade() {
   const { post } = useContext(ApiContext);
   const history = useHistory();
 
@@ -19,13 +19,13 @@ function DialogInserirEspecialidade({ aberto }) {
   }, [history, post])
 
   return (
-    <Dialogo aberto={aberto} titulo="Inserir especialidade">
-      <Formulario aoEnviar={manipularEnvio}>
-        <CampoDeTexto nome="descricao" label="Descrição" fullWidth required autoFocus />
+    <Dialogo open title="Inserir especialidade">
+      <Form onSubmit={manipularEnvio}>
+        <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
         <DialogActions>
           <Button type="submit">Salvar</Button>
         </DialogActions>
-      </Formulario>
+      </Form>
     </Dialogo>
   );
 }

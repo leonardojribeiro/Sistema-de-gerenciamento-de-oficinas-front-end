@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import { IconButton, makeStyles, Box, Tooltip, Grid, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
+import Especialidade from '../../../Types/Especialidade';
 
 const useStyles = makeStyles((theme) => ({
   listagem: {
@@ -14,16 +15,19 @@ const useStyles = makeStyles((theme) => ({
     objectFit: "scale-down"
   },
   linhaTabela: {
-    '&:hover':{
+    '&:hover': {
       backgroundColor: theme.palette.action.hover
     },
     borderTop: `1px solid ${theme.palette.divider}`
   }
 }));
 
-function Listagem({ especialidades = [] }) {
-  const classes = useStyles();
+interface ListagemEspecialidadesProps {
+  especialidades: Especialidade[];
+}
 
+const ListagemEspecialidades: React.FC<ListagemEspecialidadesProps> = ({ especialidades }) => {
+  const classes = useStyles();
   return (
     <Box mb={2}>
       <Grid container justify="space-between">
@@ -35,7 +39,7 @@ function Listagem({ especialidades = [] }) {
         </Grid>
       </Grid>
       {
-        !!especialidades.length && especialidades.map((especialidade, index) => (
+        especialidades.map((especialidade, index) => (
           <Grid container justify="space-between" alignItems="center" className={classes.linhaTabela} key={index} >
             <Grid item>
               <Typography>{especialidade.descricao}</Typography>
@@ -54,4 +58,4 @@ function Listagem({ especialidades = [] }) {
   );
 }
 
-export default memo(Listagem);
+export default memo(ListagemEspecialidades);

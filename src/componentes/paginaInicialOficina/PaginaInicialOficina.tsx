@@ -1,11 +1,10 @@
 import React, { useContext, useState } from 'react';
-import { Avatar, AppBar, Toolbar, IconButton, Menu, MenuItem, Box, Typography, makeStyles, Container, List, ListItem, ListItemIcon, ListItemText, Grid } from '@material-ui/core';
+import { Avatar, AppBar, Toolbar, IconButton, Menu, MenuItem, Box, Typography, makeStyles, Container, List, ListItem, ListItemIcon, ListItemText, } from '@material-ui/core';
 import AuthContext from '../../contexts/AuthContext';
 import MiniDrawer from '../Drawer';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import MenuIcon from '@material-ui/icons/Menu';
 import Rodape from './Rodape.js';
-import Cartao from './Cartao.js';
 import FolderIcon from '@material-ui/icons/Folder';
 import { Link } from 'react-router-dom';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -16,6 +15,8 @@ import SchoolIcon from '@material-ui/icons/School';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import BuildIcon from '@material-ui/icons/Build';
 import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
+import ListagemOrdensDeServico from '../../pages/OrdemDeServico/ListagemOrdensDeServico';
+import BotaoInserir from '../BotaoInserir';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -29,14 +30,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function PaginaInicialOficina() {
+const PaginaInicialOficina: React.FC = () => {
   const classes = useStyles();
   const { usuario, logout } = useContext(AuthContext);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<EventTarget & HTMLAnchorElement | null>(null);
+  const [open, setOpen] = useState<boolean>(false);
   const opend = Boolean(anchorEl);
 
-  const handleMenu = (event) => {
+  const handleMenu = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -56,7 +57,7 @@ function PaginaInicialOficina() {
           <IconButton onClick={() => setOpen(!open)}>
             {open ? <ChevronLeftIcon /> : <MenuIcon />}
           </IconButton>
-          <Typography>{usuario.oficina.nomeFantasia}</Typography>
+          <Typography>{usuario?.oficina.nomeFantasia}</Typography>
           <IconButton
             aria-label="account of current user"
             aria-controls="menu-appbar"
@@ -64,7 +65,7 @@ function PaginaInicialOficina() {
             onClick={handleMenu}
             color="inherit"
           >
-            <Avatar src={`${process.env.REACT_APP_API_URL}/files/${usuario.oficina.uriLogo}`} />
+            <Avatar src={`${process.env.REACT_APP_API_URL}/files/${usuario?.oficina.uriLogo}`} />
           </IconButton>
           <Menu
             id="menu-appbar"
@@ -81,7 +82,7 @@ function PaginaInicialOficina() {
             open={opend}
             onClose={handleClose}
           >
-            <MenuItem>{`Usuário: ${usuario.nomeUsuario}`}</MenuItem>
+            <MenuItem>{`Usuário: ${usuario?.nomeUsuario}`}</MenuItem>
             <MenuItem onClick={handleClick} >Deslogar</MenuItem>
           </Menu>
         </Toolbar>
@@ -158,7 +159,6 @@ function PaginaInicialOficina() {
                   Especialidades
               </Typography>
               </ListItemText>
-              
             </ListItem>
             <ListItem button component={Link} to="/funcionarios">
               <ListItemIcon>
@@ -203,44 +203,8 @@ function PaginaInicialOficina() {
           </List>
         </MiniDrawer>
         <Container className="h-min-barra-rodape">
-          <Grid container spacing={2} justify="space-around">
-            <Grid item>
-              <Cartao />
-            </Grid>
-            <Grid item>
-              <Cartao />
-            </Grid>
-            <Grid item>
-              <Cartao />
-            </Grid>
-            <Grid item>
-              <Cartao />
-            </Grid>
-            <Grid item>
-              <Cartao />
-            </Grid>
-            <Grid item>
-              <Cartao />
-            </Grid>
-            <Grid item>
-              <Cartao />
-            </Grid>
-            <Grid item>
-              <Cartao />
-            </Grid>
-            <Grid item>
-              <Cartao />
-            </Grid>
-            <Grid item>
-              <Cartao />
-            </Grid>
-            <Grid item>
-              <Cartao />
-            </Grid>
-            <Grid item>
-              <Cartao />
-            </Grid>
-          </Grid>
+          <ListagemOrdensDeServico/>
+          <BotaoInserir titulo="Nova ordem de serviço" linkTo="ordensdeservico/inserir"/>
         </Container>
       </Box>
       <Rodape />

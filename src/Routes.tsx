@@ -5,21 +5,19 @@ import AuthContext from './contexts/AuthContext';
 import PaginaInicialOficina from './componentes/paginaInicialOficina/PaginaInicialOficina';
 import DialgoMarcas from './pages/Marca/DialogMarcas';
 import DialogoLogin from './pages/Login/DialogLogin';
-// import DialogoModelos from './pages/Modelo/DialogoModelos';
-// import DialogoPecas from './pages/Peca/DialogoPecas';
+import DialogoModelos from './pages/Modelo/DialogoModelos';
+import DialogoPecas from './pages/Peca/DialogoPecas';
 // import DialogoClientes from './pages/Cliente/DialogoClientes';
 import DialogoOpcoes from './pages/Opcoes';
-// import DialogoVeiculos from './pages/Veiculo/DialogoVeiculos';
-// import DialogoEspecialidades from './pages/Especialidade/DialogoEspecialidades';
-// import DialogoFornecedores from './pages/Fornecedor/DialogoFornecedores';
+import DialogoVeiculos from './pages/Veiculo/DialogoVeiculos';
+import DialogoFornecedores from './pages/Fornecedor/DialogoFornecedores';
 import DialogoFuncionarios from './pages/Funcionario/DialogFuncionarios';
 import ApiContext from './contexts/ApiContext';
 import useAuth from './hooks/useAuth';
 import Usuario from './Types/Usuario';
 import DialogServicos from './pages/Servico/DialogServicos';
 import DialogOrdensDeServico from './pages/OrdemDeServico/DialogOrdensDeServico';
-import DialogoVeiculos from './pages/Veiculo/DialogoVeiculos';
-import DialogoPecas from './pages/Peca/DialogoPecas';
+import DialogoEspecialidades from './pages/Especialidade/DialogoEspecialidades';
 
 
 const Routes: React.FC = () => {
@@ -67,37 +65,21 @@ const Routes: React.FC = () => {
             <>
               <PaginaInicialOficina />
               <Switch>
-                <Route path="/marcas">
-                  <DialgoMarcas />
-                </Route>
-
-                <Route path="/pecas">
-                  <DialogoPecas />
-                </Route>
-
-                <Route path="/veiculos">
-                  <DialogoVeiculos />
-                </Route>
-
-                <Route path="/funcionarios">
-                  <DialogoFuncionarios />
-                </Route>
-
-                <Route path="/servicos">
-                  <DialogServicos />
-                </Route>
-
-                <Route path="/ordensdeservico">
-                  <DialogOrdensDeServico />
-                </Route>
-
+                <Route path="/marcas" component={DialgoMarcas} />
+                <Route path="/modelos" component={DialogoModelos} />
+                <Route path="/pecas" component={DialogoPecas} />
+                <Route path="/veiculos" component={DialogoVeiculos}/>
+                <Route path="/especialidades" component={DialogoEspecialidades}/>
+                <Route path="/fornecedores" component={DialogoFornecedores}/>
+                <Route path="/funcionarios" component={DialogoFuncionarios}/>
+                <Route path="/servicos" component={DialogServicos}/>
+                <Route path="/ordensdeservico" component={DialogOrdensDeServico}/>
+                <Route path="/opcoes" component={DialogoOpcoes}/>
                 <Route path="/login" exact>
                   <Redirect to="/" />
                 </Route>
 
-                <Route path="/opcoes">
-                  <DialogoOpcoes />
-                </Route>
+                
               </Switch>
             </>
           )

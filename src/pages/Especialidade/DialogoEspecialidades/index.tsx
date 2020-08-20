@@ -1,22 +1,23 @@
 import React, { useState, useCallback, memo, useEffect, useContext, useMemo } from 'react';
 import { Box, } from '@material-ui/core';
 import Dialogo from '../../../componentes/Dialog';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Switch, Route, } from 'react-router-dom';
 import ApiContext from '../../../contexts/ApiContext';
 import DialogoInserirEspecialidade from '../DialogoInserirEspecialidade';
 import DialogAlterarEspecialidade from '../DialogoAlterarEspecialidade';
-import Listagem from '../ListagemEspecialidades';
+import ListagemEspecialidades from '../ListagemEspecialidades';
 import BotaoInserir from '../../../componentes/BotaoInserir';
 import FormularioConsulta from '../../../componentes/FormularioConsulta';
+import Especialidade from '../../../Types/Especialidade';
 
 
 function DialgoEspecialidades() {
-  const [especialidades, setEspecialidades] = useState([]);
+  const [especialidades, setEspecialidades] = useState<Especialidade[]>([]);
   const { get } = useContext(ApiContext);
   const { pathname } = useLocation();
 
   const listar = useCallback(async () => {
-    const especialidades = await get("/especialidade");
+    const especialidades = await get("/especialidade") as Especialidade[];
     if (especialidades) {
       setEspecialidades(especialidades);
     }
@@ -29,7 +30,7 @@ function DialgoEspecialidades() {
   }, [listar, pathname]);
 
   const manipularBusca = useCallback(async ({ consulta }) => {
-    const especialidades = await get(`/especialidade/descricao?descricao=${consulta}`);
+    const especialidades = await get(`/especialidade/descricao?descricao=${consulta}`) as Especialidade[];
     if (especialidades) {
       setEspecialidades(especialidades);
     }
@@ -37,18 +38,20 @@ function DialgoEspecialidades() {
 
   const conteudo = useMemo(() => (
     <>
-      <FormularioConsulta aoEnviar={manipularBusca}/>
+      <FormularioConsulta onSubmit={manipularBusca} />
       <Box display="flex" justifyContent="center" pt={2}>Listagem</Box>
-      <Listagem especialidades={especialidades} />
-      <BotaoInserir titulo="Inserir especialidade" component={Link} to="especialidades/inserir"/>
+      <ListagemEspecialidades especialidades={especialidades} />
+      <BotaoInserir titulo="Inserir especialidade" linkTo="especialidades/inserir" />
     </>
   ), [manipularBusca, especialidades])
 
   return (
-    <Dialogo aberto fullWidth maxWidth="xs" titulo="Especialidades">
+    <Dialogo open fullWidth maxWidth="xs" title="Especialidades">
       {conteudo}
-      <DialogoInserirEspecialidade aberto={pathname === "/especialidades/inserir"} />
-      <DialogAlterarEspecialidade aberto={pathname === "/especialidades/alterar"} />
+      <Switch>
+        <Route path="/especialidades/inserir" component={DialogoInserirEspecialidade} />
+        <Route path="/especialidades/alterar" component={DialogAlterarEspecialidade} />
+      </Switch>
     </Dialogo>
   );
 }
