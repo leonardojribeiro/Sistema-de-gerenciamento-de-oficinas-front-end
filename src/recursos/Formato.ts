@@ -40,5 +40,15 @@ export default {
       )
     }
     return "";
+  },
+  formatarMoeda(valor: string | number) {
+    return Number(valor).toLocaleString(
+      'pt-br',
+      {
+        minimumIntegerDigits: 1,
+        maximumFractionDigits: 2,
+        minimumFractionDigits: 2
+      }
+    );
   }
 }

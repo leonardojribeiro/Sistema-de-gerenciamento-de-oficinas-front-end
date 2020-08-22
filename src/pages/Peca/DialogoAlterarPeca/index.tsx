@@ -80,7 +80,7 @@ const DialogoAlterarModelo: React.FC = () => {
   const conteudo = useMemo(() => (
     <Form onSubmit={manipularEnvio} initialData={peca}>
       <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
-      <CampoDeSelecao name="idMarca" label="Marca" fullWidth required >
+      <CampoDeSelecao name="marca" label="Marca" fullWidth required >
         {
           marcas.map((marca, index) => (
             <MenuItem key={index} value={marca._id} className={classes.itemMenu}>

@@ -84,7 +84,7 @@ const FormOrdemDeServico: React.FC = () => {
             </CampoDeSelecao>
           </Grid>
           <Grid item md={6}>
-            <CampoDeTexto name="andamento" type="number" min={0} label="Andamento" required fullWidth />
+            <CampoDeTexto name="andamento" type="number" label="Andamento" required fullWidth />
           </Grid>
           <Grid item md={6}>
             <MoneyField name="valorTotalDosServicos" label="Valor total dos serviços" disabled fullWidth />

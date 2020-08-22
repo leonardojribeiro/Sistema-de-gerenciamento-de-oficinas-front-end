@@ -10,7 +10,7 @@ import FormOrdemDeServico from '../FormOrdemDeServico';
 
 const DialogInserirOrdemDeServico: React.FC = () => {
   return (
-    <Dialog title="Nova ordem de serviço" open maxWidth="lg" fullWidth fullScreen>
+    <Dialog title="Nova ordem de serviço" open maxWidth="lg" fullWidth>
       <OrdemDeServicoProvider>
         <OrdemDeServicoContext.Consumer >
           {({ indexTab, setIndexTab }) => (

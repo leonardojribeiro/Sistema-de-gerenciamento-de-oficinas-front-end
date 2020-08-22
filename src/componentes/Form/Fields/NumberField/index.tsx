@@ -5,9 +5,11 @@ import useField from '../../Hooks/useField';
 
 interface TextFieldProps extends TextFieldPropsMUI {
   name: string,
+  min?: number;
+  max?: number;
 }
 
-const TextField: React.FC<TextFieldProps> = ({ name, ...props }) => {
+const NumberField: React.FC<TextFieldProps> = ({ name, max, min, ...props }) => {
   const [valid, setValid] = useState<boolean>(true);
   const [value, setValue] = useState<string>("");
   const ref = useRef<HTMLInputElement | undefined>(undefined);
@@ -68,14 +70,31 @@ const TextField: React.FC<TextFieldProps> = ({ name, ...props }) => {
 
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const value = event.target.value;
-    setValue(value)
-    if (!valid) {
-      validate();
+    if (props.type === 'number' || min || max) {
+      const valueNumeric = Number(value);
+      if (
+        (max && valueNumeric <= max && min && valueNumeric >= min)
+        || (min === undefined && max !== undefined && valueNumeric <= max)
+        || (max === undefined && min !== undefined && valueNumeric >= min)) {
+        setValue(value)
+        if (!valid) {
+          validate();
+        }
+        if (props.onChange) {
+          props.onChange(event);
+        }
+      }
     }
-    if (props.onChange) {
-      props.onChange(event);
+    else {
+      setValue(value)
+      if (!valid) {
+        validate();
+      }
+      if (props.onChange) {
+        props.onChange(event);
+      }
     }
-  }, [props, valid, validate]);
+  }, [props, max, min, valid, validate]);
 
   return (
     <TextFieldMUI
@@ -95,4 +114,4 @@ const TextField: React.FC<TextFieldProps> = ({ name, ...props }) => {
   );
 }
 
-export default memo(TextField);
+export default memo(NumberField);

@@ -1,12 +1,13 @@
 import React, { memo, useRef, useCallback, useEffect, useState } from 'react';
 import useField from '../../Hooks/useField';
-import {  BaseDatePickerProps, KeyboardDatePicker } from '@material-ui/pickers';
+import { KeyboardDatePicker, DatePickerViewsProps } from '@material-ui/pickers';
 
-interface DateFieldProps extends BaseDatePickerProps {
+interface DateFieldProps extends DatePickerViewsProps {
   name: string,
   required?: boolean;
   label?: string;
   fullWidth?: boolean;
+  format?: string
 }
 
 

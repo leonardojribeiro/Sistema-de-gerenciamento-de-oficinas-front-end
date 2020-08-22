@@ -92,7 +92,7 @@ const FormItensDeServico: React.FC = () => {
             </SelectField>
           </Grid>
           <Grid item md={2}>
-            <CampoDeTexto type="number" min={0} name="garantia" fullWidth required label="Garantia" onChange={calcularValorTotal} />
+            <CampoDeTexto type="number" name="garantia" fullWidth required label="Garantia" onChange={calcularValorTotal} />
           </Grid>
           <Grid item md={1}>
             <CampoDeSelecao name="unidadeDeGarantia" label="Tipo" fullWidth required>
@@ -104,7 +104,7 @@ const FormItensDeServico: React.FC = () => {
             <MoneyField name="valorUnitario" fullWidth required label="Valor unitário" onChange={calcularValorTotal} />
           </Grid>
           <Grid item md={2}>
-            <CampoDeTexto type="number" min={0} name="quantidade" fullWidth required label="Quantidade" onChange={calcularValorTotal} />
+            <CampoDeTexto type="number" name="quantidade" fullWidth required label="Quantidade" onChange={calcularValorTotal} />
           </Grid>
           <Grid item md={1}>
             <MoneyField name="valorTotal" fullWidth required label="ValorTotal" />

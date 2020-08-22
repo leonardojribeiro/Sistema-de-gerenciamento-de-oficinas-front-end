@@ -53,7 +53,7 @@ const DialogoInserirPeca: React.FC = () => {
     <Dialogo open title="Inserir peça">
       <Form onSubmit={manipularEnvio}>
         <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
-        <CampoDeSelecao name="idMarca" label="Marca" fullWidth required  >
+        <CampoDeSelecao name="marca" label="Marca" fullWidth required  >
           <MenuItem value="" className={classes.itemMenu}>Nenhum</MenuItem>
           {
             marcas.map((marca, index) => (

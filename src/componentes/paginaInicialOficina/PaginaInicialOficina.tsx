@@ -27,6 +27,13 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
   },
+  btn: {
+    position: "fixed",
+    bottom: "64px",
+    height: "64px",
+    right: theme.spacing(3),
+    zIndex: 5000
+  }
 }));
 
 
@@ -181,15 +188,15 @@ const PaginaInicialOficina: React.FC = () => {
               </ListItemText>
             </ListItem>
             <ListItem button component={Link} to="/ordensdeservico">
-                <ListItemIcon>
-                  <FormatAlignJustifyIcon />
-                </ListItemIcon>
-                <ListItemText>
-                  <Typography variant="body2">
-                    Ordens de serviço
+              <ListItemIcon>
+                <FormatAlignJustifyIcon />
+              </ListItemIcon>
+              <ListItemText>
+                <Typography variant="body2">
+                  Ordens de serviço
                 </Typography>
-                </ListItemText>
-              </ListItem>
+              </ListItemText>
+            </ListItem>
             <ListItem button component={Link} to="/opcoes">
               <ListItemIcon>
                 <SettingsIcon />
@@ -202,9 +209,11 @@ const PaginaInicialOficina: React.FC = () => {
             </ListItem>
           </List>
         </MiniDrawer>
-        <Container className="h-min-barra-rodape">
-          <ListagemOrdensDeServico/>
-          <BotaoInserir titulo="Nova ordem de serviço" linkTo="ordensdeservico/inserir"/>
+        <Container className="h-min-barra-rodape" maxWidth="lg">
+          <ListagemOrdensDeServico />
+          <Box className={classes.btn}>
+            <BotaoInserir titulo="Nova ordem de serviço" linkTo="ordensdeservico/inserir" />
+          </Box>
         </Container>
       </Box>
       <Rodape />

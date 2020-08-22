@@ -47,8 +47,8 @@ const DialogoInserirVeiculo: React.FC = () => {
     <Dialogo open title="Inserir veículo">
       <Form onSubmit={manipularEnvio}>
         <CampoDeTexto name="placa" label="Placa" fullWidth required autoFocus />
-        <DateField name="anoFabricacao" label="Ano de fabricação" fullWidth required />
-        <DateField name="anoModelo" label="Ano de modelo" fullWidth required />
+        <DateField name="anoFabricacao" label="Ano de fabricação" fullWidth required views={["year"]} format="yyyy"/>
+        <DateField name="anoModelo" label="Ano de modelo" fullWidth required views={["year"]} format="yyyy"/>
         <CampoDeSelecao name="idModelo" label="Modelo" required fullWidth>
           {
             modelos.map((modelo, indice) => <MenuItem key={indice} value={modelo._id}>{modelo.descricao}</MenuItem>)
