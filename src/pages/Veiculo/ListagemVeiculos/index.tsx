@@ -49,7 +49,7 @@ const ListagemVeiculos: React.FC<ListagemVeiculosProps> = ({ veiculos }) => {
                   </TableCell>
                   <TableCell padding="none">
                     <Typography>
-                      {veiculo?.modelo?.descricao}
+                      {veiculo.modelo?.descricao}
                     </Typography>
                   </TableCell>
                   <TableCell padding="none">

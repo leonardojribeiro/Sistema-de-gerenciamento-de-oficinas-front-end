@@ -18,11 +18,11 @@ export default interface OrdemDeServico{
   categoria: string;
   status: string;
   sintoma: string;
-  itensDeServico: ItemDeServico[];
-  itensDePeca: ItemDePeca[];
-  pecas: Peca[];
-  fornecedores: Fornecedor[];
-  servicos: Servico[];
-  funcionarios: Funcionario[];
+  itensDeServico: ItemDeServico[] | undefined;
+  itensDePeca: ItemDePeca[] | undefined;
+  pecas: Peca[] | undefined;
+  fornecedores: Fornecedor[] | undefined;
+  servicos: Servico[] | undefined;
+  funcionarios: Funcionario[] | undefined;
   veiculo: Veiculo;
 }

@@ -37,20 +37,21 @@ interface AgrupamentoPecasPorFornecedor extends Fornecedor {
 const ItemOrdemDeServico: React.FC<ItemOrdemDeServicoProps> = ({ ordemDeServico }) => {
   const classes = useStyles();
 
-
-
   const organizarOrdensDeServico = () => {
     const agrupamentos: AgrupamentoPecasPorFornecedor[] = [];
 
-    ordemDeServico.fornecedores.forEach((fornecedor) => {
-      if (!agrupamentos.includes({...fornecedor, pecas:[]})) {
-        agrupamentos.push({...fornecedor, pecas:[]});
+    ordemDeServico.itensDePeca?.forEach((itemDePeca) => {
+      console.log( agrupamentos)
+      if (!agrupamentos.includes({...itemDePeca.fornecedor, pecas:[]})) {
+        console.log('incluso')
+        agrupamentos.push({...itemDePeca.fornecedor, pecas:[]});
       }
     })
+
     agrupamentos.forEach((agrupamento) => {
-      ordemDeServico.itensDePeca.forEach((itemDePeca, indice) => {
-        if(agrupamento._id === itemDePeca.idFornecedor){
-          agrupamento.pecas.push(ordemDeServico.pecas[indice])
+      ordemDeServico.itensDePeca?.forEach((itemDePeca, indice) => {
+        if(agrupamento._id === itemDePeca.fornecedor._id && ordemDeServico.itensDePeca){
+          agrupamento.pecas.push(ordemDeServico.itensDePeca[indice].peca)
         }
       })
     });
@@ -58,7 +59,7 @@ const ItemOrdemDeServico: React.FC<ItemOrdemDeServicoProps> = ({ ordemDeServico 
     return agrupamentos;
   }
   //console.log(ordemDeServico)
- // console.log(organizarOrdensDeServico())
+  organizarOrdensDeServico()
   return (
     <Grid item xs={12} sm={10} md={8} lg={6} >
       <Card className={classes.card} component={Paper} elevation={4}>
@@ -66,7 +67,7 @@ const ItemOrdemDeServico: React.FC<ItemOrdemDeServicoProps> = ({ ordemDeServico 
           <Box p={2}>
             <Grid container spacing={1} justify="space-between">
               <Grid item>
-                <Typography>Veículo: {ordemDeServico.veiculo.placa.toLocaleUpperCase()}</Typography>
+                <Typography>Veículo: {ordemDeServico.veiculo?.placa.toLocaleUpperCase()}</Typography>
               </Grid>
               <Grid item>
                 <Typography>{Formato.formatarData(ordemDeServico.dataDeRegistro)}</Typography>
@@ -86,10 +87,10 @@ const ItemOrdemDeServico: React.FC<ItemOrdemDeServicoProps> = ({ ordemDeServico 
                 </Box>
                 <Box className={classes.listagem}>
                   {
-                    ordemDeServico.itensDePeca.map((itemDePeca, index) => (
+                    ordemDeServico.itensDePeca?.map((itemDePeca, index) => (
                       <Grid container key={index}>
                         <Grid item>
-                          <Typography>{ordemDeServico.pecas[index].descricao} Qtd. {itemDePeca.quantidade}</Typography>
+                          <Typography>{itemDePeca.peca.descricao} Qtd. {itemDePeca.quantidade}</Typography>
                         </Grid>
                       </Grid>
                     ))
@@ -107,10 +108,10 @@ const ItemOrdemDeServico: React.FC<ItemOrdemDeServicoProps> = ({ ordemDeServico 
                 </Box>
                 <Box className={classes.listagem}>
                   {
-                    ordemDeServico.itensDeServico.map((itemDeServico, index) => (
+                    ordemDeServico.itensDeServico?.map((itemDeServico, index) => (
                       <Grid container key={index}>
                         <Grid item>
-                          <Typography>{ordemDeServico.servicos[index].descricao} Qtd. {itemDeServico.quantidade}</Typography>
+                          <Typography>{itemDeServico.servico.descricao} Qtd. {itemDeServico.quantidade}</Typography>
                         </Grid>
                       </Grid>
                     ))

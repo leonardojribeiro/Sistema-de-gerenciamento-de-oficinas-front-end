@@ -27,6 +27,8 @@ const ListagemOrdensDeServico: React.FC = () => {
     <Grid container spacing={3} justify="center">
       {
         
+          <ItemOrdemDeServico  ordemDeServico={ ordensDeServico.length ? ordensDeServico[1] : {} as OrdemDeServico}/>
+        
       }
     </Grid >
   );

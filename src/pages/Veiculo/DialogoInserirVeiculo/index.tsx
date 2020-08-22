@@ -49,12 +49,12 @@ const DialogoInserirVeiculo: React.FC = () => {
         <CampoDeTexto name="placa" label="Placa" fullWidth required autoFocus />
         <DateField name="anoFabricacao" label="Ano de fabricação" fullWidth required views={["year"]} format="yyyy"/>
         <DateField name="anoModelo" label="Ano de modelo" fullWidth required views={["year"]} format="yyyy"/>
-        <CampoDeSelecao name="idModelo" label="Modelo" required fullWidth>
+        <CampoDeSelecao name="modelo" label="Modelo" required fullWidth>
           {
             modelos.map((modelo, indice) => <MenuItem key={indice} value={modelo._id}>{modelo.descricao}</MenuItem>)
           }
         </CampoDeSelecao>
-        <CampoDeSelecao name="idCliente" label="Cliente" required fullWidth >
+        <CampoDeSelecao name="cliente" label="Cliente" required fullWidth >
           {
             clientes.map((cliente, indice) => <MenuItem key={indice} value={cliente._id}>{cliente.nome}</MenuItem>)
           }

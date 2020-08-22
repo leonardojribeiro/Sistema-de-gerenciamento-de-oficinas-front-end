@@ -6,5 +6,4 @@ export default interface Veiculo{
   anoModelo: Date;
   anoFabricacao: Date;
   modelo?: Modelo;
-  idModelo?: string;
 }

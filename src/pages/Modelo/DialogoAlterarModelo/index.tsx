@@ -58,7 +58,7 @@ const DialogoAlterarModelo: React.FC = () => {
   const id = useQuery("id");
 
   const popular = useCallback(async () => {
-    const resposta = await get(`/modelo/id?_id=${id}`) as Modelo
+    const resposta = await get(`/modelo/id?_id=${id}`) as Modelo;
     if (resposta) {
       setModelo(resposta)
     }
@@ -79,7 +79,7 @@ const DialogoAlterarModelo: React.FC = () => {
   const conteudo = useMemo(() => (
     <Form onSubmit={manipularEnvio} initialData={modelo}>
       <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
-      <CampoDeSelecao name="idMarca" label="Marca" fullWidth required>
+      <CampoDeSelecao name="marca" label="Marca" fullWidth required>
         {
           marcas.map((marca, index) => (
             <MenuItem key={index} value={marca._id} className={classes.itemMenu}>

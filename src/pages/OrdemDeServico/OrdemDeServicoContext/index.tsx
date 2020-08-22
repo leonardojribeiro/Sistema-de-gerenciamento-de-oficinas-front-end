@@ -38,8 +38,8 @@ export const OrdemDeServicoProvider: React.FC = ({children}) => {
     if(validar()){
       dados.itensDeServico = itensDeServico.map(itemDeServico => {
         return {
-          idServico: itemDeServico.servico._id,
-          idFuncionario: itemDeServico.funcionario._id,
+          servico: itemDeServico.servico._id,
+          funcionario: itemDeServico.funcionario._id,
           garantia: itemDeServico.garantia,
           unidadeDeGarantia: itemDeServico.unidadeDeGarantia,
           valorUnitario: itemDeServico.valorUnitario,
@@ -49,8 +49,8 @@ export const OrdemDeServicoProvider: React.FC = ({children}) => {
       });
       dados.itensDePeca = itensDePeca.map(itemDePeca => {
         return {
-          idPeca: itemDePeca.peca._id,
-          idFornecedor: itemDePeca.fornecedor._id,
+          peca: itemDePeca.peca._id,
+          fornecedor: itemDePeca.fornecedor._id,
           garantia: itemDePeca.garantia,
           unidadeDeGarantia: itemDePeca.unidadeDeGarantia,
           valorUnitario: itemDePeca.valorUnitario,
@@ -58,6 +58,7 @@ export const OrdemDeServicoProvider: React.FC = ({children}) => {
           valorTotal: itemDePeca.valorTotal
         }
       });
+      console.log(dados);
       await post('ordemdeservico', dados);
 
     }

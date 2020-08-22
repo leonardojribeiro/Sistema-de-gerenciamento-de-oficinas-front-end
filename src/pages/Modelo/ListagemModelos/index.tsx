@@ -55,7 +55,7 @@ const ListagemModelos: React.FC<ListagemModelosProps> = ({ modelos }) => {
               <Grid container alignItems="center" justify="space-between">
                 <Grid item >
                   <Typography>
-                    {modelo.marca ? modelo.marca.descricao : ""}
+                    { modelo.marca.descricao}
                   </Typography>
                 </Grid>
                 <Grid item>

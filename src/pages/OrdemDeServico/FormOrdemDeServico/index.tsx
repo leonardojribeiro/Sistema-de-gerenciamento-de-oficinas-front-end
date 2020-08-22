@@ -52,7 +52,7 @@ const FormOrdemDeServico: React.FC = () => {
       <Form onSubmit={handleSubmit} ref={formRef}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <CampoDeSelecao name="idVeiculo" label="Veículo" required fullWidth>
+            <CampoDeSelecao name="veiculo" label="Veículo" required fullWidth>
               {veiculos.map((veiculo, indice) => (
                 <MenuItem value={veiculo._id} key={indice}>{veiculo.placa}</MenuItem>
               ))} 
