@@ -1,12 +1,12 @@
 import React, { memo, useContext } from 'react';
-import { Toolbar, Grid, makeStyles, Paper } from '@material-ui/core';
+import { Grid, makeStyles, Paper } from '@material-ui/core';
 import AuthContext from '../../contexts/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
+    position: "absolute",
     zIndex: theme.zIndex.drawer + 1,
-    position: "relative",
-    backgroundColor: "#ccc"
+    minHeight: "64px",
   },
 }));
 
@@ -18,9 +18,8 @@ function Rodape() {
 
   const endereco = oficina.endereco;
   return (
-  <div className={classes.appBar}>
-    <Toolbar component={Paper} square >
-      <Grid display="flex" justify="space-around" container >
+    <Paper square >
+      <Grid alignItems="center" justify="space-around" container className={classes.appBar} >
         <Grid item>
           {`Telefone celular: ${oficina.telefoneCelular}`}
         </Grid>
@@ -31,8 +30,7 @@ function Rodape() {
           {`${endereco.logradouro}, N ${endereco.numero}, ${endereco.bairro}, ${endereco.complemento}, ${endereco.cep}, ${endereco.cidade}, ${endereco.estado}`}
         </Grid>
       </Grid>
-    </Toolbar>
-  </div>
+    </Paper>
   )
 }
 

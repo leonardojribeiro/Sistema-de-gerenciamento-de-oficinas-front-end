@@ -2,12 +2,12 @@ import React, { memo, useContext, useCallback, useEffect } from 'react';
 import { Switch, Route, Redirect, } from 'react-router-dom';
 import PaginaInicial from './componentes/paginaInicial/PaginaInicial';
 import AuthContext from './contexts/AuthContext';
-import PaginaInicialOficina from './componentes/paginaInicialOficina/PaginaInicialOficina';
+import PaginaInicialOficina from './componentes/Home/Home';
 import DialgoMarcas from './pages/Marca/DialogMarcas';
 import DialogoLogin from './pages/Login/DialogLogin';
 import DialogoModelos from './pages/Modelo/DialogoModelos';
 import DialogoPecas from './pages/Peca/DialogoPecas';
-// import DialogoClientes from './pages/Cliente/DialogoClientes';
+import DialogoClientes from './pages/Cliente/DialogoClientes';
 import DialogoOpcoes from './pages/Opcoes';
 import DialogoVeiculos from './pages/Veiculo/DialogoVeiculos';
 import DialogoFornecedores from './pages/Fornecedor/DialogoFornecedores';
@@ -68,6 +68,7 @@ const Routes: React.FC = () => {
                 <Route path="/marcas" component={DialgoMarcas} />
                 <Route path="/modelos" component={DialogoModelos} />
                 <Route path="/pecas" component={DialogoPecas} />
+                <Route path="/clientes" component={DialogoClientes} />
                 <Route path="/veiculos" component={DialogoVeiculos}/>
                 <Route path="/especialidades" component={DialogoEspecialidades}/>
                 <Route path="/fornecedores" component={DialogoFornecedores}/>

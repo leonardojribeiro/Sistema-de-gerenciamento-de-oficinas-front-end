@@ -12,7 +12,7 @@ import FormularioConsulta from '../../../componentes/FormularioConsulta';
 import Peca from '../../../Types/Peca';
 
 
-function DialogoPecas() {
+const DialogoPecas: React.FC = () => {
   const [pecas, setPecas] = useState<Peca[]>([]);
   const { get } = useContext(ApiContext);
   const { pathname } = useLocation();

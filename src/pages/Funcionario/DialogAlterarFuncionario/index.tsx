@@ -72,7 +72,7 @@ const DialogAlterarFuncionario: React.FC = () => {
             <CampoDeCpfOuCnpj name="cpf" label="CPF" disabled fullWidth required />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <DateField name="dataNascimento" label="Data de nascimento" fullWidth required />
+            <DateField name="dataNascimento" label="Data de nascimento" fullWidth required openTo="year"/>
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <CampoDeRadio name="sexo" label="Sexo" required>

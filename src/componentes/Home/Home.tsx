@@ -14,7 +14,6 @@ import PersonIcon from '@material-ui/icons/Person';
 import SchoolIcon from '@material-ui/icons/School';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import BuildIcon from '@material-ui/icons/Build';
-import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
 import ListagemOrdensDeServico from '../../pages/OrdemDeServico/ListagemOrdensDeServico';
 import BotaoInserir from '../BotaoInserir';
 
@@ -183,16 +182,6 @@ const PaginaInicialOficina: React.FC = () => {
                 <Typography variant="body2">
                   Serviços
               </Typography>
-              </ListItemText>
-            </ListItem>
-            <ListItem button component={Link} to="/ordensdeservico">
-              <ListItemIcon>
-                <FormatAlignJustifyIcon />
-              </ListItemIcon>
-              <ListItemText>
-                <Typography variant="body2">
-                  Ordens de serviço
-                </Typography>
               </ListItemText>
             </ListItem>
             <ListItem button component={Link} to="/opcoes">

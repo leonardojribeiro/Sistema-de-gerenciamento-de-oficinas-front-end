@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import { ThemeProvider, createMuiTheme, Dialog } from "@material-ui/core";
+import { ThemeProvider, createMuiTheme, Dialog, responsiveFontSizes } from "@material-ui/core";
 
 interface ThemeContextValues{
   alterarTema: () => void,
@@ -56,7 +56,7 @@ export const TemaProvider: React.FC = ({children}) => {
 
   return (
     <TemaContexto.Provider value={{ alterarTema, alterarTamanhoFonte, temaEscuro, tamanhoFonte }}>
-      <ThemeProvider theme={tema}>
+      <ThemeProvider theme={responsiveFontSizes(tema)}>
         <Dialog  disablePortal fullScreen fullWidth open>
           {children}
         </Dialog>
