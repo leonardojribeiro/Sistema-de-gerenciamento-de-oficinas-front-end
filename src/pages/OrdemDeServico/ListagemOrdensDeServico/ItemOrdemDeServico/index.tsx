@@ -1,9 +1,10 @@
 import React, { memo } from 'react';
 import { Grid, Paper, Typography, Box, Card, makeStyles, } from '@material-ui/core';
 import Formato from '../../../../recursos/Formato';
-import OrdemDeServico from '../../../../Types/OrdemDeSertvico';
+import OrdemDeServico from '../../../../Types/OrdemDeServico';
 import Fornecedor from '../../../../Types/Fornecedor';
 import Peca from '../../../../Types/Peca';
+import CircularProgressWithLabel from '../../../../componentes/CircularProgressWithLabel';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -41,45 +42,58 @@ const ItemOrdemDeServico: React.FC<ItemOrdemDeServicoProps> = ({ ordemDeServico 
     const agrupamentos: AgrupamentoPecasPorFornecedor[] = [];
 
     ordemDeServico.itensDePeca?.forEach((itemDePeca) => {
-      console.log( agrupamentos)
-      if (!agrupamentos.includes({...itemDePeca.fornecedor, pecas:[]})) {
-        console.log('incluso')
-        agrupamentos.push({...itemDePeca.fornecedor, pecas:[]});
+      if (agrupamentos.findIndex(
+        (agrupamento) =>
+          agrupamento._id === itemDePeca.fornecedor._id)
+        === -1) {
+        agrupamentos.push({ ...itemDePeca.fornecedor, pecas: [] });
       }
     })
 
     agrupamentos.forEach((agrupamento) => {
       ordemDeServico.itensDePeca?.forEach((itemDePeca, indice) => {
-        if(agrupamento._id === itemDePeca.fornecedor._id && ordemDeServico.itensDePeca){
+        if (agrupamento._id === itemDePeca.fornecedor._id && ordemDeServico.itensDePeca) {
           agrupamento.pecas.push(ordemDeServico.itensDePeca[indice].peca)
         }
       })
     });
+    console.log(agrupamentos)
 
     return agrupamentos;
   }
   //console.log(ordemDeServico)
-  organizarOrdensDeServico()
+  //organizarOrdensDeServico()
   return (
     <Grid item xs={12} sm={10} md={8} lg={6} >
       <Card className={classes.card} component={Paper} elevation={4}>
         <Paper elevation={4} square>
           <Box p={2}>
-            <Grid container spacing={1} justify="space-between">
+            <Grid container spacing={1} justify="space-between" alignItems="center">
               <Grid item>
                 <Typography>Veículo: {ordemDeServico.veiculo?.placa.toLocaleUpperCase()}</Typography>
               </Grid>
               <Grid item>
-                <Typography>{Formato.formatarData(ordemDeServico.dataDeRegistro)}</Typography>
+                <CircularProgressWithLabel value={Number(ordemDeServico.andamento)} />
               </Grid>
             </Grid>
           </Box>
         </Paper>
         <Box p={2}>
-          <Grid container spacing={1}>
+          <Grid container spacing={1} justify="space-between">
             <Grid item xs={12}>
               <Typography>Sintoma: {ordemDeServico.sintoma}</Typography>
             </Grid>
+            <Grid item>
+              <Typography>Registrada em: {Formato.formatarData(ordemDeServico.dataDeRegistro)}</Typography>
+            </Grid>
+            <Grid item>
+              <Typography>Iniciada em: {Formato.formatarData(ordemDeServico.dataDeInicio)}</Typography>
+            </Grid>
+            <Grid item>
+              <Typography>Finalizada em: {Formato.formatarData(ordemDeServico.dataDeConclusao)}</Typography>
+            </Grid>
+          </Grid>
+          <Grid container spacing={1}>
             <Grid item xs={12} md={6}>
               <Box className={classes.containerListagem}>
                 <Box className={classes.tituloListagem}>

@@ -5,7 +5,6 @@ Tabela de conteúdos
 <!--ts-->
    * [Sobre](#Sobre)
    * [Status](#Status)
-   * [Tabela de Conteudo](#tabela-de-conteudo)
    * [Scripts disponíveis](#Scripts-disponíveis)
       * [Executar em modo de desenvolvimento](#yarn-start)
       * [Compilar para o modo de produção](#yarn-build)
@@ -42,7 +41,7 @@ Veja a sessão [deployment](https://facebook.github.io/create-react-app/docs/dep
 
 ## Tecnologias
 
-  * ReatJS
+  * ReatcJS
   * MaterialUI
   * React-Router-Dom
   * React-Dropzone

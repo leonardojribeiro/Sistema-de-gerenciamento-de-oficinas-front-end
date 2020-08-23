@@ -30,9 +30,7 @@ const useStyles = makeStyles((theme) => ({
   btn: {
     position: "fixed",
     bottom: "64px",
-    height: "64px",
     right: theme.spacing(3),
-    zIndex: 5000
   }
 }));
 
@@ -209,7 +207,7 @@ const PaginaInicialOficina: React.FC = () => {
             </ListItem>
           </List>
         </MiniDrawer>
-        <Container className="h-min-barra-rodape" maxWidth="lg">
+        <Container className="h-min-barra-rodape" maxWidth="xl" >
           <ListagemOrdensDeServico />
           <Box className={classes.btn}>
             <BotaoInserir titulo="Nova ordem de serviço" linkTo="ordensdeservico/inserir" />

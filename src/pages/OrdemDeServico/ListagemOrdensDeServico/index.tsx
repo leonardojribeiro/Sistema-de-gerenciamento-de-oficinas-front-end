@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useContext, memo } from 'react';
-import OrdemDeServico from '../../../Types/OrdemDeSertvico';
+import OrdemDeServico from '../../../Types/OrdemDeServico';
 import ApiContext from '../../../contexts/ApiContext';
 import { Grid } from '@material-ui/core';
 import ItemOrdemDeServico from './ItemOrdemDeServico';
@@ -26,9 +26,9 @@ const ListagemOrdensDeServico: React.FC = () => {
   return (
     <Grid container spacing={3} justify="center">
       {
-        
-          <ItemOrdemDeServico  ordemDeServico={ ordensDeServico.length ? ordensDeServico[1] : {} as OrdemDeServico}/>
-        
+        ordensDeServico.map((ordemDeServico, indice) => 
+          <ItemOrdemDeServico ordemDeServico={ordemDeServico} key={indice} />
+        )
       }
     </Grid >
   );
