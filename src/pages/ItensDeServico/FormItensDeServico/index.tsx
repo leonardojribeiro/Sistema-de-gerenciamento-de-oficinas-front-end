@@ -1,14 +1,14 @@
 import React, { useCallback, useState, useContext, useEffect, useRef, memo } from 'react';
-import { Form, MoneyField, CampoDeTexto, CampoDeSelecao } from '../../../../componentes/Form';
-import ApiContext from '../../../../contexts/ApiContext';
-import SelectField from '../../../../componentes/Form/Fields/SelectField';
+import { Form, MoneyField, CampoDeTexto, CampoDeSelecao } from '../../../componentes/Form';
+import ApiContext from '../../../contexts/ApiContext';
+import SelectField from '../../../componentes/Form/Fields/SelectField';
 import { Grid, MenuItem, Button, Container } from '@material-ui/core';
-import { FormProviderHandles } from '../../../../componentes/Form/types';
-import Servico from '../../../../Types/Servico';
-import Funcionario from '../../../../Types/Funcionario';
-import OrdemDeServicoContext from '../../OrdemDeServicoContext';
-import ItemDeServico from '../../../../Types/ItemDeServico';
-import comparar from '../../../../recursos/Comparar';
+import { FormProviderHandles } from '../../../componentes/Form/types';
+import Servico from '../../../Types/Servico';
+import Funcionario from '../../../Types/Funcionario';
+import ItemDeServico from '../../../Types/ItemDeServico';
+import comparar from '../../../recursos/Comparar';
+import OrdemDeServicoContext from '../../OrdemDeServico/OrdemDeServicoContext';
 
 
 const FormItensDeServico: React.FC = () => {

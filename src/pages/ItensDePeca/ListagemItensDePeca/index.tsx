@@ -1,7 +1,7 @@
 import React, { memo, useContext, } from 'react';
-import { Box, Grid, Typography, makeStyles } from '@material-ui/core';
-import OrdemDeServicoContext from '../../OrdemDeServicoContext';
-
+import { Box, Grid, Typography, makeStyles, IconButton, Tooltip } from '@material-ui/core';
+import OrdemDeServicoContext from '../../OrdemDeServico/OrdemDeServicoContext';
+import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ListagemItensDePeca: React.FC = () => {
   const classes = useStyles();
-  const {itensDePeca} = useContext(OrdemDeServicoContext);
+  const { itensDePeca, removerItemDePeca } = useContext(OrdemDeServicoContext);
 
   return (
     <Box className={classes.root}>
@@ -42,6 +42,13 @@ const ListagemItensDePeca: React.FC = () => {
           <Grid item>
             <Typography>Valor total: {itemDePeca.valorTotal}</Typography>
           </Grid>
+          <Grid item>
+              <Tooltip title={`Alterar `} onClick={()=>removerItemDePeca(indice)}>
+                <IconButton >
+                  <EditIcon />
+                </IconButton>
+              </Tooltip>
+            </Grid>
         </Grid>
       ))}
     </Box>

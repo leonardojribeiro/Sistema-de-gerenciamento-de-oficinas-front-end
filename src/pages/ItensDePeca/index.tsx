@@ -2,7 +2,7 @@ import React, { memo, useContext } from 'react';
 import { Box, makeStyles, Grid, Typography } from '@material-ui/core';
 import ListagemItensDePeca from './ListagemItensDePeca';
 import FormItensDePeca from './FormItensDePeca';
-import OrdemDeServicoContext from '../OrdemDeServicoContext';
+import OrdemDeServicoContext from '../OrdemDeServico/OrdemDeServicoContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {

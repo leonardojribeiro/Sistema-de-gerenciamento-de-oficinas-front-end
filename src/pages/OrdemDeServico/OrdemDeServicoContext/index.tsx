@@ -13,6 +13,7 @@ interface OrdemDeServicoContextValues{
   setItensDeServico: React.Dispatch<React.SetStateAction<ItemDeServico[]>>;
   setIndexTab: React.Dispatch<React.SetStateAction<number>>;
   handleSubmit: (dados: any) => void;
+  removerItemDePeca: (index: number) => void;
 }
 
 const OrdemDeServicoContext = createContext<OrdemDeServicoContextValues>({} as OrdemDeServicoContextValues);
@@ -23,6 +24,9 @@ export const OrdemDeServicoProvider: React.FC = ({children}) => {
   const [indexTab, setIndexTab] = useState<number>(1);
 
   const {post} = useContext(ApiContext);
+
+  console.log(itensDePeca);
+  
 
   const validar = useCallback(()=>{
     if(itensDeServico.length){
@@ -80,6 +84,12 @@ export const OrdemDeServicoProvider: React.FC = ({children}) => {
     return valorTotal
   },[itensDeServico])
 
+  const removerItemDePeca = useCallback((index: number)=>{
+    console.log(index)
+    console.log(itensDePeca, itensDePeca.splice(index, 1))
+    setItensDePeca(itensDePeca.splice(index, 1))
+  },[itensDePeca])
+
   return (
     <OrdemDeServicoContext.Provider
       value={{
@@ -91,7 +101,9 @@ export const OrdemDeServicoProvider: React.FC = ({children}) => {
         setItensDePeca,
         setItensDeServico,
         setIndexTab,
-        handleSubmit
+        handleSubmit,
+        removerItemDePeca,
+
       }}
     >
       {children}

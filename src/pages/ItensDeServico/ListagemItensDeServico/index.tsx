@@ -1,6 +1,6 @@
 import React, { memo, useContext, } from 'react';
 import { Box, Grid, Typography, makeStyles } from '@material-ui/core';
-import OrdemDeServicoContext from '../../OrdemDeServicoContext';
+import OrdemDeServicoContext from '../../OrdemDeServico/OrdemDeServicoContext';
 
 
 const useStyles = makeStyles((theme) => ({

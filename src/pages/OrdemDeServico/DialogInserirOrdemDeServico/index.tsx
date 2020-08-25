@@ -2,11 +2,10 @@ import React from 'react';
 import Dialog from '../../../componentes/Dialog';
 import SwipeableViews from 'react-swipeable-views';
 import { Tabs, Tab } from '@material-ui/core';
-import ItensDePeca from '../ItensDePeca';
 import OrdemDeServicoContext, { OrdemDeServicoProvider } from '../OrdemDeServicoContext';
-import ItensDeServico from '../ItensDeServico';
 import FormOrdemDeServico from '../FormOrdemDeServico';
-// import { Container } from './styles';
+import ItensDePeca from '../../ItensDePeca';
+import ItensDeServico from '../../ItensDeServico';
 
 const DialogInserirOrdemDeServico: React.FC = () => {
   return (

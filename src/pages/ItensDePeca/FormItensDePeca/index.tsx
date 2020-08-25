@@ -1,14 +1,14 @@
 import React, { useCallback, useState, useContext, useEffect, useRef, memo } from 'react';
-import { Form, MoneyField, CampoDeTexto, CampoDeSelecao } from '../../../../componentes/Form';
-import Peca from '../../../../Types/Peca';
-import ApiContext from '../../../../contexts/ApiContext';
-import SelectField from '../../../../componentes/Form/Fields/SelectField';
+import { Form, MoneyField, CampoDeTexto, CampoDeSelecao } from '../../../componentes/Form';
+import Peca from '../../../Types/Peca';
+import ApiContext from '../../../contexts/ApiContext';
+import SelectField from '../../../componentes/Form/Fields/SelectField';
 import { Grid, MenuItem, Button, Container } from '@material-ui/core';
-import { FormProviderHandles } from '../../../../componentes/Form/types';
-import Fornecedor from '../../../../Types/Fornecedor';
-import OrdemDeServicoContext from '../../OrdemDeServicoContext';
-import ItemDePeca from '../../../../Types/ItemDePeca';
-import comparar from '../../../../recursos/Comparar';
+import { FormProviderHandles } from '../../../componentes/Form/types';
+import Fornecedor from '../../../Types/Fornecedor';
+import ItemDePeca from '../../../Types/ItemDePeca';
+import comparar from '../../../recursos/Comparar';
+import OrdemDeServicoContext from '../../OrdemDeServico/OrdemDeServicoContext';
 
 const FormItensDePeca: React.FC = () => {
   const [pecas, setPecas] = useState<Peca[] | undefined>(undefined);
@@ -60,13 +60,13 @@ const FormItensDePeca: React.FC = () => {
         quantidade: Number(dados.quantidade),
         valorTotal: Number(dados.valorUnitario) * Number(dados.quantidade),
       } as ItemDePeca;
-      if (!validar(itemDePeca)) {
+      //if (!validar(itemDePeca)) {
         setItensDePeca((ItensDePeca) => [...ItensDePeca, itemDePeca])
-      }
+    //  }
     }
-  }, [fornecedores, pecas, setItensDePeca, validar]);
+  }, [fornecedores, pecas, setItensDePeca, ]);
 
-  const calcularValorTotal = useCallback((event) => {
+  const calcularValorTotal = useCallback(() => {
     const valorUnitario = Number(formRef.current.getFieldValue('valorUnitario'));
     const quantidade = Number(formRef.current.getFieldValue('quantidade'));
     formRef.current.setFieldValue('valorTotal', quantidade * valorUnitario);
