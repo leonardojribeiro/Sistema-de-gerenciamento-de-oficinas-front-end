@@ -7,13 +7,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Rodape() {
+const Rodape: React.FC = () => {
   const classes = useStyles();
   return (
     <Box p={3} className={classes.rodape}>
       <Grid container justify="space-around">
         <Grid item xs={12}>
-          <Typography  align="center">
+          <Typography align="center">
             Web App desenvolvido como avaliação parcial do tabalho de conclusão de curso de Sistemas de Informação
           </Typography>
         </Grid>
