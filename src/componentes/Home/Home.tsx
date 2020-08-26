@@ -4,7 +4,7 @@ import AuthContext from '../../contexts/AuthContext';
 import MiniDrawer from '../Drawer';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import MenuIcon from '@material-ui/icons/Menu';
-import Rodape from './Rodape.js';
+import Rodape from './Rodape';
 import FolderIcon from '@material-ui/icons/Folder';
 import { Link } from 'react-router-dom';
 import SettingsIcon from '@material-ui/icons/Settings';

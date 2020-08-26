@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Rodape() {
+const Rodape: React.FC = () => {
   const classes = useStyles();
   const { usuario } = useContext(AuthContext);
 

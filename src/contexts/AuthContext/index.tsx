@@ -4,23 +4,23 @@ import Usuario from '../../Types/Usuario';
 
 interface AuthContextValues {
   logout: () => void,
-  usuario: Usuario | undefined,
-  setUsuario: React.Dispatch<React.SetStateAction<Usuario | undefined>>
+  usuario: Usuario,
+  setUsuario: React.Dispatch<React.SetStateAction<Usuario>>
 }
 
 const AuthContext = createContext<AuthContextValues>({} as AuthContextValues);
 
 export const AuthProvider: React.FC = ({ children }) => {
-  const [usuario, setUsuario] = useState<Usuario | undefined>(undefined);
+  const [usuario, setUsuario] = useState<Usuario>({} as Usuario);
 
   const logout = useCallback(() => {
     localStorage.removeItem("tokenUsuario");
-    setUsuario(undefined);
+    setUsuario({} as Usuario);
   }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("tokenUsuario");
-    if (token && !usuario) {
+    if (token && !usuario.token) {
       setUsuario({ token } as Usuario);
     }
   }, [usuario])

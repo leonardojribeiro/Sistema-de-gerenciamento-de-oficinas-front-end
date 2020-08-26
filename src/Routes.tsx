@@ -24,7 +24,7 @@ const Routes: React.FC = () => {
   const authContext = useContext(AuthContext);
   const apiContext = useContext(ApiContext);
   const { logado } = useAuth();
-  const efetuarLoginPorToken = useCallback(async (token) => {
+  const efetuarLoginPorToken = useCallback(async () => {
     if (apiContext) {
       const resposta = await apiContext.get(
         "/usuario/loginPorToken"
@@ -45,8 +45,8 @@ const Routes: React.FC = () => {
 
 
   useEffect(() => {
-    if (!logado && authContext && authContext.usuario?.token) {
-      efetuarLoginPorToken(authContext.usuario.token);
+    if (!logado && authContext && authContext.usuario.token) {
+      efetuarLoginPorToken();
     }
   }, [authContext, efetuarLoginPorToken, logado]);
 
