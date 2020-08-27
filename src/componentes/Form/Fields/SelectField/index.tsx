@@ -22,7 +22,8 @@ const SelectField: React.FC<SelectFieldProps> = ({ name, ...props }) => {
     if (!props.required) {
       return true;
     }
-    if (ref.current && ref.current.value !== undefined) {
+    console.log(ref.current.value)
+    if (ref.current && ref.current.value !== '' && ref.current.value !== undefined) {
       setValid(true);
       return (true);
     }
@@ -37,13 +38,13 @@ const SelectField: React.FC<SelectFieldProps> = ({ name, ...props }) => {
 
   const setFieldValue = useCallback((ref, value) => {
     setValue(value);
-    if(ref.current){
+    if (ref.current) {
       ref.current.value = value;
     }
   }, [])
 
   const clear = useCallback(() => {
-    setValue("");
+    setValue('');
     ref.current.value = '';
     setValid(true);
   }, [])
@@ -60,11 +61,11 @@ const SelectField: React.FC<SelectFieldProps> = ({ name, ...props }) => {
   }, [clear, fieldName, registerField, setFieldValue, validate]);
 
   useEffect(() => {
-    if (defaultValue) {
+    if (defaultValue !== undefined && defaultValue !== null) {
       setValue(defaultValue);
       ref.current.value = defaultValue;
     }
-  }, [defaultValue]);
+  }, [defaultValue, fieldName]);
 
   const handleChange = useCallback((event: React.ChangeEvent<{
     name?: string | undefined;

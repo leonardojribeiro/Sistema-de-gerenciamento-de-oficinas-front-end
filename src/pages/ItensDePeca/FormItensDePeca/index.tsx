@@ -3,7 +3,7 @@ import { Form, MoneyField, CampoDeTexto, CampoDeSelecao } from '../../../compone
 import Peca from '../../../Types/Peca';
 import ApiContext from '../../../contexts/ApiContext';
 import SelectField from '../../../componentes/Form/Fields/SelectField';
-import { Grid, MenuItem, Button, Container } from '@material-ui/core';
+import { Grid, MenuItem, Button, Container, Paper, Card, CardContent, CardActions } from '@material-ui/core';
 import { FormProviderHandles } from '../../../componentes/Form/types';
 import Fornecedor from '../../../Types/Fornecedor';
 import ItemDePeca from '../../../Types/ItemDePeca';
@@ -15,7 +15,7 @@ const FormItensDePeca: React.FC = () => {
   const [fornecedores, setForncedores] = useState<Fornecedor[] | undefined>(undefined);
   const { get } = useContext(ApiContext);
   const formRef = useRef<FormProviderHandles>({} as FormProviderHandles);
-  const { itensDePeca, setItensDePeca } = useContext(OrdemDeServicoContext);
+  const { itensDePeca, itemDePecaSelecionado, setItemDePecaSelecionado, setItensDePeca } = useContext(OrdemDeServicoContext);
 
   const popularPecas = useCallback(async () => {
     const pecas = await get('peca') as Peca[];
@@ -33,21 +33,23 @@ const FormItensDePeca: React.FC = () => {
 
   useEffect(() => {
     popularPecas();
+    console.log("listando peças")
   }, [popularPecas]);
 
   useEffect(() => {
     popularFornecedores();
+    console.log("listando fornecedores")
   }, [popularFornecedores]);
 
-  const validar = useCallback((dados: ItemDePeca) => {
-    let igual = false;
-    itensDePeca.forEach(itemDePeca => {
-      if (comparar(itemDePeca, dados)) {
-        igual = true;
-      }
-    })
-    return igual;
-  }, [itensDePeca]);
+  // const validar = useCallback((dados: ItemDePeca) => {
+  //   let igual = false;
+  //   itensDePeca.forEach(itemDePeca => {
+  //     if (comparar(itemDePeca, dados)) {
+  //       igual = true;
+  //     }
+  //   })
+  //   return igual;
+  // }, [itensDePeca]);
 
   const handleSubmit = useCallback((dados) => {
     if (pecas && fornecedores) {
@@ -59,59 +61,102 @@ const FormItensDePeca: React.FC = () => {
         unidadeDeGarantia: dados.unidadeDeGarantia,
         quantidade: Number(dados.quantidade),
         valorTotal: Number(dados.valorUnitario) * Number(dados.quantidade),
+        _id: itensDePeca.length,
       } as ItemDePeca;
       //if (!validar(itemDePeca)) {
+      if (itemDePecaSelecionado !== undefined) {
+        setItensDePeca([
+          ...itensDePeca.slice(0, itemDePecaSelecionado),
+          itemDePeca,
+          ...itensDePeca.slice(itemDePecaSelecionado + 1)
+        ]);
+        setItemDePecaSelecionado(undefined)
+      }
+      else {
         setItensDePeca((ItensDePeca) => [...ItensDePeca, itemDePeca])
-    //  }
+      }
+      //  }
     }
-  }, [fornecedores, pecas, setItensDePeca, ]);
+  }, [fornecedores, itemDePecaSelecionado, itensDePeca, pecas, setItemDePecaSelecionado, setItensDePeca]);
 
   const calcularValorTotal = useCallback(() => {
     const valorUnitario = Number(formRef.current.getFieldValue('valorUnitario'));
     const quantidade = Number(formRef.current.getFieldValue('quantidade'));
     formRef.current.setFieldValue('valorTotal', quantidade * valorUnitario);
   }, []);
+
+  const intialData = itemDePecaSelecionado !== undefined ? {
+    peca: pecas?.findIndex(peca => peca._id === itensDePeca[itemDePecaSelecionado].peca._id),
+    fornecedor: fornecedores?.findIndex(fornecedor => fornecedor._id === itensDePeca[itemDePecaSelecionado].fornecedor._id),
+    valorUnitario: itensDePeca[itemDePecaSelecionado].valorUnitario,
+    garantia: itensDePeca[itemDePecaSelecionado].garantia,
+    unidadeDeGarantia: itensDePeca[itemDePecaSelecionado].unidadeDeGarantia,
+    quantidade: itensDePeca[itemDePecaSelecionado].quantidade,
+    valorTotal: itensDePeca[itemDePecaSelecionado].valorTotal,
+  } : undefined;
+
+  console.log(intialData, "initial data")
+  // console.log(itemDe)
+
+  const handleReset = useCallback(()=>{
+    if(itemDePecaSelecionado !== undefined){
+      setItemDePecaSelecionado(undefined);
+    }
+  },[itemDePecaSelecionado, setItemDePecaSelecionado]);
+
   return (
-    <Form onSubmit={handleSubmit} ref={formRef} >
-      <Container maxWidth="xl">
-        <Grid container spacing={3}>
-          <Grid item md={4} lg={3}>
-            <SelectField name="peca" fullWidth required label="Peça">
-              {pecas?.map((peca, indice) => (
-                <MenuItem key={indice} value={indice}>{peca.descricao}</MenuItem>
-              ))}
-            </SelectField>
+    <Form onSubmit={handleSubmit} ref={formRef} initialData={intialData} clearOnSubmit>
+      <Card >
+        <CardContent>
+          <Container maxWidth="xl">
+            <Grid container spacing={3}>
+              <Grid item md={5} lg={6}>
+                <SelectField name="peca" fullWidth required label="Peça">
+                  {pecas?.map((peca, indice) => (
+                    <MenuItem key={indice} value={indice}>{peca.descricao}</MenuItem>
+                  ))}
+                </SelectField>
+              </Grid>
+              <Grid item md={4} lg={6}>
+                <SelectField name="fornecedor" fullWidth required label="Fornecedor">
+                  {fornecedores?.map((fornecedor, indice) => (
+                    <MenuItem key={indice} value={indice}>{fornecedor.nomeFantasia}</MenuItem>
+                  ))}
+                </SelectField>
+              </Grid>
+              <Grid item md={2}>
+                <CampoDeTexto type="number" name="garantia" fullWidth required label="Garantia" onChange={calcularValorTotal} />
+              </Grid>
+              <Grid item md={2}>
+                <CampoDeSelecao name="unidadeDeGarantia" label="Tipo" fullWidth required>
+                  <MenuItem value="0">Km</MenuItem>
+                  <MenuItem value="1">Dias</MenuItem>
+                </CampoDeSelecao>
+              </Grid>
+              <Grid item md={2} lg={2}>
+                <MoneyField name="valorUnitario" fullWidth required label="Valor unitário" onChange={calcularValorTotal} />
+              </Grid>
+              <Grid item md={2} lg={2}>
+                <CampoDeTexto type="number" name="quantidade" fullWidth required label="Quantidade" onChange={calcularValorTotal} />
+              </Grid>
+              <Grid item md={1} lg={2}>
+                <MoneyField name="valorTotal" fullWidth required label="ValorTotal" />
+              </Grid>
+
+            </Grid>
+          </Container>
+        </CardContent>
+        <CardActions>
+          <Grid container spacing={2} justify="flex-end">
+            <Grid item >
+              <Button type="reset" onClick={handleReset} variant="outlined">{itemDePecaSelecionado !== undefined ? "Cancelar" : "Limpar"}</Button>
+            </Grid>
+            <Grid item >
+              <Button type="submit" variant="outlined">{itemDePecaSelecionado !== undefined ? "Alterar" : "Adicionar"}</Button>
+            </Grid>
           </Grid>
-          <Grid item md={4} lg={3}>
-            <SelectField name="fornecedor" fullWidth required label="Fornecedor">
-              {fornecedores?.map((fornecedor, indice) => (
-                <MenuItem key={indice} value={indice}>{fornecedor.nomeFantasia}</MenuItem>
-              ))}
-            </SelectField>
-          </Grid>
-          <Grid item md={2}>
-            <CampoDeTexto type="number" name="garantia" fullWidth required label="Garantia" onChange={calcularValorTotal} />
-          </Grid>
-          <Grid item md={1}>
-            <CampoDeSelecao name="unidadeDeGarantia" label="Tipo" fullWidth required>
-              <MenuItem value="0">Km</MenuItem>
-              <MenuItem value="1">Dias</MenuItem>
-            </CampoDeSelecao>
-          </Grid>
-          <Grid item md={2}>
-            <MoneyField name="valorUnitario" fullWidth required label="Valor unitário" onChange={calcularValorTotal} />
-          </Grid>
-          <Grid item md={2}>
-            <CampoDeTexto type="number" name="quantidade" fullWidth required label="Quantidade" onChange={calcularValorTotal} />
-          </Grid>
-          <Grid item md={1}>
-            <MoneyField name="valorTotal" fullWidth required label="ValorTotal" />
-          </Grid>
-          <Grid item md={1}>
-            <Button type="submit" variant="outlined">Adicionar</Button>
-          </Grid>
-        </Grid>
-      </Container>
+        </CardActions>
+      </Card>
     </Form>
   );
 }

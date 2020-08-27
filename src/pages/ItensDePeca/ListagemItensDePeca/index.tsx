@@ -11,14 +11,14 @@ const useStyles = makeStyles((theme) => ({
     '&:nth-child(even)': {
       background: theme.palette.background.paper,
     },
-    height: "60%",
+    height: "40%",
     overflowY: "scroll"
   }
 }));
 
 const ListagemItensDePeca: React.FC = () => {
   const classes = useStyles();
-  const { itensDePeca, removerItemDePeca } = useContext(OrdemDeServicoContext);
+  const { itensDePeca, removerItemDePeca, alterarItemDePeca } = useContext(OrdemDeServicoContext);
 
   return (
     <Box className={classes.root}>
@@ -43,7 +43,7 @@ const ListagemItensDePeca: React.FC = () => {
             <Typography>Valor total: {itemDePeca.valorTotal}</Typography>
           </Grid>
           <Grid item>
-              <Tooltip title={`Alterar `} onClick={()=>removerItemDePeca(indice)}>
+              <Tooltip title={`Alterar `} onClick={()=>alterarItemDePeca(indice)}>
                 <IconButton >
                   <EditIcon />
                 </IconButton>

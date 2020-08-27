@@ -3,7 +3,7 @@ import ItemDePeca from '../../../Types/ItemDePeca';
 import ItemDeServico from '../../../Types/ItemDeServico';
 import ApiContext from '../../../contexts/ApiContext';
 
-interface OrdemDeServicoContextValues{
+interface OrdemDeServicoContextValues {
   itensDePeca: ItemDePeca[];
   itensDeServico: ItemDeServico[];
   indexTab: number;
@@ -14,32 +14,33 @@ interface OrdemDeServicoContextValues{
   setIndexTab: React.Dispatch<React.SetStateAction<number>>;
   handleSubmit: (dados: any) => void;
   removerItemDePeca: (index: number) => void;
+  alterarItemDePeca: (index: number) => void;
+  itemDePecaSelecionado: number | undefined;
+  setItemDePecaSelecionado: React.Dispatch<React.SetStateAction<number | undefined>>;
 }
 
 const OrdemDeServicoContext = createContext<OrdemDeServicoContextValues>({} as OrdemDeServicoContextValues);
 
-export const OrdemDeServicoProvider: React.FC = ({children}) => {
+export const OrdemDeServicoProvider: React.FC = ({ children }) => {
   const [itensDePeca, setItensDePeca] = useState<ItemDePeca[]>([]);
+  const [itemDePecaSelecionado, setItemDePecaSelecionado] = useState<number | undefined>();
   const [itensDeServico, setItensDeServico] = useState<ItemDeServico[]>([]);
-  const [indexTab, setIndexTab] = useState<number>(1);
+  const [indexTab, setIndexTab] = useState<number>(0);
 
-  const {post} = useContext(ApiContext);
+  const { post } = useContext(ApiContext);
 
-  console.log(itensDePeca);
-  
-
-  const validar = useCallback(()=>{
-    if(itensDeServico.length){
+  const validar = useCallback(() => {
+    if (itensDeServico.length) {
       return true;
     }
-    else{
+    else {
       setIndexTab(2);
       return false;
     }
-  },[itensDeServico.length])
+  }, [itensDeServico.length])
 
-  const handleSubmit = useCallback(async (dados)=>{
-    if(validar()){
+  const handleSubmit = useCallback(async (dados) => {
+    if (validar()) {
       dados.itensDeServico = itensDeServico.map(itemDeServico => {
         return {
           servico: itemDeServico.servico._id,
@@ -64,36 +65,37 @@ export const OrdemDeServicoProvider: React.FC = ({children}) => {
       });
       console.log(dados);
       await post('ordemdeservico', dados);
-
     }
-  },[itensDePeca, itensDeServico, post, validar]);
+  }, [itensDePeca, itensDeServico, post, validar]);
 
-  const valorTotalPecas = useCallback(()=>{
+  const valorTotalPecas = useCallback(() => {
     let valorTotal = 0;
-    itensDePeca.forEach(itemDePeca=>{
+    itensDePeca.forEach(itemDePeca => {
       valorTotal = valorTotal + itemDePeca.valorTotal;
     })
     return valorTotal
-  },[itensDePeca])
+  }, [itensDePeca])
 
-  const valorTotalServicos = useCallback(()=>{
+  const valorTotalServicos = useCallback(() => {
     let valorTotal = 0;
-    itensDeServico.forEach(itemDeServico=>{
+    itensDeServico.forEach(itemDeServico => {
       valorTotal = valorTotal + itemDeServico.valorTotal;
     })
     return valorTotal
-  },[itensDeServico])
+  }, [itensDeServico])
 
-  const removerItemDePeca = useCallback((index: number)=>{
-    console.log(index)
-    console.log(itensDePeca, itensDePeca.splice(index, 1))
-    setItensDePeca(itensDePeca.splice(index, 1))
-  },[itensDePeca])
+  const removerItemDePeca = useCallback((index: number) => {
+    setItensDePeca([...itensDePeca.slice(0, index), ...itensDePeca.slice(index + 1)])
+  }, [itensDePeca]);
+
+  const alterarItemDePeca = (index: number) => {
+    setItemDePecaSelecionado(index);
+  }
 
   return (
     <OrdemDeServicoContext.Provider
       value={{
-        itensDePeca, 
+        itensDePeca,
         itensDeServico,
         indexTab,
         valorTotalPecas,
@@ -102,8 +104,10 @@ export const OrdemDeServicoProvider: React.FC = ({children}) => {
         setItensDeServico,
         setIndexTab,
         handleSubmit,
+        alterarItemDePeca,
         removerItemDePeca,
-
+        itemDePecaSelecionado,
+        setItemDePecaSelecionado,
       }}
     >
       {children}

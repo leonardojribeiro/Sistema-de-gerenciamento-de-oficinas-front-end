@@ -65,7 +65,7 @@ const FormProvider: RefForwardingComponent<FormProviderHandles, FormProviderProp
       }
     })
   }
-  
+
   const getFieldByName = useCallback(
     fieldName =>
       fields.current.find(unformField => unformField.name === fieldName),

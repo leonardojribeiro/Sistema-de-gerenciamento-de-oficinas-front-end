@@ -10,12 +10,13 @@ import { Form, CampoDeTexto, CampoDeCpfOuCnpj, DateField, CampoDeRadio, PhoneFie
 import Funcionario from '../../../Types/Funcionario';
 import SelectField from '../../../componentes/Form/Fields/SelectField';
 import Especialidade from '../../../Types/Especialidade';
+import FuncionarioD from '../../../Types/FuncionarioD';
 
 const DialogAlterarFuncionario: React.FC = () => {
   const [especialidades, setEspecialidades] = useState<Especialidade[] | undefined>(undefined);
   const { get, put, } = useContext(ApiContext);
   const history = useHistory();
-  const [funcionario, setFuncionario] = useState<Funcionario | undefined>(undefined);
+  const [funcionario, setFuncionario] = useState<FuncionarioD | undefined>(undefined);
   const id = useQuery("id");
   const refAlerta = useRef<AlertaHandles | undefined>(undefined);
 
@@ -53,7 +54,11 @@ const DialogAlterarFuncionario: React.FC = () => {
   const popular = useCallback(async () => {
     const resposta = await get(`funcionario/id?_id=${id}`) as Funcionario;
     if (resposta) {
-      setFuncionario(resposta)
+      const funcionario = {
+        ...resposta,
+        especialidades: resposta.especialidades.map(especialidade => especialidade._id)
+      } as FuncionarioD
+      setFuncionario(funcionario)
     }
   }, [get, id]);
 
@@ -72,7 +77,7 @@ const DialogAlterarFuncionario: React.FC = () => {
             <CampoDeCpfOuCnpj name="cpf" label="CPF" disabled fullWidth required />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <DateField name="dataNascimento" label="Data de nascimento" fullWidth required openTo="year"/>
+            <DateField name="dataNascimento" label="Data de nascimento" fullWidth required openTo="year" />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <CampoDeRadio name="sexo" label="Sexo" required>
@@ -115,7 +120,7 @@ const DialogAlterarFuncionario: React.FC = () => {
         </Grid>
         <Grid container>
           <Grid item xs={12}>
-            <SelectField name="idsEspecialidades" multiple label="Especialidades" required fullWidth>
+            <SelectField name="especialidades" multiple label="Especialidades" required fullWidth>
               {especialidades?.map((especialidade, index) => (
                 <MenuItem key={index} value={especialidade._id} >{especialidade.descricao}</MenuItem>
               ))}

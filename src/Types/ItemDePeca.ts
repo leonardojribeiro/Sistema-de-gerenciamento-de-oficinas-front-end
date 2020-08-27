@@ -1,10 +1,9 @@
 import Peca from "./Peca";
 import Fornecedor from "./Fornecedor";
 
-export default interface ItemDePeca{
+export default interface ItemDePeca {
+  _id?: number | string;
   peca: Peca;
-  idPeca?: string
-  idFornecedor?: string;
   fornecedor: Fornecedor;
   valorUnitario: number;
   quantidade: number;

@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
   },
   listagem: {
-    height: "60%",
+    height: "40%",
   }
 }));
 

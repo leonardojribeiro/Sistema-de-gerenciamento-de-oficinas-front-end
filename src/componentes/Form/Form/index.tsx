@@ -3,9 +3,9 @@ import  FormProvider from '../Context/FormProvider';
 import FormContext from '../Context/FormContext';
 import { FormProviderHandles, FormProviderProps } from '../types';
 
-const Formulario: RefForwardingComponent<FormProviderHandles, FormProviderProps> = (({initialData, onSubmit, children }, formRef) => {
+const Formulario: RefForwardingComponent<FormProviderHandles, FormProviderProps> = (({...props }, formRef) => {
   return (
-    <FormProvider ref={formRef} onSubmit={onSubmit} initialData={initialData}>
+    <FormProvider ref={formRef} {...props}>
       <FormContext.Consumer>
         {({ handleSubmit, clear }) =>{
           const handleKeyDown = (evento: KeyboardEvent)=>{
@@ -16,7 +16,7 @@ const Formulario: RefForwardingComponent<FormProviderHandles, FormProviderProps>
           }
           return(
           <form noValidate onReset={clear} onSubmit={handleSubmit} onKeyPress={handleKeyDown}>
-            {children}
+            {props.children}
           </form>
         )}}
       </FormContext.Consumer>
