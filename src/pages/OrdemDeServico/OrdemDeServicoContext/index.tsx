@@ -85,6 +85,7 @@ export const OrdemDeServicoProvider: React.FC = ({ children }) => {
   }, [itensDeServico])
 
   const removerItemDePeca = useCallback((index: number) => {
+    setItemDePecaSelecionado(undefined)
     setItensDePeca([...itensDePeca.slice(0, index), ...itensDePeca.slice(index + 1)])
   }, [itensDePeca]);
 

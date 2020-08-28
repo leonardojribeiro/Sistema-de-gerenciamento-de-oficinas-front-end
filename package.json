@@ -16,6 +16,7 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "@types/react-swipeable": "^5.2.0",
     "@types/react-swipeable-views": "^0.13.0",
     "axios": "^0.19.2",
     "date-fns": "^2.15.0",
@@ -27,6 +28,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.2",
     "react-scroll": "^1.8.1",
+    "react-swipeable": "^5.5.1",
     "react-swipeable-views": "^0.13.9",
     "string-mask": "^0.3.0",
     "typescript": "~3.7.2"

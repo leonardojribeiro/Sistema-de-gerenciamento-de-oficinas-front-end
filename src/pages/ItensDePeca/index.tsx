@@ -1,31 +1,39 @@
-import React, { memo, useContext } from 'react';
-import { Box, makeStyles, Grid, Typography } from '@material-ui/core';
+import React, { memo, } from 'react';
+import { Box, makeStyles, Hidden } from '@material-ui/core';
 import ListagemItensDePeca from './ListagemItensDePeca';
 import FormItensDePeca from './FormItensDePeca';
-import OrdemDeServicoContext from '../OrdemDeServico/OrdemDeServicoContext';
+import SwipeableViews from 'react-swipeable-views';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100%",
-    position: "relative",
+    maxHeight: "100%",
+    display: "flex",
+    flexDirection: "column",
   },
-  listagem: {
-    height: "40%",
-  }
 }));
 
 const ItensDePeca: React.FC = () => {
   const classes = useStyles();
-  const {valorTotalPecas} = useContext(OrdemDeServicoContext)
   return (
-    <Box className={classes.root}>
-      <ListagemItensDePeca />
-      <Grid container>
-        <Grid item>
-          <Typography>Valor Total:{valorTotalPecas()}</Typography>
-        </Grid>
-      </Grid>
-      <FormItensDePeca />
+    <Box className={classes.root} >
+      <Hidden mdUp>
+        <SwipeableViews
+          axis="y"
+          enableMouseEvents
+          style={{ height: "100%", padding: "50, 0px"}}
+          containerStyle={{ height: "100%" }}
+          slideStyle={{ height: "100%", padding: "50, 0px"}}
+          resistance
+        >
+          <ListagemItensDePeca />
+          <FormItensDePeca />
+        </SwipeableViews>
+      </Hidden>
+      <Hidden smDown>
+        <ListagemItensDePeca />
+        <FormItensDePeca />
+      </Hidden>
     </Box>
   );
 }

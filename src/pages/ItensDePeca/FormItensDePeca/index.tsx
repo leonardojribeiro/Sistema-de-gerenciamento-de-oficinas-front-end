@@ -3,14 +3,22 @@ import { Form, MoneyField, CampoDeTexto, CampoDeSelecao } from '../../../compone
 import Peca from '../../../Types/Peca';
 import ApiContext from '../../../contexts/ApiContext';
 import SelectField from '../../../componentes/Form/Fields/SelectField';
-import { Grid, MenuItem, Button, Container, Paper, Card, CardContent, CardActions } from '@material-ui/core';
+import { Grid, MenuItem, Button, Card, CardContent, CardActions, Box, makeStyles, CardHeader } from '@material-ui/core';
 import { FormProviderHandles } from '../../../componentes/Form/types';
 import Fornecedor from '../../../Types/Fornecedor';
 import ItemDePeca from '../../../Types/ItemDePeca';
-import comparar from '../../../recursos/Comparar';
+//import comparar from '../../../recursos/Comparar';
 import OrdemDeServicoContext from '../../OrdemDeServico/OrdemDeServicoContext';
 
+const useStyles = makeStyles((theme) => ({
+
+  form: {
+    paddingTop: "-14px",
+  }
+}));
+
 const FormItensDePeca: React.FC = () => {
+  const classes = useStyles();
   const [pecas, setPecas] = useState<Peca[] | undefined>(undefined);
   const [fornecedores, setForncedores] = useState<Fornecedor[] | undefined>(undefined);
   const { get } = useContext(ApiContext);
@@ -80,9 +88,11 @@ const FormItensDePeca: React.FC = () => {
   }, [fornecedores, itemDePecaSelecionado, itensDePeca, pecas, setItemDePecaSelecionado, setItensDePeca]);
 
   const calcularValorTotal = useCallback(() => {
-    const valorUnitario = Number(formRef.current.getFieldValue('valorUnitario'));
-    const quantidade = Number(formRef.current.getFieldValue('quantidade'));
-    formRef.current.setFieldValue('valorTotal', quantidade * valorUnitario);
+    if (formRef.current) {
+      const valorUnitario = Number(formRef.current.getFieldValue('valorUnitario'));
+      const quantidade = Number(formRef.current.getFieldValue('quantidade'));
+      formRef.current.setFieldValue('valorTotal', quantidade * valorUnitario);
+    }
   }, []);
 
   const intialData = itemDePecaSelecionado !== undefined ? {
@@ -96,68 +106,73 @@ const FormItensDePeca: React.FC = () => {
   } : undefined;
 
   console.log(intialData, "initial data")
-  // console.log(itemDe)
+  console.log(itemDePecaSelecionado)
 
-  const handleReset = useCallback(()=>{
-    if(itemDePecaSelecionado !== undefined){
+  const handleReset = useCallback(() => {
+    if (itemDePecaSelecionado !== undefined) {
       setItemDePecaSelecionado(undefined);
     }
-  },[itemDePecaSelecionado, setItemDePecaSelecionado]);
+  }, [itemDePecaSelecionado, setItemDePecaSelecionado]);
+
+
 
   return (
-    <Form onSubmit={handleSubmit} ref={formRef} initialData={intialData} clearOnSubmit>
-      <Card >
-        <CardContent>
-          <Container maxWidth="xl">
-            <Grid container spacing={3}>
-              <Grid item md={5} lg={6}>
+    <Box className={classes.form}>
+      <Box border={1}>
+        a
+      </Box>
+      <Form onSubmit={handleSubmit} ref={formRef} initialData={intialData} >
+        <Card>
+          <CardHeader title="Inserir peça" />
+          <CardContent>
+            <Grid container spacing={2} justify="flex-end">
+              <Grid item xs={12} md={6} lg={6}>
                 <SelectField name="peca" fullWidth required label="Peça">
                   {pecas?.map((peca, indice) => (
                     <MenuItem key={indice} value={indice}>{peca.descricao}</MenuItem>
                   ))}
                 </SelectField>
               </Grid>
-              <Grid item md={4} lg={6}>
+              <Grid item xs={12} md={6} lg={6}>
                 <SelectField name="fornecedor" fullWidth required label="Fornecedor">
                   {fornecedores?.map((fornecedor, indice) => (
                     <MenuItem key={indice} value={indice}>{fornecedor.nomeFantasia}</MenuItem>
                   ))}
                 </SelectField>
               </Grid>
-              <Grid item md={2}>
+              <Grid item xs={7} md={2}>
                 <CampoDeTexto type="number" name="garantia" fullWidth required label="Garantia" onChange={calcularValorTotal} />
               </Grid>
-              <Grid item md={2}>
+              <Grid item xs={5} md={2}>
                 <CampoDeSelecao name="unidadeDeGarantia" label="Tipo" fullWidth required>
                   <MenuItem value="0">Km</MenuItem>
                   <MenuItem value="1">Dias</MenuItem>
                 </CampoDeSelecao>
               </Grid>
-              <Grid item md={2} lg={2}>
+              <Grid item xs={6} md={2} lg={2}>
                 <MoneyField name="valorUnitario" fullWidth required label="Valor unitário" onChange={calcularValorTotal} />
               </Grid>
-              <Grid item md={2} lg={2}>
+              <Grid item xs={6} md={2} lg={2}>
                 <CampoDeTexto type="number" name="quantidade" fullWidth required label="Quantidade" onChange={calcularValorTotal} />
               </Grid>
-              <Grid item md={1} lg={2}>
-                <MoneyField name="valorTotal" fullWidth required label="ValorTotal" />
+              <Grid item xs={6} md={1} lg={2}>
+                <MoneyField name="valorTotal" fullWidth required label="ValorTotal" disabled />
               </Grid>
-
             </Grid>
-          </Container>
-        </CardContent>
-        <CardActions>
-          <Grid container spacing={2} justify="flex-end">
-            <Grid item >
-              <Button type="reset" onClick={handleReset} variant="outlined">{itemDePecaSelecionado !== undefined ? "Cancelar" : "Limpar"}</Button>
+          </CardContent>
+          <CardActions>
+            <Grid container spacing={2} justify="flex-end">
+              <Grid item >
+                <Button type="reset" onClick={handleReset} variant="outlined">{itemDePecaSelecionado !== undefined ? "Cancelar" : "Limpar"}</Button>
+              </Grid>
+              <Grid item >
+                <Button type="submit" variant="outlined">{itemDePecaSelecionado !== undefined ? "Alterar" : "Adicionar"}</Button>
+              </Grid>
             </Grid>
-            <Grid item >
-              <Button type="submit" variant="outlined">{itemDePecaSelecionado !== undefined ? "Alterar" : "Adicionar"}</Button>
-            </Grid>
-          </Grid>
-        </CardActions>
-      </Card>
-    </Form>
+          </CardActions>
+        </Card>
+      </Form>
+    </Box>
   );
 }
 

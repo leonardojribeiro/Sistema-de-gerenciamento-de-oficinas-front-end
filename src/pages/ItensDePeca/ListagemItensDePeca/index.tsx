@@ -11,46 +11,64 @@ const useStyles = makeStyles((theme) => ({
     '&:nth-child(even)': {
       background: theme.palette.background.paper,
     },
-    height: "40%",
-    overflowY: "scroll"
+    height: "100%",
+    overflow: "scroll",
+    display: "flex",
+    flexDirection: "column",
+  },
+  listagem: {
+    height: '100%',
+    overflowY: "scroll",
   }
 }));
 
 const ListagemItensDePeca: React.FC = () => {
   const classes = useStyles();
-  const { itensDePeca, removerItemDePeca, alterarItemDePeca } = useContext(OrdemDeServicoContext);
+  const { itensDePeca, removerItemDePeca, alterarItemDePeca, valorTotalPecas } = useContext(OrdemDeServicoContext);
 
   return (
     <Box className={classes.root}>
-      {itensDePeca.map((itemDePeca, indice) => (
-        <Grid key={indice} container justify="space-between" >
-          <Grid item>
-            <Typography>Peça: {itemDePeca.peca.descricao}</Typography>
-          </Grid>
-          <Grid item>
-            <Typography>Fornecedor: {itemDePeca.fornecedor.nomeFantasia}</Typography>
-          </Grid>
-          <Grid item>
-            <Typography>Garantia: {itemDePeca.garantia}</Typography>
-          </Grid>
-          <Grid item>
-            <Typography>Valor unitário: {itemDePeca.valorUnitario}</Typography>
-          </Grid>
-          <Grid item>
-            <Typography>Quantidade: {itemDePeca.quantidade}</Typography>
-          </Grid>
-          <Grid item>
-            <Typography>Valor total: {itemDePeca.valorTotal}</Typography>
-          </Grid>
-          <Grid item>
-              <Tooltip title={`Alterar `} onClick={()=>alterarItemDePeca(indice)}>
+      <Box className={classes.listagem}>
+        {itensDePeca.map((itemDePeca, indice) => (
+          <Grid key={indice} container justify="space-between" alignItems="center" >
+            <Grid item>
+              <Typography>Peça: {itemDePeca.peca.descricao}</Typography>
+            </Grid>
+            <Grid item>
+              <Typography>Fornecedor: {itemDePeca.fornecedor.nomeFantasia}</Typography>
+            </Grid>
+            <Grid item>
+              <Typography>Garantia: {itemDePeca.garantia}</Typography>
+            </Grid>
+            <Grid item>
+              <Typography>Valor unitário: {itemDePeca.valorUnitario}</Typography>
+            </Grid>
+            <Grid item>
+              <Typography>Quantidade: {itemDePeca.quantidade}</Typography>
+            </Grid>
+            <Grid item>
+              <Typography>Valor total: {itemDePeca.valorTotal}</Typography>
+            </Grid>
+            <Grid item>
+              <Tooltip title={`Alterar `} onClick={() => alterarItemDePeca(indice)}>
                 <IconButton >
                   <EditIcon />
                 </IconButton>
               </Tooltip>
             </Grid>
-        </Grid>
-      ))}
+            <Grid item>
+              <Tooltip title={`Alterar `} onClick={() => removerItemDePeca(indice)}>
+                <IconButton >
+                  <EditIcon />
+                </IconButton>
+              </Tooltip>
+            </Grid>
+          </Grid>
+        ))}
+      </Box>
+      <Box alignSelf="flex-end" justifySelf="flex-end">
+        <Typography>Valor Total:{valorTotalPecas()}</Typography>
+      </Box>
     </Box>
   )
 }

@@ -23,7 +23,7 @@ import DialogoEspecialidades from './pages/Especialidade/DialogoEspecialidades';
 const Routes: React.FC = () => {
   const authContext = useContext(AuthContext);
   const apiContext = useContext(ApiContext);
-  const { logado } = useAuth();
+  const { logado  } = useAuth();
   const efetuarLoginPorToken = useCallback(async () => {
     if (apiContext) {
       const resposta = await apiContext.get(

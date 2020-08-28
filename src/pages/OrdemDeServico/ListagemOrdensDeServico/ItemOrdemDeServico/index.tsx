@@ -38,29 +38,27 @@ interface AgrupamentoPecasPorFornecedor extends Fornecedor {
 const ItemOrdemDeServico: React.FC<ItemOrdemDeServicoProps> = ({ ordemDeServico }) => {
   const classes = useStyles();
 
-  const organizarOrdensDeServico = () => {
-    const agrupamentos: AgrupamentoPecasPorFornecedor[] = [];
+  // const organizarOrdensDeServico = () => {
+  //   const agrupamentos: AgrupamentoPecasPorFornecedor[] = [];
 
-    ordemDeServico.itensDePeca?.forEach((itemDePeca) => {
-      if (agrupamentos.findIndex(
-        (agrupamento) =>
-          agrupamento._id === itemDePeca.fornecedor._id)
-        === -1) {
-        agrupamentos.push({ ...itemDePeca.fornecedor, pecas: [] });
-      }
-    })
+  //   ordemDeServico.itensDePeca?.forEach((itemDePeca) => {
+  //     if (agrupamentos.findIndex(
+  //       (agrupamento) =>
+  //         agrupamento._id === itemDePeca.fornecedor._id)
+  //       === -1) {
+  //       agrupamentos.push({ ...itemDePeca.fornecedor, pecas: [] });
+  //     }
+  //   })
 
-    agrupamentos.forEach((agrupamento) => {
-      ordemDeServico.itensDePeca?.forEach((itemDePeca, indice) => {
-        if (agrupamento._id === itemDePeca.fornecedor._id && ordemDeServico.itensDePeca) {
-          agrupamento.pecas.push(ordemDeServico.itensDePeca[indice].peca)
-        }
-      })
-    });
-    console.log(agrupamentos)
-
-    return agrupamentos;
-  }
+  //   agrupamentos.forEach((agrupamento) => {
+  //     ordemDeServico.itensDePeca?.forEach((itemDePeca, indice) => {
+  //       if (agrupamento._id === itemDePeca.fornecedor._id && ordemDeServico.itensDePeca) {
+  //         agrupamento.pecas.push(ordemDeServico.itensDePeca[indice].peca)
+  //       }
+  //     })
+  //   });
+  //   return agrupamentos;
+  // }
   //console.log(ordemDeServico)
   //organizarOrdensDeServico()
   return (

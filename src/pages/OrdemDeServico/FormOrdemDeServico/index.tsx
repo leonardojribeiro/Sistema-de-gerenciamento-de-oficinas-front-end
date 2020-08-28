@@ -1,12 +1,20 @@
 import React, { useContext, memo, useEffect, useRef, useCallback, useState } from 'react';
-import { Container, Grid, MenuItem, Button } from '@material-ui/core';
+import { Container, Grid, MenuItem, Button, makeStyles } from '@material-ui/core';
 import { Form, DateField, CampoDeTexto, MoneyField, CampoDeSelecao, } from '../../../componentes/Form';
 import OrdemDeServicoContext from '../OrdemDeServicoContext';
 import { FormProviderHandles } from '../../../componentes/Form/types';
 import Veiculo from '../../../Types/Veiculo';
 import ApiContext from '../../../contexts/ApiContext';
 
+const useStyles = makeStyles((theme)=>({
+  root:{
+    height: "100%",
+    overflow: "scroll",
+  }
+}))
+
 const FormOrdemDeServico: React.FC = () => {
+  const classes = useStyles();
   const { handleSubmit, valorTotalPecas, valorTotalServicos } = useContext(OrdemDeServicoContext);
   const formRef = useRef<FormProviderHandles>({} as FormProviderHandles);
   const [veiculos, setVeiculos] = useState<Veiculo[]>([]);
@@ -48,7 +56,7 @@ const FormOrdemDeServico: React.FC = () => {
   }, [calcularValorTotal, valorTotalServicos]);
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="md" className={classes.root}>
       <Form onSubmit={handleSubmit} ref={formRef}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
