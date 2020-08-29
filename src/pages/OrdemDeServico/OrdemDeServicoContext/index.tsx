@@ -17,6 +17,10 @@ interface OrdemDeServicoContextValues {
   alterarItemDePeca: (index: number) => void;
   itemDePecaSelecionado: number | undefined;
   setItemDePecaSelecionado: React.Dispatch<React.SetStateAction<number | undefined>>;
+  itemDeServicoSelecionado: number | undefined;
+  alterarItemDeServico: (index: number) => void;
+  removerItemDeServico: (index: number) => void;
+  setItemDeServicoSelecionado:React.Dispatch<React.SetStateAction<number | undefined>>;
 }
 
 const OrdemDeServicoContext = createContext<OrdemDeServicoContextValues>({} as OrdemDeServicoContextValues);
@@ -24,6 +28,7 @@ const OrdemDeServicoContext = createContext<OrdemDeServicoContextValues>({} as O
 export const OrdemDeServicoProvider: React.FC = ({ children }) => {
   const [itensDePeca, setItensDePeca] = useState<ItemDePeca[]>([]);
   const [itemDePecaSelecionado, setItemDePecaSelecionado] = useState<number | undefined>();
+  const [itemDeServicoSelecionado, setItemDeServicoSelecionado] = useState<number | undefined>();
   const [itensDeServico, setItensDeServico] = useState<ItemDeServico[]>([]);
   const [indexTab, setIndexTab] = useState<number>(0);
 
@@ -93,6 +98,15 @@ export const OrdemDeServicoProvider: React.FC = ({ children }) => {
     setItemDePecaSelecionado(index);
   }
 
+  const removerItemDeServico = useCallback((index: number) => {
+    setItemDeServicoSelecionado(undefined)
+    setItensDeServico([...itensDeServico.slice(0, index), ...itensDeServico.slice(index + 1)])
+  }, [itensDeServico]);
+
+  const alterarItemDeServico = (index: number) => {
+    setItemDeServicoSelecionado(index);
+  }
+
   return (
     <OrdemDeServicoContext.Provider
       value={{
@@ -109,6 +123,10 @@ export const OrdemDeServicoProvider: React.FC = ({ children }) => {
         removerItemDePeca,
         itemDePecaSelecionado,
         setItemDePecaSelecionado,
+        itemDeServicoSelecionado,
+        setItemDeServicoSelecionado,
+        alterarItemDeServico,
+        removerItemDeServico,
       }}
     >
       {children}

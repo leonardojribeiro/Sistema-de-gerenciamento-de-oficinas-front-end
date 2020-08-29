@@ -2,6 +2,7 @@ import React, { memo, useContext, } from 'react';
 import { Box, Grid, Typography, makeStyles, IconButton, Tooltip } from '@material-ui/core';
 import OrdemDeServicoContext from '../../OrdemDeServico/OrdemDeServicoContext';
 import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,9 +58,9 @@ const ListagemItensDePeca: React.FC = () => {
               </Tooltip>
             </Grid>
             <Grid item>
-              <Tooltip title={`Alterar `} onClick={() => removerItemDePeca(indice)}>
+              <Tooltip title={`Excluir `} onClick={() => removerItemDePeca(indice)}>
                 <IconButton >
-                  <EditIcon />
+                  <DeleteIcon />
                 </IconButton>
               </Tooltip>
             </Grid>

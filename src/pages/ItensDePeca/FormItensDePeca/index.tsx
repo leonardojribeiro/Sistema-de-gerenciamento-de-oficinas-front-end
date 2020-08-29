@@ -105,8 +105,6 @@ const FormItensDePeca: React.FC = () => {
     valorTotal: itensDePeca[itemDePecaSelecionado].valorTotal,
   } : undefined;
 
-  console.log(intialData, "initial data")
-  console.log(itemDePecaSelecionado)
 
   const handleReset = useCallback(() => {
     if (itemDePecaSelecionado !== undefined) {
@@ -114,48 +112,43 @@ const FormItensDePeca: React.FC = () => {
     }
   }, [itemDePecaSelecionado, setItemDePecaSelecionado]);
 
-
-
   return (
     <Box className={classes.form}>
-      <Box border={1}>
-        a
-      </Box>
       <Form onSubmit={handleSubmit} ref={formRef} initialData={intialData} >
         <Card>
           <CardHeader title="Inserir peça" />
           <CardContent>
             <Grid container spacing={2} justify="flex-end">
-              <Grid item xs={12} md={6} lg={6}>
+              <Grid item xs={12} md={6} lg={3}>
                 <SelectField name="peca" fullWidth required label="Peça">
                   {pecas?.map((peca, indice) => (
                     <MenuItem key={indice} value={indice}>{peca.descricao}</MenuItem>
                   ))}
                 </SelectField>
               </Grid>
-              <Grid item xs={12} md={6} lg={6}>
+              <Grid item xs={12} md={6} lg={3}>
                 <SelectField name="fornecedor" fullWidth required label="Fornecedor">
                   {fornecedores?.map((fornecedor, indice) => (
                     <MenuItem key={indice} value={indice}>{fornecedor.nomeFantasia}</MenuItem>
                   ))}
                 </SelectField>
               </Grid>
-              <Grid item xs={7} md={2}>
+              <Grid item xs={7} md={2} lg={1}>
                 <CampoDeTexto type="number" name="garantia" fullWidth required label="Garantia" onChange={calcularValorTotal} />
               </Grid>
-              <Grid item xs={5} md={2}>
+              <Grid item xs={5} md={2} lg={1}>
                 <CampoDeSelecao name="unidadeDeGarantia" label="Tipo" fullWidth required>
                   <MenuItem value="0">Km</MenuItem>
                   <MenuItem value="1">Dias</MenuItem>
                 </CampoDeSelecao>
               </Grid>
-              <Grid item xs={6} md={2} lg={2}>
+              <Grid item xs={6} md={3} lg={2}>
                 <MoneyField name="valorUnitario" fullWidth required label="Valor unitário" onChange={calcularValorTotal} />
               </Grid>
               <Grid item xs={6} md={2} lg={2}>
                 <CampoDeTexto type="number" name="quantidade" fullWidth required label="Quantidade" onChange={calcularValorTotal} />
               </Grid>
-              <Grid item xs={6} md={1} lg={2}>
+              <Grid item xs={6} md={3} lg={2}>
                 <MoneyField name="valorTotal" fullWidth required label="ValorTotal" disabled />
               </Grid>
             </Grid>
