@@ -101,6 +101,7 @@ const SelectField: React.FC<SelectFieldProps> = ({ name, ...props }) => {
         error={!valid}
         onChange={handleChange}
         value={value}
+        fullWidth
       >
         {props.children}
       </Select>

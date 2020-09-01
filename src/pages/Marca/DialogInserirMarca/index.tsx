@@ -2,7 +2,7 @@ import React, { useContext, useCallback, memo } from 'react';
 import Dialogo from '../../../componentes/Dialog';
 import { Button, DialogActions } from '@material-ui/core';
 import ApiContext from '../../../contexts/ApiContext';
-import { useHistory } from 'react-router-dom';
+import { useHistory,} from 'react-router-dom';
 import { CampoDeTexto, Form, DragAndDrop } from '../../../componentes/Form';
 
 const DialogInserirMarca: React.FC = () => {

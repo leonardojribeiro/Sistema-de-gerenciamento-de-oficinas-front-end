@@ -8,8 +8,8 @@ interface DragAndDropProps {
   required: boolean
 }
 
-const useStyles = makeStyles((theme) => {console.log(theme.palette.success.main);  return({
-  
+const useStyles = makeStyles((theme) => ({
+
   drag: {
     transition: "border 0.3s",
     border: "1px dashed",
@@ -71,9 +71,9 @@ const useStyles = makeStyles((theme) => {console.log(theme.palette.success.main)
     },
     width: "100%",
   },
-})});
+}));
 
-interface InputRef{
+interface InputRef {
   files: Blob | undefined,
 }
 
