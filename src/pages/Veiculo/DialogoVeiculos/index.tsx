@@ -42,7 +42,7 @@ const DialogoVeiculos: React.FC = () => {
       <FormularioConsulta onSubmit={manipularBusca} />
       <Box display="flex" justifyContent="center" pt={2}>Listagem</Box>
       <ListagemVeiculos veiculos={veiculos} />
-      <BotaoInserir titulo="Inserir veiculo" linkTo="/veiculos/inserir" />
+      <BotaoInserir titulo="Inserir veiculo" linkTo="/veiculos/inserirveiculo" />
     </>
   ), [manipularBusca, veiculos])
 
@@ -50,8 +50,8 @@ const DialogoVeiculos: React.FC = () => {
     <Dialogo maxWidth="sm" fullWidth open title="Veículos">
       {conteudo}
       <Switch>
-        <Route path="/veiculos/inserir" component={DialogoInserirVeiculo} />
-        <Route path="/veiculos/alterar"  component={DialogAlterarVeiculo} />
+        <Route path="/veiculos/inserirveiculo" component={DialogoInserirVeiculo} />
+        <Route path="/veiculos/alterarveiculo"  component={DialogAlterarVeiculo} />
       </Switch>
     </Dialogo>
   );

@@ -42,7 +42,7 @@ const ClienteItem: React.FC<ClienteItemProps> = ({ cliente }) => {
         </TableCell>
         <TableCell align="right">
           <Tooltip title={`Alterar o cliente ${cliente.nome}`}>
-            <IconButton component={Link} to={`/clientes/alterar?id=${cliente._id}`}>
+            <IconButton component={Link} to={`/clientes/alterarcliente?id=${cliente._id}`}>
               <EditIcon />
             </IconButton>
           </Tooltip>

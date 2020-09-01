@@ -22,7 +22,6 @@ const SelectField: React.FC<SelectFieldProps> = ({ name, ...props }) => {
     if (!props.required) {
       return true;
     }
-    console.log(ref.current.value)
     if (ref.current && ref.current.value !== '' && ref.current.value !== undefined) {
       setValid(true);
       return (true);

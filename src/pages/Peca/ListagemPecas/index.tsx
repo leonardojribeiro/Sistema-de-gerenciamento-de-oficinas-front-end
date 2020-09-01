@@ -60,7 +60,7 @@ const ListagemPecas: React.FC<ListagemPecasProps> = ({ pecas }) => {
                   </TableCell>
                   <TableCell padding="none" align="center">
                     <Tooltip title={`Alterar a peça ${peca.descricao}`}>
-                      <IconButton component={Link} to={`/pecas/alterar?id=${peca._id}`}>
+                      <IconButton component={Link} to={`/pecas/alterarpeca?id=${peca._id}`}>
                         <EditIcon />
                       </IconButton>
                     </Tooltip>

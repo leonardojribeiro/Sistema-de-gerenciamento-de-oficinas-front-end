@@ -42,7 +42,7 @@ const DialogServicos: React.FC = () => {
       <FormularioConsulta onSubmit={manipularBusca} />
       <Box display="flex" justifyContent="center" pt={2}>Listagem</Box>
       <ListagemServicos servicos={servicos} />
-      <BotaoInserir titulo="Inserir serviços" linkTo="/servicos/inserir" />
+      <BotaoInserir titulo="Inserir serviços" linkTo="/servicos/inserirservico" />
     </>
   ), [manipularBusca, servicos])
 
@@ -51,8 +51,8 @@ const DialogServicos: React.FC = () => {
     <Dialogo maxWidth="sm" fullWidth open title="Serviços">
       {conteudo}
       <Switch>
-        <Route path="/servicos/inserir" component={DialogInserirServico}/>
-        <Route path="/servicos/alterar" component={DialogAlterarServico}/>
+        <Route path="/servicos/inserirservico" component={DialogInserirServico}/>
+        <Route path="/servicos/alterarservico" component={DialogAlterarServico}/>
       </Switch>
     </Dialogo>
   );

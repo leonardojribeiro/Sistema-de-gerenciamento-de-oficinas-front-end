@@ -45,7 +45,7 @@ const DialogoInserirVeiculo: React.FC = () => {
   }, [get,]);
 
   useEffect(() => {
-    if (pathname.endsWith("veiculos/inserir")) {
+    if (pathname.endsWith("inserirveiculo")) {
       listarClientes();
       listarModelos();
     }

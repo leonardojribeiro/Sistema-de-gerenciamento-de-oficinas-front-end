@@ -59,7 +59,7 @@ const ListagemVeiculos: React.FC<ListagemVeiculosProps> = ({ veiculos }) => {
                   </TableCell>
                   <TableCell padding="none" align="center">
                     <Tooltip title={`Alterar o veículo ${veiculo.placa}`}>
-                      <IconButton component={Link} to={`/veiculos/alterar?id=${veiculo._id}`}>
+                      <IconButton component={Link} to={`/veiculos/alterarveiculo?id=${veiculo._id}`}>
                         <EditIcon />
                       </IconButton>
                     </Tooltip>

@@ -46,7 +46,7 @@ const ListagemEspecialidades: React.FC<ListagemEspecialidadesProps> = ({ especia
             </Grid>
             <Grid item>
               <Tooltip title={`Alterar a especialidade ${especialidade.descricao}`}>
-                <IconButton component={Link} to={`/especialidades/alterar?id=${especialidade._id}`}>
+                <IconButton component={Link} to={`/especialidades/alterarespecialidade?id=${especialidade._id}`}>
                   <EditIcon />
                 </IconButton>
               </Tooltip>

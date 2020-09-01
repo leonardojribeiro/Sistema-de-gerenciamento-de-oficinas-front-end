@@ -41,7 +41,7 @@ const DialogMarcas: React.FC = () => {
       <FormularioConsulta onSubmit={manipularBusca} />
       <Box display="flex" justifyContent="center" pt={2}>Listagem</Box>
       <ListagemMarcas marcas={marcas} />
-      <Link to="marcas/inserir" >
+      <Link to="marcas/inserirmarca" >
         <BotaoInserir titulo="Inserir marca" />
       </Link>
     </>
@@ -51,10 +51,10 @@ const DialogMarcas: React.FC = () => {
     <Dialogo open fullWidth maxWidth="xs" title="Marcas">
       {conteudo}
       <Switch>
-        <Route path="/marcas/inserir">
+        <Route path="/marcas/inserirmarca">
           <DialogoInserirMarca/>
         </Route>
-        <Route path="/marcas/alterar">
+        <Route path="/marcas/alterarmarca">
           <DialogAlterarMarca/>
         </Route>
       </Switch>

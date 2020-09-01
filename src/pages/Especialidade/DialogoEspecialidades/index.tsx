@@ -41,7 +41,7 @@ function DialgoEspecialidades() {
       <FormularioConsulta onSubmit={manipularBusca} />
       <Box display="flex" justifyContent="center" pt={2}>Listagem</Box>
       <ListagemEspecialidades especialidades={especialidades} />
-      <BotaoInserir titulo="Inserir especialidade" linkTo="especialidades/inserir" />
+      <BotaoInserir titulo="Inserir especialidade" linkTo="especialidades/inserirespecialidade" />
     </>
   ), [manipularBusca, especialidades])
 
@@ -49,8 +49,8 @@ function DialgoEspecialidades() {
     <Dialogo open fullWidth maxWidth="xs" title="Especialidades">
       {conteudo}
       <Switch>
-        <Route path="/especialidades/inserir" component={DialogoInserirEspecialidade} />
-        <Route path="/especialidades/alterar" component={DialogAlterarEspecialidade} />
+        <Route path="/especialidades/inserirespecialidade" component={DialogoInserirEspecialidade} />
+        <Route path="/especialidades/alterarespecialidade" component={DialogAlterarEspecialidade} />
       </Switch>
     </Dialogo>
   );

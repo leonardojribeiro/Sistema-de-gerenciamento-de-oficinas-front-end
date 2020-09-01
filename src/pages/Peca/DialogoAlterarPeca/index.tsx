@@ -77,7 +77,7 @@ const DialogoAlterarModelo: React.FC = () => {
   }, [get, popular]);
 
   useEffect(() => {
-    if (pathname.endsWith("pecas/alterar")) {
+    if (pathname.endsWith("alterarpeca")) {
       popular();
       listarMarcas();
     }
@@ -100,7 +100,7 @@ const DialogoAlterarModelo: React.FC = () => {
             ))
           }
         </CampoDeSelecao>
-        <Link to={`${path}/marca/inserir`}>
+        <Link to={`${path}/inserirmarca`}>
           <Tooltip title="Inserir marca">
             <IconButton>
               <CreateNewFolderIcon />
@@ -119,7 +119,7 @@ const DialogoAlterarModelo: React.FC = () => {
       {conteudo}
       <Alerta ref={refAlerta} />
       <Switch>
-        <Route path={`${url}/marca/inserir`} component={DialogInserirMarca} />
+        <Route path={`${url}/inserirmarca`} component={DialogInserirMarca} />
       </Switch>
     </Dialogo>
   );

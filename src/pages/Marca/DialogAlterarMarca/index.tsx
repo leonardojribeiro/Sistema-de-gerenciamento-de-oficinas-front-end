@@ -58,9 +58,6 @@ const DialogAlterarMarca: React.FC = () => {
 
   useEffect(() => {
     popular();
-    return () => {
-      setMarca(undefined);
-    }
   }, [popular])
 
   return (

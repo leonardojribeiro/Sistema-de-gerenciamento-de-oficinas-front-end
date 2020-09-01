@@ -42,7 +42,7 @@ const FuncionarioItem: React.FC<FuncionarioItemProps> = ({ funcionario }) => {
         </TableCell>
         <TableCell align="right">
           <Tooltip title={`Alterar o funcionario ${funcionario.nome}`}>
-            <IconButton component={Link} to={`/funcionarios/alterar?id=${funcionario._id}`}>
+            <IconButton component={Link} to={`/funcionarios/alterarfuncionario?id=${funcionario._id}`}>
               <EditIcon />
             </IconButton>
           </Tooltip>

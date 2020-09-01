@@ -77,7 +77,7 @@ const DialogoAlterarModelo: React.FC = () => {
   }, [get, popular]);
 
   useEffect(() => {
-    if (pathname.endsWith("modelos/alterar")) {
+    if (pathname.endsWith("alterarmodelo")) {
       listarMarcas();
     }
   }, [listarMarcas, pathname]);

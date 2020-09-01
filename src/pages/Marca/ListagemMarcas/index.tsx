@@ -59,7 +59,7 @@ const ListagemMarcas: React.FC<ListagemMarcasProps> = ({ marcas }) =>{
             </Grid>
             <Grid item>
               <Tooltip title={`Alterar a marca ${marca.descricao}`}>
-                <IconButton component={Link} to={`/marcas/alterar?id=${marca._id}`}>
+                <IconButton component={Link} to={`/marcas/alterarmarca?id=${marca._id}`}>
                   <EditIcon />
                 </IconButton>
               </Tooltip>

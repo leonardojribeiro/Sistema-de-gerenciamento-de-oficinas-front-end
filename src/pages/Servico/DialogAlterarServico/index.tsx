@@ -49,7 +49,7 @@ const DialogInserirServico: React.FC = () => {
   },[popular])
 
   return (
-    <Dialogo open title="Inserir Serviço">
+    <Dialogo open title="Alterar Serviço">
       <Form onSubmit={manipularEnvio} initialData={servico}>
         <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
         <CampoDeTexto name="tempoDuracao" type="number" required fullWidth label="Tempo de duração (minutos)" />

@@ -49,7 +49,7 @@ const DialogoInserirModelo: React.FC = () => {
   }, [get,]);
 
   useEffect(() => {
-    if (pathname.endsWith("/modelos/inserir") || pathname.endsWith("/inserirmodelo")) {
+    if (pathname.endsWith("/inserirmodelo")) {
       listarMarcas();
     }
   }, [listarMarcas, pathname]);

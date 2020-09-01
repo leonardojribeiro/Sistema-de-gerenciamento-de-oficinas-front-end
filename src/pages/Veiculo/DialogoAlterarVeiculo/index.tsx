@@ -70,7 +70,7 @@ const DialogAlterarVeiculo: React.FC = () => {
   }, [get,]);
 
   useEffect(() => {
-    if (pathname.endsWith("veiculos/alterar")) {
+    if (pathname.endsWith("alterarveiculo")) {
       listarClientes();
       listarModelos();
       popular();

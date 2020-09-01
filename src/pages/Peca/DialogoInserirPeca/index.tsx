@@ -50,7 +50,7 @@ const DialogoInserirPeca: React.FC = () => {
   }, [get,]);
 
   useEffect(() => {
-    if (pathname.endsWith("pecas/inserir")) {
+    if (pathname.endsWith("inserirpeca")) {
       listarMarcas();
     }
   }, [listarMarcas, pathname]);
@@ -73,7 +73,7 @@ const DialogoInserirPeca: React.FC = () => {
               ))
             }
           </CampoDeSelecao>
-          <Link to={`${path}/marca/inserir`}>
+          <Link to={`${path}/inserirmarca`}>
             <Tooltip title="Inserir marca">
               <IconButton>
                 <CreateNewFolderIcon />
@@ -86,7 +86,7 @@ const DialogoInserirPeca: React.FC = () => {
         </DialogActions>
       </Form>
       <Switch>
-        <Route path={`${url}/marca/inserir`} component={DialogInserirMarca} />
+        <Route path={`${url}/inserirmarca`} component={DialogInserirMarca} />
       </Switch>
     </Dialogo>
   );

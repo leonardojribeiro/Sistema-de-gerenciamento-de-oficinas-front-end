@@ -38,7 +38,7 @@ const DialogFuncionarios: React.FC = () => {
       <FormularioConsulta onSubmit={handleSearch} />
       <Box display="flex" justifyContent="center" pt={2}>Listagem</Box>
       <ListagemFuncionarios funcionarios={funcionarios} />
-      <Link to="funcionarios/inserir">
+      <Link to="funcionarios/inserirfuncionario">
         <BotaoInserir titulo="Inserir funcionario" />
       </Link>
     </>
@@ -49,10 +49,10 @@ const DialogFuncionarios: React.FC = () => {
     <Dialogo maxWidth="lg" fullWidth open title="Funcionários">
       {conteudo}
       <Switch>
-        <Route path="/funcionarios/inserir">
+        <Route path="/funcionarios/inserirfuncionario">
           <DialogInserirFuncionario/>
         </Route>
-        <Route path="/funcionarios/alterar">
+        <Route path="/funcionarios/alterarfuncionario">
           <DialogAlterarFuncionario/>
         </Route>
       </Switch>

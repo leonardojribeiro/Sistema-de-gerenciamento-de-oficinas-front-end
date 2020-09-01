@@ -53,7 +53,7 @@ const FornecedorItem: React.FC<FornecedorItemProps> = ({ fornecedor }) => {
             </Grid>
             <Grid item>
               <Tooltip title={`Alterar o fornecedor ${fornecedor.nomeFantasia}`}>
-                <IconButton component={Link} to={`/fornecedores/alterar?id=${fornecedor._id}`}>
+                <IconButton component={Link} to={`/fornecedores/alterarfornecedor?id=${fornecedor._id}`}>
                   <EditIcon />
                 </IconButton>
               </Tooltip>

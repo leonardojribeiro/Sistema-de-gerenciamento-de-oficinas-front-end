@@ -43,7 +43,7 @@ const DialogoPecas: React.FC = () => {
       <FormularioConsulta onSubmit={manipularBusca} filtros={filtros} />
       <Box display="flex" justifyContent="center" pt={2}>Listagem</Box>
       <ListagemPeca pecas={pecas} />
-      <BotaoInserir titulo="Inserir peça" linkTo="/pecas/inserir" />
+      <BotaoInserir titulo="Inserir peça" linkTo="/pecas/inserirpeca" />
     </>
   ), [filtros, manipularBusca, pecas])
 
@@ -52,8 +52,8 @@ const DialogoPecas: React.FC = () => {
     <Dialogo maxWidth="sm" fullWidth open title="Peças">
       {conteudo}
       <Switch>
-        <Route path="/pecas/inserir" component={DialogoInserirPeca} />
-        <Route path="/pecas/alterar" component={DialogoAlterarPeca} />
+        <Route path="/pecas/inserirpeca" component={DialogoInserirPeca} />
+        <Route path="/pecas/alterarpeca" component={DialogoAlterarPeca} />
       </Switch>
     </Dialogo>
   );
