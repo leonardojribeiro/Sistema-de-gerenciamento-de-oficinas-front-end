@@ -49,8 +49,8 @@ const DialogoClientes: React.FC = () => {
     <Dialogo maxWidth="lg" fullWidth open title="Clientes">
       {conteudo}
       <Switch>
-        <Route path="/clientes/inserircliente" component={DialogoInserirCliente}/>
-        <Route path="/clientes/alterarcliente" component={DialogoAlterarCliente}/>
+        <Route path="/clientes/inserircliente" component={DialogoInserirCliente} />
+        <Route path="/clientes/alterarcliente" component={DialogoAlterarCliente} />
       </Switch>
     </Dialogo>
   );
