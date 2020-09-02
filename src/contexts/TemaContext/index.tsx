@@ -21,7 +21,7 @@ export const TemaProvider: React.FC = ({children}) => {
     }
     else {
       setTemaEscuro(true);
-      localStorage.setItem("temaEscuro", JSON.stringify(false));
+      localStorage.setItem("temaEscuro", JSON.stringify(true));
     }
   }
 

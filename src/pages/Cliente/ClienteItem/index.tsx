@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Box, IconButton, Grid, Tooltip, Hidden, Typography, Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
+import { Box, IconButton, Grid, Tooltip, Hidden, Typography, Accordion, AccordionSummary, AccordionDetails, AccordionActions } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import formato from '../../../recursos/Formato';
 import { Link } from 'react-router-dom';
@@ -17,15 +17,15 @@ interface ClienteItemProps {
 const ClienteItem: React.FC<ClienteItemProps> = ({ cliente }) => {
   return (
     <Accordion>
-      <AccordionSummary >
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Grid container justify="space-between" alignItems="center" >
-          <Grid item sm={10} md={5}>
+          <Grid item sm={5} md={5}>
             <Box display="flex">
               <PersonIcon />
               <Typography > {cliente.nome}</Typography>
             </Box>
           </Grid>
-          <Hidden smDown>
+          <Hidden xsDown>
             <Grid item>
               <Box display="flex">
                 <PhoneAndroidIcon />
@@ -86,15 +86,25 @@ const ClienteItem: React.FC<ClienteItemProps> = ({ cliente }) => {
             </Grid>
           </Grid>
           <Grid container spacing={2} justify="space-between">
-            <Grid item>Logradouro: {cliente.endereco.logradouro}</Grid>
-            <Grid item>Bairro: {cliente.endereco.bairro}</Grid>
-            <Grid item>CEP: {cliente.endereco.cep}</Grid>
-            {cliente.endereco.complemento && <Grid item>Complemento: {cliente.endereco.complemento}</Grid>}
-            <Grid item>Cidade: {cliente.endereco.cidade}</Grid>
-            <Grid item>Estado: {cliente.endereco.estado}</Grid>
+            <Grid item>
+              <Typography >
+                {`${cliente.endereco.logradouro}, ${cliente.endereco.numero} - ${cliente.endereco.bairro}. ${cliente.endereco.cidade} - ${cliente.endereco.estado}. CEP: ${cliente.endereco.cep}`}
+              </Typography>
+            </Grid>
           </Grid>
         </Box>
       </AccordionDetails>
+      <AccordionActions>
+        <Hidden smUp>
+          <Grid item>
+            <Tooltip title={`Alterar o cliente ${cliente.nome}`}>
+              <IconButton component={Link} to={`/clientes/alterarcliente?id=${cliente._id}`}>
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+          </Grid>
+        </Hidden>
+      </AccordionActions>
     </Accordion>
   );
 }
