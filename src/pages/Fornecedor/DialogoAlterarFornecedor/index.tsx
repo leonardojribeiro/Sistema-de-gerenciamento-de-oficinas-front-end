@@ -67,7 +67,7 @@ const DialogoAlterarFornecedor: React.FC = () => {
             <PhoneField name="telefoneCelular" label="Telefone celular" fullWidth required />
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
-            <CampoDeEmail name="email" label="E-mail" fullWidth />
+            <CampoDeEmail name="email" required label="E-mail" fullWidth />
           </Grid>
           <Node node="endereco">
             <Grid item xs={12} sm={12} md={6}>
