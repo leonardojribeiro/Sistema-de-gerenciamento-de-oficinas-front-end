@@ -12,14 +12,14 @@ const useStyles = makeStyles((theme) => ({
     '&:nth-child(even)': {
       background: theme.palette.background.paper,
     },
-    height: "100%",
-    overflow: "scroll",
+    height: "calc(100% - 64px)",
+    overflowY: "auto",
     display: "flex",
     flexDirection: "column",
   },
   listagem: {
     height: '100%',
-    overflowY: "scroll",
+    overflowY: "auto",
   }
 }));
 

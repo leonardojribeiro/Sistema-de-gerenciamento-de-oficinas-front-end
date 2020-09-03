@@ -11,9 +11,8 @@ import ItemDePeca from '../../../Types/ItemDePeca';
 import OrdemDeServicoContext from '../../OrdemDeServico/OrdemDeServicoContext';
 
 const useStyles = makeStyles((theme) => ({
-
   form: {
-    paddingTop: "-14px",
+    position: "relative",
   }
 }));
 

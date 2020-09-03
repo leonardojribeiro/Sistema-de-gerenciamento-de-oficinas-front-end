@@ -7,7 +7,7 @@ import { FormProviderHandles } from '../../../componentes/Form/types';
 import Servico from '../../../Types/Servico';
 import Funcionario from '../../../Types/Funcionario';
 import ItemDeServico from '../../../Types/ItemDeServico';
-import comparar from '../../../recursos/Comparar';
+//import comparar from '../../../recursos/Comparar';
 import OrdemDeServicoContext from '../../OrdemDeServico/OrdemDeServicoContext';
 
 
@@ -40,15 +40,15 @@ const FormItensDeServico: React.FC = () => {
     popularFuncionarios();
   }, [popularFuncionarios]);
 
-  const validar = useCallback((dados: ItemDeServico) => {
-    let igual = false;
-    itensDeServico.forEach(itemDeServico => {
-      if (comparar(itemDeServico, dados)) {
-        igual = true;
-      }
-    })
-    return igual;
-  }, [itensDeServico]);
+  // const validar = useCallback((dados: ItemDeServico) => {
+  //   let igual = false;
+  //   itensDeServico.forEach(itemDeServico => {
+  //     if (comparar(itemDeServico, dados)) {
+  //       igual = true;
+  //     }
+  //   })
+  //   return igual;
+  // }, [itensDeServico]);
 
   const handleSubmit = useCallback((dados) => {
     if (servicos && funcionarios) {

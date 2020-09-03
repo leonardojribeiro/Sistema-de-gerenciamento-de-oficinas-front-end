@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 const ClienteItem: React.FC<ClienteItemProps> = ({ cliente }) => {
   const classes = useStyles();
   return (
-    <Accordion>
+    <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />} className={classes.summary}>
         <Grid container justify="space-between" alignItems="center" >
           <Grid item sm={5} md={5}>
@@ -86,7 +86,7 @@ const ClienteItem: React.FC<ClienteItemProps> = ({ cliente }) => {
               </Grid>
             </Hidden>
             <Grid item>
-              <Box display="flex" alignItems="flex-end">
+              <Box display="flex" alignItems="center">
                 <CakeIcon />
                 <Typography >{formato.formatarData(cliente.dataNascimento)}</Typography>
               </Box>

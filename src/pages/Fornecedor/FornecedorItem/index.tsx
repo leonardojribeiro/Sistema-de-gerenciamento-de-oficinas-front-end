@@ -17,7 +17,7 @@ interface FornecedorItemProps {
 
 const FornecedorItem: React.FC<FornecedorItemProps> = ({ fornecedor }) => {
   return (
-    <Accordion>
+    <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />} >
         <Grid container justify="space-between" alignItems="center" >
           <Grid item sm={5} md={5}>

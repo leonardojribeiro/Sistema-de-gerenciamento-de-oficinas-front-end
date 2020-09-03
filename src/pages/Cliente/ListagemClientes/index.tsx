@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Box, Container } from '@material-ui/core';
+import { Box, } from '@material-ui/core';
 import ClienteItem from '../ClienteItem';
 import Cliente from '../../../Types/Cliente';
 
@@ -9,15 +9,13 @@ interface ListagemClientesProps {
 
 const ListagemClientes: React.FC<ListagemClientesProps> = ({ clientes }) => {
   return (
-    <Container>
-      <Box mb={2}>
-        {
-          !!clientes.length && clientes.map((cliente, index) => (
-            <ClienteItem cliente={cliente} key={index} />
-          ))
-        }
-      </Box>
-    </Container>
+    <Box mb={2}>
+      {
+        !!clientes.length && clientes.map((cliente, index) => (
+          <ClienteItem cliente={cliente} key={index} />
+        ))
+      }
+    </Box>
   );
 }
 

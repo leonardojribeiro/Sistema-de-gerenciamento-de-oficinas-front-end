@@ -6,10 +6,10 @@ import { FormProviderHandles } from '../../../componentes/Form/types';
 import Veiculo from '../../../Types/Veiculo';
 import ApiContext from '../../../contexts/ApiContext';
 
-const useStyles = makeStyles((theme)=>({
-  root:{
+const useStyles = makeStyles((theme) => ({
+  root: {
     height: "100%",
-    overflow: "scroll",
+    overflowY: "auto",
   }
 }))
 
@@ -63,47 +63,47 @@ const FormOrdemDeServico: React.FC = () => {
             <CampoDeSelecao name="veiculo" label="Veículo" required fullWidth>
               {veiculos.map((veiculo, indice) => (
                 <MenuItem value={veiculo._id} key={indice}>{veiculo.placa}</MenuItem>
-              ))} 
+              ))}
             </CampoDeSelecao>
           </Grid>
-          <Grid item md={6}>
-            <DateField name="dataDeRegistro" label="Data de registro" required fullWidth allowKeyboardControl/>
+          <Grid item xs={12} sm={6} md={6} >
+            <DateField name="dataDeRegistro" label="Data de registro" required fullWidth allowKeyboardControl />
           </Grid>
-          <Grid item md={6}>
+          <Grid item xs={12} sm={6} md={6} >
             <DateField name="dataDeInicio" label="Data de início" required fullWidth />
           </Grid>
-          <Grid item md={6}>
+          <Grid item xs={12} sm={6} md={6} >
             <DateField name="dataDeConclusao" label="Data de conclusão" required fullWidth />
           </Grid>
-          <Grid item md={6}>
+          <Grid item xs={12} sm={12}>
+            <CampoDeTexto name="sintoma" label="Sintoma do veículo" required fullWidth />
+          </Grid>
+          <Grid item xs={12} sm={6} md={6} >
             <CampoDeSelecao name="categoria" label="Categoria da ordem de serviço" required fullWidth>
               <MenuItem value="0">Predetiva</MenuItem>
               <MenuItem value="1">Corretiva</MenuItem>
               <MenuItem value="2">Preventiva</MenuItem>
             </CampoDeSelecao>
           </Grid>
-          <Grid item md={12}>
-            <CampoDeTexto name="sintoma" label="Sintoma do veículo" required fullWidth />
-          </Grid>
-          <Grid item md={6}>
+          <Grid item xs={12} sm={6} md={6}>
             <CampoDeSelecao name="status" label="Status da ordem de serviço" required fullWidth>
               <MenuItem value="0">Em andamento</MenuItem>
               <MenuItem value="1">Finalizada</MenuItem>
             </CampoDeSelecao>
           </Grid>
-          <Grid item md={6}>
-            <CampoDeTexto name="andamento" type="number" label="Andamento" required fullWidth />
+          <Grid item xs={12} sm={6} md={6}>
+            <CampoDeTexto name="andamento" type="number" label="Andamento (%)" required fullWidth />
           </Grid>
-          <Grid item md={6}>
+          <Grid item xs={12} sm={6} md={6}>
             <MoneyField name="valorTotalDosServicos" label="Valor total dos serviços" disabled fullWidth />
           </Grid>
-          <Grid item md={6}>
+          <Grid item xs={12} sm={6} md={6}>
             <MoneyField name="valorTotalDasPecas" label="Valor total das peças" disabled fullWidth />
           </Grid>
-          <Grid item md={6}>
+          <Grid item xs={12} sm={6} md={6}>
             <MoneyField name="desconto" label="Desconto" fullWidth onChange={calcularValorTotal} />
           </Grid>
-          <Grid item md={6}>
+          <Grid item xs={12} sm={6} md={6}>
             <MoneyField name="valorTotal" label="Valor total da ordem de serviço" disabled fullWidth />
           </Grid>
         </Grid>

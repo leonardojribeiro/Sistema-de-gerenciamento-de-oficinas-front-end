@@ -30,7 +30,7 @@ export const OrdemDeServicoProvider: React.FC = ({ children }) => {
   const [itemDePecaSelecionado, setItemDePecaSelecionado] = useState<number | undefined>();
   const [itemDeServicoSelecionado, setItemDeServicoSelecionado] = useState<number | undefined>();
   const [itensDeServico, setItensDeServico] = useState<ItemDeServico[]>([]);
-  const [indexTab, setIndexTab] = useState<number>(0);
+  const [indexTab, setIndexTab] = useState<number>(1);
 
   const { post } = useContext(ApiContext);
 
