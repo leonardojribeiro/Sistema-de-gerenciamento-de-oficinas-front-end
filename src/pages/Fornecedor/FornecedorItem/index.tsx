@@ -1,55 +1,37 @@
 import React, { memo } from 'react';
-import { Collapse, Box, IconButton, Grid, makeStyles, Tooltip, Hidden, Typography } from '@material-ui/core';
-import { useState } from 'react';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import { Box, IconButton, Grid, Tooltip, Hidden, Typography, Accordion, AccordionSummary, AccordionDetails, AccordionActions } from '@material-ui/core';
 import formato from '../../../recursos/Formato';
 import { Link } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
 import Fornecedor from '../../../Types/Fornecedor';
+import EmailIcon from '@material-ui/icons/Email';
+import PhoneIcon from '@material-ui/icons/Phone';
+import PhoneAndroidIcon from '@material-ui/icons/PhoneAndroid';
+import PersonIcon from '@material-ui/icons/Person';
+import BreakWord from '../../../componentes/BreakWord';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      borderBottom: 'unset',
-    },
-  },
-  linhaTabela: {
-    '&:hover': {
-      backgroundColor: theme.palette.action.hover
-    },
-    borderTop: `1px solid ${theme.palette.divider}`,
-    height: "64px",
-    position: "static"
-  },
-}));
-
-interface FornecedorItemProps{
+interface FornecedorItemProps {
   fornecedor: Fornecedor;
 }
 
 const FornecedorItem: React.FC<FornecedorItemProps> = ({ fornecedor }) => {
-  const [aberto, setAberto] = useState<boolean>(false);
-  const classes = useStyles();
   return (
-    <>
-      <Grid container className={classes.linhaTabela} justify="space-between" alignItems="center">
-        <Grid item xs={5}>
-          <Typography>{fornecedor.nomeFantasia}</Typography>
-        </Grid>
-        <Hidden smDown>
-          <Grid item>
-            <Typography >Telefone Celular{formato.formatarTelefone(fornecedor.telefoneCelular)}</Typography>
+    <Accordion>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />} >
+        <Grid container justify="space-between" alignItems="center" >
+          <Grid item sm={5} md={5}>
+            <Box display="flex" alignItems="center">
+              <PersonIcon />
+              <Typography > {fornecedor.nomeFantasia}</Typography>
+            </Box>
           </Grid>
-        </Hidden>
-        <Grid item>
-          <Grid container spacing={1}>
+          <Hidden xsDown>
             <Grid item>
-              <Tooltip title={aberto ? "Recolher" : "Expandir"} >
-                <IconButton onClick={() => setAberto(!aberto)}>
-                  {aberto ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                </IconButton>
-              </Tooltip>
+              <Box display="flex" alignItems="center">
+                <PhoneAndroidIcon />
+                <Typography> {formato.formatarTelefone(fornecedor.telefoneCelular)}</Typography>
+              </Box>
             </Grid>
             <Grid item>
               <Tooltip title={`Alterar o fornecedor ${fornecedor.nomeFantasia}`}>
@@ -58,34 +40,77 @@ const FornecedorItem: React.FC<FornecedorItemProps> = ({ fornecedor }) => {
                 </IconButton>
               </Tooltip>
             </Grid>
-          </Grid>
+          </Hidden>
         </Grid>
-      </Grid>
-      <Collapse in={aberto} timeout="auto" unmountOnExit>
-        <Box mb={1} pt={2}>
-          <Grid container spacing={2} justify="space-between">
-            <Grid item>CPF/CNPJ: {formato.formatarCpfCnpj(fornecedor.cpfCnpj)}</Grid>
-            {fornecedor.razaoSocial && <Grid item>Razão social: {fornecedor.razaoSocial}</Grid>}
-            {fornecedor.email && <Grid item>E-mail: {fornecedor.email}</Grid>}
-            {fornecedor.telefoneFixo && <Grid item>Telefone Fixo: {formato.formatarTelefone(fornecedor.telefoneCelular)}</Grid>}
-            <Hidden mdUp>
-              <Grid item >Telefone Celular {formato.formatarTelefone(fornecedor.telefoneCelular)}</Grid>
+      </AccordionSummary>
+      <AccordionDetails >
+        <Grid container>
+          <Grid container spacing={2} justify="space-between" alignItems="center">
+            <Grid item>
+              <Typography >
+                CPF/CNPJ: {formato.formatarCpfCnpj(fornecedor.cpfCnpj)}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography >
+                Razão Social: {fornecedor.razaoSocial}
+              </Typography>
+            </Grid>
+            {fornecedor.email ?
+              <Grid item>
+                <Box display="flex" alignItems="center">
+                  <EmailIcon />
+                  <BreakWord>{fornecedor.email}</BreakWord>
+                </Box>
+              </Grid>
+              : null
+            }
+            {fornecedor.telefoneFixo ?
+              <Grid item>
+                <Box display="flex" alignItems="center">
+                  <PhoneIcon />
+                  <Typography>{formato.formatarTelefone(fornecedor.telefoneFixo)}</Typography>
+                </Box>
+              </Grid>
+              : null
+            }
+            <Hidden smUp>
+              <Grid item >
+                <Box display="flex" alignItems="center">
+                  <PhoneAndroidIcon />
+                  <Typography>
+                    {formato.formatarTelefone(fornecedor.telefoneCelular)}
+                  </Typography>
+                </Box>
+              </Grid>
             </Hidden>
           </Grid>
           <Grid container spacing={2} justify="space-between">
-            <Grid item>Endereço</Grid>
+            <Grid item>
+              <Typography >Endereço</Typography>
+            </Grid>
           </Grid>
           <Grid container spacing={2} justify="space-between">
-            <Grid item>Logradouro: {fornecedor.endereco.logradouro}</Grid>
-            <Grid item>Bairro: {fornecedor.endereco.bairro}</Grid>
-            <Grid item>CEP: {fornecedor.endereco.cep}</Grid>
-            {fornecedor.endereco.complemento && <Grid item>Complemento: {fornecedor.endereco.complemento}</Grid>}
-            <Grid item>Cidade: {fornecedor.endereco.cidade}</Grid>
-            <Grid item>Estado: {fornecedor.endereco.estado}</Grid>
+            <Grid item>
+              <Typography >
+                {`${fornecedor.endereco.logradouro}, ${fornecedor.endereco.numero} - ${fornecedor.endereco.bairro}. ${fornecedor.endereco.cidade} - ${fornecedor.endereco.estado}. CEP: ${fornecedor.endereco.cep}`}
+              </Typography>
+            </Grid>
           </Grid>
-        </Box>
-      </Collapse>
-    </>
+        </Grid>
+      </AccordionDetails>
+      <Hidden smUp>
+        <AccordionActions>
+          <Grid item>
+            <Tooltip title={`Alterar o fornecedor ${fornecedor.nomeFantasia}`}>
+              <IconButton component={Link} to={`/fornecedores/alterarfornecedor?id=${fornecedor._id}`}>
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+          </Grid>
+        </AccordionActions>
+      </Hidden>
+    </Accordion>
   );
 }
 

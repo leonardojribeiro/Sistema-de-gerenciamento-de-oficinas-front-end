@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Box, IconButton, Grid, Tooltip, Hidden, Typography, Accordion, AccordionSummary, AccordionDetails, AccordionActions } from '@material-ui/core';
+import { Box, IconButton, Grid, Tooltip, Hidden, Typography, Accordion, AccordionSummary, AccordionDetails, AccordionActions, makeStyles } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import formato from '../../../recursos/Formato';
 import { Link } from 'react-router-dom';
@@ -9,27 +9,36 @@ import EmailIcon from '@material-ui/icons/Email';
 import PhoneIcon from '@material-ui/icons/Phone';
 import PhoneAndroidIcon from '@material-ui/icons/PhoneAndroid';
 import PersonIcon from '@material-ui/icons/Person';
+import CakeIcon from '@material-ui/icons/Cake';
+import BreakWord from '../../../componentes/BreakWord';
 
 interface ClienteItemProps {
   cliente: Cliente;
 }
 
+const useStyles = makeStyles((theme) => ({
+  summary: {
+    background: theme.palette.background.default
+  }
+}))
+
 const ClienteItem: React.FC<ClienteItemProps> = ({ cliente }) => {
+  const classes = useStyles();
   return (
     <Accordion>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />} className={classes.summary}>
         <Grid container justify="space-between" alignItems="center" >
           <Grid item sm={5} md={5}>
-            <Box display="flex">
+            <Box display="flex" alignItems="center">
               <PersonIcon />
               <Typography > {cliente.nome}</Typography>
             </Box>
           </Grid>
           <Hidden xsDown>
             <Grid item>
-              <Box display="flex">
+              <Box display="flex" alignItems="center">
                 <PhoneAndroidIcon />
-                <Typography > {formato.formatarTelefone(cliente.telefoneCelular)}</Typography>
+                <Typography> {formato.formatarTelefone(cliente.telefoneCelular)}</Typography>
               </Box>
             </Grid>
             <Grid item>
@@ -43,7 +52,7 @@ const ClienteItem: React.FC<ClienteItemProps> = ({ cliente }) => {
         </Grid>
       </AccordionSummary>
       <AccordionDetails>
-        <Box>
+        <Grid container>
           <Grid container spacing={2} justify="space-between" alignItems="center">
             <Grid item>
               <Typography >
@@ -52,12 +61,15 @@ const ClienteItem: React.FC<ClienteItemProps> = ({ cliente }) => {
             </Grid>
             {cliente.email &&
               <Grid item>
-                <Typography noWrap >{cliente.email}</Typography>
+                <Box display="flex" alignItems="center">
+                  <EmailIcon />
+                  <BreakWord>{cliente.email}</BreakWord>
+                </Box>
               </Grid>
             }
             {cliente.telefoneFixo &&
               <Grid item>
-                <Box display="flex">
+                <Box display="flex" alignItems="center">
                   <PhoneIcon />
                   <Typography>{formato.formatarTelefone(cliente.telefoneFixo)}</Typography>
                 </Box>
@@ -65,7 +77,7 @@ const ClienteItem: React.FC<ClienteItemProps> = ({ cliente }) => {
             }
             <Hidden smUp>
               <Grid item >
-                <Box display="flex">
+                <Box display="flex" alignItems="center">
                   <PhoneAndroidIcon />
                   <Typography>
                     {formato.formatarTelefone(cliente.telefoneCelular)}
@@ -74,7 +86,10 @@ const ClienteItem: React.FC<ClienteItemProps> = ({ cliente }) => {
               </Grid>
             </Hidden>
             <Grid item>
-              <Typography >Data de nascimento: {formato.formatarData(cliente.dataNascimento)}</Typography>
+              <Box display="flex" alignItems="flex-end">
+                <CakeIcon />
+                <Typography >{formato.formatarData(cliente.dataNascimento)}</Typography>
+              </Box>
             </Grid>
             <Grid item>
               <Typography >Sexo: {formato.formatarSexo(cliente.sexo)}</Typography>
@@ -92,7 +107,7 @@ const ClienteItem: React.FC<ClienteItemProps> = ({ cliente }) => {
               </Typography>
             </Grid>
           </Grid>
-        </Box>
+        </Grid>
       </AccordionDetails>
       <AccordionActions>
         <Hidden smUp>

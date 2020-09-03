@@ -47,7 +47,7 @@ const DialogoFornecedores: React.FC = () => {
 
 
   return (
-    <Dialogo maxWidth="md" fullWidth open title="Fornecedores">
+    <Dialogo maxWidth="lg" fullWidth open title="Fornecedores">
       {conteudo}
       <Switch>
         <Route path="/fornecedores/inserirfornecedor" component={DialogoInserirCliente} />
