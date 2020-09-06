@@ -1,5 +1,5 @@
 import React, { memo, } from 'react';
-import { Box, makeStyles, Hidden } from '@material-ui/core';
+import { makeStyles, Hidden, Container } from '@material-ui/core';
 import ListagemItensDePeca from './ListagemItensDePeca';
 import FormItensDePeca from './FormItensDePeca';
 import SwipeableViews from 'react-swipeable-views';
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 const ItensDePeca: React.FC = () => {
   const classes = useStyles();
   return (
-    <Box className={classes.root} >
+    <Container className={classes.root} >
       <Hidden mdUp>
         <SwipeableViews
           axis="y"
@@ -34,7 +34,7 @@ const ItensDePeca: React.FC = () => {
         <ListagemItensDePeca />
         <FormItensDePeca />
       </Hidden>
-    </Box>
+    </Container>
   );
 }
 

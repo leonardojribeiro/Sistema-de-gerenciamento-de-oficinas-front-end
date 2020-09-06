@@ -18,6 +18,7 @@ import Usuario from './Types/Usuario';
 import DialogServicos from './pages/Servico/DialogServicos';
 import DialogOrdensDeServico from './pages/OrdemDeServico/DialogOrdensDeServico';
 import DialogoEspecialidades from './pages/Especialidade/DialogoEspecialidades';
+import Teste from './Teste';
 
 
 const Routes: React.FC = () => {
@@ -80,6 +81,8 @@ const Routes: React.FC = () => {
                   <Redirect to="/" />
                 </Route>
 
+                <Route path="/popular" exact component={Teste}>  
+                </Route>
                 
               </Switch>
             </>

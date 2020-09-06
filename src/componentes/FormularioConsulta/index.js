@@ -3,7 +3,7 @@ import { Form, CampoDeBusca, CampoDeSelecao } from '../Form';
 import { Grid, Box, MenuItem, Tooltip, IconButton } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
-function FormularioConsulta({ onSubmit, filtros = [] }) {
+function FormularioConsulta({ onSubmit, filtros = [], name }) {
   return (
     <Form onSubmit={onSubmit} initialData={{ tipo: "0" }}>
       <Grid container spacing={2} justify="space-between" alignItems="flex-end">
@@ -11,7 +11,7 @@ function FormularioConsulta({ onSubmit, filtros = [] }) {
           <CampoDeBusca
             disableButtonSearch={filtros.length}
             fullWidth
-            name="consulta"
+            name={name}
             label="Consulta"
           />
         </Grid>

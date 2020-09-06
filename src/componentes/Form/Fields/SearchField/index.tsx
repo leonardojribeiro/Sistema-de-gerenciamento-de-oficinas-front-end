@@ -1,11 +1,11 @@
 import React, { useRef, useEffect, memo } from 'react';
-import { TextField, InputAdornment, IconButton, Tooltip } from '@material-ui/core';
+import { TextField, StandardTextFieldProps as TextFieldPropsMUI, InputAdornment, IconButton, Tooltip } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import useField from '../../Hooks/useField';
 
-interface SearchFieldProps{
+interface SearchFieldProps extends TextFieldPropsMUI{
   name: string,
-  disableButtonSearch: boolean
+  disableButtonSearch?: boolean
 }
 
 const SearchField: React.FC<SearchFieldProps> = ({name, disableButtonSearch, ...props }) => {

@@ -39,7 +39,7 @@ const ListagemPecas: React.FC<ListagemPecasProps> = ({ pecas }) => {
           </TableHead>
           <TableBody>
             {
-              pecas.map((peca, index) => (
+              pecas?.map((peca, index) => (
                 <TableRow className={classes.linhaTabela} key={index} hover >
                   <TableCell padding="none">
                     <Typography>
