@@ -8,15 +8,17 @@ interface ComboBoxProps<T> extends AutocompleteProps<T, false, false, false> {
   path: string;
   getOptions: () => Promise<any[]>;
   getMoreOptions?: (search: string) => Promise<any[]>;
-  getDefaultValue?: (value: any) => Promise<any>;
+  getDefaultValue?: (value: any,) => Promise<any>;
+  getDefaultValueInOptions?: (value: any, options: any) => boolean;
 }
 
 const ComboBox: React.FC<ComboBoxProps<any>> =
-  ({ options: defaultOptions, getOptions, getMoreOptions, getDefaultValue, path, name, onChange, onInputChange, ...props }) => {
+  ({ options: defaultOptions, getOptions, getMoreOptions, getDefaultValue, getDefaultValueInOptions, path, name, onChange, onInputChange, ...props }) => {
     const [options, setOptions] = useState<any>(defaultOptions);
     const [value, setValue] = useState<any>(null);
     const valueSelected = useRef<any>({});
     const { fieldName, registerField, defaultValue } = useField(name);
+    const filled = useRef(false);
 
     const getValue = useCallback((ref) => {
       return ref.current ? dot.pick(path, ref) ? dot.pick(path, ref) : "" : "";
@@ -38,19 +40,35 @@ const ComboBox: React.FC<ComboBoxProps<any>> =
       get();
     }, [getMoreOptions, getOptions]);
 
-    useEffect(() => {
-      const get = async () => {
-        if (getDefaultValue && defaultValue) {
-          const value = await getDefaultValue(defaultValue);
+    const fill = useCallback(async () => {
+      if (getDefaultValue && defaultValue && !value && options.length && !filled.current) {
+        let value: any;
+        if (getDefaultValueInOptions) {
+          options.forEach((option: any) => {
+            if (getDefaultValueInOptions(defaultValue, option)) {
+              value = option;
+              return
+            }
+          })
+          if (value) {
+            setValue(value);
+            filled.current = true;
+          }
+        }
+        if (!value) {
+          value = await getDefaultValue(defaultValue);
           if (value) {
             setOptions((options: any[]) => [...options, value]);
             setValue(value);
+            filled.current = true;
           }
         }
       }
-      get();
-    }, [defaultValue, getDefaultValue])
+    }, [defaultValue, getDefaultValue, getDefaultValueInOptions, options, value, filled]);
 
+    useEffect(() => {
+      fill()
+    }, [fill]);
     const handleChange = useCallback((event: React.ChangeEvent<{}>, value: any, reason: AutocompleteChangeReason, details?: AutocompleteChangeDetails<any> | undefined) => {
       valueSelected.current = value;
       setValue(value)

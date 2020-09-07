@@ -2,33 +2,16 @@ import React, { useContext, useRef, useCallback, useEffect, memo } from 'react';
 import Dialogo from '../../../componentes/Dialog';
 import ApiContext from '../../../contexts/ApiContext';
 import { useHistory, Link, Route, Switch, useRouteMatch, useLocation } from 'react-router-dom';
-import { DialogActions, Button, MenuItem, Typography, makeStyles, Grid, Box, Tooltip, IconButton } from '@material-ui/core';
-import CampoDeSelecao from '../../../componentes/Form/Fields/SelectField';
+import { DialogActions, Button, Box, Tooltip, IconButton } from '@material-ui/core';
 import { useState } from 'react';
 import useQuery from '../../../hooks/useQuery';
 import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
 import { useMemo } from 'react';
 import { Form, CampoDeTexto } from '../../../componentes/Form';
-import Marca from '../../../Types/Marca';
 import Peca from '../../../Types/Peca';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import DialogInserirMarca from '../../Marca/DialogInserirMarca';
 import ComboBoxMarca from '../../../componentes/ComboBox/ComboBoxMarca';
-
-const useStyles = makeStyles((theme) => ({
-  listagem: {
-    minHeight: "50vh",
-  },
-  imgLogomarca: {
-    maxHeight: "32px",
-    maxWidth: "32px",
-    objectFit: "scale-down"
-  },
-  itemMenu: {
-    display: "flex",
-    justifyContent: "space-between"
-  }
-}));
 
 const DialogoAlterarModelo: React.FC = () => {
   const { get, put } = useContext(ApiContext);

@@ -7,7 +7,6 @@ import DialogoInserirMarca from '../DialogInserirMarca';
 import DialogAlterarMarca from '../DialogAlterarMarca';
 import ListagemMarcas from '../ListagemMarcas';
 import BotaoInserir from '../../../componentes/BotaoInserir';
-import FormularioConsulta from '../../../componentes/FormularioConsulta';
 import Marca from '../../../Types/Marca';
 import { Pagination } from '@material-ui/lab';
 import FormConsultaMarca from '../FormConsultaMarca';

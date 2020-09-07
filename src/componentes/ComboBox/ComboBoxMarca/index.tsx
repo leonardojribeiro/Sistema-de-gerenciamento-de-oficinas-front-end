@@ -28,16 +28,22 @@ const ComboBoxMarca: React.FC<ComboBoxMarcaProps> = ({ onChange, label, name }) 
     return resposta.marcas as Marca[];
   }, [get]);
 
-  const getDefaultValue = useCallback(async (consulta) => {
-    const resposta = await get(`/marca/id?_id=${consulta}`,) as any;
+  const getDefaultValue = useCallback(async (value) => {
+    const resposta = await get(`/marca/id?_id=${value}`,) as any;
+    console.log("consultando");
     return resposta ? resposta : null;
   }, [get]);
+
+  const getDefaultValueInOptions = useCallback((value, option) => {
+    return value === option._id;
+  }, []);
 
   return (
     <ComboBox
       getOptions={getOptions}
       getMoreOptions={getMoreOptions}
       getDefaultValue={getDefaultValue}
+      getDefaultValueInOptions={getDefaultValueInOptions}
       name={name}
       path="current._id"
       fullWidth
