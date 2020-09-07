@@ -13,6 +13,7 @@ import Marca from '../../../Types/Marca';
 import Peca from '../../../Types/Peca';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import DialogInserirMarca from '../../Marca/DialogInserirMarca';
+import ComboBoxMarca from '../../../componentes/ComboBox/ComboBoxMarca';
 
 const useStyles = makeStyles((theme) => ({
   listagem: {
@@ -30,11 +31,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DialogoAlterarModelo: React.FC = () => {
-  const classes = useStyles();
-  const imagensUrl = process.env.REACT_APP_IMAGENS_URL;
   const { get, put } = useContext(ApiContext);
   const history = useHistory();
-  const [marcas, setMarcas] = useState<Marca[]>([]);
   const [peca, setPeca] = useState<Peca | undefined>();
   const refAlerta = useRef<AlertaHandles>();
   const id = useQuery("id");
@@ -43,7 +41,7 @@ const DialogoAlterarModelo: React.FC = () => {
 
   const manipularEnvio = useCallback(async (pecaASerAlterada) => {
     if (pecaASerAlterada && peca) {
-      if (!(pecaASerAlterada.descricao === peca.descricao) || !(pecaASerAlterada.idMarca === peca.idMarca)) {
+      if (!(pecaASerAlterada.descricao === peca.descricao) || !(pecaASerAlterada.marca === peca.marca)) {
         pecaASerAlterada._id = peca._id;
         const resposta = await put("/peca", pecaASerAlterada);
         if (resposta) {
@@ -68,38 +66,17 @@ const DialogoAlterarModelo: React.FC = () => {
     }
   }, [get, id,]);
 
-  const listarMarcas = useCallback(async () => {
-    const marcas = await get("/marca") as Marca[];
-    if (marcas) {
-      setMarcas(marcas);
-    }
-    popular()
-  }, [get, popular]);
-
   useEffect(() => {
     if (pathname.endsWith("alterarpeca")) {
       popular();
-      listarMarcas();
     }
-  }, [popular, listarMarcas, pathname])
+  }, [popular, pathname])
 
   const conteudo = useMemo(() => (
     <Form onSubmit={manipularEnvio} initialData={peca}>
       <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
       <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-        <CampoDeSelecao name="marca" label="Marca" fullWidth required>
-          <MenuItem value="" className={classes.itemMenu}>Inserir marca</MenuItem>
-          {
-            marcas.map((marca, index) => (
-              <MenuItem key={index} value={marca._id} className={classes.itemMenu}>
-                <Grid container justify="space-between">
-                  <Typography>{marca.descricao}</Typography>
-                  <img src={`${imagensUrl}/${marca.uriLogo}`} alt={`logomarca da marca ${marca.descricao}`} className={classes.imgLogomarca} />
-                </Grid>
-              </MenuItem>
-            ))
-          }
-        </CampoDeSelecao>
+        <ComboBoxMarca label="Marca" name="marca" />
         <Link to={`${path}/inserirmarca`}>
           <Tooltip title="Inserir marca">
             <IconButton>
@@ -112,7 +89,7 @@ const DialogoAlterarModelo: React.FC = () => {
         <Button type="submit">Salvar</Button>
       </DialogActions>
     </Form>
-  ), [classes.imgLogomarca, classes.itemMenu, imagensUrl, manipularEnvio, marcas, path, peca])
+  ), [manipularEnvio, path, peca])
 
   return (
     <Dialogo open title="Alterar peça" fullWidth maxWidth="xs">

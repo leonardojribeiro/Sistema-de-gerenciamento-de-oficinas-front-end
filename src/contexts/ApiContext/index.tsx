@@ -7,7 +7,7 @@ import { useRef } from "react";
 import useAuth from "../../hooks/useAuth";
 
 interface ApiContextValues {
-  get: (url: string) => Promise<object>,
+  get: (url: string, desablitarProgresso?: boolean) => Promise<object>,
   getTipoBlob: (url: string) => Promise<object>,
   post: (url: string, dados: object) => Promise<object>,
   put: (url: string, dados: object) => Promise<object>,
@@ -76,8 +76,8 @@ export const ApiProvider: React.FC = ({ children }) => {
     return null;
   }, []);
 
-  const get = useCallback(async (url: string) => {
-    refProgresso && refProgresso.current && refProgresso.current.setAberto(true);
+  const get = useCallback(async (url: string, desablitarProgresso?: boolean) => {
+    !desablitarProgresso && refProgresso && refProgresso.current && refProgresso.current.setAberto(true);
     let resposta = null;
     try {
       resposta = await api.get(url, { headers });
@@ -85,7 +85,7 @@ export const ApiProvider: React.FC = ({ children }) => {
     catch (e) {
       handleErro(e)
     }
-    refProgresso && refProgresso.current && refProgresso.current.setAberto(false);
+    !desablitarProgresso && refProgresso && refProgresso.current && refProgresso.current.setAberto(false);
     return handleResposta(resposta);
   }, [handleResposta, headers]);
 

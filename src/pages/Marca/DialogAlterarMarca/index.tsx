@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useContext, useState, memo, useCallback, } from 'react';
-import Dialogo from '../../../componentes/Dialog';
+import Dialog from '../../../componentes/Dialog';
 import useQuery from '../../../hooks/useQuery';
 import { DialogActions, Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
@@ -14,23 +14,23 @@ const DialogAlterarMarca: React.FC = () => {
   const [marca, setMarca] = useState<Marca | undefined>(undefined);
   const { get, getTipoBlob, multipartPut } = useContext(ApiContext);
   const history = useHistory();
-  const refAlerta = useRef<AlertaHandles | undefined>(undefined);
+  const refAlert = useRef<AlertaHandles | undefined>(undefined);
 
-  const manipularEnvio = useCallback(async (marcaASerAlterada) => {
-    if (marcaASerAlterada && marca) {
-      if (!(marcaASerAlterada.descricao === marca.descricao) || !(marca.logomarca && marcaASerAlterada.logomarca === marca.logomarca[0])) {
-        marcaASerAlterada._id = marca._id
-        marcaASerAlterada.uriLogo = marca.uriLogo;
-        const resposta = await multipartPut("/marca", marcaASerAlterada);
+  const manipularEnvio = useCallback(async (informacoesDaMarca) => {
+    if (informacoesDaMarca && marca) {
+      if (!(informacoesDaMarca.descricao === marca.descricao) || !(marca.logomarca && informacoesDaMarca.logomarca === marca.logomarca[0])) {
+        informacoesDaMarca._id = marca._id
+        informacoesDaMarca.uriLogo = marca.uriLogo;
+        const resposta = await multipartPut("/marca", informacoesDaMarca);
         if (resposta) {
           history.goBack();
         }
       }
       else {
-        if (refAlerta && refAlerta.current) {
-          refAlerta.current.setTipo("warning");
-          refAlerta.current.setMensagem(<span></span>);
-          refAlerta.current.setAberto(true);
+        if (refAlert && refAlert.current) {
+          refAlert.current.setTipo("warning");
+          refAlert.current.setMensagem(<span></span>);
+          refAlert.current.setAberto(true);
         }
       }
     }
@@ -61,7 +61,7 @@ const DialogAlterarMarca: React.FC = () => {
   }, [popular])
 
   return (
-    <Dialogo open  maxWidth="xs" fullWidth title="Alterar marca">
+    <Dialog open maxWidth="xs" fullWidth title="Alterar marca">
       <Form initialData={marca} onSubmit={manipularEnvio}>
         <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
         <DragAndDrop name="logomarca" required />
@@ -69,8 +69,8 @@ const DialogAlterarMarca: React.FC = () => {
           <Button type="submit">Salvar</Button>
         </DialogActions>
       </Form>
-      <Alerta ref={refAlerta} />
-    </Dialogo>
+      <Alerta ref={refAlert} />
+    </Dialog>
   )
 }
 

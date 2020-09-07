@@ -11,6 +11,7 @@ interface ListagemMarcasProps{
 const useStyles = makeStyles((theme) => ({
   listagem: {
     minHeight: "50vh",
+    overflow: "hidden"
   },
   imgLogomarca: {
     backgroundSize: "100%",
@@ -32,7 +33,7 @@ const ListagemMarcas: React.FC<ListagemMarcasProps> = ({ marcas }) =>{
   const imagensUrl = process.env.REACT_APP_IMAGENS_URL as string;
 
   return (
-    <Box mb={2}>
+    <Box mb={3}>
       <Grid container justify="space-between">
         <Grid item xs={6}>
           <Typography>Descrição</Typography>
@@ -45,7 +46,7 @@ const ListagemMarcas: React.FC<ListagemMarcasProps> = ({ marcas }) =>{
         </Grid>
       </Grid>
       {
-        !!marcas.length && marcas.map((marca, index) => (
+        marcas?.map((marca, index) => (
           <Grid container justify="space-between" alignItems="center" className={classes.linhaTabela} key={index} >
             <Grid item xs={6}>
               <Typography>{marca.descricao}</Typography>

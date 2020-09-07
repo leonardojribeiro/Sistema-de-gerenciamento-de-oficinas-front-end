@@ -1,4 +1,4 @@
-import React, { useState, useCallback, memo, useEffect, useContext, useMemo } from 'react';
+import React, { useState, useCallback, memo, useEffect, useContext, useRef } from 'react';
 import { Box, } from '@material-ui/core';
 import Dialogo from '../../../componentes/Dialog';
 import { useLocation, Link, Route, Switch } from 'react-router-dom';
@@ -9,19 +9,27 @@ import ListagemMarcas from '../ListagemMarcas';
 import BotaoInserir from '../../../componentes/BotaoInserir';
 import FormularioConsulta from '../../../componentes/FormularioConsulta';
 import Marca from '../../../Types/Marca';
+import { Pagination } from '@material-ui/lab';
+import FormConsultaMarca from '../FormConsultaMarca';
 
 
 const DialogMarcas: React.FC = () => {
   const [marcas, setMarcas] = useState<Marca[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [pages, setPages] = useState<number>(0);
   const { get } = useContext(ApiContext);
   const { pathname } = useLocation();
+  const consultaValues = useRef<any>();
 
   const listar = useCallback(async () => {
-    const marcas = await get(`/marca`);
-    if (marcas) {
-      setMarcas(marcas as Marca[]);
+    if (!(Boolean(consultaValues.current))) {
+      const resposta = await get(`/marca?pagina=${page}&limite=100`) as any;;
+      if (resposta) {
+        setMarcas(resposta.marcas as Marca[]);
+        setPages(Math.ceil(Number(resposta.total) / 100));
+      }
     }
-  }, [get,]);
+  }, [get, page]);
 
   useEffect(() => {
     if (pathname === "/marcas") {
@@ -29,33 +37,40 @@ const DialogMarcas: React.FC = () => {
     }
   }, [listar, pathname]);
 
-  const manipularBusca = useCallback(async ({ consulta }) => {
-    const marcas = await get(`/marca/descricao?descricao=${consulta}`);
-    if (marcas) {
-      setMarcas(marcas as Marca[]);
-    }
-  }, [get,]);
+  const handleSearch = useCallback(async (consulta, pagina = page) => {
+    consultaValues.current = consulta;
+    const resposta = await get(`/marca/consulta?descricao=${consulta}&limite=100&pagina=${pagina}`) as any;
 
-  const conteudo = useMemo(() => (
-    <>
-      <FormularioConsulta onSubmit={manipularBusca} />
-      <Box display="flex" justifyContent="center" pt={2}>Listagem</Box>
-      <ListagemMarcas marcas={marcas} />
-      <Link to="marcas/inserirmarca" >
-        <BotaoInserir titulo="Inserir marca" />
-      </Link>
-    </>
-  ), [manipularBusca, marcas])
+    if (resposta) {
+      setMarcas(resposta.marcas as Marca[]);
+      setPages(Math.ceil(Number(resposta.total) / 100));
+    }
+  }, [get, page]);
+
+  const handlePageChange = useCallback((event, value: number) => {
+    setPage(value);
+    if (consultaValues.current) {
+      handleSearch(consultaValues.current, value)
+    }
+  }, [handleSearch]);
 
   return (
     <Dialogo open fullWidth maxWidth="xs" title="Marcas">
-      {conteudo}
+      <FormConsultaMarca onSubmit={handleSearch} />
+      <Box display="flex" justifyContent="center" pt={2}>Listagem</Box>
+      <ListagemMarcas marcas={marcas} />
+      <Box display="flex" justifyContent="center">
+        <Pagination count={pages} onChange={handlePageChange} page={page} />
+      </Box>
+      <Link to="marcas/inserirmarca" >
+        <BotaoInserir titulo="Inserir marca" />
+      </Link>
       <Switch>
         <Route path="/marcas/inserirmarca">
-          <DialogoInserirMarca/>
+          <DialogoInserirMarca />
         </Route>
         <Route path="/marcas/alterarmarca">
-          <DialogAlterarMarca/>
+          <DialogAlterarMarca />
         </Route>
       </Switch>
     </Dialogo>
