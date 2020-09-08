@@ -56,10 +56,10 @@ const DialogoPecas: React.FC = () => {
       <FormConsultaPeca onSubmit={manipularBusca} />
       <Box display="flex" justifyContent="center" pt={2}>Listagem</Box>
       <ListagemPeca pecas={pecas} />
-      <BotaoInserir titulo="Inserir peça" linkTo="/pecas/inserirpeca" />
       <Box display="flex" justifyContent="center">
         <Pagination count={pages} onChange={handlePageChange} page={page} />
       </Box>
+      <BotaoInserir titulo="Inserir peça" linkTo="/pecas/inserirpeca" />
       <Switch>
         <Route path="/pecas/inserirpeca" component={DialogoInserirPeca} />
         <Route path="/pecas/alterarpeca" component={DialogoAlterarPeca} />

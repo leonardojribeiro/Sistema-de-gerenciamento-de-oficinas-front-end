@@ -10,13 +10,15 @@ function Teste() {
   const { post, get } = useContext(ApiContext);
 
   const preencher = useCallback(async () => {
-    const marcas = await get('marca') as Marca[];
-    setMarcas(marcas)
-    for (let i = 0; i < 10000; i++) {
-      await post('peca',{
+    const resposta = await get('marca?limite=100&pagina=1') as any;
+    setMarcas(resposta.marcas as Marca[])
+    for (let i = 0; i < 1000; i++) {
+      //console.log({
+      await post('marca',{
         descricao: Math.random().toString(36).substr(2, 5),
-        marca: marcas[i % marcas.length]._id
+        //marca: resposta.marcas[i % resposta.marcas.length]._id
       })
+     // })
     }
 
   }, [get, post]);

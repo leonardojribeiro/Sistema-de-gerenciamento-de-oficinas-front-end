@@ -1,8 +1,15 @@
 import React from 'react';
 
-// import { Container } from './styles';
+export interface ConsultaValues {
+  marca: String;
+  consulta: String;
+}
 
-const FormConsultaModelo: React.FC = () => {
+interface FormConsultaProps {
+  onSubmit: (data: ConsultaValues) => void;
+}
+
+const FormConsultaModelo: React.FC<FormConsultaProps> = () => {
   return <div />;
 }
 

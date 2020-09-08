@@ -44,7 +44,7 @@ const ListagemModelos: React.FC<ListagemModelosProps> = ({ modelos }) => {
         </Grid>
       </Grid>
       {
-        modelos.map((modelo, index) => (
+        modelos?.map((modelo, index) => (
           <Grid container alignItems="center" justify="space-between" className={classes.linhaTabela} key={index}>
             <Grid item xs={4}>
               <Typography>
