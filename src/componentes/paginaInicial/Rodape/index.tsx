@@ -1,9 +1,9 @@
 import React from 'react';
-import { Box, Grid, Typography, makeStyles } from '@material-ui/core';
+import { Box, Grid, Typography, makeStyles, } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   rodape: {
-    backgroundColor: theme.palette.primary.main
+    backgroundColor: theme.palette.background.paper,
   }
 }));
 

@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("xs")]: {
       padding: "8px"
     },
+    height: "100%"
   },
 }));
 
@@ -42,7 +43,7 @@ const Dialog: React.FC<DialogProps> = ({ open, title, children, ...props }) => {
   }, [history]);
 
   return (
-    <DialogMUI fullScreen={fullScreen} open={open} disablePortal style={{ height: "100%" }} onClose={manipularFechamento} disableBackdropClick {...props}>
+    <DialogMUI fullScreen={fullScreen} open={open} onClose={manipularFechamento} disableBackdropClick {...props}>
       <DialogTitle>
         <Typography id="dialogo-titulo">{title}</Typography>
         <IconButton aria-label="Fechar" className={classes.botaofechar} onClick={manipularFechamento}>

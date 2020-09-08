@@ -8,9 +8,10 @@ interface ComboBoxMarcaProps {
   onChange?: (marca: Marca | null) => void;
   label: string;
   name: string;
+  required?: boolean
 }
 
-const ComboBoxMarca: React.FC<ComboBoxMarcaProps> = ({ onChange, label, name }) => {
+const ComboBoxMarca: React.FC<ComboBoxMarcaProps> = ({ onChange, label, name, required }) => {
   const { get } = useContext(ApiContext);
   const [progresso, setProgresso] = useState(false);
 
@@ -45,6 +46,7 @@ const ComboBoxMarca: React.FC<ComboBoxMarcaProps> = ({ onChange, label, name }) 
       getDefaultValue={getDefaultValue}
       getDefaultValueInOptions={getDefaultValueInOptions}
       name={name}
+      label={label}
       path="current._id"
       fullWidth
       options={[]}
@@ -54,23 +56,9 @@ const ComboBoxMarca: React.FC<ComboBoxMarcaProps> = ({ onChange, label, name }) 
       openText="Abrir"
       openOnFocus
       loading={progresso}
+      required={required}
       getOptionLabel={(option) => option.descricao}
       getOptionSelected={(option, value) => option.descricao === value.descricao}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label={label}
-          InputProps={{
-            ...params.InputProps,
-            endAdornment: (
-              <React.Fragment>
-                {progresso ? <CircularProgress color="inherit" size={20} /> : null}
-                {params.InputProps.endAdornment}
-              </React.Fragment>
-            ),
-          }}
-        />
-      )}
     />
   );
 }

@@ -8,8 +8,6 @@ import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import DialogInserirMarca from '../../Marca/DialogInserirMarca';
 import ComboBoxMarca from '../../../componentes/ComboBox/ComboBoxMarca';
 
-
-
 const DialogoInserirModelo: React.FC = () => {
   const { post } = useContext(ApiContext);
   const history = useHistory();
@@ -29,7 +27,7 @@ const DialogoInserirModelo: React.FC = () => {
       <Form onSubmit={manipularEnvio}>
         <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-          <ComboBoxMarca name="marca" label="Marca" />
+          <ComboBoxMarca name="marca" label="Marca" required/>
           <Link to={`${path}/inserirmarca`}>
             <Tooltip title="Inserir marca">
               <IconButton>

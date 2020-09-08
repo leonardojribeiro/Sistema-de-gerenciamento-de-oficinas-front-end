@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
-import { ThemeProvider, createMuiTheme, responsiveFontSizes, Paper } from "@material-ui/core";
+import { ThemeProvider, createMuiTheme, responsiveFontSizes, Paper, useMediaQuery } from "@material-ui/core";
 
-interface ThemeContextValues{
+interface ThemeContextValues {
   alterarTema: () => void,
   alterarTamanhoFonte: (novoTamanho: number) => void,
   temaEscuro: boolean,
@@ -10,9 +10,17 @@ interface ThemeContextValues{
 
 const TemaContexto = createContext<ThemeContextValues>({} as ThemeContextValues);
 
-export const TemaProvider: React.FC = ({children}) => {
-  const [temaEscuro, setTemaEscuro] = useState<boolean>(false);
+export const TemaProvider: React.FC = ({ children }) => {
+  const prefersDarkTheme = useMediaQuery("(prefers-color-scheme: dark)");
+  const [temaEscuro, setTemaEscuro] = useState<boolean>(prefersDarkTheme);
   const [tamanhoFonte, setTamanhoFonte] = useState<number>(13);
+
+  useEffect(() => {
+    const temaEscuro = localStorage.getItem("temaEscuro");
+    if (!temaEscuro) {
+      setTemaEscuro(prefersDarkTheme);
+    }
+  }, [prefersDarkTheme]);
 
   const alterarTema = () => {
     if (temaEscuro) {

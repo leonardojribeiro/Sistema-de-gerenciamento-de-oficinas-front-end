@@ -1,6 +1,5 @@
 import React from 'react';
 import { Container, Box, Grid, Typography, Button, AppBar, Toolbar } from '@material-ui/core';
-
 import { Link } from 'react-router-dom';
 import Slide from '../Slide';
 import ItemFuncionalidade from './itemFuncionalidade/ItemFuncionalidade';
@@ -21,7 +20,7 @@ const PaginaInicial: React.FC = ({ ...props }) => {
 
   return (
     <>
-      <AppBar color="primary" position="relative" >
+      <AppBar position="relative" >
         <Toolbar className="flex justify-between">
           <LinkScroll to="item" smooth="easeInQuad" duration={500}>
             Funcionalidades
@@ -29,7 +28,7 @@ const PaginaInicial: React.FC = ({ ...props }) => {
           <LinkScroll to="cadastro" smooth="easeInQuad" duration={500}>
             Cadastro
             </LinkScroll>
-          <Button component={Link} to={"/login"}>Login</Button>
+          <Button color="inherit" component={Link} to={"/login"}>Login</Button>
         </Toolbar>
       </AppBar>
 
@@ -40,7 +39,7 @@ const PaginaInicial: React.FC = ({ ...props }) => {
         <Box className="h-total" display="flex" alignItems="center" >
           <Container maxWidth="md">
             <Box display="flex" justifyContent="center" p={2} pb={6}>
-              <Typography variant="h4">Funcionalidades</Typography>
+              <Typography variant="h1">Funcionalidades</Typography>
             </Box>
             <Grid container spacing={4} justify="center">
               {

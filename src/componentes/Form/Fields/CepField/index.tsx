@@ -35,7 +35,6 @@ const CepField: React.FC<CepFieldProps> = ({ name, ...props }) => {
     }
     else {
       throw new Error("");
-
     }
   }, [props.required]);
 

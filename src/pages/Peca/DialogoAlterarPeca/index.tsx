@@ -59,7 +59,7 @@ const DialogoAlterarModelo: React.FC = () => {
     <Form onSubmit={manipularEnvio} initialData={peca}>
       <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
       <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-        <ComboBoxMarca label="Marca" name="marca" />
+        <ComboBoxMarca label="Marca" name="marca" required/>
         <Link to={`${path}/inserirmarca`}>
           <Tooltip title="Inserir marca">
             <IconButton>
