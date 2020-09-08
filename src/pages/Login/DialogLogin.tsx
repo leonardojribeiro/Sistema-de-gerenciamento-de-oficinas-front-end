@@ -44,14 +44,14 @@ const DialogLogin: React.FC = () => {
       <Form clearOnSubmit onSubmit={handleLogin}>
         <Box p={2}>
           <CampoDeTexto
-            autoCapitalize="off"
-            autoCorrect="none"
             autoFocus
             name="nomeUsuario"
             fullWidth
             required
+            type="email"
             label="Usuário"
-            autoComplete="username"
+            autoCapitalize="off"
+            autoComplete="off"
           />
         </Box>
         <Box p={2}>
