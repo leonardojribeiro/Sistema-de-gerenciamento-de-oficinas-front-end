@@ -9,7 +9,6 @@ import ListagemModelos from '../ListagemModelos';
 import BotaoInserir from '../../../componentes/BotaoInserir';
 import Modelo from '../../../Types/Modelo';
 import { Pagination } from '@material-ui/lab';
-import FormConsultaModelo from '../FormConsultaModelo';
 import FormConsultaPeca, { ConsultaValues } from '../../Peca/FormConsultaPeca';
 
 const DialogoModelos: React.FC = () => {
@@ -38,7 +37,7 @@ const DialogoModelos: React.FC = () => {
 
   const manipularBusca = useCallback(async (dados, pagina = page) => {
     consultaValues.current = dados;
-    const resposta = await get(`/modelo/consulta?consulta=${dados.consulta}&marca=${dados.marca}&limite=100&pagina=${pagina}`) as any;
+    const resposta = await get(`/modelo/consulta?descricao=${dados.consulta}&marca=${dados.marca}&limite=100&pagina=${pagina}`) as any;
     if (resposta) {
       setModelos(resposta.modelos as Modelo[]);
       setPages(Math.ceil(Number(resposta.total) / 100));

@@ -28,25 +28,27 @@ const ClienteItem: React.FC<ClienteItemProps> = ({ cliente }) => {
     <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />} className={classes.summary}>
         <Grid container justify="space-between" alignItems="center" >
-          <Grid item sm={5} md={5}>
+          <Grid item sm={6} md={4}>
             <Box display="flex" alignItems="center">
               <PersonIcon />
               <Typography > {cliente.nome}</Typography>
             </Box>
           </Grid>
           <Hidden xsDown>
-            <Grid item>
+            <Grid item sm={5} md={3}>
               <Box display="flex" alignItems="center">
                 <PhoneAndroidIcon />
                 <Typography> {formato.formatarTelefone(cliente.telefoneCelular)}</Typography>
               </Box>
             </Grid>
-            <Grid item>
-              <Tooltip title={`Alterar o cliente ${cliente.nome}`}>
-                <IconButton component={Link} to={`/clientes/alterarcliente?id=${cliente._id}`}>
-                  <EditIcon />
-                </IconButton>
-              </Tooltip>
+            <Grid item sm={1}>
+              <Box display="flex" justifyContent="flex-end" alignItems="center">
+                <Tooltip title={`Alterar o cliente ${cliente.nome}`}>
+                  <IconButton component={Link} to={`/clientes/alterarcliente?id=${cliente._id}`}>
+                    <EditIcon />
+                  </IconButton>
+                </Tooltip>
+              </Box>
             </Grid>
           </Hidden>
         </Grid>

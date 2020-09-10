@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useEffect, memo, useState, } from 'react';
 import { Autocomplete, AutocompleteProps, AutocompleteChangeDetails, AutocompleteChangeReason, AutocompleteInputChangeReason, } from '@material-ui/lab';
 import useField from '../../Hooks/useField';
 import dot from 'dot-object';
-import { TextField, CircularProgress } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 
 interface ComboBoxProps<T> extends Omit<AutocompleteProps<T, false, false, false>, 'renderInput'> {
   name: string;
@@ -21,8 +21,9 @@ const ComboBox: React.FC<ComboBoxProps<any>> =
     const [options, setOptions] = useState<any>(defaultOptions);
     const [value, setValue] = useState<any>(null);
     const [valid, setValid] = useState(true);
+    const [loading, setLoading] = useState(false);
     const ref = useRef<any>();
-    const valueSelected = useRef<any>({});
+    const valueSelected = useRef<any>(null);
     const { fieldName, registerField, defaultValue } = useField(name);
     const filled = useRef(false);
 
@@ -31,25 +32,20 @@ const ComboBox: React.FC<ComboBoxProps<any>> =
     }, [path]);
 
     const validate = useCallback(() => {
-      if (valueSelected.current) {
-        if (!required) {
-          return true;
-        }
-        if (required && !dot.pick(path, valueSelected)) {
-          setValid(true);
-          return (true);
-        }
-        else {
-          if (ref) {
-            console.log(ref.current)
-            ref.current.focus();
-          }
-          setValid(false);
-          return (false);
-        }
+      if (!required) {
+        return true;
+      }
+      if (required && dot.pick(path, valueSelected)) {
+        setValid(true);
+        return (true);
       }
       else {
-        throw new Error("");
+        if (ref) {
+          console.log(ref.current)
+          ref.current.focus();
+        }
+        setValid(false);
+        return (false);
       }
     }, [path, required])
 
@@ -64,7 +60,9 @@ const ComboBox: React.FC<ComboBoxProps<any>> =
 
     useEffect(() => {
       const get = async () => {
+        setLoading(true);
         const options = await getOptions();
+        setLoading(false);
         setOptions(options)
       }
       get();
@@ -86,7 +84,9 @@ const ComboBox: React.FC<ComboBoxProps<any>> =
           }
         }
         if (!value) {
+          setLoading(true);
           value = await getDefaultValue(defaultValue);
+          setLoading(false)
           if (value) {
             setOptions((options: any[]) => [...options, value]);
             setValue(value);
@@ -109,9 +109,11 @@ const ComboBox: React.FC<ComboBoxProps<any>> =
     }, [onChange]);
 
     const handleInputChange = useCallback(async (event: React.ChangeEvent<{}>, value: string, reason: AutocompleteInputChangeReason) => {
-      if (!Boolean(valueSelected.current) && value.length > 1 && getMoreOptions) {
+      if (reason === "input" && value.length > 1 && getMoreOptions) {
+        setLoading(true);
         const options = await getMoreOptions(value);
         setOptions(options)
+        setLoading(false);
       }
       if (onInputChange) {
         onInputChange(event, value, reason,);
@@ -123,6 +125,7 @@ const ComboBox: React.FC<ComboBoxProps<any>> =
         fullWidth
         onChange={handleChange}
         onInputChange={handleInputChange}
+        loading={loading}
         options={options}
         value={value}
         renderInput={(params) => (
@@ -133,13 +136,7 @@ const ComboBox: React.FC<ComboBoxProps<any>> =
             helperText={!valid && "Campo obrigatório"}
             inputRef={ref}
             InputProps={{
-              ...params.InputProps,
-              endAdornment: (
-                <React.Fragment>
-                  {options.length === 0 ? <CircularProgress color="inherit" size={20} /> : null}
-                  {params.InputProps.endAdornment}
-                </React.Fragment>
-              ),
+              ...params.InputProps
             }}
           />
         )}

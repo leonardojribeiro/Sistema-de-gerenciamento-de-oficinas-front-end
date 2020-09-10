@@ -1,37 +1,40 @@
 import React, { useContext, useCallback, memo } from 'react';
-import Marca from '../../../Types/Marca';
 import ApiContext from '../../../contexts/ApiContext';
 import ComboBox from '../../Form/Fields/ComboBox';
+import Modelo from '../../../Types/Modelo';
 
-interface ComboBoxMarcaProps {
-  onChange?: (marca: Marca | null) => void;
+interface ComboBoxModeloProps {
+  onChange?: (marca: Modelo | null) => void;
   label: string;
   name: string;
   required?: boolean
 }
 
-const ComboBoxMarca: React.FC<ComboBoxMarcaProps> = ({ onChange, label, name, required }) => {
+const ComboBoxModelo: React.FC<ComboBoxModeloProps> = ({ onChange, label, name, required }) => {
   const { get } = useContext(ApiContext);
 
   const getOptions = useCallback(async () => {
-    const resposta = await get(`/marca/?pagina=1&limite=100`, true) as any;
-    return resposta.marcas as Marca[];
+    const resposta = await get(`/modelo/?pagina=1&limite=100`, true) as any;
+    return resposta.modelos as Modelo[];
   }, [get]);
 
   const getMoreOptions = useCallback(async (consulta) => {
-    const resposta = await get(`/marca/consulta?descricao=${consulta}&pagina=1&limite=100`, true) as any;
-    return resposta.marcas as Marca[];
+    console.log(consulta)
+    const resposta = await get(`/modelo/consulta?descricao=${consulta}&pagina=1&limite=100`, true) as any;
+    if (resposta) {
+      return resposta.modelos as Modelo[];
+    }
+    return []
   }, [get]);
 
   const getDefaultValue = useCallback(async (value) => {
-    const resposta = await get(`/marca/id?_id=${value}`,) as any;
+    const resposta = await get(`/modelo/id?_id=${value}`,) as any;
     return resposta ? resposta : null;
   }, [get]);
 
   const getDefaultValueInOptions = useCallback((value, option) => {
     return value === option._id;
   }, []);
-
 
   return (
     <ComboBox
@@ -40,6 +43,7 @@ const ComboBoxMarca: React.FC<ComboBoxMarcaProps> = ({ onChange, label, name, re
       getDefaultValue={getDefaultValue}
       getDefaultValueInOptions={getDefaultValueInOptions}
       name={name}
+      disablePortal
       label={label}
       path="current._id"
       fullWidth
@@ -56,4 +60,4 @@ const ComboBoxMarca: React.FC<ComboBoxMarcaProps> = ({ onChange, label, name, re
   );
 }
 
-export default memo(ComboBoxMarca);
+export default memo(ComboBoxModelo);

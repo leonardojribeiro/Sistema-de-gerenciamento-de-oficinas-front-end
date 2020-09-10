@@ -5,19 +5,18 @@ import { useHistory, useRouteMatch, useLocation, Link, Switch, Route } from 'rea
 import { DialogActions, Button, MenuItem, Box, Tooltip, IconButton, } from '@material-ui/core';
 import { useState } from 'react';
 import { Form, CampoDeTexto, DateField, CampoDeSelecao } from '../../../componentes/Form';
-import Modelo from '../../../Types/Modelo';
 import Cliente from '../../../Types/Cliente';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import DialogoInserirModelo from '../../Modelo/DialogoInserirModelo';
 import DialogoInserirCliente from '../../Cliente/DialogoInserirCliente';
+import ComboBoxModelo from '../../../componentes/ComboBox/ComboBoxModelo';
 
 
 const DialogoInserirVeiculo: React.FC = () => {
   const { get, post, } = useContext(ApiContext);
   const history = useHistory();
   const [clientes, setClientes] = useState<Cliente[]>([]);
-  const [modelos, setModelos] = useState<Modelo[]>([]);
   const { path, url } = useRouteMatch();
   const { pathname } = useLocation();
 
@@ -37,19 +36,11 @@ const DialogoInserirVeiculo: React.FC = () => {
     }
   }, [get]);
 
-  const listarModelos = useCallback(async () => {
-    const modelos = await get("/modelo") as Modelo[];
-    if (modelos) {
-      setModelos(modelos);
-    }
-  }, [get,]);
-
   useEffect(() => {
     if (pathname.endsWith("inserirveiculo")) {
       listarClientes();
-      listarModelos();
     }
-  }, [listarClientes, listarModelos, pathname]);
+  }, [listarClientes, pathname]);
 
   return (
     <Dialogo open title="Inserir veículo" maxWidth="sm" fullWidth>
@@ -58,11 +49,7 @@ const DialogoInserirVeiculo: React.FC = () => {
         <DateField name="anoFabricacao" label="Ano de fabricação" fullWidth required views={["year"]} format="yyyy" />
         <DateField name="anoModelo" label="Ano de modelo" fullWidth required views={["year"]} format="yyyy" />
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-          <CampoDeSelecao name="modelo" label="Modelo" required fullWidth>
-            {
-              modelos.map((modelo, indice) => <MenuItem key={indice} value={modelo._id}>{modelo.descricao}</MenuItem>)
-            }
-          </CampoDeSelecao>
+          <ComboBoxModelo name="modelo" label="Modelo" required />
           <Link to={`${path}/inserirmodelo`}>
             <Tooltip title="Inserir modelo">
               <IconButton>

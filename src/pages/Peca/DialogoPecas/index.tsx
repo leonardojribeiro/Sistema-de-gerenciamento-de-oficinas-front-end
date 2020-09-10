@@ -37,7 +37,7 @@ const DialogoPecas: React.FC = () => {
 
   const manipularBusca = useCallback(async (dados, pagina = page) => {
     consultaValues.current = dados;
-    const resposta = await get(`/peca/consulta?consulta=${dados.consulta}&marca=${dados.marca}&limite=100&pagina=${pagina}`) as any;
+    const resposta = await get(`/peca/consulta?descricao=${dados.consulta}&marca=${dados.marca}&limite=100&pagina=${pagina}`) as any;
     if (resposta) {
       setPecas(resposta.pecas as Peca[]);
       setPages(Math.ceil(Number( resposta.total) / 100));
