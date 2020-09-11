@@ -76,6 +76,8 @@ const CampoCpfCnpj: React.FC<CpfCnpjFieldProps> = ({ name, onlyCpf, ...props }) 
     }
   }, [validate, valido])
 
+  console.log(value)
+
   return (
     <TextField
       onChange={manipularAlteracao}

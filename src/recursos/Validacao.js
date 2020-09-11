@@ -23,7 +23,7 @@ function validaCpf(cpf) {
     peso--;
   }
   resto = 11 - (soma % 11);
-  dv1 = (resto === 10 || resto === 10) ? 0 : resto;
+  dv1 = (resto === 10 || resto === 11) ? 0 : resto;
   //valida o segundo digito
   soma = 0;
   peso = 11;
@@ -79,7 +79,7 @@ function validaCnpj(cnpj) {
 }
 
 function validarCpfCnpj(cpfCnpj) {
-  if(!cpfCnpj){
+  if (!cpfCnpj) {
     return false;
   }
   let regex = new RegExp(/[^\d]+/g); //somente números
@@ -94,33 +94,33 @@ function validarCpfCnpj(cpfCnpj) {
 };
 
 
-function validarNome(nome){
+function validarNome(nome) {
   return nome.length > 2;
 }
 
-function validarEmail(email){
+function validarEmail(email) {
   let regex = new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
   return regex.test(email);
 }
 
-function validarTelefone(telefone){
-  return telefone.length === 14 || telefone.length === 15 
+function validarTelefone(telefone) {
+  return telefone.length === 14 || telefone.length === 15
 }
 
-function validarTexto(texto){
+function validarTexto(texto) {
   return texto.length > 0;
 }
 
-function validarCep(cep){
+function validarCep(cep) {
   return cep.length === 9;
 }
 
-function validarNumero(numero){
+function validarNumero(numero) {
   return numero !== "";
 }
 
-function validarStringData(data){
-  if(/([0-9]{4})-([0-9]{2})-([0-9]{2})/.test(data)){
+function validarStringData(data) {
+  if (/([0-9]{4})-([0-9]{2})-([0-9]{2})/.test(data)) {
     return !!new Date(data).getTime();
   }
   return false;
