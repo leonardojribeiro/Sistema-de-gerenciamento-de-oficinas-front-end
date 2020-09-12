@@ -62,7 +62,6 @@ const RadioField: React.FC<RadioFieldProps> = ({ name, required, label, children
   }, [defaultValue]);
 
   const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>, value: string) => {
-    console.log(value)
     setValue(value);
     ref.current.value = value;
     if (!valid) {

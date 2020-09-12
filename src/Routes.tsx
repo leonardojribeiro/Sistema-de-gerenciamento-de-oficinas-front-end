@@ -1,5 +1,5 @@
 import React, { memo, useContext, useCallback, useEffect } from 'react';
-import { Switch, Route, Redirect, } from 'react-router-dom';
+import { Switch, Route, } from 'react-router-dom';
 import PaginaInicial from './componentes/paginaInicial/PaginaInicial';
 import AuthContext from './contexts/AuthContext';
 import PaginaInicialOficina from './componentes/Home/Home';
@@ -24,7 +24,7 @@ import Teste from './Teste';
 const Routes: React.FC = () => {
   const authContext = useContext(AuthContext);
   const apiContext = useContext(ApiContext);
-  const { logado  } = useAuth();
+  const { logado } = useAuth();
   const efetuarLoginPorToken = useCallback(async () => {
     if (apiContext) {
       const resposta = await apiContext.get(
@@ -53,14 +53,16 @@ const Routes: React.FC = () => {
 
   return (
     <>
-      <Switch>
-        <Route path="/login" exact>
-          <DialogoLogin />
-        </Route>
-      </Switch>
       {
         !logado ? (
-          <PaginaInicial />
+          <>
+            <PaginaInicial />
+            <Switch>
+              <Route path="/login" exact>
+                <DialogoLogin />
+              </Route>
+            </Switch>
+          </>
         )
           : (
             <>
@@ -70,20 +72,18 @@ const Routes: React.FC = () => {
                 <Route path="/modelos" component={DialogoModelos} />
                 <Route path="/pecas" component={DialogoPecas} />
                 <Route path="/clientes" component={DialogoClientes} />
-                <Route path="/veiculos" component={DialogoVeiculos}/>
-                <Route path="/especialidades" component={DialogoEspecialidades}/>
-                <Route path="/fornecedores" component={DialogoFornecedores}/>
-                <Route path="/funcionarios" component={DialogoFuncionarios}/>
-                <Route path="/servicos" component={DialogServicos}/>
-                <Route path="/ordensdeservico" component={DialogOrdensDeServico}/>
-                <Route path="/opcoes" component={DialogoOpcoes}/>
-                <Route path="/login" exact>
-                  <Redirect to="/" />
+                <Route path="/veiculos" component={DialogoVeiculos} />
+                <Route path="/especialidades" component={DialogoEspecialidades} />
+                <Route path="/fornecedores" component={DialogoFornecedores} />
+                <Route path="/funcionarios" component={DialogoFuncionarios} />
+                <Route path="/servicos" component={DialogServicos} />
+                <Route path="/ordensdeservico" component={DialogOrdensDeServico} />
+                <Route path="/opcoes" component={DialogoOpcoes} />
+
+
+                <Route path="/popular" exact component={Teste}>
                 </Route>
 
-                <Route path="/popular" exact component={Teste}>  
-                </Route>
-                
               </Switch>
             </>
           )
@@ -94,31 +94,3 @@ const Routes: React.FC = () => {
 }
 
 export default memo(Routes);
-/*
-<Route path="/modelos">
-                  <DialogoModelos />
-                </Route>
-
-                <Route path="/pecas">
-                  <DialogoPecas />
-                </Route>
-
-                <Route path="/clientes">
-                  <DialogoClientes />
-                </Route>
-
-                <Route path="/veiculos">
-                  <DialogoVeiculos />
-                </Route>
-
-                <Route path="/especialidades">
-                  <DialogoEspecialidades />
-                </Route>
-
-                <Route path="/fornecedores">
-                  <DialogoFornecedores />
-                </Route>
-
-                <Route path="/funcionarios">
-                  <DialogoFuncionarios />
-                </Route>*/

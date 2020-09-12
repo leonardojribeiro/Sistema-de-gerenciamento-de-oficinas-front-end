@@ -18,7 +18,8 @@ interface ClienteItemProps {
 
 const useStyles = makeStyles((theme) => ({
   summary: {
-    background: theme.palette.background.default
+    background: theme.palette.background.default,
+    boxShadow: 'none'
   }
 }))
 

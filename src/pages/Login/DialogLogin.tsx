@@ -24,10 +24,9 @@ const DialogLogin: React.FC = () => {
     if (resposta) {
       setUsuario(resposta);
       localStorage.setItem("tokenUsuario", resposta.token as string);
-      return true;
+      history.goBack();
     }
-    return false;
-  }, [post, setUsuario]);
+  }, [history, post, setUsuario]);
 
   function handleLogin(usuario: object) {
     if (usuario) {

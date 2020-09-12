@@ -1,15 +1,16 @@
 import React, { useCallback, useEffect, useState, useContext, useMemo, memo, useRef } from 'react';
 import Dialogo from '../../../componentes/Dialog';
-import { Box, } from '@material-ui/core';
+import { Box, FormControlLabel, Grid, Radio, } from '@material-ui/core';
 import ApiContext from '../../../contexts/ApiContext';
 import { useLocation, Switch, Route } from 'react-router-dom';
 import DialogoInserirCliente from '../DialogoInserirCliente';
 import ListagemClientes from '../ListagemClientes';
 import DialogoAlterarCliente from '../DialogoAlterarCliente';
 import BotaoInserir from '../../../componentes/BotaoInserir';
-import FormularioConsulta from '../../../componentes/FormularioConsulta';
 import Cliente from '../../../Types/Cliente';
 import { Pagination } from '@material-ui/lab';
+import { CampoDeRadio, Form } from '../../../componentes/Form';
+import SearchField from '../../../componentes/Form/Fields/SearchField';
 
 const DialogoClientes: React.FC = () => {
   const [clientes, setClientes] = useState<Cliente[]>([]);
@@ -23,7 +24,7 @@ const DialogoClientes: React.FC = () => {
     const resposta = await get(`cliente?pagina=${page}&limite=2`) as any;
     if (resposta) {
       setClientes(resposta.clientes as Cliente[]);
-      setPages(Math.ceil(Number( resposta.total) / 2));
+      setPages(Math.ceil(Number(resposta.total) / 2));
     }
   }, [get, page]);
 
@@ -35,10 +36,10 @@ const DialogoClientes: React.FC = () => {
 
   const manipularBusca = useCallback(async (dados, pagina = page) => {
     consultaValues.current = dados;
-    const resposta = await get(`/peca/consulta?descricao=${dados.consulta}&marca=${dados.marca}&limite=100&pagina=${pagina}`) as any;
+    const resposta = await get(`/cliente/consulta?${dados.filtro}=${dados.consulta}&limite=100&pagina=${pagina}`) as any;
     if (resposta) {
       setClientes(resposta.clientes as Cliente[]);
-      setPages(Math.ceil(Number( resposta.total) / 100));
+      setPages(Math.ceil(Number(resposta.total) / 100));
     }
   }, [get, page]);
 
@@ -49,9 +50,24 @@ const DialogoClientes: React.FC = () => {
     }
   }, [manipularBusca]);
 
+  const handleSubmit = useCallback((dados) => {
+    manipularBusca(dados);
+  }, [manipularBusca]);
+
   const conteudo = useMemo(() => (
     <>
-      <FormularioConsulta onSubmit={manipularBusca} />
+      <Form onSubmit={handleSubmit} initialData={{ filtro: "nome" }}>
+        <Box display="flex">
+          <SearchField name="consulta" label="Consulta" fullWidth />
+
+          <CampoDeRadio required name="filtro" label="Fitrar por">
+            <FormControlLabel value="nome" label="Nome" control={<Radio color="primary" />} />
+            <FormControlLabel value="cpfCnpj" label="CPF/CNPJ" control={<Radio color="primary" />} />
+            <FormControlLabel value="email" label="E-mail" control={<Radio color="primary" />} />
+            <FormControlLabel value="telefone" label="Telefone" control={<Radio color="primary" />} />
+          </CampoDeRadio>
+        </Box>
+      </Form>
       <Box display="flex" justifyContent="center" pt={2}>Listagem</Box>
       <ListagemClientes clientes={clientes} />
       <Box display="flex" justifyContent="center">
@@ -59,7 +75,7 @@ const DialogoClientes: React.FC = () => {
       </Box>
       <BotaoInserir titulo="Inserir cliente" linkTo="clientes/inserircliente" />
     </>
-  ), [clientes, handlePageChange, manipularBusca, page, pages])
+  ), [clientes, handlePageChange, handleSubmit, page, pages])
 
 
   return (
