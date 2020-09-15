@@ -11,7 +11,7 @@ const ListagemClientes: React.FC<ListagemClientesProps> = ({ clientes }) => {
   return (
     <Box mb={2}>
       {
-        !!clientes.length && clientes.map((cliente, index) => (
+        clientes?.map((cliente, index) => (
           <ClienteItem cliente={cliente} key={index} />
         ))
       }

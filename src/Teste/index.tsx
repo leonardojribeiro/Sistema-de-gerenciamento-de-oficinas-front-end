@@ -10,23 +10,37 @@ function Teste() {
   const { post, get } = useContext(ApiContext);
 
   const preencher = useCallback(async () => {
-    const resposta = await get('marca?limite=100&pagina=1') as any;
-    setMarcas(resposta.marcas as Marca[])
-    for (let i = 0; i < 1000; i++) {
-      //console.log({
-      await post('marca',{
-        descricao: Math.random().toString(36).substr(2, 5),
-        //marca: resposta.marcas[i % resposta.marcas.length]._id
-      })
-     // })
-    }
 
+    for (let i = 0; i < 10000; i++) {
+      //console.log({
+      await post('cliente', {
+        nome: Math.random().toString(36).replace(/[^a-z]+/g, ''),
+        dataNascimento: new Date(new Date().getTime() * Math.random()),
+        sexo: Math.random() > 0.5 ? "m" : "f",
+        cpfCnpj: Math.random().toString(36).replace(/[^a-z]+/g, ''),
+        telefoneFixo: Math.random().toString(36).replace(/[^a-z]+/g, ''),
+        telefoneCelular: Math.random().toString(36).replace(/[^a-z]+/g, ''),
+        email: Math.random().toString(36).replace(/[^a-z]+/g, ''),
+        endereco: {
+          logradouro: Math.random().toString(36).replace(/[^a-z]+/g, ''),
+          numero: Math.random().toString(36).replace(/[^a-z]+/g, ''),
+          bairro: Math.random().toString(36).replace(/[^a-z]+/g, ''),
+          cep: Math.random().toString(36).replace(/[^a-z]+/g, ''),
+          complemento: Math.random().toString(36).replace(/[^a-z]+/g, ''),
+          cidade: Math.random().toString(36).replace(/[^a-z]+/g, ''),
+          estado: Math.random().toString(36).replace(/[^a-z]+/g, ''),
+        }
+      })
+      // })
+    }
+    console.log(new Date(new Date().getTime() * Math.random()));
+    console.log(Math.random().toString(36).replace(/[^a-z]+/g, ''))
   }, [get, post]);
 
   console.log(marcas)
 
   useEffect(() => {
-   // preencher();
+    //preencher();
   }, [preencher])
 
   return <div />;

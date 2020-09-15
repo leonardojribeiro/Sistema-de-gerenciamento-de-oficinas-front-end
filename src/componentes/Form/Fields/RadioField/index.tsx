@@ -73,9 +73,9 @@ const RadioField: React.FC<RadioFieldProps> = ({ name, required, label, children
   }, [valid, onChange, validate]);
 
   return (
-    <FormControl error={!valid} component="fieldset" fullWidth>
+    <FormControl error={!valid} fullWidth>
       <FormLabel >{label}</FormLabel>
-      <RadioGroup row value={value} onChange={handleChange}>
+      <RadioGroup {...props} row value={value} onChange={handleChange}>
         {children}
       </RadioGroup>
       <FormHelperText>{

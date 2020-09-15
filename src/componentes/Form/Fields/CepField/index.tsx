@@ -55,7 +55,12 @@ const CepField: React.FC<CepFieldProps> = ({ name, ...props }) => {
 
   useEffect(() => {
     if (defaultValue) {
-      setValue(defaultValue)
+      setValue(
+        numberMask(
+          defaultValue,
+          () => "00000-000"
+        )
+      )
     }
   }, [defaultValue]);
 

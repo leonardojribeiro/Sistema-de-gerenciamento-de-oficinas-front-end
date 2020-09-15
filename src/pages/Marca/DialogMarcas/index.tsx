@@ -11,21 +11,23 @@ import Marca from '../../../Types/Marca';
 import { Pagination } from '@material-ui/lab';
 import FormConsultaMarca from '../FormConsultaMarca';
 
+interface ListaMarcas {
+  marcas: Marca[];
+  total: number;
+}
 
 const DialogMarcas: React.FC = () => {
-  const [marcas, setMarcas] = useState<Marca[]>([]);
+  const [marcas, setMarcas] = useState<ListaMarcas>({} as ListaMarcas);
   const [page, setPage] = useState<number>(1);
-  const [pages, setPages] = useState<number>(0);
   const { get } = useContext(ApiContext);
   const { pathname } = useLocation();
   const consultaValues = useRef<any>();
 
   const listar = useCallback(async () => {
-    if (!(Boolean(consultaValues.current))) {
-      const resposta = await get(`/marca?pagina=${page}&limite=100`) as any;;
+    if (!consultaValues.current) {
+      const resposta = await get(`/marca?pagina=${page}&limite=100`);
       if (resposta) {
-        setMarcas(resposta.marcas as Marca[]);
-        setPages(Math.ceil(Number(resposta.total) / 100));
+        setMarcas(resposta as ListaMarcas);
       }
     }
   }, [get, page]);
@@ -39,10 +41,8 @@ const DialogMarcas: React.FC = () => {
   const handleSearch = useCallback(async (consulta, pagina = page) => {
     consultaValues.current = consulta;
     const resposta = await get(`/marca/consulta?descricao=${consulta}&limite=100&pagina=${pagina}`) as any;
-
     if (resposta) {
-      setMarcas(resposta.marcas as Marca[]);
-      setPages(Math.ceil(Number(resposta.total) / 100));
+      setMarcas(resposta as ListaMarcas);
     }
   }, [get, page]);
 
@@ -57,9 +57,9 @@ const DialogMarcas: React.FC = () => {
     <Dialogo open fullWidth maxWidth="xs" title="Marcas">
       <FormConsultaMarca onSubmit={handleSearch} />
       <Box display="flex" justifyContent="center" pt={2}>Listagem</Box>
-      <ListagemMarcas marcas={marcas} />
+      <ListagemMarcas marcas={marcas.marcas} />
       <Box display="flex" justifyContent="center">
-        <Pagination count={pages} onChange={handlePageChange} page={page} />
+        <Pagination count={Math.ceil(Number(marcas.total)/100)} onChange={handlePageChange} page={page} />
       </Box>
       <Link to="marcas/inserirmarca" >
         <BotaoInserir titulo="Inserir marca" />

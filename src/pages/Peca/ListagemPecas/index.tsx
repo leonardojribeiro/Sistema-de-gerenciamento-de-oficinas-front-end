@@ -54,7 +54,7 @@ const ListagemPecas: React.FC<ListagemPecasProps> = ({ pecas }) => {
                       <img
                         className={classes.imgLogomarca}
                         src={peca.marca && peca.marca.uriLogo && `${imagensUrl}/${peca.marca.uriLogo}`}
-                        alt={`logomarca da marca ${peca.marca ? peca.marca.descricao : ""}`}
+                        alt={`logomarca ${peca.marca ? peca.marca.descricao : ""}`}
                       />
                     </Box>
                   </TableCell>

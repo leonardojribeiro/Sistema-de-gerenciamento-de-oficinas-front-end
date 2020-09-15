@@ -11,20 +11,23 @@ import Modelo from '../../../Types/Modelo';
 import { Pagination } from '@material-ui/lab';
 import FormConsultaPeca, { ConsultaValues } from '../../Peca/FormConsultaPeca';
 
+interface ListaModelos {
+  modelos: Modelo[];
+  total: number;
+}
+
 const DialogoModelos: React.FC = () => {
-  const [modelos, setModelos] = useState<Modelo[]>([]);
+  const [listaModelos, setListaModelos] = useState<ListaModelos>({} as ListaModelos);
   const { get } = useContext(ApiContext);
   const { pathname } = useLocation();
   const [page, setPage] = useState<number>(1);
-  const [pages, setPages] = useState<number>(0);
   const consultaValues = useRef<ConsultaValues | undefined>();
 
   const listar = useCallback(async () => {
     if (!(Boolean(consultaValues.current?.consulta) || Boolean(consultaValues.current?.marca))) {
-      const resposta = await get(`/modelo?limite=100&pagina=${page}`) as any;
+      const resposta = await get(`/modelo?limite=100&pagina=${page}`);
       if (resposta) {
-        setModelos(resposta.modelos as Modelo[]);
-        setPages(Math.ceil(Number(resposta.total) / 100));
+        setListaModelos(resposta as ListaModelos);
       }
     }
   }, [get, page]);
@@ -39,8 +42,7 @@ const DialogoModelos: React.FC = () => {
     consultaValues.current = dados;
     const resposta = await get(`/modelo/consulta?descricao=${dados.consulta}&marca=${dados.marca}&limite=100&pagina=${pagina}`) as any;
     if (resposta) {
-      setModelos(resposta.modelos as Modelo[]);
-      setPages(Math.ceil(Number(resposta.total) / 100));
+      setListaModelos(resposta as ListaModelos);
     }
   }, [get, page]);
 
@@ -55,9 +57,9 @@ const DialogoModelos: React.FC = () => {
     <Dialogo maxWidth="sm" fullWidth open title="Modelos">
       <FormConsultaPeca onSubmit={manipularBusca} />
       <Box display="flex" justifyContent="center" pt={2}>Listagem</Box>
-      <ListagemModelos modelos={modelos} />
+      <ListagemModelos modelos={listaModelos.modelos} />
       <Box display="flex" justifyContent="center">
-        <Pagination count={pages} onChange={handlePageChange} page={page} />
+        <Pagination count={Math.ceil(Number(listaModelos.total) / 100)} onChange={handlePageChange} page={page} />
       </Box>
       <BotaoInserir titulo="Inserir modelo" linkTo="modelos/inserirmodelo" />
       <Switch>

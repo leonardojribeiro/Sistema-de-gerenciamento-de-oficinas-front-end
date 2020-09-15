@@ -61,7 +61,15 @@ const CampoCpfCnpj: React.FC<CpfCnpjFieldProps> = ({ name, onlyCpf, onChange, ..
 
   useEffect(() => {
     if (defaultValue) {
-      setValue(defaultValue)
+      setValue(
+        numberMask(
+          defaultValue,
+          tamanho =>
+            tamanho < 12
+              ? "000.000.000-00"
+              : "00.000.000/0000-00"
+        )
+      )
     }
   }, [defaultValue])
 
@@ -77,7 +85,7 @@ const CampoCpfCnpj: React.FC<CpfCnpjFieldProps> = ({ name, onlyCpf, onChange, ..
     if (!valido) {
       validate();
     }
-    if(onChange){
+    if (onChange) {
       event.target.value = value;
       onChange(event)
     }

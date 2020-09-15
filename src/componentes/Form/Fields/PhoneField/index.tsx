@@ -59,7 +59,11 @@ const PhoneField: React.FC<PhoneFieldProps> = ({ name, onChange, ...props }) => 
 
   useEffect(() => {
     if (defaultValue) {
-      setValue(defaultValue)
+      setValue(
+        numberMask(
+          defaultValue,
+          (size) => size < 11 ? "(00) 0000-0000" : "(00) 00000-0000"
+        ))
     }
   }, [defaultValue]);
 
