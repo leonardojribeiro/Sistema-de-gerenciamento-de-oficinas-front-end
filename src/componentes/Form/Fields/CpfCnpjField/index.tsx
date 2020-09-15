@@ -6,11 +6,12 @@ import useField from '../../Hooks/useField';
 import numberMask from '../../../../recursos/NumberMask';
 
 interface CpfCnpjFieldProps extends StandardTextFieldProps {
-  name: string,
-  onlyCpf?: boolean,
+  name: string;
+  onlyCpf?: boolean;
+  noValidate?: boolean;
 }
 
-const CampoCpfCnpj: React.FC<CpfCnpjFieldProps> = ({ name, onlyCpf, ...props }) => {
+const CampoCpfCnpj: React.FC<CpfCnpjFieldProps> = ({ name, onlyCpf, onChange, ...props }) => {
   const [valido, setValid] = useState<boolean>(true);
   const [value, setValue] = useState<string>("");
   const ref = useRef<HTMLInputElement | undefined>(undefined);
@@ -19,6 +20,9 @@ const CampoCpfCnpj: React.FC<CpfCnpjFieldProps> = ({ name, onlyCpf, ...props }) 
 
   const validate = useCallback(() => {
     if (ref && ref.current) {
+      if (props.noValidate) {
+        return true;
+      }
       if (!props.required && !ref.current.value.length) {
         return true;
       }
@@ -38,7 +42,7 @@ const CampoCpfCnpj: React.FC<CpfCnpjFieldProps> = ({ name, onlyCpf, ...props }) 
       throw new Error("");
 
     }
-  }, [props.required]);
+  }, [props.noValidate, props.required]);
 
   const clear = useCallback(() => {
     setValue("");
@@ -61,22 +65,23 @@ const CampoCpfCnpj: React.FC<CpfCnpjFieldProps> = ({ name, onlyCpf, ...props }) 
     }
   }, [defaultValue])
 
-  const manipularAlteracao = useCallback((evento) => {
-    setValue(
-      numberMask(
-        evento.target.value,
-        tamanho =>
-          tamanho < 12
-            ? "000.000.000-00"
-            : "00.000.000/0000-00"
-      )
-    )
+  const manipularAlteracao = useCallback((event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    const value = numberMask(
+      event.target.value,
+      tamanho =>
+        tamanho < 12
+          ? "000.000.000-00"
+          : "00.000.000/0000-00"
+    );
+    setValue(value);
     if (!valido) {
       validate();
     }
-  }, [validate, valido])
-
-  console.log(value)
+    if(onChange){
+      event.target.value = value;
+      onChange(event)
+    }
+  }, [onChange, validate, valido])
 
   return (
     <TextField

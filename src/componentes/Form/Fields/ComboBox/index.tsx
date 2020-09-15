@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useEffect, memo, useState, } from 'react';
-import { Autocomplete, AutocompleteProps, AutocompleteChangeDetails, AutocompleteChangeReason, AutocompleteInputChangeReason, } from '@material-ui/lab';
+import { Autocomplete, AutocompleteProps, AutocompleteChangeDetails, AutocompleteChangeReason } from '@material-ui/lab';
 import useField from '../../Hooks/useField';
 import dot from 'dot-object';
 import { TextField } from '@material-ui/core';
@@ -9,23 +9,16 @@ interface ComboBoxProps<T> extends Omit<AutocompleteProps<T, false, false, false
   path: string;
   label: string;
   required?: boolean;
-  getOptions: () => Promise<any[]>;
-  getMoreOptions?: (search: string) => Promise<any[]>;
-  getDefaultValue?: (value: any,) => Promise<any>;
-  getDefaultValueInOptions?: (value: any, options: any) => boolean;
-
+  getDefaultValue?: (value: T,) => Promise<T>;
 }
 
 const ComboBox: React.FC<ComboBoxProps<any>> =
-  ({ options: defaultOptions, getOptions, getMoreOptions, getDefaultValue, getDefaultValueInOptions, path, name, label, required, onChange, onInputChange, ...props }) => {
-    const [options, setOptions] = useState<any>(defaultOptions);
+  ({ getDefaultValue, path, name, label, required, onChange, ...props }) => {
     const [value, setValue] = useState<any>(null);
     const [valid, setValid] = useState(true);
-    const [loading, setLoading] = useState(false);
     const ref = useRef<any>();
     const valueSelected = useRef<any>(null);
     const { fieldName, registerField, defaultValue } = useField(name);
-    const filled = useRef(false);
 
     const getValue = useCallback((ref) => {
       return ref.current ? dot.pick(path, ref) ? dot.pick(path, ref) : "" : "";
@@ -41,7 +34,6 @@ const ComboBox: React.FC<ComboBoxProps<any>> =
       }
       else {
         if (ref) {
-          console.log(ref.current)
           ref.current.focus();
         }
         setValid(false);
@@ -58,43 +50,15 @@ const ComboBox: React.FC<ComboBoxProps<any>> =
       })
     }, [fieldName, getValue, path, registerField, validate]);
 
-    useEffect(() => {
-      const get = async () => {
-        setLoading(true);
-        const options = await getOptions();
-        setLoading(false);
-        setOptions(options)
-      }
-      get();
-    }, [getMoreOptions, getOptions]);
-
     const fill = useCallback(async () => {
-      if (getDefaultValue && defaultValue && !value && options.length && !filled.current) {
-        let value: any;
-        if (getDefaultValueInOptions) {
-          options.forEach((option: any) => {
-            if (getDefaultValueInOptions(defaultValue, option)) {
-              value = option;
-              return
-            }
-          })
-          if (value) {
-            setValue(value);
-            filled.current = true;
-          }
-        }
-        if (!value) {
-          setLoading(true);
-          value = await getDefaultValue(defaultValue);
-          setLoading(false)
-          if (value) {
-            setOptions((options: any[]) => [...options, value]);
-            setValue(value);
-            filled.current = true;
-          }
+      if (getDefaultValue && defaultValue && !valueSelected.current && props.options.length > 0) {
+        const value = await getDefaultValue(defaultValue);
+        if (value) {
+          valueSelected.current = value;
+          setValue(value);
         }
       }
-    }, [defaultValue, getDefaultValue, getDefaultValueInOptions, options, value, filled]);
+    }, [defaultValue, getDefaultValue, props.options.length]);
 
     useEffect(() => {
       fill()
@@ -108,26 +72,12 @@ const ComboBox: React.FC<ComboBoxProps<any>> =
       }
     }, [onChange]);
 
-    const handleInputChange = useCallback(async (event: React.ChangeEvent<{}>, value: string, reason: AutocompleteInputChangeReason) => {
-      if (reason === "input" && value.length > 1 && getMoreOptions) {
-        setLoading(true);
-        const options = await getMoreOptions(value);
-        setOptions(options)
-        setLoading(false);
-      }
-      if (onInputChange) {
-        onInputChange(event, value, reason,);
-      }
-    }, [getMoreOptions, onInputChange]);
-
     return (
       <Autocomplete
         fullWidth
         onChange={handleChange}
-        onInputChange={handleInputChange}
-        loading={loading}
-        options={options}
         value={value}
+        openOnFocus
         renderInput={(params) => (
           <TextField
             {...params}

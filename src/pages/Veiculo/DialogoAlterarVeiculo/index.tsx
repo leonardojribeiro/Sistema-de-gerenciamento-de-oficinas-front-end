@@ -2,20 +2,20 @@ import React, { useContext, useRef, useCallback, useEffect, memo } from 'react';
 import Dialogo from '../../../componentes/Dialog';
 import ApiContext from '../../../contexts/ApiContext';
 import { useHistory, Link, useRouteMatch, Switch, Route, useLocation } from 'react-router-dom';
-import { DialogActions, Button, MenuItem, Box, Tooltip, IconButton, } from '@material-ui/core';
+import { DialogActions, Button, Box, Tooltip, IconButton, } from '@material-ui/core';
 import { useState } from 'react';
 import useQuery from '../../../hooks/useQuery';
 import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
 import { useMemo } from 'react';
-import { Form, CampoDeTexto, CampoDeSelecao, DateField } from '../../../componentes/Form';
+import { Form, CampoDeTexto, DateField } from '../../../componentes/Form';
 import comparar from '../../../recursos/Comparar';
-import Cliente from '../../../Types/Cliente';
-import Modelo from '../../../Types/Modelo';
 import Veiculo from '../../../Types/Veiculo';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import DialogoInserirModelo from '../../Modelo/DialogoInserirModelo';
 import DialogoInserirCliente from '../../Cliente/DialogoInserirCliente';
+import ComboBoxModelo from '../../../componentes/ComboBox/ComboBoxModelo';
+import ComboBoxCliente from '../../../componentes/ComboBox/ComboBoxCliente';
 
 const DialogAlterarVeiculo: React.FC = () => {
   const { get, put } = useContext(ApiContext);
@@ -23,8 +23,6 @@ const DialogAlterarVeiculo: React.FC = () => {
   const [veiculo, setVeiculo] = useState<Veiculo | undefined>();
   const refAlerta = useRef<AlertaHandles>();
   const id = useQuery("id");
-  const [clientes, setClientes] = useState<Cliente[]>([]);
-  const [modelos, setModelos] = useState<Modelo[]>([]);
   const { path, url } = useRouteMatch();
   const { pathname } = useLocation();
 
@@ -55,27 +53,12 @@ const DialogAlterarVeiculo: React.FC = () => {
     }
   }, [get, id,]);
 
-  const listarClientes = useCallback(async () => {
-    const cliente = await get("/cliente") as Cliente[];
-    if (cliente) {
-      setClientes(cliente);
-    }
-  }, [get,]);
-
-  const listarModelos = useCallback(async () => {
-    const modelos = await get("/modelo") as Modelo[];
-    if (modelos) {
-      setModelos(modelos);
-    }
-  }, [get,]);
 
   useEffect(() => {
     if (pathname.endsWith("alterarveiculo")) {
-      listarClientes();
-      listarModelos();
       popular();
     }
-  }, [listarClientes, listarModelos, pathname, popular]);
+  }, [pathname, popular]);
 
   const conteudo = useMemo(() => (
     <Form onSubmit={manipularEnvio} initialData={veiculo}>
@@ -83,11 +66,7 @@ const DialogAlterarVeiculo: React.FC = () => {
       <DateField name="anoFabricacao" label="Ano de fabricação" fullWidth required />
       <DateField name="anoModelo" label="Ano de modelo" fullWidth required />
       <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-        <CampoDeSelecao name="modelo" label="Modelo" required fullWidth>
-          {
-            modelos.map((modelo, indice) => <MenuItem key={indice} value={modelo._id}>{modelo.descricao}</MenuItem>)
-          }
-        </CampoDeSelecao>
+        <ComboBoxModelo name="modelo" label="Modelo" required />
         <Link to={`${path}/inserirmodelo`}>
           <Tooltip title="Inserir modelo">
             <IconButton>
@@ -97,11 +76,7 @@ const DialogAlterarVeiculo: React.FC = () => {
         </Link>
       </Box>
       <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-        <CampoDeSelecao name="cliente" label="Cliente" required fullWidth >
-          {
-            clientes.map((cliente, indice) => <MenuItem key={indice} value={cliente._id}>{cliente.nome}</MenuItem>)
-          }
-        </CampoDeSelecao>
+      <ComboBoxCliente name="cliente" label="Cliente" required />
         <Link to={`${path}/inserircliente`}>
           <Tooltip title="Inserir cliente">
             <IconButton>
@@ -114,7 +89,7 @@ const DialogAlterarVeiculo: React.FC = () => {
         <Button type="submit">Salvar</Button>
       </DialogActions>
     </Form>
-  ), [clientes, manipularEnvio, modelos, path, veiculo])
+  ), [manipularEnvio, path, veiculo])
 
   return (
     <Dialogo open title="Alterar veículo" fullWidth maxWidth="sm">

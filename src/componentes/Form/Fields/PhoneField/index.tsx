@@ -1,14 +1,15 @@
-import React, { useState, useCallback, useRef, memo, useEffect,} from 'react';
+import React, { useState, useCallback, useRef, memo, useEffect, } from 'react';
 import { TextField, StandardTextFieldProps } from '@material-ui/core';
 import validacao from '../../../../recursos/Validacao';
 import useField from '../../Hooks/useField';
 import numberMask from '../../../../recursos/NumberMask';
 
 interface PhoneFieldProps extends StandardTextFieldProps {
-  name: string
+  name: string;
+  noValidate?: boolean;
 }
 
-const PhoneField: React.FC<PhoneFieldProps> = ({ name, ...props }) => {
+const PhoneField: React.FC<PhoneFieldProps> = ({ name, onChange, ...props }) => {
   const [valid, setValid] = useState<boolean>(true);
   const [value, setValue] = useState<string>("");
   const ref = useRef<HTMLInputElement | undefined>(undefined);
@@ -17,6 +18,9 @@ const PhoneField: React.FC<PhoneFieldProps> = ({ name, ...props }) => {
 
   const validate = useCallback(() => {
     if (ref && ref.current) {
+      if (props.noValidate) {
+        return true;
+      }
       if (!props.required && !ref.current.value.length) {
         return true;
       }
@@ -36,7 +40,7 @@ const PhoneField: React.FC<PhoneFieldProps> = ({ name, ...props }) => {
       throw new Error("");
 
     }
-  }, [props.required]);
+  }, [props.noValidate, props.required]);
 
   const clear = useCallback(() => {
     setValue("");
@@ -59,17 +63,20 @@ const PhoneField: React.FC<PhoneFieldProps> = ({ name, ...props }) => {
     }
   }, [defaultValue]);
 
-  const handleChange = useCallback((evento: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    setValue(
-      numberMask(
-        evento.target.value,
-        (size) => size < 11 ? "(00) 0000-0000" : "(00) 00000-0000"
-      )
+  const handleChange = useCallback((event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    const value = numberMask(
+      event.target.value,
+      (size) => size < 11 ? "(00) 0000-0000" : "(00) 00000-0000"
     )
+    setValue(value);
     if (!valid) {
       validate();
     }
-  }, [validate, valid])
+    if (onChange) {
+      event.target.value = value;
+      onChange(event);
+    }
+  }, [valid, onChange, validate])
 
   return (
     <TextField

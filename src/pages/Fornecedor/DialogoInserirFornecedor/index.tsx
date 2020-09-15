@@ -3,7 +3,7 @@ import Dialogo from '../../../componentes/Dialog';
 import ApiContext from '../../../contexts/ApiContext';
 import { useHistory } from 'react-router-dom';
 import { DialogActions, Button, Grid, } from '@material-ui/core';
-import { CampoDeCpfOuCnpj, Form, CampoDeTexto, PhoneField, CampoDeEmail, CepField, Node } from '../../../componentes/Form';
+import { CampoDeCpfOuCnpj, Form, CampoDeTexto, PhoneField, CampoDeEmail, CepField, Node, NameField } from '../../../componentes/Form';
 
 const DialogoInserirFornecedor: React.FC = () => {
   const { post } = useContext(ApiContext);
@@ -24,7 +24,7 @@ const DialogoInserirFornecedor: React.FC = () => {
       <Form onSubmit={manipularEnvio}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8} md={8}>
-            <CampoDeTexto name="nomeFantasia" label="Nome fantasia" fullWidth required autoFocus />
+            <NameField name="nomeFantasia" label="Nome fantasia" fullWidth required autoFocus />
           </Grid>
           <Grid item xs={12} sm={4} md={4}>
             <CampoDeCpfOuCnpj name="cpfCnpj" label="CPF/CNPJ" fullWidth required />

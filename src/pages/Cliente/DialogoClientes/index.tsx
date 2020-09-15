@@ -11,6 +11,7 @@ import Cliente from '../../../Types/Cliente';
 import { Pagination } from '@material-ui/lab';
 import { CampoDeRadio, Form } from '../../../componentes/Form';
 import SearchField from '../../../componentes/Form/Fields/SearchField';
+import FormConsultaPessoa from '../../../componentes/FormConsultaPessoa';
 
 const DialogoClientes: React.FC = () => {
   const [clientes, setClientes] = useState<Cliente[]>([]);
@@ -50,24 +51,10 @@ const DialogoClientes: React.FC = () => {
     }
   }, [manipularBusca]);
 
-  const handleSubmit = useCallback((dados) => {
-    manipularBusca(dados);
-  }, [manipularBusca]);
 
   const conteudo = useMemo(() => (
     <>
-      <Form onSubmit={handleSubmit} initialData={{ filtro: "nome" }}>
-        <Box display="flex">
-          <SearchField name="consulta" label="Consulta" fullWidth />
-
-          <CampoDeRadio required name="filtro" label="Fitrar por">
-            <FormControlLabel value="nome" label="Nome" control={<Radio color="primary" />} />
-            <FormControlLabel value="cpfCnpj" label="CPF/CNPJ" control={<Radio color="primary" />} />
-            <FormControlLabel value="email" label="E-mail" control={<Radio color="primary" />} />
-            <FormControlLabel value="telefone" label="Telefone" control={<Radio color="primary" />} />
-          </CampoDeRadio>
-        </Box>
-      </Form>
+      <FormConsultaPessoa onSubmit={manipularBusca} />
       <Box display="flex" justifyContent="center" pt={2}>Listagem</Box>
       <ListagemClientes clientes={clientes} />
       <Box display="flex" justifyContent="center">
@@ -75,7 +62,7 @@ const DialogoClientes: React.FC = () => {
       </Box>
       <BotaoInserir titulo="Inserir cliente" linkTo="clientes/inserircliente" />
     </>
-  ), [clientes, handlePageChange, handleSubmit, page, pages])
+  ), [clientes, handlePageChange, manipularBusca, page, pages])
 
 
   return (

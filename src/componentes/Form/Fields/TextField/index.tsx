@@ -4,10 +4,11 @@ import { useEffect } from 'react';
 import useField from '../../Hooks/useField';
 
 interface TextFieldProps extends TextFieldPropsMUI {
-  name: string,
+  name: string;
+  noValidate?: boolean;
 }
 
-const TextField: React.FC<TextFieldProps> = ({ name, ...props }) => {
+const TextField: React.FC<TextFieldProps> = ({ name, onChange, ...props }) => {
   const [valid, setValid] = useState<boolean>(true);
   const [value, setValue] = useState<string>("");
   const ref = useRef<HTMLInputElement | undefined>(undefined);
@@ -16,6 +17,9 @@ const TextField: React.FC<TextFieldProps> = ({ name, ...props }) => {
 
   const validate = useCallback(() => {
     if (ref && ref.current) {
+      if(props.noValidate){
+        return true;
+      }
       if (!props.required && !ref.current.value.length) {
         return true;
       }
@@ -33,9 +37,8 @@ const TextField: React.FC<TextFieldProps> = ({ name, ...props }) => {
     }
     else {
       throw new Error("");
-
     }
-  }, [props.required]);
+  }, [props.noValidate, props.required]);
 
   const clear = useCallback(() => {
     setValue("");
@@ -72,10 +75,10 @@ const TextField: React.FC<TextFieldProps> = ({ name, ...props }) => {
     if (!valid) {
       validate();
     }
-    if (props.onChange) {
-      props.onChange(event);
+    if (onChange) {
+      onChange(event);
     }
-  }, [props, valid, validate]);
+  }, [onChange, valid, validate]);
 
   return (
     <TextFieldMUI

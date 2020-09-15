@@ -10,10 +10,10 @@ interface RadioFieldProps extends RadioGroupProps {
 }
 
 interface RadioRef {
-  value: any ;
+  value: any;
 }
 
-const RadioField: React.FC<RadioFieldProps> = ({ name, required, label, children, ...props }) => {
+const RadioField: React.FC<RadioFieldProps> = ({ name, required, label, children, onChange, ...props }) => {
   const [valid, setValid] = useState<boolean>(true);
   const [value, setValue] = useState<RadioRef['value']>('');
   const ref = useRef<RadioRef>({} as RadioRef);
@@ -62,23 +62,23 @@ const RadioField: React.FC<RadioFieldProps> = ({ name, required, label, children
   }, [defaultValue]);
 
   const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>, value: string) => {
-    setValue(value);
     ref.current.value = value;
+    setValue(value);
     if (!valid) {
       validate();
     }
-    if(props.onChange){
-      props.onChange(event, value);
+    if (onChange) {
+      onChange(event, value);
     }
-  }, [valid, props, validate]);
+  }, [valid, onChange, validate]);
 
   return (
-    <FormControl component="fieldset">
-      <FormLabel error={!valid} >{label}</FormLabel>
+    <FormControl error={!valid} component="fieldset" fullWidth>
+      <FormLabel >{label}</FormLabel>
       <RadioGroup row value={value} onChange={handleChange}>
         {children}
       </RadioGroup>
-      <FormHelperText error={!valid}>{
+      <FormHelperText>{
         required
         && !value
         && !valid

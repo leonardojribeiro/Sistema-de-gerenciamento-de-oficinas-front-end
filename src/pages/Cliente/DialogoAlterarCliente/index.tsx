@@ -6,7 +6,7 @@ import { DialogActions, Button, Grid, FormControlLabel, Radio } from '@material-
 import useQuery from '../../../hooks/useQuery';
 import comparar from '../../../recursos/Comparar';
 import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
-import { Form, CampoDeTexto, CampoDeCpfOuCnpj, DateField, CampoDeRadio, PhoneField, CampoDeEmail, CepField, Node } from '../../../componentes/Form';
+import { Form, CampoDeTexto, CampoDeCpfOuCnpj, DateField, CampoDeRadio, PhoneField, CampoDeEmail, CepField, Node, NameField } from '../../../componentes/Form';
 import Cliente from '../../../Types/Cliente';
 
 
@@ -53,7 +53,7 @@ const DialogoAlterarCliente: React.FC = () => {
       <Form initialData={cliente} onSubmit={manipularEnvio}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8} md={8}>
-            <CampoDeTexto name="nome" label="Nome" fullWidth required autoFocus />
+            <NameField name="nome" label="Nome" fullWidth required autoFocus />
           </Grid>
           <Grid item xs={12} sm={4} md={4}>
             <CampoDeCpfOuCnpj name="cpfCnpj" label="CPF/CNPJ" disabled fullWidth required />

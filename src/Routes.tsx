@@ -1,5 +1,5 @@
 import React, { memo, useContext, useCallback, useEffect } from 'react';
-import { Switch, Route, } from 'react-router-dom';
+import { Switch, Route, useRouteMatch, useLocation } from 'react-router-dom';
 import PaginaInicial from './componentes/paginaInicial/PaginaInicial';
 import AuthContext from './contexts/AuthContext';
 import PaginaInicialOficina from './componentes/Home/Home';
@@ -20,11 +20,11 @@ import DialogOrdensDeServico from './pages/OrdemDeServico/DialogOrdensDeServico'
 import DialogoEspecialidades from './pages/Especialidade/DialogoEspecialidades';
 import Teste from './Teste';
 
-
 const Routes: React.FC = () => {
   const authContext = useContext(AuthContext);
   const apiContext = useContext(ApiContext);
   const { logado } = useAuth();
+ //console.log(useLocation())
   const efetuarLoginPorToken = useCallback(async () => {
     if (apiContext) {
       const resposta = await apiContext.get(
@@ -40,7 +40,7 @@ const Routes: React.FC = () => {
       }
     }
     else {
-      throw new Error("Esse componente deve estar em uma sub-árvore depois do <AuthContext.Provider>.");
+      throw new Error("Esse componente deve estar em uma sub-árvore depois do <ApiContext.Provider>.");
     }
   }, [apiContext, authContext]);
 
@@ -62,6 +62,7 @@ const Routes: React.FC = () => {
                 <DialogoLogin />
               </Route>
             </Switch>
+
           </>
         )
           : (
@@ -79,16 +80,11 @@ const Routes: React.FC = () => {
                 <Route path="/servicos" component={DialogServicos} />
                 <Route path="/ordensdeservico" component={DialogOrdensDeServico} />
                 <Route path="/opcoes" component={DialogoOpcoes} />
-
-
-                <Route path="/popular" exact component={Teste}>
-                </Route>
-
+                <Route path="/popular" exact component={Teste} />
               </Switch>
             </>
           )
       }
-
     </>
   );
 }

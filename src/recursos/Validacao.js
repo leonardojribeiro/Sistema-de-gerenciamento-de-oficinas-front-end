@@ -94,8 +94,8 @@ function validarCpfCnpj(cpfCnpj) {
 };
 
 
-function validarNome(nome) {
-  return nome.length > 2;
+export function validarNome(nome) {
+  return nome.match(/^[A-ZÀ-Ÿ][A-zÀ-ÿ']+\s([A-zÀ-ÿ']\s?)*[A-ZÀ-Ÿ][A-zÀ-ÿ']+$/);
 }
 
 function validarEmail(email) {

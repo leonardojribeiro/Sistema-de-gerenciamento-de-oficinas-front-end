@@ -1,49 +1,48 @@
 import React, { useContext, useCallback, memo, useState, useEffect } from 'react';
-import Marca from '../../../Types/Marca';
 import ApiContext from '../../../contexts/ApiContext';
 import ComboBox from '../../Form/Fields/ComboBox';
+import Cliente from '../../../Types/Cliente';
 import { AutocompleteInputChangeReason } from '@material-ui/lab';
 
-interface ComboBoxMarcaProps {
-  onChange?: (marca: Marca | null) => void;
+interface ComboBoxClienteProps {
+  onChange?: (marca: Cliente | null) => void;
   label: string;
   name: string;
   required?: boolean
 }
 
-const ComboBoxMarca: React.FC<ComboBoxMarcaProps> = ({ onChange, label, name, required }) => {
+const ComboBoxCliente: React.FC<ComboBoxClienteProps> = ({ onChange, label, name, required }) => {
   const { get } = useContext(ApiContext);
-  const [options, setOptions] = useState<Marca[]>([] as Marca[]);
+  const [options, setOptions] = useState<Cliente[]>([]);
 
   const getOptions = useCallback(async () => {
     console.log("obtendo opções")
-    const resposta = await get(`/marca/?pagina=1&limite=100`, true) as any;
+    const resposta = await get(`/cliente/?pagina=1&limite=100`, true) as any;
     if (resposta) {
-      setOptions(resposta.marcas as Marca[]);
+      setOptions(resposta.clientes as Cliente[]);
     }
   }, [get]);
 
   const getMoreOptions = useCallback(async (consulta) => {
-    const resposta = await get(`/marca/consulta?descricao=${consulta}&pagina=1&limite=100`, true) as any;
+    const resposta = await get(`/cliente/consulta?descricao=${consulta}&pagina=1&limite=100`, true) as any;
     if (resposta) {
-      setOptions(resposta.marcas as Marca[]);
+      setOptions(resposta.clientes as Cliente[]);
     }
   }, [get]);
 
   const getDefaultValueInOptions = useCallback((value) => {
-    return options.find((marca) => marca._id === value);
+    return options.find((cliente) => cliente._id === value);
   }, [options]);
 
   const getDefaultValue = useCallback(async (value) => {
     let defaultValue = getDefaultValueInOptions(value);
-    console.log(defaultValue)
     if (defaultValue) {
       return defaultValue;
     }
     else {
-      defaultValue = await get(`/marca/id?_id=${value}`) as any;
+      defaultValue = await get(`/cliente/id?_id=${value}`) as any;
       if (defaultValue) {
-        setOptions(options => [...options, defaultValue as Marca])
+        setOptions(options => [...options, defaultValue as Cliente])
         return defaultValue;
       }
       else {
@@ -78,10 +77,10 @@ const ComboBoxMarca: React.FC<ComboBoxMarcaProps> = ({ onChange, label, name, re
       clearText="Limpar"
       openText="Abrir"
       required={required}
-      getOptionLabel={(option) => option.descricao}
-      getOptionSelected={(option, value) => option.descricao === value.descricao}
+      getOptionLabel={(option) => option.nome}
+      getOptionSelected={(option, value) => option.nome === value.nome}
     />
   );
 }
 
-export default memo(ComboBoxMarca);
+export default memo(ComboBoxCliente);

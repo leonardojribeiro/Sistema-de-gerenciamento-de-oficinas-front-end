@@ -6,7 +6,7 @@ import { DialogActions, Button, Grid, } from '@material-ui/core';
 import useQuery from '../../../hooks/useQuery';
 import comparar from '../../../recursos/Comparar';
 import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
-import { Form, CampoDeTexto, CampoDeCpfOuCnpj, PhoneField, CampoDeEmail, CepField, Node } from '../../../componentes/Form';
+import { Form, CampoDeTexto, CampoDeCpfOuCnpj, PhoneField, CampoDeEmail, CepField, Node, NameField } from '../../../componentes/Form';
 import Fornecedor from '../../../Types/Fornecedor';
 
 const DialogoAlterarFornecedor: React.FC = () => {
@@ -52,7 +52,7 @@ const DialogoAlterarFornecedor: React.FC = () => {
       <Form initialData={fornecedor} onSubmit={manipularEnvio}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8} md={8}>
-            <CampoDeTexto name="nomeFantasia" label="Nome fantasia" fullWidth required autoFocus />
+            <NameField name="nomeFantasia" label="Nome fantasia" fullWidth required autoFocus />
           </Grid>
           <Grid item xs={12} sm={4} md={4}>
             <CampoDeCpfOuCnpj name="cpfCnpj" label="CPF/CNPJ" disabled fullWidth required />

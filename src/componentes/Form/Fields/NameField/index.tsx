@@ -1,15 +1,15 @@
-import React, { useState, useCallback, useRef, memo } from 'react';
-import { TextField, StandardTextFieldProps } from '@material-ui/core';
-import validacao from '../../../../recursos/Validacao';
+import React, { useState, useCallback, useRef, memo, ChangeEvent } from 'react';
+import { TextField as TextFieldMUI, StandardTextFieldProps as TextFieldPropsMUI, } from '@material-ui/core';
 import { useEffect } from 'react';
 import useField from '../../Hooks/useField';
+import { validarNome } from '../../../../recursos/Validacao';
 
-interface EmailFieldProps extends StandardTextFieldProps {
+interface NameFieldProps extends TextFieldPropsMUI {
   name: string;
   noValidate?: boolean;
 }
 
-const EmailField: React.FC<EmailFieldProps> = ({ name, onChange, ...props }) => {
+const NameField: React.FC<NameFieldProps> = ({ name, onChange, ...props }) => {
   const [valid, setValid] = useState<boolean>(true);
   const [value, setValue] = useState<string>("");
   const ref = useRef<HTMLInputElement | undefined>(undefined);
@@ -17,13 +17,13 @@ const EmailField: React.FC<EmailFieldProps> = ({ name, onChange, ...props }) => 
 
   const validate = useCallback(() => {
     if (ref && ref.current) {
+      if (props.noValidate) {
+        return true;
+      }
       if (!props.required && !ref.current.value.length) {
         return true;
       }
-      if(props.noValidate){
-        return true;
-      }
-      if (validacao.validarEmail(ref.current.value)) {
+      if (validarNome(ref.current.value)) {
         setValid(true);
         return (true);
       }
@@ -35,50 +35,59 @@ const EmailField: React.FC<EmailFieldProps> = ({ name, onChange, ...props }) => 
         return (false);
       }
     }
-    else{
+    else {
       throw new Error("");
-      
     }
   }, [props.noValidate, props.required]);
 
   const clear = useCallback(() => {
     setValue("");
     setValid(true);
-  }, [])
+  }, []);
+
+  const setFieldValue = useCallback((ref, value) => {
+    setValue(value as string);
+    if (ref.current) {
+      ref.current.value = value;
+    }
+  }, []);
 
   useEffect(() => {
     registerField({
       validate,
       ref: ref.current,
       name: fieldName,
+      setFieldValue,
       path: "value",
-      clear
+      clear,
     });
-  }, [clear, fieldName, registerField, validate]);
+  }, [clear, fieldName, registerField, setFieldValue, validate]);
 
   useEffect(() => {
     if (defaultValue) {
-      setValue(defaultValue)
+      setValue(defaultValue);
     }
   }, [defaultValue]);
 
-  const handleChange = useCallback((event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    setValue(
-      event.target.value
-    )
+  const handleChange = useCallback((event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const value = event.target.value.replace(/[^A-zÀ-ÿ' ]/, "");
+    setValue(value)
     if (!valid) {
       validate();
     }
-    if(onChange){
+    if (onChange) {
+      event.target.value = value;
       onChange(event);
     }
-  }, [valid, onChange, validate]);
+  }, [onChange, valid, validate]);
+
 
   return (
-    <TextField
+    <TextFieldMUI
+      {...props}
       onChange={handleChange}
-      error={!valid}
       value={value}
+      error={!valid}
       inputRef={ref}
       helperText={
         ref.current ?
@@ -95,9 +104,8 @@ const EmailField: React.FC<EmailFieldProps> = ({ name, onChange, ...props }) => 
               : null
           : null
       }
-      {...props}
     />
   );
 }
 
-export default memo(EmailField);
+export default memo(NameField);

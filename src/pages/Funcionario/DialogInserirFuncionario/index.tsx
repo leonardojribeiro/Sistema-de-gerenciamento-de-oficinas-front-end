@@ -3,7 +3,7 @@ import Dialogo from '../../../componentes/Dialog';
 import ApiContext from '../../../contexts/ApiContext';
 import { useHistory } from 'react-router-dom';
 import { DialogActions, Button, Grid, FormControlLabel, Radio, MenuItem } from '@material-ui/core';
-import { CampoDeCpfOuCnpj, Form, CampoDeTexto, DateField, CampoDeRadio, PhoneField, CampoDeEmail, CepField, Node } from '../../../componentes/Form';
+import { CampoDeCpfOuCnpj, Form, CampoDeTexto, DateField, CampoDeRadio, PhoneField, CampoDeEmail, CepField, Node, NameField } from '../../../componentes/Form';
 import SelectField from '../../../componentes/Form/Fields/SelectField';
 import Especialidade from '../../../Types/Especialidade';
 
@@ -38,7 +38,7 @@ const DialogInserirFuncionario: React.FC = () => {
       <Form onSubmit={manipularEnvio}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8} md={8}>
-            <CampoDeTexto name="nome" label="Nome" fullWidth required autoFocus />
+            <NameField name="nome" label="Nome" fullWidth required autoFocus />
           </Grid>
           <Grid item xs={12} sm={4} md={4}>
             <CampoDeCpfOuCnpj name="cpf" label="CPF" onlyCpf fullWidth required />
