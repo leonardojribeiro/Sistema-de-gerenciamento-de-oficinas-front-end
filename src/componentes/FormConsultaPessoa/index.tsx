@@ -29,7 +29,7 @@ const FormConsultaPessoa: React.FC<FormConsultaPessoaProps> = ({ onSubmit }) => 
   }, [filter, onSubmit]);
 
   const getFieldForCurrentFilter = useCallback(() => {
-    const props = { name: "consulta", fullWidth: true, label: "Consulta", noValidate: true };
+    const props = { name: "consulta", fullWidth: true, label: `Consultar ${filter}`, noValidate: true };
     switch (filter) {
       case "nome": {
         return <NameField {...props} />
