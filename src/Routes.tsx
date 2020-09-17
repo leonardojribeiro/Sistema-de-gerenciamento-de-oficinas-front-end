@@ -1,5 +1,5 @@
 import React, { memo, useContext, useCallback, useEffect } from 'react';
-import { Switch, Route, useRouteMatch, useLocation } from 'react-router-dom';
+import { Switch, Route,  } from 'react-router-dom';
 import PaginaInicial from './componentes/paginaInicial/PaginaInicial';
 import AuthContext from './contexts/AuthContext';
 import PaginaInicialOficina from './componentes/Home/Home';

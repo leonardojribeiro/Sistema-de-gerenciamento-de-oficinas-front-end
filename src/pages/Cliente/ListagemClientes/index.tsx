@@ -1,6 +1,5 @@
 import React, { memo } from 'react';
 import { Box, } from '@material-ui/core';
-import ClienteItem from '../ClienteItem';
 import Cliente from '../../../Types/Cliente';
 import PessoaItem from '../../../componentes/PessoaItem';
 
@@ -17,7 +16,7 @@ const ListagemClientes: React.FC<ListagemClientesProps> = ({ clientes }) => {
             key={index}
             {...cliente}
             linkText={`Alterar o cliente ${cliente.nome}`}
-            linkToChange={`clientes/alterar`}
+            linkToChange={`clientes/alterarcliente`}
           />
         ))
       }

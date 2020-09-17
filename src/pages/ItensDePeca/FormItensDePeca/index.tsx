@@ -9,6 +9,7 @@ import Fornecedor from '../../../Types/Fornecedor';
 import ItemDePeca from '../../../Types/ItemDePeca';
 //import comparar from '../../../recursos/Comparar';
 import OrdemDeServicoContext from '../../OrdemDeServico/OrdemDeServicoContext';
+import ComboBoxPeca from '../../../componentes/ComboBox/ComboBoxPeca';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -59,9 +60,10 @@ const FormItensDePeca: React.FC = () => {
   // }, [itensDePeca]);
 
   const handleSubmit = useCallback((dados) => {
-    if (pecas && fornecedores) {
+    if (fornecedores) {
+      console.log(dados.peca)
       const itemDePeca = {
-        peca: pecas[Number(dados.peca)],
+        peca: dados.peca,
         fornecedor: fornecedores[Number(dados.fornecedor)],
         valorUnitario: Number(dados.valorUnitario),
         garantia: Number(dados.garantia),
@@ -80,11 +82,12 @@ const FormItensDePeca: React.FC = () => {
         setItemDePecaSelecionado(undefined)
       }
       else {
+        console.log('ins')
         setItensDePeca((ItensDePeca) => [...ItensDePeca, itemDePeca])
       }
       //  }
     }
-  }, [fornecedores, itemDePecaSelecionado, itensDePeca, pecas, setItemDePecaSelecionado, setItensDePeca]);
+  }, [fornecedores, itemDePecaSelecionado, itensDePeca, setItemDePecaSelecionado, setItensDePeca]);
 
   const calcularValorTotal = useCallback(() => {
     if (formRef.current) {
@@ -119,11 +122,7 @@ const FormItensDePeca: React.FC = () => {
           <CardContent>
             <Grid container spacing={2} justify="flex-end">
               <Grid item xs={12} md={6} lg={3}>
-                <SelectField name="peca" fullWidth required label="Peça">
-                  {pecas?.map((peca, indice) => (
-                    <MenuItem key={indice} value={indice}>{peca.descricao}</MenuItem>
-                  ))}
-                </SelectField>
+                <ComboBoxPeca label="Peça" name="peca" required />
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
                 <SelectField name="fornecedor" fullWidth required label="Fornecedor">

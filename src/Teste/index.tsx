@@ -1,13 +1,11 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback, } from 'react';
 import { useContext } from 'react';
 import ApiContext from '../contexts/ApiContext';
-import Marca from '../Types/Marca';
 
 // import { Container } from './styles';
 
 function Teste() {
-  const [marcas, setMarcas] = useState<Marca[]>([])
-  const { post, get } = useContext(ApiContext);
+  const { post,  } = useContext(ApiContext);
 
   const preencher = useCallback(async () => {
 
@@ -35,9 +33,8 @@ function Teste() {
     }
     console.log(new Date(new Date().getTime() * Math.random()));
     console.log(Math.random().toString(36).replace(/[^a-z]+/g, ''))
-  }, [get, post]);
+  }, [post]);
 
-  console.log(marcas)
 
   useEffect(() => {
     //preencher();

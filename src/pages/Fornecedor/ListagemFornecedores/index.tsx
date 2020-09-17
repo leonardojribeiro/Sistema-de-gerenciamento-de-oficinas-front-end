@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
-import FornecedorItem from '../FornecedorItem';
 import Fornecedor from '../../../Types/Fornecedor';
 import { Box, } from '@material-ui/core';
+import PessoaItem from '../../../componentes/PessoaItem';
 
 interface ListagemFornecedoresProps {
   fornecedores: Fornecedor[];
@@ -12,8 +12,13 @@ const ListagemFornecedores: React.FC<ListagemFornecedoresProps> = ({ fornecedore
   return (
     <Box mb={2}>
       {
-        fornecedores.map((cliente, index) => (
-          <FornecedorItem fornecedor={cliente} key={index} />
+        fornecedores?.map((fornecedor, index) => (
+          <PessoaItem
+            {...fornecedor}
+            key={index}
+            linkText={`Alterar o cliente ${fornecedor.nomeFantasia}`}
+            linkToChange={`fornecedores/alterarfornecedor`}
+          />
         ))
       }
     </Box>

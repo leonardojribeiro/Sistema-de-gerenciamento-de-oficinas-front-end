@@ -48,7 +48,7 @@ const DialogoAlterarFornecedor: React.FC = () => {
   }, [popular,])
 
   return (
-    <Dialogo maxWidth="md" fullWidth open title="Alterar cliente">
+    <Dialogo maxWidth="md" fullWidth open title="Alterar Fornecedor">
       <Form initialData={fornecedor} onSubmit={manipularEnvio}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8} md={8}>

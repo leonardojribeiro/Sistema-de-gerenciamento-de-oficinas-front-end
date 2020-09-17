@@ -42,6 +42,12 @@ const PessoaItem: React.FC<PessoaItemProps> = (
                 <Typography > {nome}</Typography>
               </Box>
             }
+            {nomeFantasia &&
+              <Box display="flex" alignItems="center">
+                <PersonIcon />
+                <Typography > {nomeFantasia}</Typography>
+              </Box>
+            }
           </Grid>
           <Hidden xsDown>
             {telefoneCelular &&
@@ -68,6 +74,11 @@ const PessoaItem: React.FC<PessoaItemProps> = (
         <Grid container>
           <Grid container spacing={2} justify="space-between" alignItems="center">
             <Grid item>
+              {razaoSocial &&
+                <Typography >
+                  Razão social: {razaoSocial}
+                </Typography>
+              }
               {cpfCnpj &&
                 <Typography >
                   CPF/CNPJ: {Formato.formatarCpfCnpj(cpfCnpj)}
