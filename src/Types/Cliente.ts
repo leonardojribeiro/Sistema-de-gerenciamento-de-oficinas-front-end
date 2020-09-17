@@ -1,13 +1,8 @@
-import Endereco from "./Endereco";
+import Pessoa from "./Pessoa";
 
-export default interface Cliente {
-  _id?: string;
+export default interface Cliente extends Pessoa {
   nome: string;
   cpfCnpj: string;
   sexo: string;
   dataNascimento: Date;
-  telefoneFixo?: string;
-  telefoneCelular: string;
-  email: string;
-  endereco: Endereco;
 }

@@ -10,27 +10,18 @@ import PersonIcon from '@material-ui/icons/Person';
 import CakeIcon from '@material-ui/icons/Cake';
 import Formato from '../../recursos/Formato';
 import BreakWord from '../BreakWord';
-import Endereco from '../../Types/Endereco';
+import SchoolIcon from '@material-ui/icons/School';
+import Fornecedor from '../../Types/Fornecedor';
+import Cliente from '../../Types/Cliente';
+import Funcionario from '../../Types/Funcionario';
 
-interface PessoaItemProps {
-  _id?: string;
-  nome?: string;
-  nomeFantasia?: string;
-  cpf?: string;
-  cpfCnpj?: string;
-  razaoSocial?: string;
-  sexo?: string;
-  email?: string;
-  dataNascimento?: Date;
-  telefoneCelular?: string;
-  telefoneFixo?: string;
-  endereco?: Endereco;
-  linkText: string;
-  linkToChange: string;
+interface PessoaItemProps extends Funcionario, Cliente, Fornecedor {
+  linkToChangeText: string;
+  linkToChangePath: string;
 }
 
 const PessoaItem: React.FC<PessoaItemProps> = (
-  { _id, nome, nomeFantasia, razaoSocial, cpf, cpfCnpj, dataNascimento, telefoneFixo, telefoneCelular, sexo, email, endereco, linkText, linkToChange }) => {
+  { _id, nome, nomeFantasia, razaoSocial, cpf, cpfCnpj, dataNascimento, telefoneFixo, telefoneCelular, sexo, email, endereco, especialidades, linkToChangeText, linkToChangePath }) => {
   return (
     <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -60,8 +51,8 @@ const PessoaItem: React.FC<PessoaItemProps> = (
             }
             <Grid item sm={1}>
               <Box display="flex" justifyContent="flex-end" alignItems="center">
-                <Tooltip title={linkText}>
-                  <IconButton component={Link} to={`${linkToChange}?id=${_id}`}>
+                <Tooltip title={linkToChangeText}>
+                  <IconButton component={Link} to={linkToChangePath}>
                     <EditIcon />
                   </IconButton>
                 </Tooltip>
@@ -138,19 +129,31 @@ const PessoaItem: React.FC<PessoaItemProps> = (
             </Grid>
           </Grid>
           <Grid container spacing={2} justify="space-between">
-            <Grid item>
+            <Grid item xs={12}>
               <Typography >
                 {endereco && `${endereco.logradouro}, ${endereco.numero} - ${endereco.bairro}. ${endereco.cidade} - ${endereco.estado}. CEP: ${endereco.cep}`}
               </Typography>
             </Grid>
+            {especialidades &&
+              <Grid item xs={12}>
+                <Box display="flex" alignItems="center">
+                  <SchoolIcon />
+                  <Typography>
+                    {
+                      especialidades?.map((especialidade, index) => `${especialidade.descricao}, `)
+                    }
+                  </Typography>
+                </Box>
+              </Grid>
+            }
           </Grid>
         </Grid>
       </AccordionDetails>
       <AccordionActions>
         <Hidden smUp>
           <Grid item>
-            <Tooltip title={linkText}>
-              <IconButton component={Link} to={`${linkToChange}?id=${_id}`}>
+            <Tooltip title={linkToChangeText}>
+              <IconButton component={Link} to={`${linkToChangePath}?id=${_id}`}>
                 <EditIcon />
               </IconButton>
             </Tooltip>

@@ -1,12 +1,7 @@
-import Endereco from "./Endereco";
+import Pessoa from "./Pessoa";
 
-export default interface Fornecedor{
-  _id?: string;
+export default interface Fornecedor extends Pessoa{
   nomeFantasia: string;
   razaoSocial: string;
   cpfCnpj: string;
-  telefoneFixo: string;
-  telefoneCelular: string;
-  email: string;
-  endereco: Endereco;
 }

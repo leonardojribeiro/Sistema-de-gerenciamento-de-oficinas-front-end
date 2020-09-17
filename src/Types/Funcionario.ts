@@ -1,15 +1,10 @@
-import Endereco from "./Endereco";
 import Especialidade from "./Especialidade";
+import Pessoa from "./Pessoa";
 
-export default interface Funcionario{
-  _id?: string;
+export default interface Funcionario extends Pessoa{
   nome: string;
   cpf: string;
   sexo: string;
   dataNascimento: Date;
-  telefoneFixo?: string;
-  telefoneCelular: string;
-  email: string;
   especialidades: Especialidade[];
-  endereco: Endereco;
 }
