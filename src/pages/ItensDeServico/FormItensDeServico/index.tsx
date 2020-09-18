@@ -9,6 +9,7 @@ import Funcionario from '../../../Types/Funcionario';
 import ItemDeServico from '../../../Types/ItemDeServico';
 //import comparar from '../../../recursos/Comparar';
 import OrdemDeServicoContext from '../../OrdemDeServico/OrdemDeServicoContext';
+import AutoCompleteServico from '../../../componentes/ComboBox/AutoCompleteServico';
 
 
 const FormItensDeServico: React.FC = () => {
@@ -105,49 +106,45 @@ const FormItensDeServico: React.FC = () => {
         <CardContent>
           <Grid container spacing={2} justify="flex-end">
             <Grid item xs={12} md={6} lg={3}>
-              <SelectField name="servico" fullWidth required label="Serviço">
-                {servicos?.map((servico, indice) => (
-                  <MenuItem key={indice} value={indice}>{servico.descricao}</MenuItem>
-                ))}
-              </SelectField>
+              <AutoCompleteServico name="servico" label="Serviço" />
             </Grid>
-            <Grid item xs={12} md={6} lg={3}>
-              <SelectField name="funcionario" fullWidth required label="Funcionário">
-                {funcionarios?.map((funcionario, indice) => (
-                  <MenuItem key={indice} value={indice}>{funcionario.nome}</MenuItem>
-                ))}
-              </SelectField>
+              <Grid item xs={12} md={6} lg={3}>
+                <SelectField name="funcionario" fullWidth required label="Funcionário">
+                  {funcionarios?.map((funcionario, indice) => (
+                    <MenuItem key={indice} value={indice}>{funcionario.nome}</MenuItem>
+                  ))}
+                </SelectField>
+              </Grid>
+              <Grid item xs={7} md={2} lg={1}>
+                <CampoDeTexto type="number" name="garantia" fullWidth required label="Garantia" onChange={calcularValorTotal} />
+              </Grid>
+              <Grid item xs={5} md={2} lg={1}>
+                <CampoDeSelecao name="unidadeDeGarantia" label="Tipo" fullWidth required>
+                  <MenuItem value="0">Km</MenuItem>
+                  <MenuItem value="1">Dias</MenuItem>
+                </CampoDeSelecao>
+              </Grid>
+              <Grid item xs={6} md={3} lg={2}>
+                <MoneyField name="valorUnitario" fullWidth required label="Valor unitário" onChange={calcularValorTotal} />
+              </Grid>
+              <Grid item xs={6} md={2} lg={2}>
+                <CampoDeTexto type="number" name="quantidade" fullWidth required label="Quantidade" onChange={calcularValorTotal} />
+              </Grid>
+              <Grid item xs={6} md={3} lg={2}>
+                <MoneyField name="valorTotal" fullWidth required label="ValorTotal" />
+              </Grid>
             </Grid>
-            <Grid item xs={7} md={2} lg={1}>
-              <CampoDeTexto type="number" name="garantia" fullWidth required label="Garantia" onChange={calcularValorTotal} />
-            </Grid>
-            <Grid item xs={5} md={2} lg={1}>
-              <CampoDeSelecao name="unidadeDeGarantia" label="Tipo" fullWidth required>
-                <MenuItem value="0">Km</MenuItem>
-                <MenuItem value="1">Dias</MenuItem>
-              </CampoDeSelecao>
-            </Grid>
-            <Grid item xs={6} md={3} lg={2}>
-              <MoneyField name="valorUnitario" fullWidth required label="Valor unitário" onChange={calcularValorTotal} />
-            </Grid>
-            <Grid item xs={6} md={2} lg={2}>
-              <CampoDeTexto type="number" name="quantidade" fullWidth required label="Quantidade" onChange={calcularValorTotal} />
-            </Grid>
-            <Grid item xs={6} md={3} lg={2}>
-              <MoneyField name="valorTotal" fullWidth required label="ValorTotal" />
-            </Grid>
-          </Grid>
         </CardContent>
-        <CardActions>
-          <Grid container spacing={2} justify="flex-end">
-            <Grid item >
-              <Button type="reset" onClick={handleReset} variant="outlined">{itemDeServicoSelecionado !== undefined ? "Cancelar" : "Limpar"}</Button>
+          <CardActions>
+            <Grid container spacing={2} justify="flex-end">
+              <Grid item >
+                <Button type="reset" onClick={handleReset} variant="outlined">{itemDeServicoSelecionado !== undefined ? "Cancelar" : "Limpar"}</Button>
+              </Grid>
+              <Grid item >
+                <Button type="submit" variant="outlined">{itemDeServicoSelecionado !== undefined ? "Alterar" : "Adicionar"}</Button>
+              </Grid>
             </Grid>
-            <Grid item >
-              <Button type="submit" variant="outlined">{itemDeServicoSelecionado !== undefined ? "Alterar" : "Adicionar"}</Button>
-            </Grid>
-          </Grid>
-        </CardActions>
+          </CardActions>
       </Card>
     </Form >
   );

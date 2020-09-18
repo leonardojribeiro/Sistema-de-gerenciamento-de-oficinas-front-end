@@ -1,8 +1,8 @@
 import { Box } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import usePessoa from '../../hooks/usePessoa';
+import usePessoa from '../../hooks/useListagemPessoa';
 import Cliente from '../../Types/Cliente';
 import Fornecedor from '../../Types/Fornecedor';
 import Funcionario from '../../Types/Funcionario';
@@ -17,11 +17,18 @@ interface ListagemPessoaProps {
   linkToChangePath: (pessoa: Pessoa) => string;
   linkToInsertText: string;
   linkToInsertPath: string;
-  dominio: "funcionario" | "cliente" | "fornecedor"
+  dominio: "funcionario" | "cliente" | "fornecedor";
+  listar?: boolean;
 }
 
-const ListagemPessoa: React.FC<ListagemPessoaProps> = ({ linkToChangePath, linkToChangeText, linkToInsertPath, linkToInsertText, dominio }) => {
-  const { manipularBusca, handlePageChange, pessoas, total, page } = usePessoa<Pessoa>(dominio);
+const ListagemPessoa: React.FC<ListagemPessoaProps> = ({ linkToChangePath, linkToChangeText, linkToInsertPath, linkToInsertText, dominio, ...props }) => {
+  const { manipularBusca, handlePageChange, pessoas, listar, total, page } = usePessoa<Pessoa>(dominio);
+
+  useEffect(() => {
+    if (props.listar) {
+      listar();
+    }
+  }, [props.listar, listar])
 
   return (
     <>

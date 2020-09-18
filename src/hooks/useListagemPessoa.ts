@@ -39,31 +39,32 @@ export default function usePessoa<T>(dominio: "funcionario" | "cliente" | "forne
     }
   }, [dominio, get, getPessoa, page]);
 
-  useEffect(() => {
-    listar();
-  }, [listar]);
-
   const manipularBusca = useCallback(async (dados) => {
     consultaValues.current = dados;
     const resposta = await get(`${dominio}/consulta?${dados.filtro}=${dados.consulta}&limite=20&pagina=${page}`) as any;
     if (resposta) {
-      setLista(resposta);
+      setLista({
+        total: resposta.total,
+        pessoas: getPessoa(resposta),
+      } as Lista<T>);
     }
-  }, [dominio, get, page]);
+  }, [dominio, get, getPessoa, page]);
 
   const handlePageChange = useCallback((event, value) => {
     setPage(value);
   }, []);
 
-  const refresh = useCallback(() => {
-    listar();
-  }, [listar]);
+  useEffect(()=>{
+    if(consultaValues.current){
+      manipularBusca(consultaValues.current)
+    }
+  },[manipularBusca, page])
 
   return {
     ...lista,
     page,
     handlePageChange,
-    manipularBusca,
-    refresh,
+    manipularBusca, 
+    listar,
   }
 }

@@ -51,14 +51,14 @@ const ComboBox: React.FC<ComboBoxProps<any>> =
     }, [fieldName, getValue, path, registerField, validate]);
 
     const fill = useCallback(async () => {
-      if (getDefaultValue && defaultValue && !valueSelected.current && props.options.length > 0) {
+      if (getDefaultValue && defaultValue && !valueSelected.current && props.options?.length > 0) {
         const value = await getDefaultValue(defaultValue);
         if (value) {
           valueSelected.current = value;
           setValue(value);
         }
       }
-    }, [defaultValue, getDefaultValue, props.options.length]);
+    }, [defaultValue, getDefaultValue, props.options]);
 
     useEffect(() => {
       fill()

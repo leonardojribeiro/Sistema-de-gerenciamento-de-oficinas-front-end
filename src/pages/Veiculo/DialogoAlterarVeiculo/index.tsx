@@ -14,8 +14,8 @@ import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import DialogoInserirModelo from '../../Modelo/DialogoInserirModelo';
 import DialogoInserirCliente from '../../Cliente/DialogoInserirCliente';
-import ComboBoxModelo from '../../../componentes/ComboBox/ComboBoxModelo';
-import ComboBoxCliente from '../../../componentes/ComboBox/ComboBoxCliente';
+import AutoCompleteModelo from '../../../componentes/ComboBox/AutoCompleteModelo';
+import AutoCompleteCliente from '../../../componentes/ComboBox/AutoCompleteCliente';
 
 const DialogAlterarVeiculo: React.FC = () => {
   const { get, put } = useContext(ApiContext);
@@ -66,7 +66,7 @@ const DialogAlterarVeiculo: React.FC = () => {
       <DateField name="anoFabricacao" label="Ano de fabricação" fullWidth required />
       <DateField name="anoModelo" label="Ano de modelo" fullWidth required />
       <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-        <ComboBoxModelo name="modelo" label="Modelo" required />
+        <AutoCompleteModelo name="modelo" label="Modelo" required />
         <Link to={`${path}/inserirmodelo`}>
           <Tooltip title="Inserir modelo">
             <IconButton>
@@ -76,7 +76,7 @@ const DialogAlterarVeiculo: React.FC = () => {
         </Link>
       </Box>
       <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-      <ComboBoxCliente name="cliente" label="Cliente" required />
+      <AutoCompleteCliente name="cliente" label="Cliente" required />
         <Link to={`${path}/inserircliente`}>
           <Tooltip title="Inserir cliente">
             <IconButton>

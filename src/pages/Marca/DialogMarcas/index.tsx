@@ -1,8 +1,7 @@
-import React, { useState, useCallback, memo, useEffect, useContext, useRef } from 'react';
+import React, {  memo, useCallback, useEffect } from 'react';
 import { Box, } from '@material-ui/core';
 import Dialogo from '../../../componentes/Dialog';
-import { useLocation, Link, Route, Switch } from 'react-router-dom';
-import ApiContext from '../../../contexts/ApiContext';
+import { Link, Route, Switch } from 'react-router-dom';
 import DialogoInserirMarca from '../DialogInserirMarca';
 import DialogAlterarMarca from '../DialogAlterarMarca';
 import ListagemMarcas from '../ListagemMarcas';
@@ -10,6 +9,7 @@ import BotaoInserir from '../../../componentes/BotaoInserir';
 import Marca from '../../../Types/Marca';
 import { Pagination } from '@material-ui/lab';
 import FormConsultaMarca from '../FormConsultaMarca';
+import useListagem from '../../../hooks/useListagem';
 
 interface ListaMarcas {
   marcas: Marca[];
@@ -17,49 +17,23 @@ interface ListaMarcas {
 }
 
 const DialogMarcas: React.FC = () => {
-  const [marcas, setMarcas] = useState<ListaMarcas>({} as ListaMarcas);
-  const [page, setPage] = useState<number>(1);
-  const { get } = useContext(ApiContext);
-  const { pathname } = useLocation();
-  const consultaValues = useRef<any>();
-
-  const listar = useCallback(async () => {
-    if (!consultaValues.current) {
-      const resposta = await get(`/marca?pagina=${page}&limite=100`);
-      if (resposta) {
-        setMarcas(resposta as ListaMarcas);
-      }
-    }
-  }, [get, page]);
+  const { handlePageChange, handleSearch, itens, total, listar, page, } = useListagem<Marca>("marcas", "marca");
 
   useEffect(() => {
-    if (pathname === "/marcas") {
-      listar();
-    }
-  }, [listar, pathname]);
+    listar();
+  }, [listar]);
 
-  const handleSearch = useCallback(async (consulta, pagina = page) => {
-    consultaValues.current = consulta;
-    const resposta = await get(`/marca/consulta?descricao=${consulta}&limite=100&pagina=${pagina}`) as any;
-    if (resposta) {
-      setMarcas(resposta as ListaMarcas);
-    }
-  }, [get, page]);
-
-  const handlePageChange = useCallback((event, value: number) => {
-    setPage(value);
-    if (consultaValues.current) {
-      handleSearch(consultaValues.current, value)
-    }
-  }, [handleSearch]);
+  const handleSubmitFormSearch = useCallback((search)=>{
+    handleSearch(`descricao=${search}`)
+  },[handleSearch]);
 
   return (
     <Dialogo open fullWidth maxWidth="xs" title="Marcas">
-      <FormConsultaMarca onSubmit={handleSearch} />
+      <FormConsultaMarca onSubmit={handleSubmitFormSearch} />
       <Box display="flex" justifyContent="center" pt={2}>Listagem</Box>
-      <ListagemMarcas marcas={marcas.marcas} />
+      <ListagemMarcas marcas={itens} />
       <Box display="flex" justifyContent="center">
-        <Pagination count={Math.ceil(Number(marcas.total)/100)} onChange={handlePageChange} page={page} />
+        <Pagination count={Math.ceil(Number(total) / 100)} onChange={handlePageChange} page={page} />
       </Box>
       <Link to="marcas/inserirmarca" >
         <BotaoInserir titulo="Inserir marca" />

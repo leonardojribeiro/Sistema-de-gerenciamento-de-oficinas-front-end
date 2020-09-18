@@ -6,11 +6,12 @@ import { DialogActions, Button, MenuItem, Box, Tooltip, IconButton, } from '@mat
 import { useState } from 'react';
 import { Form, CampoDeTexto, DateField, CampoDeSelecao } from '../../../componentes/Form';
 import Cliente from '../../../Types/Cliente';
+import Veiculo from '../../../Types/Veiculo';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import DialogoInserirModelo from '../../Modelo/DialogoInserirModelo';
 import DialogoInserirCliente from '../../Cliente/DialogoInserirCliente';
-import ComboBoxModelo from '../../../componentes/ComboBox/ComboBoxModelo';
+import AutoCompleteModelo from '../../../componentes/ComboBox/AutoCompleteModelo';
 
 
 const DialogoInserirVeiculo: React.FC = () => {
@@ -49,7 +50,7 @@ const DialogoInserirVeiculo: React.FC = () => {
         <DateField name="anoFabricacao" label="Ano de fabricação" fullWidth required views={["year"]} format="yyyy" />
         <DateField name="anoModelo" label="Ano de modelo" fullWidth required views={["year"]} format="yyyy" />
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-          <ComboBoxModelo name="modelo" label="Modelo" required />
+          <AutoCompleteModelo name="modelo" label="Modelo" required />
           <Link to={`${path}/inserirmodelo`}>
             <Tooltip title="Inserir modelo">
               <IconButton>

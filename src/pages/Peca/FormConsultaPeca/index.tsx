@@ -1,7 +1,7 @@
 import React, { useCallback, memo } from 'react';
 import { Card, CardHeader, CardContent } from '@material-ui/core';
 import { Form, CampoDeBusca } from '../../../componentes/Form';
-import ComboBoxMarca from '../../../componentes/ComboBox/ComboBoxMarca';
+import AutoCompleteMarca from '../../../componentes/ComboBox/AutoCompleteMarca';
 
 export interface ConsultaValues {
   marca: String;
@@ -21,7 +21,7 @@ const FormConsultaPeca: React.FC<FormConsultaProps> = ({ onSubmit }) => {
       <CardHeader title="Consulta" />
       <CardContent>
         <Form onSubmit={handleSubmit}>
-          <ComboBoxMarca name="marca" label="Filtrar pela marca" />
+          <AutoCompleteMarca name="marca" label="Filtrar pela marca" />
           <CampoDeBusca name="consulta" fullWidth label="Consulta" />
         </Form>
       </CardContent>

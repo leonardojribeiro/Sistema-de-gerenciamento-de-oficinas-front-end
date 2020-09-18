@@ -11,7 +11,8 @@ import { Form, CampoDeTexto } from '../../../componentes/Form';
 import Peca from '../../../Types/Peca';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import DialogInserirMarca from '../../Marca/DialogInserirMarca';
-import ComboBoxMarca from '../../../componentes/ComboBox/ComboBoxMarca';
+import AutoCompleteMarca from '../../../componentes/ComboBox/AutoCompleteMarca';
+import AutoCompleteModelo from '../../../componentes/ComboBox/AutoCompleteModelo';
 
 const DialogoAlterarModelo: React.FC = () => {
   const { get, put } = useContext(ApiContext);
@@ -59,7 +60,7 @@ const DialogoAlterarModelo: React.FC = () => {
     <Form onSubmit={manipularEnvio} initialData={peca}>
       <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
       <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-        <ComboBoxMarca label="Marca" name="marca" required/>
+        <AutoCompleteModelo label="Marca" name="marca" required/>
         <Link to={`${path}/inserirmarca`}>
           <Tooltip title="Inserir marca">
             <IconButton>
