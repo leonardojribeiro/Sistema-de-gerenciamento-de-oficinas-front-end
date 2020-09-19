@@ -3,7 +3,7 @@ import { useCallback, useContext, useEffect } from "react";
 import ApiContext from "../contexts/ApiContext";
 import useListagem from "./useListagem";
 
-export default function useAutoComplete<T>(pathToItens: string, dominio: string, filterToSearch: string) {
+export default function useAutoComplete<T>(pathToItens: string, dominio: string, filterToSearch: string, listOptionsIn: boolean) {
   const { itens, listar, handleSearch, setItens } = useListagem<T | any>(pathToItens, dominio);
   const { get } = useContext(ApiContext);
 
@@ -40,8 +40,10 @@ export default function useAutoComplete<T>(pathToItens: string, dominio: string,
 
 
   useEffect(() => {
-    listar();
-  }, [listar]);
+    if (listOptionsIn) {
+      listar();
+    }
+  }, [listOptionsIn, listar]);
 
   const handleInputChange = useCallback((event: React.ChangeEvent<{}>, value: string, reason: AutocompleteInputChangeReason) => {
     if (reason === "input" && value.length > 1) {

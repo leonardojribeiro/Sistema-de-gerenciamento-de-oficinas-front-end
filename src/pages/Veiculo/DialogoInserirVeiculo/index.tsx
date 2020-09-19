@@ -1,23 +1,20 @@
-import React, { useContext, useCallback, useEffect, memo } from 'react';
+import React, { useContext, useCallback, memo } from 'react';
 import Dialogo from '../../../componentes/Dialog';
 import ApiContext from '../../../contexts/ApiContext';
 import { useHistory, useRouteMatch, useLocation, Link, Switch, Route } from 'react-router-dom';
-import { DialogActions, Button, MenuItem, Box, Tooltip, IconButton, } from '@material-ui/core';
-import { useState } from 'react';
-import { Form, CampoDeTexto, DateField, CampoDeSelecao } from '../../../componentes/Form';
-import Cliente from '../../../Types/Cliente';
-import Veiculo from '../../../Types/Veiculo';
+import { DialogActions, Button, Box, Tooltip, IconButton, } from '@material-ui/core';
+import { Form, CampoDeTexto, DateField, } from '../../../componentes/Form';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import DialogoInserirModelo from '../../Modelo/DialogoInserirModelo';
 import DialogoInserirCliente from '../../Cliente/DialogoInserirCliente';
 import AutoCompleteModelo from '../../../componentes/ComboBox/AutoCompleteModelo';
+import AutoCompleteCliente from '../../../componentes/ComboBox/AutoCompleteCliente';
 
 
 const DialogoInserirVeiculo: React.FC = () => {
-  const { get, post, } = useContext(ApiContext);
+  const { post, } = useContext(ApiContext);
   const history = useHistory();
-  const [clientes, setClientes] = useState<Cliente[]>([]);
   const { path, url } = useRouteMatch();
   const { pathname } = useLocation();
 
@@ -30,19 +27,6 @@ const DialogoInserirVeiculo: React.FC = () => {
     }
   }, [history, post]);
 
-  const listarClientes = useCallback(async () => {
-    const cliente = await get("/cliente") as Cliente[];
-    if (cliente) {
-      setClientes(cliente);
-    }
-  }, [get]);
-
-  useEffect(() => {
-    if (pathname.endsWith("inserirveiculo")) {
-      listarClientes();
-    }
-  }, [listarClientes, pathname]);
-
   return (
     <Dialogo open title="Inserir veículo" maxWidth="sm" fullWidth>
       <Form onSubmit={manipularEnvio}>
@@ -50,7 +34,7 @@ const DialogoInserirVeiculo: React.FC = () => {
         <DateField name="anoFabricacao" label="Ano de fabricação" fullWidth required views={["year"]} format="yyyy" />
         <DateField name="anoModelo" label="Ano de modelo" fullWidth required views={["year"]} format="yyyy" />
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-          <AutoCompleteModelo name="modelo" label="Modelo" required />
+          <AutoCompleteModelo name="modelo" label="Modelo" required listOptionsIn />
           <Link to={`${path}/inserirmodelo`}>
             <Tooltip title="Inserir modelo">
               <IconButton>
@@ -60,11 +44,7 @@ const DialogoInserirVeiculo: React.FC = () => {
           </Link>
         </Box>
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-          <CampoDeSelecao name="cliente" label="Cliente" required fullWidth >
-            {
-              clientes.map((cliente, indice) => <MenuItem key={indice} value={cliente._id}>{cliente.nome}</MenuItem>)
-            }
-          </CampoDeSelecao>
+          <AutoCompleteCliente name="cliente" label="Cliente" listOptionsIn />
           <Link to={`${path}/inserircliente`}>
             <Tooltip title="Inserir cliente">
               <IconButton>

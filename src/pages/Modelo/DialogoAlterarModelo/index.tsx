@@ -61,7 +61,7 @@ const DialogoAlterarModelo: React.FC = () => {
     <Form onSubmit={manipularEnvio} initialData={modelo}>
       <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
       <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-        <AutoCompleteMarca name="marca" label="Marca" required/>
+        <AutoCompleteMarca name="marca" label="Marca" required listOptionsIn={pathname.endsWith("alterarmodelo")}/>
         <Link to={`${path}/inserirmarca`}>
           <Tooltip title="Inserir marca">
             <IconButton>
@@ -74,7 +74,7 @@ const DialogoAlterarModelo: React.FC = () => {
         <Button type="submit">Salvar</Button>
       </DialogActions>
     </Form>
-  ), [manipularEnvio, modelo, path])
+  ), [manipularEnvio, modelo, path, pathname])
 
   return (
     <Dialogo open title="Alterar modelo" maxWidth="xs" fullWidth>

@@ -122,7 +122,7 @@ const FormItensDePeca: React.FC = () => {
           <CardContent>
             <Grid container spacing={2} justify="flex-end">
               <Grid item xs={12} md={6} lg={3}>
-                <ComboBoxPeca label="Peça" name="peca" required />
+                <ComboBoxPeca label="Peça" name="peca" required listOptionsIn/>
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
                 <SelectField name="fornecedor" fullWidth required label="Fornecedor">

@@ -9,7 +9,7 @@ import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
 import { useMemo } from 'react';
 import { Form, CampoDeTexto, DateField } from '../../../componentes/Form';
 import comparar from '../../../recursos/Comparar';
-import Veiculo from '../../../Types/Veiculo';
+import Veiculo from '../../../Types/Veiculo'; 
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import DialogoInserirModelo from '../../Modelo/DialogoInserirModelo';
@@ -66,7 +66,7 @@ const DialogAlterarVeiculo: React.FC = () => {
       <DateField name="anoFabricacao" label="Ano de fabricação" fullWidth required />
       <DateField name="anoModelo" label="Ano de modelo" fullWidth required />
       <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-        <AutoCompleteModelo name="modelo" label="Modelo" required />
+        <AutoCompleteModelo name="modelo" label="Modelo" required listOptionsIn/>
         <Link to={`${path}/inserirmodelo`}>
           <Tooltip title="Inserir modelo">
             <IconButton>
@@ -76,7 +76,7 @@ const DialogAlterarVeiculo: React.FC = () => {
         </Link>
       </Box>
       <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-      <AutoCompleteCliente name="cliente" label="Cliente" required />
+      <AutoCompleteCliente name="cliente" label="Cliente" required listOptionsIn/>
         <Link to={`${path}/inserircliente`}>
           <Tooltip title="Inserir cliente">
             <IconButton>

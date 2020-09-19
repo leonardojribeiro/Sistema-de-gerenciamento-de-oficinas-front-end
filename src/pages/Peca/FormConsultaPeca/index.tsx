@@ -21,7 +21,7 @@ const FormConsultaPeca: React.FC<FormConsultaProps> = ({ onSubmit }) => {
       <CardHeader title="Consulta" />
       <CardContent>
         <Form onSubmit={handleSubmit}>
-          <AutoCompleteMarca name="marca" label="Filtrar pela marca" />
+          <AutoCompleteMarca name="marca" label="Filtrar pela marca" listOptionsIn/>
           <CampoDeBusca name="consulta" fullWidth label="Consulta" />
         </Form>
       </CardContent>

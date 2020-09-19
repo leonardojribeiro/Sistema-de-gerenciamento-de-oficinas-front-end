@@ -106,7 +106,7 @@ const FormItensDeServico: React.FC = () => {
         <CardContent>
           <Grid container spacing={2} justify="flex-end">
             <Grid item xs={12} md={6} lg={3}>
-              <AutoCompleteServico name="servico" label="Serviço" />
+              <AutoCompleteServico name="servico" label="Serviço" listOptionsIn/>
             </Grid>
               <Grid item xs={12} md={6} lg={3}>
                 <SelectField name="funcionario" fullWidth required label="Funcionário">

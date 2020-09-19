@@ -2,16 +2,10 @@ import React, { memo } from 'react';
 import ComboBox from '../../Form/Fields/ComboBox';
 import Cliente from '../../../Types/Cliente';
 import useAutoComplete from '../../../hooks/useAutoComplete';
+import AutoCompleteProps from '../Types';
 
-interface ComboBoxClienteProps {
-  onChange?: (marca: Cliente | null) => void;
-  label: string;
-  name: string;
-  required?: boolean
-}
-
-const AutoCompleteCliente: React.FC<ComboBoxClienteProps> = ({ onChange, label, name, required }) => {
-  const { getDefaultValue, handleInputChange, options } = useAutoComplete("clientes", "cliente", "nome");
+const AutoCompleteCliente: React.FC<AutoCompleteProps<Cliente>> = ({ onChange, label, name, required, listOptionsIn }) => {
+  const { getDefaultValue, handleInputChange, options } = useAutoComplete<Cliente>("clientes", "cliente", "nome", listOptionsIn);
 
   return (
     <ComboBox
