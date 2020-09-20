@@ -59,16 +59,17 @@ Veja a sessão [deployment](https://facebook.github.io/create-react-app/docs/dep
     - [x] Alteração de Modelos
     - [x] Listagem de Modelos
     - [x] Consulta de Modelos
-  - [ ] Peças
+  - [X] Peças
     - [x] Cadastro de Peças
     - [x] Alteração de Peças
     - [x] Listagem de Peças
-    - [ ] Consulta de Peças
+    - [X] Consulta de Peças
   - [ ] Clientes
     - [x] Cadastro de Clientes
     - [x] Alteração de Clientes
     - [x] Listagem de Clientes
-    - [ ] Consulta de Clientes
+    - [X] Consulta de Clientes
+    - [ ] Consulta de veículos de Clientes
   - [ ] Veículos
     - [x] Cadastro de Veículos
     - [x] Alteração de Veículos
@@ -84,15 +85,15 @@ Veja a sessão [deployment](https://facebook.github.io/create-react-app/docs/dep
     - [x] Alteração de Especialidades
     - [x] Listagem de Especialidades
     - [ ] Consulta de Especialidades
-  - [ ] Funcionários
-    - [ ] Cadastro de Funcionários
-    - [ ] Alteração de Funcionários
-    - [ ] Listagem de Funcionários
+  - [X] Funcionários
+    - [X] Cadastro de Funcionários
+    - [X] Alteração de Funcionários
+    - [X] Listagem de Funcionários
     - [ ] Consulta de Funcionários
   - [ ] Serviços
-    - [ ] Cadastro de Serviços
-    - [ ] Alteração de Serviços
-    - [ ] Listagem de Serviços
+    - [X] Cadastro de Serviços
+    - [X] Alteração de Serviços
+    - [X] Listagem de Serviços
     - [ ] Consulta de Serviços
   - [ ] Ordens de Serviço
     - [ ] Cadastro de Ordens de Serviço
