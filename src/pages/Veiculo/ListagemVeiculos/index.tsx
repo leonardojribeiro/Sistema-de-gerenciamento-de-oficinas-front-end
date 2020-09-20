@@ -6,6 +6,7 @@ import Veiculo from '../../../Types/Veiculo';
 import BotaoInserir from '../../../componentes/BotaoInserir';
 import FormularioConsulta from '../../../componentes/FormularioConsulta';
 import useListagem from '../../../hooks/useListagem';
+import { Pagination } from '@material-ui/lab';
 const useStyles = makeStyles((theme) => ({
   listagem: {
     minHeight: "50vh",
@@ -23,13 +24,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-interface ListagemVeiculosProps {
-  veiculos: Veiculo[];
-}
-
-const ListagemVeiculos: React.FC<ListagemVeiculosProps> = ({ veiculos }) => {
+const ListagemVeiculos: React.FC = () => {
   const classes = useStyles();
-  const { handlePageChange, handleSearch, itens, listar, page, total, pagination } = useListagem<Veiculo>("veiculos", "veiculo");
+  const { handlePageChange, handleSearch, itens, listar, page, total } = useListagem<Veiculo>("veiculos", "veiculo");
 
   useEffect(() => {
     listar();
@@ -82,6 +79,9 @@ const ListagemVeiculos: React.FC<ListagemVeiculosProps> = ({ veiculos }) => {
             </TableBody>
           </Table>
         </TableContainer>
+      </Box>
+      <Box display="flex" justifyContent="center">
+        <Pagination count={Math.ceil(Number(total) / 100)} onChange={handlePageChange} page={page} />
       </Box>
       <BotaoInserir titulo="Inserir veiculo" linkTo="/veiculos/inserirveiculo" />
     </>

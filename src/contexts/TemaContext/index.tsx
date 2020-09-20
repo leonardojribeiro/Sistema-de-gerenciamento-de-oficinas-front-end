@@ -10,7 +10,7 @@ interface ThemeContextValues {
 
 const TemaContexto = createContext<ThemeContextValues>({} as ThemeContextValues);
 
-export const TemaProvider: React.FC = ({ children }) => {
+export const TemaProvider: React.FC = (props: any) => {
   const prefersDarkTheme = useMediaQuery("(prefers-color-scheme: dark)");
   const [temaEscuro, setTemaEscuro] = useState<boolean>(prefersDarkTheme);
   const [tamanhoFonte, setTamanhoFonte] = useState<number>(13);
@@ -56,9 +56,7 @@ export const TemaProvider: React.FC = ({ children }) => {
       type: temaEscuro ? "dark" : "light",
     },
     typography: {
-      allVariants: {
-        fontSize: tamanhoFonte
-      }
+      fontSize: tamanhoFonte,
     },
   });
 
@@ -66,7 +64,7 @@ export const TemaProvider: React.FC = ({ children }) => {
     <TemaContexto.Provider value={{ alterarTema, alterarTamanhoFonte, temaEscuro, tamanhoFonte }}>
       <ThemeProvider theme={responsiveFontSizes(tema)}>
         <Paper square>
-          {children}
+          {props.children}
         </Paper>
       </ThemeProvider>
     </TemaContexto.Provider>

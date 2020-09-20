@@ -5,6 +5,7 @@ import Slide from '../Slide';
 import ItemFuncionalidade from './itemFuncionalidade/ItemFuncionalidade';
 import { Link as LinkScroll, Element, } from 'react-scroll';
 import Rodape from './Rodape';
+import Anim from './Anim';
 
 const PaginaInicial: React.FC = ({ ...props }) => {
 
@@ -19,9 +20,9 @@ const PaginaInicial: React.FC = ({ ...props }) => {
   ]
 
   return (
-    <>
-      <AppBar position="relative" >
-        <Toolbar className="flex justify-between">
+    <main>
+      <AppBar position="static">
+        <Toolbar className="flex justify-between" >
           <LinkScroll to="item" smooth="easeInQuad" duration={500}>
             Funcionalidades
             </LinkScroll>
@@ -32,10 +33,19 @@ const PaginaInicial: React.FC = ({ ...props }) => {
         </Toolbar>
       </AppBar>
 
-      <Box display="flex" className="h-min-barra" alignItems="center" justifyContent="center">
+      
+      <Anim />
+      <Rodape />
+    </main>
+  );
+}
+
+export default PaginaInicial;
+
+/* <Element name="item">
+<Box display="flex" className="h-min-barra" alignItems="center" justifyContent="center">
         <Slide />
       </Box>
-      <Element name="item">
         <Box className="h-total" display="flex" alignItems="center" >
           <Container maxWidth="md">
             <Box display="flex" justifyContent="center" p={2} pb={6}>
@@ -50,10 +60,4 @@ const PaginaInicial: React.FC = ({ ...props }) => {
             </Grid>
           </Container>
         </Box>
-      </Element>
-      <Rodape/>
-    </>
-  );
-}
-
-export default PaginaInicial;
+      </Element> */

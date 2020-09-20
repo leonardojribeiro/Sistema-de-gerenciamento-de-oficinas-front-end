@@ -2,7 +2,7 @@ import React, { memo, useContext, useCallback, useEffect } from 'react';
 import { Switch, Route,  } from 'react-router-dom';
 import PaginaInicial from './componentes/paginaInicial/PaginaInicial';
 import AuthContext from './contexts/AuthContext';
-import PaginaInicialOficina from './componentes/Home/Home';
+import Home from './pages/Home/Home';
 import DialgoMarcas from './pages/Marca/DialogMarcas';
 import DialogoLogin from './pages/Login/DialogLogin';
 import DialogoModelos from './pages/Modelo/DialogoModelos';
@@ -16,7 +16,6 @@ import ApiContext from './contexts/ApiContext';
 import useAuth from './hooks/useAuth';
 import Usuario from './Types/Usuario';
 import DialogServicos from './pages/Servico/DialogServicos';
-import DialogOrdensDeServico from './pages/OrdemDeServico/DialogOrdensDeServico';
 import DialogoEspecialidades from './pages/Especialidade/DialogoEspecialidades';
 import Teste from './Teste';
 
@@ -67,7 +66,7 @@ const Routes: React.FC = () => {
         )
           : (
             <>
-              <PaginaInicialOficina />
+              <Home />
               <Switch>
                 <Route path="/marcas" component={DialgoMarcas} />
                 <Route path="/modelos" component={DialogoModelos} />
@@ -78,7 +77,6 @@ const Routes: React.FC = () => {
                 <Route path="/fornecedores" component={DialogoFornecedores} />
                 <Route path="/funcionarios" component={DialogoFuncionarios} />
                 <Route path="/servicos" component={DialogServicos} />
-                <Route path="/ordensdeservico" component={DialogOrdensDeServico} />
                 <Route path="/opcoes" component={DialogoOpcoes} />
                 <Route path="/popular" exact component={Teste} />
               </Switch>

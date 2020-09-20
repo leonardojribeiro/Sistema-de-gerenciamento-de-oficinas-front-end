@@ -1,5 +1,4 @@
-import { Pagination } from "@material-ui/lab";
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import ApiContext from "../contexts/ApiContext";
 
 interface ListaItens<T> {
@@ -46,12 +45,6 @@ export default function useListagem<T>(pathToItens: string, dominio: string) {
     }
   }, [handleSearch, page])
 
-  const pagination = useCallback(() => {
-    return Pagination({
-      count: 10
-    });
-  }, []);
-
   return {
     ...itens,
     handleSearch,
@@ -59,6 +52,5 @@ export default function useListagem<T>(pathToItens: string, dominio: string) {
     handlePageChange,
     page,
     setItens,
-    pagination,
   }
 }
