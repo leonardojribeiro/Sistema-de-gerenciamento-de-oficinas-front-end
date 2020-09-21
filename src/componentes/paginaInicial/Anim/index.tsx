@@ -49,7 +49,8 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     height: "100vh",
     width: "100%",
-    border: `2px solid ${theme.palette.text.primary}`
+    border: `2px solid ${theme.palette.text.primary}`,
+    zIndex: theme.zIndex.modal,
   },
 }));
 
@@ -211,7 +212,7 @@ const Anim: React.FC = () => {
             opacity: opacitySubTitle,
             position: "absolute"
           }}>
-            <Typography variant="h2">A solução ideal para a sua oficina.</Typography>
+            <Typography align="center" variant="h2">A solução ideal para a sua oficina.</Typography>
           </motion.div>
           <motion.div
             className={classes.absoluteFlexFull}
@@ -249,7 +250,6 @@ const Anim: React.FC = () => {
               <motion.div
                 style={{
                   opacity: imgDesktopOpacity,
-                  width: smallSize ? "200%" : "100%"
                 }}
               >
                 <img src={desktop} alt="desktop" className={classes.img}
