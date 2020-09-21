@@ -33,9 +33,14 @@ const ListagemServicos: React.FC = () => {
   useEffect(() => {
     listar();
   }, [listar]);
+
+  const handleSubmitSearch = useCallback((data) => {
+    handleSearch(`descricao=${data.consulta}`)
+  }, [handleSearch]);
+
   return (
     <>
-      <FormularioConsulta onSubmit={handleSearch} />
+      <FormularioConsulta onSubmit={handleSubmitSearch} />
       <Box mb={2}>
         <TableContainer >
           <Table size="small">

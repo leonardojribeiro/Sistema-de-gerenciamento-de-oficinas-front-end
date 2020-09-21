@@ -100,22 +100,20 @@ const Anim: React.FC = () => {
     [0, 1, 1, 0]
   );
 
-  const scaleFrame = useTransform(
+  const frameScale = useTransform(
     scrollYProgress,
-    [0.15, 0.16, 0.44, 0.45],
-    [0.5, 0.97, 0.97, 0.5]
+    [0.15, 0.17],
+    [0.5, 0.97, ]
   )
-
-  const opacityFrame = useTransform(
+  const frameOpacity = useTransform(
     scrollYProgress,
-    [0.15, 0.16, 0.44, 0.45],
+    [0.15, 0.16, 0.17, 0.25],
     [0, 1, 1, 0]
   )
-
-  const borderRadiusFrame = useTransform(
+  const frameBorderRadius = useTransform(
     scrollYProgress,
-    [0.15, 0.17, 0.43, 0.45],
-    ['35px', '0px', '0px', '35px']
+    [0.15, 0.17, 0.19],
+    ['35px', '0px', '5px']
   )
 
 
@@ -147,7 +145,7 @@ const Anim: React.FC = () => {
 
   const legendResponsiveOpacity = useTransform(
     scrollYProgress,
-    [0.14, 0.16, 0.43, 0.45,],
+    [0.15, 0.17, 0.43, 0.45,],
     [0, 0.8, 0.8, 0,]
   );
   const legendResponsiveTop = useTransform(
@@ -188,15 +186,15 @@ const Anim: React.FC = () => {
 
   return (
     <div className={classes.root} >
-      <div className={classes.section} style={{ height: '90%' }}>
+      <div className={classes.section} style={{ height: '95%' }}>
         <Sticky>
           <div className={classes.absoluteFlexFull}>
             <motion.div
               className={classes.frame}
               style={{
-                scale: scaleFrame,
-                opacity: opacityFrame,
-                borderRadius: borderRadiusFrame,
+                scale: frameScale,
+                opacity: frameOpacity,
+                borderRadius: frameBorderRadius,
               }}
             />
           </div>
@@ -300,6 +298,7 @@ const Anim: React.FC = () => {
             </motion.div>
           </div>
           <Funcionalidades />
+          
         </Sticky>
       </div>
     </div>
