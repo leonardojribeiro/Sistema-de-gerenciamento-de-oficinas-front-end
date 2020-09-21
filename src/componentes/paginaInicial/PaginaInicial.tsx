@@ -1,39 +1,52 @@
 import React from 'react';
-import { Container, Box, Grid, Typography, Button, AppBar, Toolbar } from '@material-ui/core';
+import { Button, AppBar, Toolbar, Box, makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import Slide from '../Slide';
-import ItemFuncionalidade from './itemFuncionalidade/ItemFuncionalidade';
-import { Link as LinkScroll, Element, } from 'react-scroll';
 import Rodape from './Rodape';
 import Anim from './Anim';
+import { motion, useTransform, useViewportScroll } from 'framer-motion';
+
+const useStyles = makeStyles((theme) => ({
+  toolbar: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  main: {
+    position: "relative",
+  },
+  appBarContainer:{
+    position: "absolute",
+    left: 0,
+    right: 0,
+  },
+  appBar:{
+    position: "fixed",
+  }
+}))
 
 const PaginaInicial: React.FC = ({ ...props }) => {
-
-  const funcionalidades = [
-    "Gestão de veículos",
-    "Gestão de clientes",
-    "Gestão de peças",
-    "Gestão de fonecedores",
-    "Gestão de funcionários",
-    "Gestão de serviços",
-    "Gestão de ordens de serviço",
-  ]
+  const classes = useStyles();
+  const { scrollYProgress } = useViewportScroll();
+  const appBarTop = useTransform(
+    scrollYProgress,
+    [0.03, 0.05],
+    ['0%', '-64px'],
+  )
 
   return (
-    <main>
-      <AppBar position="static">
-        <Toolbar className="flex justify-between" >
-          <LinkScroll to="item" smooth="easeInQuad" duration={500}>
-            Funcionalidades
-            </LinkScroll>
-          <LinkScroll to="cadastro" smooth="easeInQuad" duration={500}>
-            Cadastro
-            </LinkScroll>
-          <Button color="inherit" component={Link} to={"/login"}>Login</Button>
-        </Toolbar>
-      </AppBar>
+    <main className={classes.main}>
+      <motion.div
+        className={classes.appBarContainer}
+        style={{
+          marginTop: appBarTop
+        }}
+      >
+        <AppBar className={classes.appBar} position="relative">
+          <Toolbar className={classes.toolbar} >
+            <Button color="inherit" component={Link} to={"/login"}>Login</Button>
+          </Toolbar>
+        </AppBar>
+      </motion.div>
 
-      
       <Anim />
       <Rodape />
     </main>

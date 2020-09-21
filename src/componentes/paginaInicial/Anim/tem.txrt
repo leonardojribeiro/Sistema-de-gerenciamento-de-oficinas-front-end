@@ -1,0 +1,60 @@
+<motion.svg width={394.7} height={196.4} className={classes.img}
+              filter="drop-shadow( 6px 3px 2px rgba(0, 0, 0, .7))" >
+              <motion.g>
+                <motion.path
+                  d="M102.4,113l-7.3-7.3c-3-3-3-7.8,0-10.8l34.4-34.4c6-6,6-15.8,0-21.8l-27.1-27.1L83.1,30.9c-3.3,3.3-3.3,8.8,0,12.1l6.6,6.6
+                  L102.4,37l6.9,6.9c3.2,3.2,3.2,8.4,0,11.6L76.1,88.6c-6.5,6.5-6.5,17,0,23.5l26.3,26.3l30.7-30.7c4.1-4.1,4.1-10.7,0-14.7l-5.3-5.3
+                  L102.4,113z"
+                  strokeDashoffset={uegStrokeOfset}
+                  strokeDasharray={uegDashArray}
+                  fillOpacity={uegfillOpacity}
+                  stroke="#000"
+                />
+                <motion.path
+                  strokeDashoffset={uegStrokeOfset}
+                  strokeDasharray={uegDashArray}
+                  fillOpacity={uegfillOpacity}
+                  stroke="#000" d="M146.9,68.4l-6.6,6.6l25.3,25.3l-76,76l5.4,5.4c4,4,10.6,4,14.6,0l81.4-81.4l-31.9-31.9C155.8,65.1,150.3,65.1,146.9,68.4z" />
+                <motion.path
+                  strokeDashoffset={uegStrokeOfset}
+                  strokeDasharray={uegDashArray}
+                  fillOpacity={uegfillOpacity}
+                  stroke="#000" d="M39,100.4l38-38l-6.1-6.1c-3.6-3.6-9.5-3.6-13.2,0l-44.1,44.1l55.5,55.5c4.3,4.3,11.3,4.3,15.6,0l4.9-4.9L39,100.4z" />
+              </motion.g>
+              <motion.g>
+                <motion.path strokeDashoffset={uegStrokeOfset}
+                  strokeDasharray={uegDashArray}
+                  fillOpacity={uegfillOpacity}
+                  stroke="#000"
+                  d="M250.2,58.4h3.7c5.8,0,10.6,4.7,10.6,10.6v45.2c0,16.4-10,24.2-26.7,24.2s-26-7.8-26-24.2V58.4h3.7
+	              	c5.8,0,10.5,4.7,10.5,10.5v44.6c0,7.5,3.3,12.4,11.8,12.4c8.5,0,12.5-4.9,12.5-12.4V58.4z"/>
+                <motion.path strokeDashoffset={uegStrokeOfset}
+                  strokeDasharray={uegDashArray}
+                  fillOpacity={uegfillOpacity}
+                  stroke="#000" d="M317.3,126.3v-0.8h-31.5v-20.4h15.3c6.4,0,11.6-5.2,11.6-11.6v-1.2h-26.8v-21h21.4c6.4,0,11.6-5.2,11.6-11.6v-1.4h-47.2
+		              v79.6h34.2C312.1,137.9,317.3,132.7,317.3,126.3z"/>
+                <motion.path strokeDashoffset={uegStrokeOfset}
+                  strokeDasharray={uegDashArray}
+                  fillOpacity={uegfillOpacity}
+                  stroke="#000" d="M347.6,92.6h15.2c6.4,0,11.6,5.2,11.6,11.6v9.1c0,17.4-8.3,25-27.1,25s-26.5-7.5-26.5-24.7V81.7c0-16.2,7.3-23.7,26.5-23.7
+                  c14.8,0,24.7,3.8,26.1,13.6c0.8,5.6-3.2,10.2-8.9,10.2l-4.4,0c0-7.4-1.9-11.1-12.9-11.1c-10.3,0-12.3,4.6-12.3,11.9v31.2
+                  c0,7.5,2,11.9,12.3,11.9c10.3,0,13.9-4.3,13.9-12.2v-7.7h-4.8c-4.8,0-8.7-3.9-8.7-8.7V92.6z"/>
+              </motion.g>
+            </motion.svg>
+
+            
+  const uegStrokeOfset = useTransform(
+    scrollYProgress,
+    [0.55, 0.60],
+    [0, 100]
+  )
+  const uegDashArray = useTransform(
+    scrollYProgress,
+    [0.55, 0.60],
+    [100, 0]
+  )
+  const uegfillOpacity = useTransform(
+    scrollYProgress,
+    [0.59, 0.60],
+    [0, 1]
+  )
