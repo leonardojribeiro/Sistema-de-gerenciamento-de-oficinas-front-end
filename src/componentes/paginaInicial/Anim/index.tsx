@@ -1,4 +1,4 @@
-import { makeStyles, Typography } from '@material-ui/core';
+import { makeStyles, Typography, useMediaQuery, useTheme } from '@material-ui/core';
 import React from 'react';
 import { motion, useTransform, useViewportScroll, } from "framer-motion";
 import Sticky from '../Sticky';
@@ -54,9 +54,39 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+const Funcionalidades: React.FC = () => {
+  const classes = useStyles();
+  const { scrollYProgress } = useViewportScroll();
+
+  const legendFunctionsTitleOpacity = useTransform(
+    scrollYProgress,
+    [0.45, 0.46],
+    [0, 1]
+  );
+
+  return (
+    <>
+      <div className={classes.absoluteFlexFull}>
+        <motion.div
+          className={classes.legend}
+          style={{
+            opacity: legendFunctionsTitleOpacity,
+            maxWidth: "500px",
+            marginTop: '-5vh'
+          }}
+        >
+          <Typography align="justify" variant="h4"  >Principais funcionalidades</Typography>
+        </motion.div>
+      </div>
+    </>
+  )
+}
+
 
 const Anim: React.FC = () => {
   const classes = useStyles();
+  const smallSize = useMediaQuery(useTheme().breakpoints.down('sm'))
+  console.log(smallSize)
   const { scrollYProgress } = useViewportScroll();
   const opacityTitle = useTransform(
     scrollYProgress,
@@ -71,27 +101,31 @@ const Anim: React.FC = () => {
 
   const scaleFrame = useTransform(
     scrollYProgress,
-    [0.15, 0.16,  0.44, 0.45],
+    [0.15, 0.16, 0.44, 0.45],
     [0.5, 0.97, 0.97, 0.5]
   )
 
   const opacityFrame = useTransform(
     scrollYProgress,
-    [0.15, 0.16, 0.44, 0.45 ],
+    [0.15, 0.16, 0.44, 0.45],
     [0, 1, 1, 0]
   )
 
   const borderRadiusFrame = useTransform(
     scrollYProgress,
-    [0.15, 0.17, 0.43, 0.45 ],
+    [0.15, 0.17, 0.43, 0.45],
     ['35px', '0px', '0px', '35px']
   )
 
 
   const marginLeftSlide = useTransform(
     scrollYProgress,
-    [0.15, 0.17, 0.23, 0.27, 0.33, 0.37, 0.43, 0.45],
-    ['100%', '0%', '0%', '-100%', '-100%', '-200%', '-200%', '-300%']
+    smallSize
+      ? [0.15, 0.17, 0.23, 0.27, 0.33, 0.37, 0.45]
+      : [0.15, 0.17, 0.23, 0.27, 0.33, 0.37, 0.43, 0.45],
+    smallSize
+      ? ['100%', '0%', '0%', '-100%', '-100%', '-200%', '-400%']
+      : ['100%', '0%', '0%', '-100%', '-100%', '-200%', '-200%', '-300%']
   );
 
   const imgMobileOpacity = useTransform(
@@ -182,7 +216,7 @@ const Anim: React.FC = () => {
           <motion.div
             className={classes.absoluteFlexFull}
             style={{
-              width: "300%",
+              width: smallSize ? "400%" : "300%",
               marginLeft: marginLeftSlide,
             }}
           >
@@ -206,10 +240,16 @@ const Anim: React.FC = () => {
                 />
               </motion.div>
             </div>
-            <div className={classes.flexFull}>
+            <div
+              className={classes.flexFull}
+              style={{
+                width: smallSize ? "200%" : "100%"
+              }}
+            >
               <motion.div
                 style={{
-                  opacity: imgDesktopOpacity
+                  opacity: imgDesktopOpacity,
+                  width: smallSize ? "200%" : "100%"
                 }}
               >
                 <img src={desktop} alt="desktop" className={classes.img}
@@ -259,9 +299,7 @@ const Anim: React.FC = () => {
               <Typography align="justify" variant="h5"  >Ou larga.</Typography>
             </motion.div>
           </div>
-          <div className={classes.absoluteFlexFull}>
-            <motion.div></motion.div>
-          </div>
+          <Funcionalidades />
         </Sticky>
       </div>
     </div>
