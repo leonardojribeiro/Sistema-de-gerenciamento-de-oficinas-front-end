@@ -12,7 +12,7 @@ interface ComboBoxProps<T> extends Omit<AutocompleteProps<T, false, false, false
   getDefaultValue?: (value: T,) => Promise<T>;
 }
 
-const ComboBox: React.FC<ComboBoxProps<any>> =
+const AutoComplete: React.FC<ComboBoxProps<any>> =
   ({ getDefaultValue, path, name, label, required, onChange, ...props }) => {
     const [value, setValue] = useState<any>(null);
     const [valid, setValid] = useState(true);
@@ -96,4 +96,4 @@ const ComboBox: React.FC<ComboBoxProps<any>> =
     );
   }
 
-export default memo(ComboBox);
+export default memo(AutoComplete);

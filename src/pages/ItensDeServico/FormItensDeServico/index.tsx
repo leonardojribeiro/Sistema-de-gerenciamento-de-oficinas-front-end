@@ -9,7 +9,7 @@ import Funcionario from '../../../Types/Funcionario';
 import ItemDeServico from '../../../Types/ItemDeServico';
 //import comparar from '../../../recursos/Comparar';
 import OrdemDeServicoContext from '../../OrdemDeServico/OrdemDeServicoContext';
-import AutoCompleteServico from '../../../componentes/ComboBox/AutoCompleteServico';
+import AutoCompleteServico from '../../../componentes/AutoComplete/AutoCompleteServico';
 
 
 const FormItensDeServico: React.FC = () => {

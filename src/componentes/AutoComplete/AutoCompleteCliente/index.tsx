@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import ComboBox from '../../Form/Fields/ComboBox';
+import AutoComplete from '../../Form/Fields/AutoComplete';
 import Cliente from '../../../Types/Cliente';
 import useAutoComplete from '../../../hooks/useAutoComplete';
 import AutoCompleteProps from '../Types';
@@ -8,7 +8,7 @@ const AutoCompleteCliente: React.FC<AutoCompleteProps<Cliente>> = ({ onChange, l
   const { getDefaultValue, handleInputChange, options } = useAutoComplete<Cliente>("clientes", "cliente", "nome", listOptionsIn);
 
   return (
-    <ComboBox
+    <AutoComplete
       getDefaultValue={getDefaultValue}
       onInputChange={handleInputChange}
       name={name}

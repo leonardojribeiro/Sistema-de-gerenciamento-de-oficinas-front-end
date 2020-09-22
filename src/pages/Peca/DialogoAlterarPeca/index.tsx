@@ -11,7 +11,7 @@ import { Form, CampoDeTexto } from '../../../componentes/Form';
 import Peca from '../../../Types/Peca';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import DialogInserirMarca from '../../Marca/DialogInserirMarca';
-import AutoCompleteMarca from '../../../componentes/ComboBox/AutoCompleteMarca';
+import AutoCompleteMarca from '../../../componentes/AutoComplete/AutoCompleteMarca';
 
 const DialogoAlterarModelo: React.FC = () => {
   const { get, put } = useContext(ApiContext);

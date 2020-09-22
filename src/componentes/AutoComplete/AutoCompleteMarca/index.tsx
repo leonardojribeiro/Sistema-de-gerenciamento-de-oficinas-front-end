@@ -1,14 +1,14 @@
 import React, { memo } from 'react';
-import ComboBox from '../../Form/Fields/ComboBox';
+import Marca from '../../../Types/Marca';
+import AutoComplete from '../../Form/Fields/AutoComplete';
 import useAutoComplete from '../../../hooks/useAutoComplete';
-import Modelo from '../../../Types/Modelo';
 import AutoCompleteProps from '../Types';
 
-const AutoCompleteModelo: React.FC<AutoCompleteProps<Modelo>> = ({ onChange, label, name, required, listOptionsIn }) => {
-  const { getDefaultValue, handleInputChange, options } = useAutoComplete<Modelo>("modelos", "modelo", "descricao", listOptionsIn);
+const AutoCompleteMarca: React.FC<AutoCompleteProps<Marca>> = ({ onChange, label, name, required, listOptionsIn }) => {
+  const { handleInputChange, getDefaultValue, options } = useAutoComplete<Marca>("marcas", "marca", "descricao", listOptionsIn);
 
   return (
-    <ComboBox
+    <AutoComplete
       getDefaultValue={getDefaultValue}
       onInputChange={handleInputChange}
       name={name}
@@ -28,4 +28,4 @@ const AutoCompleteModelo: React.FC<AutoCompleteProps<Modelo>> = ({ onChange, lab
   );
 }
 
-export default memo(AutoCompleteModelo);
+export default memo(AutoCompleteMarca);

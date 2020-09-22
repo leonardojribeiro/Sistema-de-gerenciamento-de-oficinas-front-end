@@ -1,7 +1,7 @@
 import React, { useCallback, memo } from 'react';
 import { Card, CardHeader, CardContent } from '@material-ui/core';
 import { Form, CampoDeBusca } from '../../../componentes/Form';
-import AutoCompleteMarca from '../../../componentes/ComboBox/AutoCompleteMarca';
+import AutoCompleteMarca from '../../../componentes/AutoComplete/AutoCompleteMarca';
 
 export interface ConsultaValues {
   marca: String;

@@ -1,22 +1,22 @@
 import React, { memo } from 'react';
+import AutoComplete from '../../Form/Fields/AutoComplete';
 import useAutoComplete from '../../../hooks/useAutoComplete';
-import Servico from '../../../Types/Servico';
-import ComboBox from '../../Form/Fields/ComboBox';
+import Modelo from '../../../Types/Modelo';
 import AutoCompleteProps from '../Types';
 
-const AutoCompleteServico: React.FC<AutoCompleteProps<Servico>> = ({ label, name, onChange, required, listOptionsIn }) => {
-  const { getDefaultValue, handleInputChange, options } = useAutoComplete("servicos", "servico", "descricao", listOptionsIn);
+const AutoCompleteModelo: React.FC<AutoCompleteProps<Modelo>> = ({ onChange, label, name, required, listOptionsIn }) => {
+  const { getDefaultValue, handleInputChange, options } = useAutoComplete<Modelo>("modelos", "modelo", "descricao", listOptionsIn);
 
   return (
-    <ComboBox
+    <AutoComplete
       getDefaultValue={getDefaultValue}
       onInputChange={handleInputChange}
       name={name}
       label={label}
-      path="current"
+      path="current._id"
       fullWidth
       options={options}
-      loading={options?.length === 0}
+      loading={options.length === 0}
       noOptionsText="Nenhuma Opção"
       loadingText="Carregando"
       clearText="Limpar"
@@ -28,4 +28,4 @@ const AutoCompleteServico: React.FC<AutoCompleteProps<Servico>> = ({ label, name
   );
 }
 
-export default memo(AutoCompleteServico);
+export default memo(AutoCompleteModelo);

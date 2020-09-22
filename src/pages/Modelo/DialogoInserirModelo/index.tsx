@@ -6,7 +6,7 @@ import { DialogActions, Button, IconButton, Tooltip, Box } from '@material-ui/co
 import { Form, CampoDeTexto } from '../../../componentes/Form';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import DialogInserirMarca from '../../Marca/DialogInserirMarca';
-import AutoCompleteMarca from '../../../componentes/ComboBox/AutoCompleteMarca';
+import AutoCompleteMarca from '../../../componentes/AutoComplete/AutoCompleteMarca';
 
 const DialogoInserirModelo: React.FC = () => {
   const { post } = useContext(ApiContext);

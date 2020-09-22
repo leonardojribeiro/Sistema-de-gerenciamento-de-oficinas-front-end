@@ -8,8 +8,8 @@ import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import DialogoInserirModelo from '../../Modelo/DialogoInserirModelo';
 import DialogoInserirCliente from '../../Cliente/DialogoInserirCliente';
-import AutoCompleteModelo from '../../../componentes/ComboBox/AutoCompleteModelo';
-import AutoCompleteCliente from '../../../componentes/ComboBox/AutoCompleteCliente';
+import AutoCompleteModelo from '../../../componentes/AutoComplete/AutoCompleteModelo';
+import AutoCompleteCliente from '../../../componentes/AutoComplete/AutoCompleteCliente';
 
 
 const DialogoInserirVeiculo: React.FC = () => {
