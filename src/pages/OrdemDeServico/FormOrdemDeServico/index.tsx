@@ -1,10 +1,9 @@
-import React, { useContext, memo, useEffect, useRef, useCallback, useState } from 'react';
+import React, { useContext, memo, useEffect, useRef, useCallback, } from 'react';
 import { Container, Grid, MenuItem, Button, makeStyles, CardHeader, Card, CardContent, CardActions } from '@material-ui/core';
 import { Form, DateField, CampoDeTexto, MoneyField, CampoDeSelecao, } from '../../../componentes/Form';
 import OrdemDeServicoContext from '../OrdemDeServicoContext';
 import { FormProviderHandles } from '../../../componentes/Form/types';
-import Veiculo from '../../../Types/Veiculo';
-import ApiContext from '../../../contexts/ApiContext';
+import AutoCompleteVeiculo from '../../../componentes/AutoComplete/AutoCompleteVeiculo';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,19 +16,6 @@ const FormOrdemDeServico: React.FC = () => {
   const classes = useStyles();
   const { handleSubmit, valorTotalPecas, valorTotalServicos } = useContext(OrdemDeServicoContext);
   const formRef = useRef<FormProviderHandles>({} as FormProviderHandles);
-  const [veiculos, setVeiculos] = useState<Veiculo[]>([]);
-  const { get } = useContext(ApiContext);
-  const popularVeiculos = useCallback(async () => {
-    const veiculos = await get('veiculo') as Veiculo[];
-    if (veiculos) {
-      setVeiculos(veiculos);
-    }
-  }, [get]);
-
-  useEffect(() => {
-    popularVeiculos();
-  }, [popularVeiculos]);
-
 
   const calcularValorTotal = useCallback(() => {
     if (formRef.current) {
@@ -63,11 +49,7 @@ const FormOrdemDeServico: React.FC = () => {
           <CardContent>
             <Grid container spacing={3}>
               <Grid item xs={12}>
-                <CampoDeSelecao name="veiculo" label="Veículo" required fullWidth>
-                  {veiculos.map((veiculo, indice) => (
-                    <MenuItem value={veiculo._id} key={indice}>{veiculo.placa}</MenuItem>
-                  ))}
-                </CampoDeSelecao>
+                <AutoCompleteVeiculo name="veiculo" label="Veículo" required listOptionsIn />
               </Grid>
               <Grid item xs={12} sm={6} md={6} >
                 <DateField name="dataDeRegistro" label="Data de registro" required fullWidth allowKeyboardControl />

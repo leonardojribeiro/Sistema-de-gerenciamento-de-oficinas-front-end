@@ -34,7 +34,7 @@ const DialogoInserirVeiculo: React.FC = () => {
         <DateField name="anoFabricacao" label="Ano de fabricação" fullWidth required views={["year"]} format="yyyy" />
         <DateField name="anoModelo" label="Ano de modelo" fullWidth required views={["year"]} format="yyyy" />
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-          <AutoCompleteModelo name="modelo" label="Modelo" required listOptionsIn />
+          <AutoCompleteModelo name="modelo" label="Modelo" required listOptionsIn={pathname.endsWith("inserirveiculo")} />
           <Link to={`${path}/inserirmodelo`}>
             <Tooltip title="Inserir modelo">
               <IconButton>
@@ -44,7 +44,7 @@ const DialogoInserirVeiculo: React.FC = () => {
           </Link>
         </Box>
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-          <AutoCompleteCliente name="cliente" label="Cliente" listOptionsIn />
+          <AutoCompleteCliente name="cliente" label="Cliente"  listOptionsIn={pathname.endsWith("inserirveiculo")} />
           <Link to={`${path}/inserircliente`}>
             <Tooltip title="Inserir cliente">
               <IconButton>

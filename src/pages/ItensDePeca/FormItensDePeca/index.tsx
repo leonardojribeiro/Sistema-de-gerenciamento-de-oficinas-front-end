@@ -1,15 +1,12 @@
-import React, { useCallback, useState, useContext, useEffect, useRef, memo } from 'react';
+import React, { useCallback, useContext, useRef, memo } from 'react';
 import { Form, MoneyField, CampoDeTexto, CampoDeSelecao } from '../../../componentes/Form';
-import Peca from '../../../Types/Peca';
-import ApiContext from '../../../contexts/ApiContext';
-import SelectField from '../../../componentes/Form/Fields/SelectField';
 import { Grid, MenuItem, Button, Card, CardContent, CardActions, Box, makeStyles, CardHeader } from '@material-ui/core';
 import { FormProviderHandles } from '../../../componentes/Form/types';
-import Fornecedor from '../../../Types/Fornecedor';
 import ItemDePeca from '../../../Types/ItemDePeca';
 //import comparar from '../../../recursos/Comparar';
 import OrdemDeServicoContext from '../../OrdemDeServico/OrdemDeServicoContext';
 import AutoCompletePeca from '../../../componentes/AutoComplete/AutoCompletePeca';
+import AutoCompleteFornecedor from '../../../componentes/AutoComplete/AutoCompleteFornecedor';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -19,35 +16,9 @@ const useStyles = makeStyles((theme) => ({
 
 const FormItensDePeca: React.FC = () => {
   const classes = useStyles();
-  const [pecas, setPecas] = useState<Peca[] | undefined>(undefined);
-  const [fornecedores, setForncedores] = useState<Fornecedor[] | undefined>(undefined);
-  const { get } = useContext(ApiContext);
   const formRef = useRef<FormProviderHandles>({} as FormProviderHandles);
   const { itensDePeca, itemDePecaSelecionado, setItemDePecaSelecionado, setItensDePeca } = useContext(OrdemDeServicoContext);
 
-  const popularPecas = useCallback(async () => {
-    const pecas = await get('peca') as Peca[];
-    if (pecas) {
-      setPecas(pecas);
-    }
-  }, [get]);
-
-  const popularFornecedores = useCallback(async () => {
-    const fornecedores = await get('fornecedor') as Fornecedor[];
-    if (fornecedores) {
-      setForncedores(fornecedores);
-    }
-  }, [get]);
-
-  useEffect(() => {
-    popularPecas();
-    console.log("listando peças")
-  }, [popularPecas]);
-
-  useEffect(() => {
-    popularFornecedores();
-    console.log("listando fornecedores")
-  }, [popularFornecedores]);
 
   // const validar = useCallback((dados: ItemDePeca) => {
   //   let igual = false;
@@ -60,34 +31,34 @@ const FormItensDePeca: React.FC = () => {
   // }, [itensDePeca]);
 
   const handleSubmit = useCallback((dados) => {
-    if (fornecedores) {
-      console.log(dados.peca)
-      const itemDePeca = {
-        peca: dados.peca,
-        fornecedor: fornecedores[Number(dados.fornecedor)],
-        valorUnitario: Number(dados.valorUnitario),
-        garantia: Number(dados.garantia),
-        unidadeDeGarantia: dados.unidadeDeGarantia,
-        quantidade: Number(dados.quantidade),
-        valorTotal: Number(dados.valorUnitario) * Number(dados.quantidade),
-        _id: itensDePeca.length,
-      } as ItemDePeca;
-      //if (!validar(itemDePeca)) {
-      if (itemDePecaSelecionado !== undefined) {
-        setItensDePeca([
-          ...itensDePeca.slice(0, itemDePecaSelecionado),
-          itemDePeca,
-          ...itensDePeca.slice(itemDePecaSelecionado + 1)
-        ]);
-        setItemDePecaSelecionado(undefined)
-      }
-      else {
-        console.log('ins')
-        setItensDePeca((ItensDePeca) => [...ItensDePeca, itemDePeca])
-      }
-      //  }
+    // if () {
+    console.log(dados.peca)
+    const itemDePeca = {
+      peca: dados.peca,
+      fornecedor: (dados.fornecedor),
+      valorUnitario: Number(dados.valorUnitario),
+      garantia: Number(dados.garantia),
+      unidadeDeGarantia: dados.unidadeDeGarantia,
+      quantidade: Number(dados.quantidade),
+      valorTotal: Number(dados.valorUnitario) * Number(dados.quantidade),
+      _id: itensDePeca.length,
+    } as ItemDePeca;
+    //if (!validar(itemDePeca)) {
+    if (itemDePecaSelecionado !== undefined) {
+      setItensDePeca([
+        ...itensDePeca.slice(0, itemDePecaSelecionado),
+        itemDePeca,
+        ...itensDePeca.slice(itemDePecaSelecionado + 1)
+      ]);
+      setItemDePecaSelecionado(undefined)
     }
-  }, [fornecedores, itemDePecaSelecionado, itensDePeca, setItemDePecaSelecionado, setItensDePeca]);
+    else {
+      console.log('ins')
+      setItensDePeca((ItensDePeca) => [...ItensDePeca, itemDePeca])
+    }
+    //  }
+    // }
+  }, [itemDePecaSelecionado, itensDePeca, setItemDePecaSelecionado, setItensDePeca]);
 
   const calcularValorTotal = useCallback(() => {
     if (formRef.current) {
@@ -98,8 +69,6 @@ const FormItensDePeca: React.FC = () => {
   }, []);
 
   const intialData = itemDePecaSelecionado !== undefined ? {
-    peca: pecas?.findIndex(peca => peca._id === itensDePeca[itemDePecaSelecionado].peca._id),
-    fornecedor: fornecedores?.findIndex(fornecedor => fornecedor._id === itensDePeca[itemDePecaSelecionado].fornecedor._id),
     valorUnitario: itensDePeca[itemDePecaSelecionado].valorUnitario,
     garantia: itensDePeca[itemDePecaSelecionado].garantia,
     unidadeDeGarantia: itensDePeca[itemDePecaSelecionado].unidadeDeGarantia,
@@ -122,14 +91,10 @@ const FormItensDePeca: React.FC = () => {
           <CardContent>
             <Grid container spacing={2} justify="flex-end">
               <Grid item xs={12} md={6} lg={3}>
-                <AutoCompletePeca label="Peça" name="peca" required listOptionsIn/>
+                <AutoCompletePeca label="Peça" name="peca" required listOptionsIn />
               </Grid>
               <Grid item xs={12} md={6} lg={3}>
-                <SelectField name="fornecedor" fullWidth required label="Fornecedor">
-                  {fornecedores?.map((fornecedor, indice) => (
-                    <MenuItem key={indice} value={indice}>{fornecedor.nomeFantasia}</MenuItem>
-                  ))}
-                </SelectField>
+                <AutoCompleteFornecedor label="Fornecedor" name="fornecedor" required listOptionsIn />
               </Grid>
               <Grid item xs={7} md={2} lg={1}>
                 <CampoDeTexto type="number" name="garantia" fullWidth required label="Garantia" onChange={calcularValorTotal} />

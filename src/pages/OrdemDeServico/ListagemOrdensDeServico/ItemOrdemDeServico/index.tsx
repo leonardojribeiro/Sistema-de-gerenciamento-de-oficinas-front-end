@@ -5,6 +5,8 @@ import OrdemDeServico from '../../../../Types/OrdemDeServico';
 import Fornecedor from '../../../../Types/Fornecedor';
 import Peca from '../../../../Types/Peca';
 import CircularProgressWithLabel from '../../../../componentes/CircularProgressWithLabel';
+import Funcionario from '../../../../Types/Funcionario';
+import Servico from '../../../../Types/Servico';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -18,7 +20,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   listagem: {
-    height: "200px"
+    [theme.breakpoints.up("md")]: {
+      height: "200px"
+    }
   },
   containerValorTotalListagem: {
     display: "flex",
@@ -35,34 +39,53 @@ interface AgrupamentoPecasPorFornecedor extends Fornecedor {
   pecas: Peca[];
 }
 
+interface AgrupamentoServicosPorFuncionario extends Funcionario {
+  servicos: Servico[];
+}
+
 const ItemOrdemDeServico: React.FC<ItemOrdemDeServicoProps> = ({ ordemDeServico }) => {
   const classes = useStyles();
 
-  // const organizarOrdensDeServico = () => {
-  //   const agrupamentos: AgrupamentoPecasPorFornecedor[] = [];
+  const agruparPecasPorFornecedor = () => {
+    const agrupamentos: AgrupamentoPecasPorFornecedor[] = [];
+    ordemDeServico.itensDePeca?.forEach((itemDePeca) => {
+      if (agrupamentos.findIndex((agrupamento) =>
+        agrupamento._id === itemDePeca.fornecedor._id
+      ) === -1) {
+        agrupamentos.push({ ...itemDePeca.fornecedor, pecas: [] });
+      }
+    })
+    agrupamentos.forEach((agrupamento) => {
+      ordemDeServico.itensDePeca?.forEach((itemDePeca, indice) => {
+        if (agrupamento._id === itemDePeca.fornecedor._id && ordemDeServico.itensDePeca) {
+          agrupamento.pecas.push(ordemDeServico.itensDePeca[indice].peca)
+        }
+      })
+    });
+    return agrupamentos;
+  }
 
-  //   ordemDeServico.itensDePeca?.forEach((itemDePeca) => {
-  //     if (agrupamentos.findIndex(
-  //       (agrupamento) =>
-  //         agrupamento._id === itemDePeca.fornecedor._id)
-  //       === -1) {
-  //       agrupamentos.push({ ...itemDePeca.fornecedor, pecas: [] });
-  //     }
-  //   })
+  const agruparServicosPorFuncionario = () => {
+    const agrupamentos: AgrupamentoServicosPorFuncionario[] = [];
+    ordemDeServico.itensDeServico?.forEach((itemDeServico) => {
+      if (agrupamentos.findIndex((agrupamento) =>
+        agrupamento._id === itemDeServico.funcionario._id
+      ) === -1) {
+        agrupamentos.push({ ...itemDeServico.funcionario, servicos: [] });
+      }
+    })
+    agrupamentos.forEach((agrupamento) => {
+      ordemDeServico.itensDeServico?.forEach((itemDeServico, indice) => {
+        if (agrupamento._id === itemDeServico.funcionario._id && ordemDeServico.itensDeServico) {
+          agrupamento.servicos.push(ordemDeServico.itensDeServico[indice].servico)
+        }
+      })
+    });
+    return agrupamentos;
+  }
 
-  //   agrupamentos.forEach((agrupamento) => {
-  //     ordemDeServico.itensDePeca?.forEach((itemDePeca, indice) => {
-  //       if (agrupamento._id === itemDePeca.fornecedor._id && ordemDeServico.itensDePeca) {
-  //         agrupamento.pecas.push(ordemDeServico.itensDePeca[indice].peca)
-  //       }
-  //     })
-  //   });
-  //   return agrupamentos;
-  // }
-  //console.log(ordemDeServico)
-  //organizarOrdensDeServico()
   return (
-    <Grid item xs={12} sm={10} md={8} lg={6} >
+    <Grid item xs={12} sm={11} md={8} lg={6} >
       <Card className={classes.card} component={Paper} elevation={4}>
         <Paper elevation={4} square>
           <Box p={2}>
@@ -99,17 +122,22 @@ const ItemOrdemDeServico: React.FC<ItemOrdemDeServicoProps> = ({ ordemDeServico 
                 </Box>
                 <Box className={classes.listagem}>
                   {
-                    ordemDeServico.itensDePeca?.map((itemDePeca, index) => (
-                      <Grid container key={index}>
-                        <Grid item>
-                          <Typography>{itemDePeca.peca.descricao} Qtd. {itemDePeca.quantidade}</Typography>
-                        </Grid>
-                      </Grid>
+                    agruparPecasPorFornecedor()?.map((agrupamento, index) => (
+                      <Box mb={1} key={index} >
+                        <Typography>De {agrupamento.nomeFantasia}:</Typography>
+                        <Box ml={1}>
+                          {agrupamento.pecas?.map((peca, index) => (
+                            <Grid container key={index}>
+                              <Typography>{peca.descricao}</Typography>
+                            </Grid>
+                          ))}
+                        </Box>
+                      </Box>
                     ))
                   }
                 </Box>
                 <Box className={classes.containerValorTotalListagem}>
-                  <Typography>Valor Total: {Formato.formatarMoeda(ordemDeServico.valorTotalDasPecas)}</Typography>
+                  <Typography>Valor Total: R${Formato.formatarMoeda(ordemDeServico.valorTotalDasPecas)}</Typography>
                 </Box>
               </Box>
             </Grid>
@@ -120,27 +148,31 @@ const ItemOrdemDeServico: React.FC<ItemOrdemDeServicoProps> = ({ ordemDeServico 
                 </Box>
                 <Box className={classes.listagem}>
                   {
-                    ordemDeServico.itensDeServico?.map((itemDeServico, index) => (
-                      <Grid container key={index}>
-                        <Grid item>
-                          <Typography>{itemDeServico.servico.descricao} Qtd. {itemDeServico.quantidade}</Typography>
-                        </Grid>
-                      </Grid>
-                    ))
-                  }
+                    agruparServicosPorFuncionario()?.map((agrupamento, index) => (
+                      <Box mb={1} key={index} >
+                        <Typography>Por {agrupamento.nome}:</Typography>
+                        <Box ml={1}>
+                          {agrupamento.servicos?.map((servico, index) => (
+                            <Grid container key={index}>
+                              <Typography>{servico.descricao}</Typography>
+                            </Grid>
+                          ))}
+                        </Box>
+                      </Box>
+                    ))}
                 </Box>
                 <Box className={classes.containerValorTotalListagem}>
-                  <Typography>Valor Total: {Formato.formatarMoeda(ordemDeServico.valorTotalDosServicos)}</Typography>
+                  <Typography>Valor Total: R${Formato.formatarMoeda(ordemDeServico.valorTotalDosServicos)}</Typography>
                 </Box>
               </Box>
             </Grid>
             <Grid item xs={12}>
               <Grid container spacing={2} justify="flex-end">
                 <Grid item>
-                  <Typography>Desconto: {Formato.formatarMoeda(ordemDeServico.desconto)}</Typography>
+                  <Typography>Desconto: R${Formato.formatarMoeda(ordemDeServico.desconto)}</Typography>
                 </Grid>
                 <Grid item>
-                  <Typography>Valor total da ordem de serviço: {Formato.formatarMoeda(ordemDeServico.valorTotal)}</Typography>
+                  <Typography>Valor total da ordem de serviço: R${Formato.formatarMoeda(ordemDeServico.valorTotal)}</Typography>
                 </Grid>
               </Grid>
             </Grid>

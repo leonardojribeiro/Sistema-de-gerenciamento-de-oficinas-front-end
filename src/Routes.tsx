@@ -18,6 +18,7 @@ import Usuario from './Types/Usuario';
 import DialogServicos from './pages/Servico/DialogServicos';
 import DialogoEspecialidades from './pages/Especialidade/DialogoEspecialidades';
 import Teste from './Teste';
+import DialogInserirOrdemDeServico from './pages/OrdemDeServico/DialogInserirOrdemDeServico';
 
 const Routes: React.FC = () => {
   const authContext = useContext(AuthContext);
@@ -78,6 +79,7 @@ const Routes: React.FC = () => {
                 <Route path="/funcionarios" component={DialogoFuncionarios} />
                 <Route path="/servicos" component={DialogServicos} />
                 <Route path="/opcoes" component={DialogoOpcoes} />
+                <Route path="/ordensdeservico/inserir" component={DialogInserirOrdemDeServico} />
                 <Route path="/popular" exact component={Teste} />
               </Switch>
             </>

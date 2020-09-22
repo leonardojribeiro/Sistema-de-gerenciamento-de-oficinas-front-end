@@ -15,6 +15,7 @@ const DialogoInserirModelo: React.FC = () => {
 
   const manipularEnvio = useCallback(async (modelo) => {
     if (modelo) {
+      console.log(modelo)
       const resposta = await post("/modelo", modelo);
       if (resposta) {
         history.goBack();

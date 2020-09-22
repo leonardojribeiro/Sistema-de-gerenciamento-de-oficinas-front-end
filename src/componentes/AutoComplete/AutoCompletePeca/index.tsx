@@ -6,7 +6,7 @@ import AutoCompleteProps from '../Types';
 
 
 const AutoCompletePeca: React.FC<AutoCompleteProps<Peca>> = ({ onChange, label, name, required, listOptionsIn }) => {
-  const { getDefaultValue, handleInputChange, options } = useAutoComplete("pecas", "peca", "descricao", listOptionsIn);
+  const { getDefaultValue, handleInputChange, options } = useAutoComplete<Peca>("pecas", "peca", "descricao", listOptionsIn);
 
   return (
     <AutoComplete

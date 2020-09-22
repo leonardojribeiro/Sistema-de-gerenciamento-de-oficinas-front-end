@@ -1,11 +1,11 @@
 import React, { memo } from 'react';
 import useAutoComplete from '../../../hooks/useAutoComplete';
-import Servico from '../../../Types/Servico';
+import Veiculo from '../../../Types/Veiculo';
 import AutoComplete from '../../Form/Fields/AutoComplete';
 import AutoCompleteProps from '../Types';
 
-const AutoCompleteServico: React.FC<AutoCompleteProps<Servico>> = ({ label, name, onChange, required, listOptionsIn }) => {
-  const { getDefaultValue, handleInputChange, options } = useAutoComplete<Servico>("servicos", "servico", "descricao", listOptionsIn);
+const AutoCompleteVeiculo: React.FC<AutoCompleteProps<Veiculo>> = ({ label, name, onChange, required, listOptionsIn }) => {
+  const { getDefaultValue, handleInputChange, options } = useAutoComplete<Veiculo>("veiculos", "veiculo", "placa", listOptionsIn);
 
   return (
     <AutoComplete
@@ -13,7 +13,7 @@ const AutoCompleteServico: React.FC<AutoCompleteProps<Servico>> = ({ label, name
       onInputChange={handleInputChange}
       name={name}
       label={label}
-      path="current"
+      path="current._id"
       fullWidth
       options={options}
       loading={options?.length === 0}
@@ -22,10 +22,10 @@ const AutoCompleteServico: React.FC<AutoCompleteProps<Servico>> = ({ label, name
       clearText="Limpar"
       openText="Abrir"
       required={required}
-      getOptionLabel={(option) => option.descricao}
-      getOptionSelected={(option, value) => option.descricao === value.descricao}
+      getOptionLabel={(option) => option.placa}
+      getOptionSelected={(option, value) => option._id === value._id}
     />
   );
 }
 
-export default memo(AutoCompleteServico);
+export default memo(AutoCompleteVeiculo);
