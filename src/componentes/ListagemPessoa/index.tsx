@@ -46,12 +46,12 @@ const ListagemPessoa: React.FC<ListagemPessoaProps> = ({ linkToChangePath, linkT
           ))
         }
       </Box>
-      <Link to={linkToInsertPath}>
-        <BotaoInserir titulo={linkToInsertText} />
-      </Link>
       <Box display="flex" justifyContent="center">
         <Pagination count={Math.ceil(Number(total) / 100)} onChange={handlePageChange} page={page} />
       </Box>
+      <Link to={linkToInsertPath}>
+        <BotaoInserir titulo={linkToInsertText} />
+      </Link>
     </>
   );
 }

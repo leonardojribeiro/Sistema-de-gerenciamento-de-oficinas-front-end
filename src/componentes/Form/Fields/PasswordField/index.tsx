@@ -1,65 +1,17 @@
-import React, { useState, useCallback, useRef, memo } from 'react';
+import React, { useState, useCallback,  memo } from 'react';
 import { TextField, InputAdornment, IconButton, Tooltip, StandardTextFieldProps } from '@material-ui/core';
-import { useEffect } from 'react';
-import useField from '../../Hooks/useField';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import useFormField from '../../Hooks/useFormField';
 
 interface PasswordField extends StandardTextFieldProps {
   name: string,
 }
 
 const CampoDeSenha: React.FC<PasswordField> = ({ name, ...props }) => {
-  const [valid, setValid] = useState<boolean>(true);
   const [visible, setVisible] = useState<boolean>(false);
-  const [value, setValue] = useState<string>("");
-  const ref = useRef<HTMLInputElement | undefined>(undefined);
 
-  const { registerField, fieldName, defaultValue } = useField(name);
-
-  const validate = useCallback(() => {
-    if(ref && ref.current){
-      if (!props.required && !ref.current.value.length) {
-        return true;
-      }
-      if (ref.current.value.length) {
-        setValid(true);
-        return (true);
-      }
-      else {
-        if (ref) {
-          ref.current.focus();
-        }
-        setValid(false);
-        return (false);
-      }
-    }
-    else{
-      throw new Error("");
-    } 
-  }, [props.required]);
-
-  const clear = useCallback(() => {
-    setValue("");
-    setValid(true);
-  }, [])
-
-  useEffect(() => {
-    registerField({
-      validate,
-      ref: ref.current,
-      name: fieldName,
-      path: "value",
-      clear,
-    });
-  }, [clear, fieldName, registerField, validate]);
-
-  const handleChange = useCallback((event) => {
-    setValue(event.target.value);
-    if (!valid) {
-      validate();
-    }
-  }, [validate, valid])
+  const { handleInputChange, ref, valid, value } = useFormField(name, () => true, undefined, undefined, props.required, props.onChange);
 
   const handleClick = useCallback(() => {
     setVisible(!visible);
@@ -68,12 +20,11 @@ const CampoDeSenha: React.FC<PasswordField> = ({ name, ...props }) => {
   return (
     <TextField
       {...props}
-      onChange={handleChange}
+      onChange={handleInputChange}
       error={!valid}
       inputRef={ref}
       value={value}
       autoComplete="current-password"
-      defaultValue={defaultValue}
       helperText={
         ref.current &&
         props.required

@@ -52,44 +52,44 @@ const DialogoAlterarFornecedor: React.FC = () => {
       <Form initialData={fornecedor} onSubmit={manipularEnvio}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8} md={8}>
-            <NameField name="nomeFantasia" label="Nome fantasia" fullWidth required autoFocus />
+            <NameField name="nomeFantasia" autoComplete="no" label="Nome fantasia" fullWidth required autoFocus />
           </Grid>
           <Grid item xs={12} sm={4} md={4}>
-            <CampoDeCpfOuCnpj name="cpfCnpj" label="CPF/CNPJ" disabled fullWidth required />
+            <CampoDeCpfOuCnpj name="cpfCnpj" autoComplete="no" label="CPF/CNPJ" disabled fullWidth required />
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
-            <CampoDeTexto name="razaoSocial" label="Razão Social" fullWidth required />
+            <CampoDeTexto name="razaoSocial" autoComplete="no" label="Razão Social" fullWidth required />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <PhoneField name="telefoneFixo" label="Telefone fixo" fullWidth />
+            <PhoneField name="telefoneFixo" autoComplete="no" label="Telefone fixo" fullWidth />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <PhoneField name="telefoneCelular" label="Telefone celular" fullWidth required />
+            <PhoneField name="telefoneCelular" autoComplete="no" label="Telefone celular" fullWidth required />
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
-            <CampoDeEmail name="email" required label="E-mail" fullWidth />
+            <CampoDeEmail name="email" required autoComplete="no" label="E-mail" fullWidth />
           </Grid>
           <Node node="endereco">
             <Grid item xs={12} sm={12} md={6}>
-              <CampoDeTexto name="logradouro" label="Logradouro" fullWidth required />
+              <CampoDeTexto name="logradouro" autoComplete="no" label="Logradouro" fullWidth required />
             </Grid>
             <Grid item xs={12} sm={9} md={6}>
-              <CampoDeTexto name="bairro" label="Bairro" fullWidth required />
+              <CampoDeTexto name="bairro" label="Bairro" autoComplete="no" fullWidth required />
             </Grid>
             <Grid item xs={12} sm={3} md={2}>
-              <CampoDeTexto name="numero" label="Número" fullWidth required />
+              <CampoDeTexto name="numero" label="Número" autoComplete="no" fullWidth required />
             </Grid>
             <Grid item xs={12} sm={9} md={7}>
-              <CampoDeTexto name="complemento" label="Complemento" fullWidth />
+              <CampoDeTexto name="complemento" autoComplete="no" label="Complemento" fullWidth />
             </Grid>
             <Grid item xs={12} sm={3} md={3}>
-              <CepField name="cep" label="CEP" fullWidth required />
+              <CepField name="cep" label="CEP" autoComplete="no" fullWidth required />
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
-              <CampoDeTexto name="estado" label="Estado" fullWidth required />
+              <CampoDeTexto name="estado" label="Estado" autoComplete="no" fullWidth required />
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
-              <CampoDeTexto name="cidade" label="Cidade" fullWidth required />
+              <CampoDeTexto name="cidade" label="Cidade" autoComplete="no" fullWidth required />
             </Grid>
           </Node>
         </Grid>

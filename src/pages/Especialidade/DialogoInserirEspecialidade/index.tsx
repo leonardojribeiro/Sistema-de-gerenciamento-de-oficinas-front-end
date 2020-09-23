@@ -21,7 +21,7 @@ function DialogInserirEspecialidade() {
   return (
     <Dialogo open title="Inserir especialidade">
       <Form onSubmit={manipularEnvio}>
-        <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
+        <CampoDeTexto name="descricao" autoComplete="no" label="Descrição" fullWidth required autoFocus />
         <DialogActions>
           <Button type="submit">Salvar</Button>
         </DialogActions>

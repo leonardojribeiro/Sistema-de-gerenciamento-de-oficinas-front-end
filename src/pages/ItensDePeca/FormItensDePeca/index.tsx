@@ -7,6 +7,7 @@ import ItemDePeca from '../../../Types/ItemDePeca';
 import OrdemDeServicoContext from '../../OrdemDeServico/OrdemDeServicoContext';
 import AutoCompletePeca from '../../../componentes/AutoComplete/AutoCompletePeca';
 import AutoCompleteFornecedor from '../../../componentes/AutoComplete/AutoCompleteFornecedor';
+import NumberField from '../../../componentes/Form/Fields/NumberField';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -97,7 +98,7 @@ const FormItensDePeca: React.FC = () => {
                 <AutoCompleteFornecedor label="Fornecedor" name="fornecedor" required listOptionsIn />
               </Grid>
               <Grid item xs={7} md={2} lg={1}>
-                <CampoDeTexto type="number" name="garantia" fullWidth required label="Garantia" onChange={calcularValorTotal} />
+                <NumberField name="garantia" min={0} fullWidth required label="Garantia" onChange={calcularValorTotal} />
               </Grid>
               <Grid item xs={5} md={2} lg={1}>
                 <CampoDeSelecao name="unidadeDeGarantia" label="Tipo" fullWidth required>
@@ -109,7 +110,7 @@ const FormItensDePeca: React.FC = () => {
                 <MoneyField name="valorUnitario" fullWidth required label="Valor unitário" onChange={calcularValorTotal} />
               </Grid>
               <Grid item xs={6} md={2} lg={2}>
-                <CampoDeTexto type="number" name="quantidade" fullWidth required label="Quantidade" onChange={calcularValorTotal} />
+                <NumberField name="quantidade" min={0} fullWidth required label="Quantidade" onChange={calcularValorTotal} />
               </Grid>
               <Grid item xs={6} md={3} lg={2}>
                 <MoneyField name="valorTotal" fullWidth required label="ValorTotal" disabled />

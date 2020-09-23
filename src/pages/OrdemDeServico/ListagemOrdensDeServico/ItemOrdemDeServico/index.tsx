@@ -3,10 +3,10 @@ import { Grid, Paper, Typography, Box, Card, makeStyles, } from '@material-ui/co
 import Formato from '../../../../recursos/Formato';
 import OrdemDeServico from '../../../../Types/OrdemDeServico';
 import Fornecedor from '../../../../Types/Fornecedor';
-import Peca from '../../../../Types/Peca';
 import CircularProgressWithLabel from '../../../../componentes/CircularProgressWithLabel';
 import Funcionario from '../../../../Types/Funcionario';
-import Servico from '../../../../Types/Servico';
+import ItemDePeca from '../../../../Types/ItemDePeca';
+import ItemDeServico from '../../../../Types/ItemDeServico';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -36,11 +36,11 @@ interface ItemOrdemDeServicoProps {
 }
 
 interface AgrupamentoPecasPorFornecedor extends Fornecedor {
-  pecas: Peca[];
+  itensDePeca: ItemDePeca[];
 }
 
 interface AgrupamentoServicosPorFuncionario extends Funcionario {
-  servicos: Servico[];
+  itensDeServico: ItemDeServico[];
 }
 
 const ItemOrdemDeServico: React.FC<ItemOrdemDeServicoProps> = ({ ordemDeServico }) => {
@@ -52,13 +52,13 @@ const ItemOrdemDeServico: React.FC<ItemOrdemDeServicoProps> = ({ ordemDeServico 
       if (agrupamentos.findIndex((agrupamento) =>
         agrupamento._id === itemDePeca.fornecedor._id
       ) === -1) {
-        agrupamentos.push({ ...itemDePeca.fornecedor, pecas: [] });
+        agrupamentos.push({ ...itemDePeca.fornecedor, itensDePeca: [] });
       }
     })
     agrupamentos.forEach((agrupamento) => {
       ordemDeServico.itensDePeca?.forEach((itemDePeca, indice) => {
         if (agrupamento._id === itemDePeca.fornecedor._id && ordemDeServico.itensDePeca) {
-          agrupamento.pecas.push(ordemDeServico.itensDePeca[indice].peca)
+          agrupamento.itensDePeca.push(ordemDeServico.itensDePeca[indice])
         }
       })
     });
@@ -71,13 +71,13 @@ const ItemOrdemDeServico: React.FC<ItemOrdemDeServicoProps> = ({ ordemDeServico 
       if (agrupamentos.findIndex((agrupamento) =>
         agrupamento._id === itemDeServico.funcionario._id
       ) === -1) {
-        agrupamentos.push({ ...itemDeServico.funcionario, servicos: [] });
+        agrupamentos.push({ ...itemDeServico.funcionario, itensDeServico: [] });
       }
     })
     agrupamentos.forEach((agrupamento) => {
       ordemDeServico.itensDeServico?.forEach((itemDeServico, indice) => {
         if (agrupamento._id === itemDeServico.funcionario._id && ordemDeServico.itensDeServico) {
-          agrupamento.servicos.push(ordemDeServico.itensDeServico[indice].servico)
+          agrupamento.itensDeServico.push(ordemDeServico.itensDeServico[indice])
         }
       })
     });
@@ -126,9 +126,9 @@ const ItemOrdemDeServico: React.FC<ItemOrdemDeServicoProps> = ({ ordemDeServico 
                       <Box mb={1} key={index} >
                         <Typography>De {agrupamento.nomeFantasia}:</Typography>
                         <Box ml={1}>
-                          {agrupamento.pecas?.map((peca, index) => (
+                          {agrupamento.itensDePeca?.map((itemDePeca, index) => (
                             <Grid container key={index}>
-                              <Typography>{peca.descricao}</Typography>
+                              <Typography>{itemDePeca.peca.descricao}</Typography>
                             </Grid>
                           ))}
                         </Box>
@@ -152,9 +152,9 @@ const ItemOrdemDeServico: React.FC<ItemOrdemDeServicoProps> = ({ ordemDeServico 
                       <Box mb={1} key={index} >
                         <Typography>Por {agrupamento.nome}:</Typography>
                         <Box ml={1}>
-                          {agrupamento.servicos?.map((servico, index) => (
+                          {agrupamento.itensDeServico?.map((itemDeServico, index) => (
                             <Grid container key={index}>
-                              <Typography>{servico.descricao}</Typography>
+                              <Typography>{itemDeServico.servico.descricao}</Typography>
                             </Grid>
                           ))}
                         </Box>

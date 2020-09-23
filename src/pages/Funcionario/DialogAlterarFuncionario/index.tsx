@@ -21,9 +21,9 @@ const DialogAlterarFuncionario: React.FC = () => {
   const refAlerta = useRef<AlertaHandles | undefined>(undefined);
 
   const listarEspecialidades = useCallback(async () => {
-    const especialidades = await get('especialidade') as Especialidade[];
+    const especialidades = await get('especialidade') as Especialidade[] as any;
     if (especialidades) {
-      setEspecialidades(especialidades);
+      setEspecialidades(especialidades.especialidades as Especialidade[]);
     }
   }, [get]);
 
@@ -71,13 +71,13 @@ const DialogAlterarFuncionario: React.FC = () => {
       <Form initialData={funcionario} onSubmit={manipularEnvio}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8} md={8}>
-            <NameField name="nome" label="Nome" fullWidth required autoFocus />
+            <NameField name="nome" label="Nome" autoComplete="no" fullWidth required autoFocus />
           </Grid>
           <Grid item xs={12} sm={4} md={4}>
-            <CampoDeCpfOuCnpj name="cpf" label="CPF" disabled fullWidth required />
+            <CampoDeCpfOuCnpj name="cpf" label="CPF" autoComplete="no" disabled fullWidth required />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <DateField name="dataNascimento" label="Data de nascimento" fullWidth required openTo="year" />
+            <DateField name="dataNascimento" label="Data de nascimento"  fullWidth required openTo="year" />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <CampoDeRadio name="sexo" label="Sexo" required>
@@ -86,41 +86,41 @@ const DialogAlterarFuncionario: React.FC = () => {
             </CampoDeRadio>
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <PhoneField name="telefoneFixo" label="Telefone fixo" fullWidth />
+            <PhoneField name="telefoneFixo" label="Telefone fixo" autoComplete="no" fullWidth />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <PhoneField name="telefoneCelular" label="Telefone celular" fullWidth required />
+            <PhoneField name="telefoneCelular" label="Telefone celular" autoComplete="no" fullWidth required />
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
-            <CampoDeEmail name="email" label="E-mail" fullWidth />
+            <CampoDeEmail name="email" label="E-mail" autoComplete="no" fullWidth />
           </Grid>
           <Node node="endereco">
             <Grid item xs={12} sm={12} md={6}>
-              <CampoDeTexto name="logradouro" label="Logradouro" fullWidth required />
+              <CampoDeTexto name="logradouro" label="Logradouro" autoComplete="no" fullWidth required />
             </Grid>
             <Grid item xs={12} sm={9} md={6}>
-              <CampoDeTexto name="bairro" label="Bairro" fullWidth required />
+              <CampoDeTexto name="bairro" label="Bairro" fullWidth autoComplete="no" required />
             </Grid>
             <Grid item xs={12} sm={3} md={2}>
-              <CampoDeTexto name="numero" label="Número" fullWidth required />
+              <CampoDeTexto name="numero" label="Número" fullWidth autoComplete="no" required />
             </Grid>
             <Grid item xs={12} sm={9} md={7}>
-              <CampoDeTexto name="complemento" label="Complemento" fullWidth />
+              <CampoDeTexto name="complemento" label="Complemento" autoComplete="no" fullWidth />
             </Grid>
             <Grid item xs={12} sm={3} md={3}>
-              <CepField name="cep" label="CEP" fullWidth required />
+              <CepField name="cep" label="CEP" fullWidth required autoComplete="no" />
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
-              <CampoDeTexto name="estado" label="Estado" fullWidth required />
+              <CampoDeTexto name="estado" label="Estado" fullWidth autoComplete="no" required />
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
-              <CampoDeTexto name="cidade" label="Cidade" fullWidth required />
+              <CampoDeTexto name="cidade" label="Cidade" fullWidth autoComplete="no" required />
             </Grid>
           </Node>
         </Grid>
         <Grid container>
           <Grid item xs={12}>
-            <SelectField name="especialidades" multiple label="Especialidades" required fullWidth>
+            <SelectField name="especialidades" multiple label="Especialidades" autoComplete="no" required fullWidth>
               {especialidades?.map((especialidade, index) => (
                 <MenuItem key={index} value={especialidade._id} >{especialidade.descricao}</MenuItem>
               ))}

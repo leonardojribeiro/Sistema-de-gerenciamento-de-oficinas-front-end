@@ -50,7 +50,7 @@ const DialogAlterarEspecialidade: React.FC = () => {
   return (
     <Dialogo open title="Editar marca">
       <Form initialData={especialidade} onSubmit={manipularEnvio}>
-        <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
+        <CampoDeTexto name="descricao" autoComplete="no" label="Descrição" fullWidth required autoFocus />
         <DialogActions>
           <Button type="submit">Salvar</Button>
         </DialogActions>

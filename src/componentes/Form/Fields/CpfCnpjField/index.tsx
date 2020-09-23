@@ -1,9 +1,8 @@
-import React, { useState, useCallback, useRef, memo } from 'react';
+import React, { useCallback, memo } from 'react';
 import { TextField, StandardTextFieldProps } from '@material-ui/core';
 import validacao from '../../../../recursos/Validacao';
-import { useEffect } from 'react';
-import useField from '../../Hooks/useField';
 import numberMask from '../../../../recursos/NumberMask';
+import useFormField from '../../Hooks/useFormField';
 
 interface CpfCnpjFieldProps extends StandardTextFieldProps {
   name: string;
@@ -11,101 +10,32 @@ interface CpfCnpjFieldProps extends StandardTextFieldProps {
   noValidate?: boolean;
 }
 
-const CampoCpfCnpj: React.FC<CpfCnpjFieldProps> = ({ name, onlyCpf, onChange, ...props }) => {
-  const [valido, setValid] = useState<boolean>(true);
-  const [value, setValue] = useState<string>("");
-  const ref = useRef<HTMLInputElement | undefined>(undefined);
-
-  const { registerField, fieldName, defaultValue } = useField(name);
-
-  const validate = useCallback(() => {
-    if (ref && ref.current) {
-      if (props.noValidate) {
-        return true;
-      }
-      if (!props.required && !ref.current.value.length) {
-        return true;
-      }
-      if (validacao.validarCpfCnpj(ref.current.value)) {
-        setValid(true);
-        return (true);
-      }
-      else {
-        if (ref) {
-          ref.current.focus();
-        }
-        setValid(false);
-        return (false);
-      }
-    }
-    else {
-      throw new Error("");
-
-    }
-  }, [props.noValidate, props.required]);
-
-  const clear = useCallback(() => {
-    setValue("");
-    setValid(true);
-  }, [])
-
-  useEffect(() => {
-    registerField({
-      validate,
-      ref: ref.current,
-      name: fieldName,
-      path: "value",
-      clear
-    });
-  }, [clear, fieldName, registerField, validate]);
-
-  useEffect(() => {
-    if (defaultValue) {
-      setValue(
-        numberMask(
-          defaultValue,
-          tamanho =>
-            tamanho < 12
-              ? "000.000.000-00"
-              : "00.000.000/0000-00"
-        )
-      )
-    }
-  }, [defaultValue])
-
-  const manipularAlteracao = useCallback((event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    const value = numberMask(
-      event.target.value,
-      tamanho =>
-        tamanho < 12
+const CampoCpfCnpj: React.FC<CpfCnpjFieldProps> = ({ name, onlyCpf, ...props }) => {
+  const getMask = useCallback((value) =>
+    numberMask(
+      value,
+      length =>
+        length < 12
           ? "000.000.000-00"
           : "00.000.000/0000-00"
-    );
-    setValue(value);
-    if (!valido) {
-      validate();
-    }
-    if (onChange) {
-      event.target.value = value;
-      onChange(event)
-    }
-  }, [onChange, validate, valido])
+    ), []);
+  const { handleInputChange, ref, valid, value } = useFormField(name, validacao.validarCpfCnpj, getMask, props.noValidate, props.required, props.onChange)
 
   return (
     <TextField
-      onChange={manipularAlteracao}
-      error={!valido}
+      onChange={handleInputChange}
+      error={!valid}
       inputRef={ref}
       helperText={
         ref.current ?
           props.required
-            ? valido
+            ? valid
               ? ""
               : ref.current.value.length
                 ? "Campo inválido."
                 : "Campo obrigatório."
             : ref.current.value.length
-              ? valido
+              ? valid
                 ? null
                 : "Campo inválido."
               : null
