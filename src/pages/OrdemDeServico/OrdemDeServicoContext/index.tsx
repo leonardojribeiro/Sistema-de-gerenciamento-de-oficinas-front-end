@@ -3,6 +3,7 @@ import ItemDePeca from '../../../Types/ItemDePeca';
 import ItemDeServico from '../../../Types/ItemDeServico';
 import ApiContext from '../../../contexts/ApiContext';
 import OrdemDeServico from '../../../Types/OrdemDeServico';
+import { useHistory } from 'react-router-dom';
 
 interface OrdemDeServicoContextValues {
   itensDePeca: ItemDePeca[];
@@ -38,6 +39,7 @@ export const OrdemDeServicoProvider: React.FC = ({ children }) => {
   const [indexTab, setIndexTab] = useState<number>(1);
   const [ordemDeServico, setOrdemDeServico] = useState<OrdemDeServico | undefined>();
   const { post, get, put } = useContext(ApiContext);
+  const history = useHistory();
 
   const getOrdemDeServico = useCallback(async (_id: string) => {
     const resposta = await get(`ordemdeservico/id?_id=${_id}`) as OrdemDeServico | undefined;
@@ -89,13 +91,19 @@ export const OrdemDeServicoProvider: React.FC = ({ children }) => {
       console.log(dados);
       if (ordemDeServico) {
         dados._id = ordemDeServico._id;
-        await put('ordemdeservico', dados);
+        const response = await put('ordemdeservico', dados);
+        if (response) {
+          history.goBack();
+        }
       }
       else {
-        await post('ordemdeservico', dados);
+        const response = await post('ordemdeservico', dados);
+        if (response) {
+          history.goBack();
+        }
       }
     }
-  }, [itensDePeca, itensDeServico, ordemDeServico, post, put, validar]);
+  }, [history, itensDePeca, itensDeServico, ordemDeServico, post, put, validar]);
 
   const valorTotalPecas = useCallback(() => {
     let valorTotal = 0;
