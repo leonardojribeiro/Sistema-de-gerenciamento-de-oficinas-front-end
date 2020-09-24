@@ -25,6 +25,7 @@ interface OrdemDeServicoContextValues {
   getOrdemDeServico: (_id: string) => void;
   ordemDeServico: OrdemDeServico | undefined;
   handleSubmitFormItemDePeca: (dados: any) => void;
+  handleSubmitFormItemDeServico: (dados: any) => void;
 }
 
 const OrdemDeServicoContext = createContext<OrdemDeServicoContextValues>({} as OrdemDeServicoContextValues);
@@ -34,7 +35,7 @@ export const OrdemDeServicoProvider: React.FC = ({ children }) => {
   const [itemDePecaSelecionado, setItemDePecaSelecionado] = useState<number | undefined>();
   const [itemDeServicoSelecionado, setItemDeServicoSelecionado] = useState<number | undefined>();
   const [itensDeServico, setItensDeServico] = useState<ItemDeServico[]>([]);
-  const [indexTab, setIndexTab] = useState<number>(2);
+  const [indexTab, setIndexTab] = useState<number>(1);
   const [ordemDeServico, setOrdemDeServico] = useState<OrdemDeServico | undefined>();
   const { post, get, put } = useContext(ApiContext);
 
@@ -179,6 +180,32 @@ export const OrdemDeServicoProvider: React.FC = ({ children }) => {
     // }
   }, [itemDePecaSelecionado, itensDePeca, setItemDePecaSelecionado, setItensDePeca]);
 
+  const handleSubmitFormItemDeServico = useCallback((dados) => {
+    const itemDeServico = {
+      servico: dados.servico,
+      funcionario: dados.funcionario,
+      valorUnitario: Number(dados.valorUnitario),
+      garantia: Number(dados.garantia),
+      unidadeDeGarantia: dados.unidadeDeGarantia,
+      quantidade: Number(dados.quantidade),
+      valorTotal: Number(dados.valorUnitario) * Number(dados.quantidade),
+      _id: String(itensDeServico.length),
+    } as ItemDeServico;
+    //if (!validar(itemDeServico)) {
+    if (itemDeServicoSelecionado !== undefined) {
+      setItensDeServico([
+        ...itensDeServico.slice(0, itemDeServicoSelecionado),
+        itemDeServico,
+        ...itensDeServico.slice(itemDeServicoSelecionado + 1)
+      ]);
+    }
+    else {
+      setItensDeServico((ItensDeServico) => [...ItensDeServico, itemDeServico])
+    }
+    // }
+
+  }, [itemDeServicoSelecionado, setItensDeServico, itensDeServico]);
+
   return (
     <OrdemDeServicoContext.Provider
       value={{
@@ -201,7 +228,8 @@ export const OrdemDeServicoProvider: React.FC = ({ children }) => {
         removerItemDeServico,
         getOrdemDeServico,
         ordemDeServico,
-        handleSubmitFormItemDePeca
+        handleSubmitFormItemDePeca,
+        handleSubmitFormItemDeServico,
       }}
     >
       {children}

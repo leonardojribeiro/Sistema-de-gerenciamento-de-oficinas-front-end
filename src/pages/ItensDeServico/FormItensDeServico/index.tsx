@@ -11,7 +11,7 @@ import AutoCompleteFuncionario from '../../../componentes/AutoComplete/AutoCompl
 
 const FormItensDeServico: React.FC = () => {
   const formRef = useRef<FormProviderHandles>({} as FormProviderHandles);
-  const { itensDeServico, setItensDeServico, itemDeServicoSelecionado, setItemDeServicoSelecionado } = useContext(OrdemDeServicoContext);
+  const { itensDeServico, itemDeServicoSelecionado, setItemDeServicoSelecionado,handleSubmitFormItemDeServico } = useContext(OrdemDeServicoContext);
 
   // const validar = useCallback((dados: ItemDeServico) => {
   //   let igual = false;
@@ -23,30 +23,7 @@ const FormItensDeServico: React.FC = () => {
   //   return igual;
   // }, [itensDeServico]);
 
-  const handleSubmit = useCallback((dados) => {
-    const itemDeServico = {
-      servico: dados.servico,
-      funcionario: dados.funcionario,
-      valorUnitario: Number(dados.valorUnitario),
-      garantia: Number(dados.garantia),
-      unidadeDeGarantia: dados.unidadeDeGarantia,
-      quantidade: Number(dados.quantidade),
-      valorTotal: Number(dados.valorUnitario) * Number(dados.quantidade),
-    } as ItemDeServico;
-    //if (!validar(itemDeServico)) {
-    if (itemDeServicoSelecionado !== undefined) {
-      setItensDeServico([
-        ...itensDeServico.slice(0, itemDeServicoSelecionado),
-        itemDeServico,
-        ...itensDeServico.slice(itemDeServicoSelecionado + 1)
-      ]);
-    }
-    else {
-      setItensDeServico((ItensDeServico) => [...ItensDeServico, itemDeServico])
-    }
-    // }
-
-  }, [itemDeServicoSelecionado, setItensDeServico, itensDeServico]);
+  
 
   const calcularValorTotal = useCallback((event) => {
     const valorUnitario = Number(formRef.current.getFieldValue('valorUnitario'));
@@ -67,7 +44,7 @@ const FormItensDeServico: React.FC = () => {
   } : undefined;
 
   return (
-    <Form onSubmit={handleSubmit} ref={formRef} initialData={intialData}>
+    <Form onSubmit={handleSubmitFormItemDeServico} ref={formRef} initialData={intialData} clearOnSubmit>
       <Card>
         <CardHeader title="Inserir serviço" />
         <CardContent>
