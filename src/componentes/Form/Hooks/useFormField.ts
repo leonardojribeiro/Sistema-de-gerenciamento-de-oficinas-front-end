@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import useField from "../Hooks/useField";
+import useField from "./useField";
 
 export default function useFormField<T>(
   name: string,
@@ -46,15 +46,23 @@ export default function useFormField<T>(
     setValid(true);
   }, [])
 
+  const setFieldValue = useCallback((ref, value) => {
+    setValue(value as string);
+    if (ref.current) {
+      ref.current.value = value;
+    }
+  }, []);
+
   useEffect(() => {
     registerField({
       validate,
       ref: ref.current,
       name: fieldName,
       path: "value",
-      clear
+      clear,
+      setFieldValue
     });
-  }, [clear, fieldName, registerField, validate]);
+  }, [clear, fieldName, registerField, setFieldValue, validate]);
 
   useEffect(() => {
     if (defaultValue) {

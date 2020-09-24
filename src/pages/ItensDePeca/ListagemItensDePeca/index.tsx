@@ -3,6 +3,7 @@ import { Box, Grid, Typography, makeStyles, IconButton, Tooltip } from '@materia
 import OrdemDeServicoContext from '../../OrdemDeServico/OrdemDeServicoContext';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { agruparPecasPorFornecedor } from '../../../recursos/Agrupamento';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,41 +31,43 @@ const ListagemItensDePeca: React.FC = () => {
   return (
     <Box className={classes.root}>
       <Box className={classes.listagem}>
-        {itensDePeca.map((itemDePeca, indice) => (
-          <Grid key={indice} container justify="space-between" alignItems="center" >
-            <Grid item>
-              <Typography>Peça: {itemDePeca.peca.descricao}</Typography>
-            </Grid>
-            <Grid item>
-              <Typography>Fornecedor: {itemDePeca.fornecedor.nomeFantasia}</Typography>
-            </Grid>
-            <Grid item>
-              <Typography>Garantia: {itemDePeca.garantia}</Typography>
-            </Grid>
-            <Grid item>
-              <Typography>Valor unitário: {itemDePeca.valorUnitario}</Typography>
-            </Grid>
-            <Grid item>
-              <Typography>Quantidade: {itemDePeca.quantidade}</Typography>
-            </Grid>
-            <Grid item>
-              <Typography>Valor total: {itemDePeca.valorTotal}</Typography>
-            </Grid>
-            <Grid item>
-              <Tooltip title={`Alterar `} onClick={() => alterarItemDePeca(indice)}>
-                <IconButton >
-                  <EditIcon />
-                </IconButton>
-              </Tooltip>
-            </Grid>
-            <Grid item>
-              <Tooltip title={`Excluir `} onClick={() => removerItemDePeca(indice)}>
-                <IconButton >
-                  <DeleteIcon />
-                </IconButton>
-              </Tooltip>
-            </Grid>
-          </Grid>
+        {agruparPecasPorFornecedor(itensDePeca).map((agrupamento, index) => (
+          <Box mb={1} key={index} >
+            <Typography>De {agrupamento.nomeFantasia}:</Typography>
+            <Box ml={1}>
+              {agrupamento.itensDePeca?.map((itemDePeca, index) => (
+                <Grid key={index} container justify="space-between" alignItems="center" >
+                  <Grid item md={4} lg={3}>
+                    <Typography>{itemDePeca.peca.descricao}</Typography>
+                  </Grid>
+                  <Grid item >
+                    <Typography>Garantia: {itemDePeca.garantia}</Typography>
+                  </Grid>
+                  <Grid item >
+                    <Typography>Valor unitário: {itemDePeca.valorUnitario}</Typography>
+                  </Grid>
+                  <Grid item >
+                    <Typography>Quantidade: {itemDePeca.quantidade}</Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography>Valor total: {itemDePeca.valorTotal}</Typography>
+                  </Grid>
+                  <Grid item >
+                    <Tooltip title={`Alterar `} onClick={() => alterarItemDePeca(itemDePeca._id)}>
+                      <IconButton >
+                        <EditIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title={`Excluir `} onClick={() => removerItemDePeca(itemDePeca._id)}>
+                      <IconButton >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </Grid>
+                </Grid>
+              ))}
+            </Box>
+          </Box>
         ))}
       </Box>
       <Box alignSelf="flex-end" justifySelf="flex-end">

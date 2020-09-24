@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useRef, memo } from 'react';
-import { Form, MoneyField, CampoDeTexto, CampoDeSelecao } from '../../../componentes/Form';
+import { Form, MoneyField, CampoDeSelecao } from '../../../componentes/Form';
 import { Grid, MenuItem, Button, Card, CardContent, CardActions, Box, makeStyles, CardHeader } from '@material-ui/core';
 import { FormProviderHandles } from '../../../componentes/Form/types';
 import ItemDePeca from '../../../Types/ItemDePeca';
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 const FormItensDePeca: React.FC = () => {
   const classes = useStyles();
   const formRef = useRef<FormProviderHandles>({} as FormProviderHandles);
-  const { itensDePeca, itemDePecaSelecionado, setItemDePecaSelecionado, setItensDePeca } = useContext(OrdemDeServicoContext);
+  const { itensDePeca, itemDePecaSelecionado, setItemDePecaSelecionado, handleSubmitFormItemDePeca } = useContext(OrdemDeServicoContext);
 
 
   // const validar = useCallback((dados: ItemDePeca) => {
@@ -31,35 +31,6 @@ const FormItensDePeca: React.FC = () => {
   //   return igual;
   // }, [itensDePeca]);
 
-  const handleSubmit = useCallback((dados) => {
-    // if () {
-    console.log(dados.peca)
-    const itemDePeca = {
-      peca: dados.peca,
-      fornecedor: (dados.fornecedor),
-      valorUnitario: Number(dados.valorUnitario),
-      garantia: Number(dados.garantia),
-      unidadeDeGarantia: dados.unidadeDeGarantia,
-      quantidade: Number(dados.quantidade),
-      valorTotal: Number(dados.valorUnitario) * Number(dados.quantidade),
-      _id: itensDePeca.length,
-    } as ItemDePeca;
-    //if (!validar(itemDePeca)) {
-    if (itemDePecaSelecionado !== undefined) {
-      setItensDePeca([
-        ...itensDePeca.slice(0, itemDePecaSelecionado),
-        itemDePeca,
-        ...itensDePeca.slice(itemDePecaSelecionado + 1)
-      ]);
-      setItemDePecaSelecionado(undefined)
-    }
-    else {
-      console.log('ins')
-      setItensDePeca((ItensDePeca) => [...ItensDePeca, itemDePeca])
-    }
-    //  }
-    // }
-  }, [itemDePecaSelecionado, itensDePeca, setItemDePecaSelecionado, setItensDePeca]);
 
   const calcularValorTotal = useCallback(() => {
     if (formRef.current) {
@@ -70,11 +41,9 @@ const FormItensDePeca: React.FC = () => {
   }, []);
 
   const intialData = itemDePecaSelecionado !== undefined ? {
-    valorUnitario: itensDePeca[itemDePecaSelecionado].valorUnitario,
-    garantia: itensDePeca[itemDePecaSelecionado].garantia,
-    unidadeDeGarantia: itensDePeca[itemDePecaSelecionado].unidadeDeGarantia,
-    quantidade: itensDePeca[itemDePecaSelecionado].quantidade,
-    valorTotal: itensDePeca[itemDePecaSelecionado].valorTotal,
+    ...itensDePeca[itemDePecaSelecionado],
+    peca: itensDePeca[itemDePecaSelecionado].peca._id,
+    fornecedor: itensDePeca[itemDePecaSelecionado].fornecedor._id,
   } : undefined;
 
 
@@ -84,9 +53,11 @@ const FormItensDePeca: React.FC = () => {
     }
   }, [itemDePecaSelecionado, setItemDePecaSelecionado]);
 
+  console.log(intialData)
+
   return (
     <Box className={classes.form}>
-      <Form onSubmit={handleSubmit} ref={formRef} initialData={intialData} >
+      <Form onSubmit={handleSubmitFormItemDePeca} ref={formRef} clearOnSubmit initialData={intialData} >
         <Card>
           <CardHeader title="Inserir peça" />
           <CardContent>

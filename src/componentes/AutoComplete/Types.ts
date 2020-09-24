@@ -4,4 +4,5 @@ export default interface AutoCompleteProps<T>{
   name: string;
   required?: boolean;
   listOptionsIn: boolean;
+  disabled?: boolean
 }

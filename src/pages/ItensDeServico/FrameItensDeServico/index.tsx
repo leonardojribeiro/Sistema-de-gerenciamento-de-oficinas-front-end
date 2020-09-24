@@ -1,7 +1,7 @@
-import React, { memo, } from 'react';
+import React, { memo } from 'react';
 import { makeStyles, Hidden, Container } from '@material-ui/core';
-import ListagemItensDePeca from './ListagemItensDePeca';
-import FormItensDePeca from './FormItensDePeca';
+import FormItensDeServico from '../FormItensDeServico';
+import ListagemItensDeServico from '../ListagemItensDeServico';
 import SwipeableViews from 'react-swipeable-views';
 
 const useStyles = makeStyles((theme) => ({
@@ -13,29 +13,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ItensDePeca: React.FC = () => {
+const FrameItensDeServico: React.FC = () => {
   const classes = useStyles();
   return (
-    <Container className={classes.root} >
+    <Container maxWidth="lg" className={classes.root} >
       <Hidden mdUp>
         <SwipeableViews
           axis="y"
           enableMouseEvents
-          style={{ height: "100%", padding: "50, 0px"}}
+          style={{ height: "100%", padding: "50, 0px" }}
           containerStyle={{ height: "100%" }}
-          slideStyle={{ height: "100%", padding: "50, 0px"}}
+          slideStyle={{ height: "100%", padding: "50, 0px" }}
           resistance
         >
-          <ListagemItensDePeca />
-          <FormItensDePeca />
+          <ListagemItensDeServico />
+          <FormItensDeServico />
         </SwipeableViews>
       </Hidden>
       <Hidden smDown>
-        <ListagemItensDePeca />
-        <FormItensDePeca />
+        <ListagemItensDeServico />
+        <FormItensDeServico />
       </Hidden>
     </Container>
   );
 }
 
-export default memo(ItensDePeca);
+export default memo(FrameItensDeServico);

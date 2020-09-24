@@ -61,11 +61,9 @@ const FormItensDeServico: React.FC = () => {
   }, [itemDeServicoSelecionado, setItemDeServicoSelecionado]);
 
   const intialData = itemDeServicoSelecionado !== undefined ? {
-    valorUnitario: itensDeServico[itemDeServicoSelecionado].valorUnitario,
-    garantia: itensDeServico[itemDeServicoSelecionado].garantia,
-    unidadeDeGarantia: itensDeServico[itemDeServicoSelecionado].unidadeDeGarantia,
-    quantidade: itensDeServico[itemDeServicoSelecionado].quantidade,
-    valorTotal: itensDeServico[itemDeServicoSelecionado].valorTotal,
+    ...itensDeServico[itemDeServicoSelecionado],
+    servico: itensDeServico[itemDeServicoSelecionado].servico._id,
+    funcionario: itensDeServico[itemDeServicoSelecionado].funcionario._id,
   } : undefined;
 
   return (

@@ -1,5 +1,5 @@
 import React, { memo, useContext, useCallback, useEffect } from 'react';
-import { Switch, Route,  } from 'react-router-dom';
+import { Switch, Route, } from 'react-router-dom';
 import PaginaInicial from './componentes/paginaInicial/PaginaInicial';
 import AuthContext from './contexts/AuthContext';
 import Home from './pages/Home/Home';
@@ -19,12 +19,14 @@ import DialogServicos from './pages/Servico/DialogServicos';
 import DialogoEspecialidades from './pages/Especialidade/DialogoEspecialidades';
 import Teste from './Teste';
 import DialogInserirOrdemDeServico from './pages/OrdemDeServico/DialogInserirOrdemDeServico';
+import DialogAlterarOrdemDeServico from './pages/OrdemDeServico/DialogoAlterarOrdemDeServico';
+import { OrdemDeServicoProvider } from './pages/OrdemDeServico/OrdemDeServicoContext';
 
 const Routes: React.FC = () => {
   const authContext = useContext(AuthContext);
   const apiContext = useContext(ApiContext);
   const { logado } = useAuth();
- //console.log(useLocation())
+  //console.log(useLocation())
   const efetuarLoginPorToken = useCallback(async () => {
     if (apiContext) {
       const resposta = await apiContext.get(
@@ -79,7 +81,10 @@ const Routes: React.FC = () => {
                 <Route path="/funcionarios" component={DialogoFuncionarios} />
                 <Route path="/servicos" component={DialogServicos} />
                 <Route path="/opcoes" component={DialogoOpcoes} />
-                <Route path="/ordensdeservico/inserir" component={DialogInserirOrdemDeServico} />
+                <OrdemDeServicoProvider>
+                  <Route path="/ordensdeservico/inserir" component={DialogInserirOrdemDeServico} />
+                  <Route path="/ordensdeservico/alterarordemdeservico" component={DialogAlterarOrdemDeServico} />
+                </OrdemDeServicoProvider>
                 <Route path="/popular" exact component={Teste} />
               </Switch>
             </>

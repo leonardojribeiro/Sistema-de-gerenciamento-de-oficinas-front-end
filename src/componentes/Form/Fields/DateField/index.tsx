@@ -7,7 +7,8 @@ interface DateFieldProps extends DatePickerViewsProps {
   required?: boolean;
   label?: string;
   fullWidth?: boolean;
-  format?: string
+  format?: string;
+  disabled?: boolean;
 }
 
 

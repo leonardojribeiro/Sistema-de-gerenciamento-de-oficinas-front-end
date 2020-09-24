@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Dialog from '../../../componentes/Dialog';
 import SwipeableViews from 'react-swipeable-views';
 import { Tabs, Tab, } from '@material-ui/core';
@@ -6,9 +6,18 @@ import OrdemDeServicoContext from '../OrdemDeServicoContext';
 import FormOrdemDeServico from '../FormOrdemDeServico';
 import FrameItensDePeca from '../../ItensDePeca/FrameItensDePeca';
 import FrameItensDeServico from '../../ItensDeServico/FrameItensDeServico';
+import useQuery from '../../../hooks/useQuery';
 
-const DialogInserirOrdemDeServico: React.FC = () => {
-  const { indexTab, setIndexTab } = useContext(OrdemDeServicoContext);
+const DialogAlterarOrdemDeServico: React.FC = () => {
+  const { indexTab, setIndexTab, getOrdemDeServico } = useContext(OrdemDeServicoContext);
+  const id = useQuery("id");
+
+  useEffect(() => {
+    if (id) {
+      getOrdemDeServico(id);
+    }
+  }, [getOrdemDeServico, id]);
+
   return (
     <Dialog title="Nova ordem de serviço" open maxWidth="lg" fullWidth fullScreen>
       <Tabs value={indexTab} onChange={(e, v) => setIndexTab(v)} variant="fullWidth" indicatorColor="primary">
@@ -25,4 +34,4 @@ const DialogInserirOrdemDeServico: React.FC = () => {
   );
 }
 
-export default DialogInserirOrdemDeServico;
+export default DialogAlterarOrdemDeServico;

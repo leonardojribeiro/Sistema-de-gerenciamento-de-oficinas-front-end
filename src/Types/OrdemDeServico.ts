@@ -7,6 +7,7 @@ import Fornecedor from "./Fornecedor";
 import Funcionario from "./Funcionario";
 
 export default interface OrdemDeServico{
+  _id: string;
   dataDeRegistro: Date;
   dataDeInicio: Date;
   dataDeConclusao: Date;

@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Grid, Paper, Typography, Box, Card, makeStyles, } from '@material-ui/core';
+import { Grid, Paper, Typography, Box, Card, makeStyles, IconButton, Tooltip } from '@material-ui/core';
 import Formato from '../../../../recursos/Formato';
 import OrdemDeServico from '../../../../Types/OrdemDeServico';
 import Fornecedor from '../../../../Types/Fornecedor';
@@ -7,6 +7,8 @@ import CircularProgressWithLabel from '../../../../componentes/CircularProgressW
 import Funcionario from '../../../../Types/Funcionario';
 import ItemDePeca from '../../../../Types/ItemDePeca';
 import ItemDeServico from '../../../../Types/ItemDeServico';
+import { Link } from 'react-router-dom';
+import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -95,6 +97,13 @@ const ItemOrdemDeServico: React.FC<ItemOrdemDeServicoProps> = ({ ordemDeServico 
               </Grid>
               <Grid item>
                 <CircularProgressWithLabel value={Number(ordemDeServico.andamento)} />
+              </Grid>
+              <Grid item>
+                <Tooltip title={`Alterar a ordem de servico do veículo ${ordemDeServico.veiculo.placa}`}>
+                  <IconButton component={Link} to={`/ordensdeservico/alterarordemdeservico?id=${ordemDeServico._id}`}>
+                    <EditIcon />
+                  </IconButton>
+                </Tooltip>
               </Grid>
             </Grid>
           </Box>

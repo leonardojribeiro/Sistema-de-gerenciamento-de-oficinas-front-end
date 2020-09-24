@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 
 const FormOrdemDeServico: React.FC = () => {
   const classes = useStyles();
-  const { handleSubmit, valorTotalPecas, valorTotalServicos } = useContext(OrdemDeServicoContext);
+  const { handleSubmit, valorTotalPecas, valorTotalServicos, ordemDeServico } = useContext(OrdemDeServicoContext);
   const formRef = useRef<FormProviderHandles>({} as FormProviderHandles);
 
   const calcularValorTotal = useCallback(() => {
@@ -43,40 +43,40 @@ const FormOrdemDeServico: React.FC = () => {
 
   return (
     <Container maxWidth="md" className={classes.root}>
-      <Form onSubmit={handleSubmit} ref={formRef}>
+      <Form onSubmit={handleSubmit} ref={formRef} initialData={ordemDeServico}>
         <Card>
           <CardHeader title="Inserir serviço" />
           <CardContent>
             <Grid container spacing={3}>
               <Grid item xs={12}>
-                <AutoCompleteVeiculo name="veiculo" label="Veículo" required listOptionsIn />
+                <AutoCompleteVeiculo disabled={ordemDeServico !== undefined} name="veiculo" label="Veículo" required listOptionsIn />
               </Grid>
-              <Grid item xs={12} sm={6} md={6} >
-                <DateField name="dataDeRegistro" label="Data de registro" required fullWidth allowKeyboardControl />
+              <Grid item xs={12} sm={4} md={4} >
+                <DateField name="dataDeRegistro" label="Data de registro" disabled={ordemDeServico !== undefined} required fullWidth allowKeyboardControl />
               </Grid>
-              <Grid item xs={12} sm={6} md={6} >
+              <Grid item xs={12} sm={4} md={4} >
                 <DateField name="dataDeInicio" label="Data de início" required fullWidth />
               </Grid>
-              <Grid item xs={12} sm={6} md={6} >
-                <DateField name="dataDeConclusao" label="Data de conclusão" required fullWidth />
+              <Grid item xs={12} sm={4} md={4} >
+                <DateField name="dataDeConclusao" label="Data de conclusão" fullWidth />
               </Grid>
               <Grid item xs={12} sm={12}>
                 <CampoDeTexto name="sintoma" label="Sintoma do veículo" required fullWidth />
               </Grid>
-              <Grid item xs={12} sm={6} md={6} >
+              <Grid item xs={12} sm={6} md={4} >
                 <CampoDeSelecao name="categoria" label="Categoria da ordem de serviço" required fullWidth>
                   <MenuItem value="0">Predetiva</MenuItem>
                   <MenuItem value="1">Corretiva</MenuItem>
                   <MenuItem value="2">Preventiva</MenuItem>
                 </CampoDeSelecao>
               </Grid>
-              <Grid item xs={12} sm={6} md={6}>
+              <Grid item xs={12} sm={6} md={4}>
                 <CampoDeSelecao name="status" label="Status da ordem de serviço" required fullWidth>
                   <MenuItem value="0">Em andamento</MenuItem>
                   <MenuItem value="1">Finalizada</MenuItem>
                 </CampoDeSelecao>
               </Grid>
-              <Grid item xs={12} sm={6} md={6}>
+              <Grid item xs={12} sm={6} md={4}>
                 <CampoDeTexto name="andamento" type="number" label="Andamento (%)" required fullWidth />
               </Grid>
               <Grid item xs={12} sm={6} md={6}>
@@ -96,7 +96,7 @@ const FormOrdemDeServico: React.FC = () => {
           <CardActions>
             <Grid container justify="flex-end">
               <Grid item>
-                <Button type="submit">Salvar</Button>
+                <Button type="submit">{ordemDeServico ? "Alterar" : "Salvar"}</Button>
               </Grid>
             </Grid>
           </CardActions>
