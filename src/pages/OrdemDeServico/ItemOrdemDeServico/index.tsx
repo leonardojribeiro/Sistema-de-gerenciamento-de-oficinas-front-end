@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   listagem: {
     [theme.breakpoints.up("md")]: {
-      height: "200px"
+      minHeight: "200px"
     }
   },
   containerValorTotalListagem: {
@@ -87,7 +87,7 @@ const ItemOrdemDeServico: React.FC<ItemOrdemDeServicoProps> = ({ ordemDeServico 
   }
 
   return (
-    <Grid item xs={12} sm={11} md={8} lg={6} >
+    <Grid item xs={12} sm={12} md={10} >
       <Card className={classes.card} component={Paper} elevation={4}>
         <Paper elevation={4} square>
           <Box p={2}>
@@ -119,9 +119,11 @@ const ItemOrdemDeServico: React.FC<ItemOrdemDeServicoProps> = ({ ordemDeServico 
             <Grid item>
               <Typography>Iniciada em: {Formato.formatarData(ordemDeServico.dataDeInicio)}</Typography>
             </Grid>
-            <Grid item>
-              <Typography>Finalizada em: {Formato.formatarData(ordemDeServico.dataDeConclusao)}</Typography>
-            </Grid>
+            {ordemDeServico.dataDeConclusao &&
+              <Grid item>
+                <Typography>Finalizada em: {Formato.formatarData(ordemDeServico.dataDeConclusao)}</Typography>
+              </Grid>
+            }
           </Grid>
           <Grid container spacing={1}>
             <Grid item xs={12} md={6}>
@@ -136,8 +138,19 @@ const ItemOrdemDeServico: React.FC<ItemOrdemDeServicoProps> = ({ ordemDeServico 
                         <Typography>De {agrupamento.nomeFantasia}:</Typography>
                         <Box ml={1}>
                           {agrupamento.itensDePeca?.map((itemDePeca, index) => (
-                            <Grid container key={index}>
-                              <Typography>{itemDePeca.peca.descricao}</Typography>
+                            <Grid container key={index} spacing={1} justify="space-between">
+                              <Grid item>
+                                <Typography>{itemDePeca.peca.descricao}</Typography>
+                              </Grid>
+                              <Grid item>
+                                <Typography>Valor unitário R$ {Formato.formatarMoeda(itemDePeca.valorUnitario)}</Typography>
+                              </Grid>
+                              <Grid item>
+                                <Typography>Qtd: {itemDePeca.quantidade}</Typography>
+                              </Grid>
+                              <Grid item>
+                                <Typography>Total: {Formato.formatarMoeda(itemDePeca.valorTotal)}</Typography>
+                              </Grid>
                             </Grid>
                           ))}
                         </Box>

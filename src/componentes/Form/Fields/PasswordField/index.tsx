@@ -10,8 +10,7 @@ interface PasswordField extends StandardTextFieldProps {
 
 const CampoDeSenha: React.FC<PasswordField> = ({ name, ...props }) => {
   const [visible, setVisible] = useState<boolean>(false);
-
-  const { handleInputChange, ref, valid, value } = useFormField(name, () => true, undefined, undefined, props.required, props.onChange);
+  const { handleInputChange, ref, valid, value } = useFormField(name, (password) => password.length > 0 , undefined, false, props.required, props.onChange);
 
   const handleClick = useCallback(() => {
     setVisible(!visible);

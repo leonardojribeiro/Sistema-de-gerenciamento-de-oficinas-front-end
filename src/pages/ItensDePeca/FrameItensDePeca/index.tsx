@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 const FrameItensDePeca: React.FC = () => {
   const classes = useStyles();
   return (
-    <Container maxWidth="lg" className={classes.root} >
+    <Container maxWidth="md" className={classes.root} >
       <Hidden mdUp>
         <SwipeableViews
           axis="y"

@@ -12,7 +12,6 @@ export default function useFormField<T>(
   const [valid, setValid] = useState<boolean>(true);
   const [value, setValue] = useState<string>("");
   const ref = useRef<HTMLInputElement | undefined>(undefined);
-
   const { registerField, fieldName, defaultValue } = useField(name);
 
   const validate = useCallback(() => {

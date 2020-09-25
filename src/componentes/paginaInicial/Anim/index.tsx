@@ -1,6 +1,6 @@
 import { makeStyles, Typography, useMediaQuery, useTheme } from '@material-ui/core';
-import React from 'react';
-import { motion, useTransform, useViewportScroll, } from "framer-motion";
+import React, { useRef } from 'react';
+import { motion, useMotionValue, useTransform, useViewportScroll, } from "framer-motion";
 import Sticky from '../Sticky';
 import desktop from '../../../Assets/Images/desktop.png';
 import mobile from '../../../Assets/Images/mobile.png';
@@ -55,6 +55,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+
+
 const Funcionalidades: React.FC = () => {
   const classes = useStyles();
   const { scrollYProgress } = useViewportScroll();
@@ -64,6 +66,27 @@ const Funcionalidades: React.FC = () => {
     [0.45, 0.46],
     [0, 1]
   );
+
+  const a = useMotionValue('100px');
+
+  const t = useMotionValue(true);
+
+  const boxVariants = {
+    pressed: () => {
+      console.log(t.get())
+      if (t.get()) {
+        t.set(false);
+        a.set("200px")
+        return ({height: "200px"})
+      }
+      else {
+        t.set(true);
+        a.set("100px")
+        return ({height: "100px"})
+      }
+    },
+    hover: { backgroundColor: "#FF0000" },
+  };
 
   return (
     <>
@@ -77,6 +100,13 @@ const Funcionalidades: React.FC = () => {
           }}
         >
           <Typography align="justify" variant="h4"  >Principais funcionalidades</Typography>
+          <motion.div whileHover="hover"
+            whileTap="pressed" >
+            <motion.div variants={boxVariants} style={{ backgroundColor: "#ccc" }} >
+              aaaa
+            </motion.div>
+          </motion.div>
+
         </motion.div>
       </div>
     </>
@@ -103,7 +133,7 @@ const Anim: React.FC = () => {
   const frameScale = useTransform(
     scrollYProgress,
     [0.15, 0.17],
-    [0.5, 0.97, ]
+    [0.5, 0.97,]
   )
   const frameOpacity = useTransform(
     scrollYProgress,
@@ -195,6 +225,7 @@ const Anim: React.FC = () => {
                 scale: frameScale,
                 opacity: frameOpacity,
                 borderRadius: frameBorderRadius,
+                zIndex: -5,
               }}
             />
           </div>
@@ -298,7 +329,7 @@ const Anim: React.FC = () => {
             </motion.div>
           </div>
           <Funcionalidades />
-          
+
         </Sticky>
       </div>
     </div>

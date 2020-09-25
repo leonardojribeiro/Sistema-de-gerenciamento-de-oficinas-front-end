@@ -21,6 +21,7 @@ import Teste from './Teste';
 import DialogInserirOrdemDeServico from './pages/OrdemDeServico/DialogInserirOrdemDeServico';
 import DialogAlterarOrdemDeServico from './pages/OrdemDeServico/DialogoAlterarOrdemDeServico';
 import { OrdemDeServicoProvider } from './pages/OrdemDeServico/OrdemDeServicoContext';
+import { TabContextProvider } from './contexts/TabContext';
 
 const Routes: React.FC = () => {
   const authContext = useContext(AuthContext);
@@ -81,10 +82,12 @@ const Routes: React.FC = () => {
                 <Route path="/funcionarios" component={DialogoFuncionarios} />
                 <Route path="/servicos" component={DialogServicos} />
                 <Route path="/opcoes" component={DialogoOpcoes} />
-                <OrdemDeServicoProvider>
-                  <Route path="/ordensdeservico/inserir" component={DialogInserirOrdemDeServico} />
-                  <Route path="/ordensdeservico/alterarordemdeservico" component={DialogAlterarOrdemDeServico} />
-                </OrdemDeServicoProvider>
+                <TabContextProvider>
+                  <OrdemDeServicoProvider>
+                    <Route path="/ordensdeservico/inserir" component={DialogInserirOrdemDeServico} />
+                    <Route path="/ordensdeservico/alterarordemdeservico" component={DialogAlterarOrdemDeServico} />
+                  </OrdemDeServicoProvider>
+                </TabContextProvider>
                 <Route path="/popular" exact component={Teste} />
               </Switch>
             </>

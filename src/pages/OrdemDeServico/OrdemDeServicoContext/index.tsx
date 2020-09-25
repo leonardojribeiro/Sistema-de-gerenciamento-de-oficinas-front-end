@@ -4,16 +4,15 @@ import ItemDeServico from '../../../Types/ItemDeServico';
 import ApiContext from '../../../contexts/ApiContext';
 import OrdemDeServico from '../../../Types/OrdemDeServico';
 import { useHistory } from 'react-router-dom';
+import TabContext from '../../../contexts/TabContext';
 
 interface OrdemDeServicoContextValues {
   itensDePeca: ItemDePeca[];
   itensDeServico: ItemDeServico[];
-  indexTab: number;
   valorTotalPecas: () => number;
   valorTotalServicos: () => number;
   setItensDePeca: React.Dispatch<React.SetStateAction<ItemDePeca[]>>;
   setItensDeServico: React.Dispatch<React.SetStateAction<ItemDeServico[]>>;
-  setIndexTab: React.Dispatch<React.SetStateAction<number>>;
   handleSubmit: (dados: any) => void;
   removerItemDePeca: (_id: string | undefined) => void;
   alterarItemDePeca: (_id: string | undefined) => void;
@@ -36,11 +35,10 @@ export const OrdemDeServicoProvider: React.FC = ({ children }) => {
   const [itemDePecaSelecionado, setItemDePecaSelecionado] = useState<number | undefined>();
   const [itemDeServicoSelecionado, setItemDeServicoSelecionado] = useState<number | undefined>();
   const [itensDeServico, setItensDeServico] = useState<ItemDeServico[]>([]);
-  const [indexTab, setIndexTab] = useState<number>(1);
   const [ordemDeServico, setOrdemDeServico] = useState<OrdemDeServico | undefined>();
   const { post, get, put } = useContext(ApiContext);
   const history = useHistory();
-
+  
   const getOrdemDeServico = useCallback(async (_id: string) => {
     const resposta = await get(`ordemdeservico/id?_id=${_id}`) as OrdemDeServico | undefined;
     if (resposta) {
@@ -59,10 +57,10 @@ export const OrdemDeServicoProvider: React.FC = ({ children }) => {
       return true;
     }
     else {
-      setIndexTab(2);
+      //setActiveIndex(2);
       return false;
     }
-  }, [itensDeServico.length])
+  }, [itensDeServico.length,])
 
   const handleSubmit = useCallback(async (dados) => {
     if (validar()) {
@@ -219,12 +217,10 @@ export const OrdemDeServicoProvider: React.FC = ({ children }) => {
       value={{
         itensDePeca,
         itensDeServico,
-        indexTab,
         valorTotalPecas,
         valorTotalServicos,
         setItensDePeca,
         setItensDeServico,
-        setIndexTab,
         handleSubmit,
         alterarItemDePeca,
         removerItemDePeca,

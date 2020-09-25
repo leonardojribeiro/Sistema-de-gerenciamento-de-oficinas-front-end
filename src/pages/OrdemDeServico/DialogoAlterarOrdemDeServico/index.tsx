@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { memo, useContext, useEffect } from 'react';
 import Dialog from '../../../componentes/Dialog';
 import SwipeableViews from 'react-swipeable-views';
 import { Tabs, Tab, } from '@material-ui/core';
@@ -7,9 +7,11 @@ import FormOrdemDeServico from '../FormOrdemDeServico';
 import FrameItensDePeca from '../../ItensDePeca/FrameItensDePeca';
 import FrameItensDeServico from '../../ItensDeServico/FrameItensDeServico';
 import useQuery from '../../../hooks/useQuery';
+import TabContext from '../../../contexts/TabContext';
 
 const DialogAlterarOrdemDeServico: React.FC = () => {
-  const { indexTab, setIndexTab, getOrdemDeServico } = useContext(OrdemDeServicoContext);
+  const { getOrdemDeServico } = useContext(OrdemDeServicoContext);
+  const {activeIndex, setActiveIndex} = useContext(TabContext);
   const id = useQuery("id");
 
   useEffect(() => {
@@ -20,12 +22,12 @@ const DialogAlterarOrdemDeServico: React.FC = () => {
 
   return (
     <Dialog title="Nova ordem de serviço" open maxWidth="lg" fullWidth fullScreen>
-      <Tabs value={indexTab} onChange={(e, v) => setIndexTab(v)} variant="fullWidth" indicatorColor="primary">
+      <Tabs value={activeIndex} onChange={(e, v) => setActiveIndex(v)} variant="fullWidth" indicatorColor="primary">
         <Tab label="Peças" wrapped />
         <Tab label="Ordem de serviço" wrapped />
         <Tab label="Serviços" wrapped />
       </Tabs>
-      <SwipeableViews style={{ height: "calc(100% - 64px)", }} containerStyle={{ height: "calc(100% )", }} enableMouseEvents index={indexTab} async onChangeIndex={(e) => setIndexTab(e)} resistance animateTransitions >
+      <SwipeableViews style={{ height: "calc(100% - 64px)", }} containerStyle={{ height: "calc(100% )", }} enableMouseEvents index={activeIndex} onChangeIndex={(e) => setActiveIndex(e)} resistance animateTransitions >
         <FrameItensDePeca />
         <FormOrdemDeServico />
         <FrameItensDeServico />
@@ -34,4 +36,4 @@ const DialogAlterarOrdemDeServico: React.FC = () => {
   );
 }
 
-export default DialogAlterarOrdemDeServico;
+export default memo(DialogAlterarOrdemDeServico);

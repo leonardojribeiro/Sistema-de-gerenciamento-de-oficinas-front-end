@@ -2,8 +2,6 @@ import React, { useCallback, useContext, useRef, memo } from 'react';
 import { Form, MoneyField, CampoDeTexto, CampoDeSelecao } from '../../../componentes/Form';
 import { Grid, MenuItem, Button, CardContent, CardHeader, Card, CardActions } from '@material-ui/core';
 import { FormProviderHandles } from '../../../componentes/Form/types';
-import ItemDeServico from '../../../Types/ItemDeServico';
-//import comparar from '../../../recursos/Comparar';
 import OrdemDeServicoContext from '../../OrdemDeServico/OrdemDeServicoContext';
 import AutoCompleteServico from '../../../componentes/AutoComplete/AutoCompleteServico';
 import AutoCompleteFuncionario from '../../../componentes/AutoComplete/AutoCompleteFuncionario';
@@ -11,19 +9,7 @@ import AutoCompleteFuncionario from '../../../componentes/AutoComplete/AutoCompl
 
 const FormItensDeServico: React.FC = () => {
   const formRef = useRef<FormProviderHandles>({} as FormProviderHandles);
-  const { itensDeServico, itemDeServicoSelecionado, setItemDeServicoSelecionado,handleSubmitFormItemDeServico } = useContext(OrdemDeServicoContext);
-
-  // const validar = useCallback((dados: ItemDeServico) => {
-  //   let igual = false;
-  //   itensDeServico.forEach(itemDeServico => {
-  //     if (comparar(itemDeServico, dados)) {
-  //       igual = true;
-  //     }
-  //   })
-  //   return igual;
-  // }, [itensDeServico]);
-
-  
+  const { itensDeServico, itemDeServicoSelecionado, setItemDeServicoSelecionado, handleSubmitFormItemDeServico } = useContext(OrdemDeServicoContext);
 
   const calcularValorTotal = useCallback((event) => {
     const valorUnitario = Number(formRef.current.getFieldValue('valorUnitario'));
@@ -49,28 +35,28 @@ const FormItensDeServico: React.FC = () => {
         <CardHeader title="Inserir serviço" />
         <CardContent>
           <Grid container spacing={2} justify="flex-end">
-            <Grid item xs={12} md={6} lg={3}>
+            <Grid item xs={12} md={6} >
               <AutoCompleteServico name="servico" label="Serviço" listOptionsIn />
             </Grid>
-            <Grid item xs={12} md={6} lg={3}>
+            <Grid item xs={12} md={6}>
               <AutoCompleteFuncionario name="funcionario" required label="Funcionário" listOptionsIn />
             </Grid>
-            <Grid item xs={7} md={2} lg={1}>
+            <Grid item xs={7} md={2} >
               <CampoDeTexto type="number" name="garantia" fullWidth required label="Garantia" onChange={calcularValorTotal} />
             </Grid>
-            <Grid item xs={5} md={2} lg={1}>
+            <Grid item xs={5} md={2}>
               <CampoDeSelecao name="unidadeDeGarantia" label="Tipo" fullWidth required>
                 <MenuItem value="0">Km</MenuItem>
                 <MenuItem value="1">Dias</MenuItem>
               </CampoDeSelecao>
             </Grid>
-            <Grid item xs={6} md={3} lg={2}>
+            <Grid item xs={6} md={3} >
               <MoneyField name="valorUnitario" fullWidth required label="Valor unitário" onChange={calcularValorTotal} />
             </Grid>
-            <Grid item xs={6} md={2} lg={2}>
+            <Grid item xs={6} md={2} >
               <CampoDeTexto type="number" name="quantidade" fullWidth required label="Quantidade" onChange={calcularValorTotal} />
             </Grid>
-            <Grid item xs={6} md={3} lg={2}>
+            <Grid item xs={6} md={3}>
               <MoneyField name="valorTotal" fullWidth required label="ValorTotal" />
             </Grid>
           </Grid>

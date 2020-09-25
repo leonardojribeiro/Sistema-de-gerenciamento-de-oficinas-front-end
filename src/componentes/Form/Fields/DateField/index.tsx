@@ -13,12 +13,12 @@ interface DateFieldProps extends DatePickerViewsProps {
 
 
 interface Ref {
-  value: Date | string;
+  value: Date | string | null;
 }
 
 const DateField: React.FC<DateFieldProps> = ({ name, ...props }) => {
   const [valid, setValid] = useState<boolean>(true);
-  const [value, setValue] = useState<Date>(new Date());
+  const [value, setValue] = useState<Date | null>(null);
   const ref = useRef<Ref>({} as Ref);
   const inputRef = useRef<HTMLInputElement>();
   const { registerField, fieldName, defaultValue } = useField(name);
@@ -27,10 +27,10 @@ const DateField: React.FC<DateFieldProps> = ({ name, ...props }) => {
 
   const validate = useCallback(() => {
     if (ref && ref.current) {
-      if (!props.required && !Number.isNaN(new Date(ref.current.value).getTime())) {
+      if (!props.required && ref.current.value === null) {
         return true;
       }
-      if (!Number.isNaN(new Date(ref.current.value).getTime()) && ref.current.value) {
+      if (!Number.isNaN(new Date(ref.current.value ? ref.current.value : "").getTime()) && ref.current.value) {
         setValid(true);
         return (true);
       }
@@ -81,6 +81,7 @@ const DateField: React.FC<DateFieldProps> = ({ name, ...props }) => {
 
   return (
     <KeyboardDatePicker
+      defaultChecked={false}
       value={value}
       onChange={handleChange}
       format="dd/MM/yyyy"
