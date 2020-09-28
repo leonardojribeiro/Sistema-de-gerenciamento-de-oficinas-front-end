@@ -87,7 +87,7 @@ const ItemOrdemDeServico: React.FC<ItemOrdemDeServicoProps> = ({ ordemDeServico 
   }
 
   return (
-    <Grid item xs={12} sm={12} md={10} >
+    <Grid item xs={12} sm={12} lg={6} >
       <Card className={classes.card} component={Paper} elevation={4}>
         <Paper elevation={4} square>
           <Box p={2}>
@@ -141,15 +141,6 @@ const ItemOrdemDeServico: React.FC<ItemOrdemDeServicoProps> = ({ ordemDeServico 
                             <Grid container key={index} spacing={1} justify="space-between">
                               <Grid item>
                                 <Typography>{itemDePeca.peca.descricao}</Typography>
-                              </Grid>
-                              <Grid item>
-                                <Typography>Valor unitário R$ {Formato.formatarMoeda(itemDePeca.valorUnitario)}</Typography>
-                              </Grid>
-                              <Grid item>
-                                <Typography>Qtd: {itemDePeca.quantidade}</Typography>
-                              </Grid>
-                              <Grid item>
-                                <Typography>Total: {Formato.formatarMoeda(itemDePeca.valorTotal)}</Typography>
                               </Grid>
                             </Grid>
                           ))}

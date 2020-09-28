@@ -1,12 +1,11 @@
 import { makeStyles, Typography, useMediaQuery, useTheme } from '@material-ui/core';
-import React, { useRef } from 'react';
-import { motion, useMotionValue, useTransform, useViewportScroll, } from "framer-motion";
+import React, { useEffect, useRef } from 'react';
+import { motion, MotionValue, PanInfo, useMotionValue, useSpring, useTransform, useViewportScroll, } from "framer-motion";
 import Sticky from '../Sticky';
 import desktop from '../../../Assets/Images/desktop.png';
 import mobile from '../../../Assets/Images/mobile.png';
 import tablet from '../../../Assets/Images/tablet.png';
-import marcaueg from '../../../Assets/Images/marcaueg.svg';
-
+import t from '../../../Assets/Images/t.svg';
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "2000vh",
@@ -59,65 +58,134 @@ const useStyles = makeStyles((theme) => ({
 
 const Funcionalidades: React.FC = () => {
   const classes = useStyles();
-  const { scrollYProgress } = useViewportScroll();
 
-  const legendFunctionsTitleOpacity = useTransform(
+  const { scrollYProgress } = useViewportScroll();
+  const opacityTitle = useTransform(
     scrollYProgress,
     [0.45, 0.46],
     [0, 1]
   );
 
-  const a = useMotionValue('100px');
+  const indexActive = useMotionValue(1);
+  const mL = useTransform(
+    indexActive,
+    [0, 1, 2],
+    ['0%', '-100%', '-200%']
+  )
 
-  const t = useMotionValue(true);
+  const startX = useRef(0);
+  const minX = useRef<number | undefined>();
+  const maxX = useRef<number | undefined>();
 
-  const boxVariants = {
-    pressed: () => {
-      console.log(t.get())
-      if (t.get()) {
-        t.set(false);
-        a.set("200px")
-        return ({height: "200px"})
+  const handleIndex = (direction: 'left' | 'right') => {
+    const index = indexActive.get();
+    switch (direction) {
+      case 'left': {
+        if (index < 2) {
+          indexActive.set(index + 1);
+        }
+        break;
       }
-      else {
-        t.set(true);
-        a.set("100px")
-        return ({height: "100px"})
+      case 'right': {
+        if (index > 0) {
+          indexActive.set(index - 1);
+        }
+        break;
       }
-    },
-    hover: { backgroundColor: "#FF0000" },
-  };
+    }
+  }
+
+  const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, e: PanInfo) => {
+    if (startX.current > e.point.x) {
+      if (minX.current && e.point.x <= minX.current) {
+        handleIndex('left');
+      }
+    }
+    else {
+      if (maxX.current && e.point.x >= maxX.current) {
+        handleIndex('right');
+      }
+    }
+    minX.current = undefined;
+    maxX.current = undefined;
+  }
+
+  const handleDragStart = (event: MouseEvent | TouchEvent | PointerEvent, e: PanInfo) => {
+    startX.current = e.point.x;
+  }
+
+  const handleDrag = (event: MouseEvent | TouchEvent | PointerEvent, e: PanInfo) => {
+    if (!minX.current) {
+      minX.current = e.point.x;
+    }
+    if (!maxX.current) {
+      maxX.current = e.point.x;
+    }
+    if (minX.current > e.point.x) {
+      minX.current = e.point.x;
+    }
+    if (maxX.current < e.point.x) {
+      maxX.current = e.point.x;
+    }
+  }
+
+   
 
   return (
     <>
-      <div className={classes.absoluteFlexFull}>
-        <motion.div
-          className={classes.legend}
-          style={{
-            opacity: legendFunctionsTitleOpacity,
-            maxWidth: "500px",
-            marginTop: '-5vh'
-          }}
-        >
-          <Typography align="justify" variant="h4"  >Principais funcionalidades</Typography>
-          <motion.div whileHover="hover"
-            whileTap="pressed" >
-            <motion.div variants={boxVariants} style={{ backgroundColor: "#ccc" }} >
-              aaaa
-            </motion.div>
-          </motion.div>
-
-        </motion.div>
-      </div>
+      <motion.div 
+      className={classes.absoluteFlexFull} 
+      transition={{duration: 1}} 
+      style={{ width: "300%", marginLeft: mL, transition: "margin-left 0.5s", userSelect: 'none',  opacity: opacityTitle}}
+        onDragEnd={handleDragEnd}
+        onDragStart={handleDragStart}
+        onDrag={handleDrag}
+        drag="x"
+        dragConstraints={{ left: 0, right: 0 }} 
+        dragMomentum
+      >
+        <motion.div className={classes.flexFull} style={{ background: "#ff0000" }} />
+        <motion.div className={classes.flexFull} style={{ background: "#00ff00" }} />
+        <motion.div className={classes.flexFull} style={{ background: "#0000ff" }} />
+      </motion.div>
     </>
   )
 }
 
+const AnimC: React.FC<{ videoTransform: MotionValue<number> }> = ({ videoTransform }) => {
+  const refCanvas = useRef<HTMLCanvasElement>({} as HTMLCanvasElement);
+  const classes = useStyles();
+
+  var totalImages = useRef(68);
+  var videoFrames = useRef<HTMLImageElement[]>([]);
+
+
+  useEffect(() => {
+    for (var i = totalImages.current - 1; i >= 0; i--) {
+      var videoFrame = new Image();
+      var videoFrameUrl = `gifRend/responsive${String(i)}.png`
+      videoFrame.src = videoFrameUrl;
+      videoFrames.current.push(videoFrame);
+    }
+    console.log(videoFrames)
+  }, []);
+
+
+
+  videoTransform.onChange(() => {
+    const ctx = refCanvas.current.getContext('2d');
+    const frame = videoFrames.current[Math.round(videoTransform.get())]
+    if (frame && ctx) {
+      ctx.drawImage(frame, 0, 0);
+    }
+  })
+
+  return <canvas ref={refCanvas} height={768} width={1360} className={classes.img} />
+}
 
 const Anim: React.FC = () => {
   const classes = useStyles();
-  const smallSize = useMediaQuery(useTheme().breakpoints.down('sm'))
-  console.log(smallSize)
+  const smallSize = useMediaQuery(useTheme().breakpoints.down('sm'));
   const { scrollYProgress } = useViewportScroll();
   const opacityTitle = useTransform(
     scrollYProgress,
@@ -180,7 +248,7 @@ const Anim: React.FC = () => {
   );
   const legendResponsiveTop = useTransform(
     scrollYProgress,
-    [0.13, 0.15, 0.45],
+    [0.15, 0.17, 0.45],
     ['80%', '30%', '0%']
   );
 
