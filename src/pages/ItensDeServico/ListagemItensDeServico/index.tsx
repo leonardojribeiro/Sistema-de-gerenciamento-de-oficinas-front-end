@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     '&:nth-child(even)': {
       background: theme.palette.background.paper,
     },
-    height: "100%",
+    height: "calc(100% - 64px)",
     overflowY: "auto",
     display: "flex",
     flexDirection: "column",

@@ -1,4 +1,3 @@
-import { ButtonBase } from '@material-ui/core';
 import { motion, useMotionValue } from 'framer-motion';
 import React, { useContext } from 'react';
 import AccordionContext from '../Context';
@@ -8,15 +7,15 @@ import AccordionContext from '../Context';
 const AccordionSumary: React.FC = ({ children }) => {
   const { expanded } = useContext(AccordionContext);
 
-  const margin = useMotionValue('0px')
+  const minHeight = useMotionValue('48px')
 
-  expanded.onChange((expanded) => {
-    margin.set(expanded ? '16px 0' : '0 0px')
+  expanded.onChange((expanded) => { 
+    minHeight.set(expanded ? '64px' : '48px')
   })
 
   return (
-    <motion.div onClick={() => expanded.set(!expanded.get())} style={{ margin: margin, transition: 'margin 0.3s', padding: '0px 16px' }}>
-      <div className="MuiAccordionSummary-root">
+    <motion.div onClick={() => expanded.set(!expanded.get())} style={{minHeight, transition: 'all 0.3s', padding: '0px 16px',  display:'flex', alignItems: 'center' }}>
+      <div style={{width:'100%', display:'flex', alignItems: 'center'}}>
         {children}
       </div>
     </motion.div>

@@ -8,6 +8,17 @@ import AutoCompleteFornecedor from '../../../componentes/AutoComplete/AutoComple
 import NumberField from '../../../componentes/Form/Fields/NumberField';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    position: 'absolute',
+    marginTop: '-64px',
+  },
+  arrowContainer:{
+    height: "64px",
+    width: '100%',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   form: {
     position: "relative",
   }
@@ -39,7 +50,8 @@ const FormItensDePeca: React.FC = () => {
   }, [itemDePecaSelecionado, setItemDePecaSelecionado]);
 
   return (
-    <Box className={classes.form}>
+    <div className={classes.root}>
+      <div className={classes.arrowContainer} > ^ </div>
       <Form onSubmit={handleSubmitFormItemDePeca} ref={formRef} clearOnSubmit initialData={intialData} >
         <Card>
           <CardHeader title="Inserir peça" />
@@ -83,7 +95,7 @@ const FormItensDePeca: React.FC = () => {
           </CardActions>
         </Card>
       </Form>
-    </Box>
+    </div>
   );
 }
 

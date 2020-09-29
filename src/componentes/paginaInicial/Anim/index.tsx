@@ -1,11 +1,10 @@
 import { makeStyles, Typography, useMediaQuery, useTheme } from '@material-ui/core';
-import React, { useEffect, useRef } from 'react';
-import { motion, MotionValue, PanInfo, useMotionValue, useSpring, useTransform, useViewportScroll, } from "framer-motion";
+import React, { useRef } from 'react';
+import { motion, PanInfo, useMotionValue, useTransform, useViewportScroll, } from "framer-motion";
 import Sticky from '../Sticky';
 import desktop from '../../../Assets/Images/desktop.png';
 import mobile from '../../../Assets/Images/mobile.png';
 import tablet from '../../../Assets/Images/tablet.png';
-import t from '../../../Assets/Images/t.svg';
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "2000vh",
@@ -129,19 +128,19 @@ const Funcionalidades: React.FC = () => {
     }
   }
 
-   
+
 
   return (
     <>
-      <motion.div 
-      className={classes.absoluteFlexFull} 
-      transition={{duration: 1}} 
-      style={{ width: "300%", marginLeft: mL, transition: "margin-left 0.5s", userSelect: 'none',  opacity: opacityTitle}}
+      <motion.div
+        className={classes.absoluteFlexFull}
+        transition={{ duration: 1 }}
+        style={{ width: "300%", marginLeft: mL, transition: "margin-left 0.5s", userSelect: 'none', opacity: opacityTitle }}
         onDragEnd={handleDragEnd}
         onDragStart={handleDragStart}
         onDrag={handleDrag}
         drag="x"
-        dragConstraints={{ left: 0, right: 0 }} 
+        dragConstraints={{ left: 0, right: 0 }}
         dragMomentum
       >
         <motion.div className={classes.flexFull} style={{ background: "#ff0000" }} />
@@ -151,7 +150,7 @@ const Funcionalidades: React.FC = () => {
     </>
   )
 }
-
+/*
 const AnimC: React.FC<{ videoTransform: MotionValue<number> }> = ({ videoTransform }) => {
   const refCanvas = useRef<HTMLCanvasElement>({} as HTMLCanvasElement);
   const classes = useStyles();
@@ -182,6 +181,7 @@ const AnimC: React.FC<{ videoTransform: MotionValue<number> }> = ({ videoTransfo
 
   return <canvas ref={refCanvas} height={768} width={1360} className={classes.img} />
 }
+*/
 
 const Anim: React.FC = () => {
   const classes = useStyles();
