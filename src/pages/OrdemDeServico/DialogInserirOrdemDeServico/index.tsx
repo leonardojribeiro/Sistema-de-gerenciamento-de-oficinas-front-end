@@ -1,16 +1,15 @@
 import React, { memo, useContext } from 'react';
 import Dialog from '../../../componentes/Dialog';
 import SwipeableViews from 'react-swipeable-views';
-import { Tabs, Tab, } from '@material-ui/core';
-import OrdemDeServicoContext from '../OrdemDeServicoContext';
+import { Tabs, Tab, } from '@material-ui/core'; 
 import FormOrdemDeServico from '../FormOrdemDeServico';
 import FrameItensDePeca from '../../ItensDePeca/FrameItensDePeca';
 import FrameItensDeServico from '../../ItensDeServico/FrameItensDeServico';
-import TabContext from '../../../contexts/TabContext';
+import SwipeableContext from '../../../contexts/SwipeableContext';
 
 const DialogInserirOrdemDeServico: React.FC = () => {
   //const { indexTab, setIndexTab } = useContext(OrdemDeServicoContext);
-  const {activeIndex,setActiveIndex} = useContext(TabContext);
+  const {activeIndex,setActiveIndex} = useContext(SwipeableContext);
   return (
     <Dialog title="Nova ordem de serviço" open maxWidth="lg" fullWidth fullScreen>
       <Tabs value={activeIndex} onChange={(e, v) => setActiveIndex(v)}  variant="fullWidth" indicatorColor="primary">

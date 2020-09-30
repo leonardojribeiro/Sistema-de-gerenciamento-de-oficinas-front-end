@@ -1,28 +1,13 @@
 import React, { useCallback, useContext, useRef, memo } from 'react';
 import { Form, MoneyField, CampoDeTexto, CampoDeSelecao } from '../../../componentes/Form';
-import { Grid, MenuItem, Button, CardContent, CardHeader, Card, CardActions, makeStyles } from '@material-ui/core';
+import { Grid, MenuItem, Button, CardContent, CardHeader, Card, CardActions, Hidden } from '@material-ui/core';
 import { FormProviderHandles } from '../../../componentes/Form/types';
 import OrdemDeServicoContext from '../../OrdemDeServico/OrdemDeServicoContext';
 import AutoCompleteServico from '../../../componentes/AutoComplete/AutoCompleteServico';
 import AutoCompleteFuncionario from '../../../componentes/AutoComplete/AutoCompleteFuncionario';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    position: 'absolute',
-    marginTop: '-64px',
-  },
-  arrowContainer:{
-    height: "64px",
-    width: '100%',
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  }
-}));
-
+import ArrowTop from '../../../componentes/ArrowTop';
 
 const FormItensDeServico: React.FC = () => {
-  const classes = useStyles();
   const formRef = useRef<FormProviderHandles>({} as FormProviderHandles);
   const { itensDeServico, itemDeServicoSelecionado, setItemDeServicoSelecionado, handleSubmitFormItemDeServico } = useContext(OrdemDeServicoContext);
 
@@ -45,8 +30,10 @@ const FormItensDeServico: React.FC = () => {
   } : undefined;
 
   return (
-    <div className={classes.root}>
-      <div className={classes.arrowContainer} > ^ </div>
+    <>
+      <Hidden mdUp>
+        <ArrowTop/>
+      </Hidden>
       <Form onSubmit={handleSubmitFormItemDeServico} ref={formRef} initialData={intialData} clearOnSubmit>
         <Card>
           <CardHeader title="Inserir serviço" />
@@ -90,7 +77,7 @@ const FormItensDeServico: React.FC = () => {
           </CardActions>
         </Card>
       </Form >
-    </div>
+    </>
   );
 }
 

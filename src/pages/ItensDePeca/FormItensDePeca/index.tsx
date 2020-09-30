@@ -1,31 +1,14 @@
 import React, { useCallback, useContext, useRef, memo } from 'react';
 import { Form, MoneyField, CampoDeSelecao } from '../../../componentes/Form';
-import { Grid, MenuItem, Button, Card, CardContent, CardActions, Box, makeStyles, CardHeader } from '@material-ui/core';
+import { Grid, MenuItem, Button, Card, CardContent, CardActions, CardHeader, Hidden } from '@material-ui/core';
 import { FormProviderHandles } from '../../../componentes/Form/types';
 import OrdemDeServicoContext from '../../OrdemDeServico/OrdemDeServicoContext';
 import AutoCompletePeca from '../../../componentes/AutoComplete/AutoCompletePeca';
 import AutoCompleteFornecedor from '../../../componentes/AutoComplete/AutoCompleteFornecedor';
 import NumberField from '../../../componentes/Form/Fields/NumberField';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    position: 'absolute',
-    marginTop: '-64px',
-  },
-  arrowContainer:{
-    height: "64px",
-    width: '100%',
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  form: {
-    position: "relative",
-  }
-}));
+import ArrowTop from '../../../componentes/ArrowTop';
 
 const FormItensDePeca: React.FC = () => {
-  const classes = useStyles();
   const formRef = useRef<FormProviderHandles>({} as FormProviderHandles);
   const { itensDePeca, itemDePecaSelecionado, setItemDePecaSelecionado, handleSubmitFormItemDePeca } = useContext(OrdemDeServicoContext);
 
@@ -50,8 +33,10 @@ const FormItensDePeca: React.FC = () => {
   }, [itemDePecaSelecionado, setItemDePecaSelecionado]);
 
   return (
-    <div className={classes.root}>
-      <div className={classes.arrowContainer} > ^ </div>
+    <>
+      <Hidden mdUp>
+        <ArrowTop />
+      </Hidden>
       <Form onSubmit={handleSubmitFormItemDePeca} ref={formRef} clearOnSubmit initialData={intialData} >
         <Card>
           <CardHeader title="Inserir peça" />
@@ -95,7 +80,7 @@ const FormItensDePeca: React.FC = () => {
           </CardActions>
         </Card>
       </Form>
-    </div>
+    </>
   );
 }
 

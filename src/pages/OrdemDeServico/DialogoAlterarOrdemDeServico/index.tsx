@@ -7,11 +7,11 @@ import FormOrdemDeServico from '../FormOrdemDeServico';
 import FrameItensDePeca from '../../ItensDePeca/FrameItensDePeca';
 import FrameItensDeServico from '../../ItensDeServico/FrameItensDeServico';
 import useQuery from '../../../hooks/useQuery';
-import TabContext from '../../../contexts/TabContext';
+import SwipeableContext from '../../../contexts/SwipeableContext';
 
 const DialogAlterarOrdemDeServico: React.FC = () => {
   const { getOrdemDeServico } = useContext(OrdemDeServicoContext);
-  const {activeIndex, setActiveIndex} = useContext(TabContext);
+  const {activeIndex, setActiveIndex} = useContext(SwipeableContext);
   const id = useQuery("id");
 
   useEffect(() => {

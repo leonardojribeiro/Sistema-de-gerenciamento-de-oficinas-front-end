@@ -3,8 +3,7 @@ import ItemDePeca from '../../../Types/ItemDePeca';
 import ItemDeServico from '../../../Types/ItemDeServico';
 import ApiContext from '../../../contexts/ApiContext';
 import OrdemDeServico from '../../../Types/OrdemDeServico';
-import { useHistory } from 'react-router-dom';
-import TabContext from '../../../contexts/TabContext';
+import { useHistory } from 'react-router-dom'; 
 
 interface OrdemDeServicoContextValues {
   itensDePeca: ItemDePeca[];

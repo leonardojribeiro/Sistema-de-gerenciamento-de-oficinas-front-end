@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, AppBar, Toolbar, Box, makeStyles } from '@material-ui/core';
+import { Button, AppBar, Toolbar, makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import Rodape from './Rodape';
 import Anim from './Anim';
