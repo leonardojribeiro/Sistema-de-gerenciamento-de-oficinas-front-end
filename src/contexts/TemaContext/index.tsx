@@ -58,6 +58,13 @@ export const TemaProvider: React.FC = (props: any) => {
     typography: {
       fontSize: tamanhoFonte,
     },
+    overrides:{
+      MuiGrid:{
+        item:{
+          transition: '0.3s'
+        }
+      }
+    }
   });
 
   return (

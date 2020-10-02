@@ -52,7 +52,7 @@ body {
   min-height: var(--h-livre-com-barra-rodape);
 }
 
-.tabela > div:nth-child(2n+2) {
+.tabela > div >  div >  div:nth-child(2n+2) {
   background: #aaaaff;
 }
 

@@ -1,12 +1,8 @@
 import React from 'react';
-import { makeStyles, Container, Grid } from '@material-ui/core';
+import { Container, Grid } from '@material-ui/core';
 import { useContext } from 'react';
 import AuthContext from '../contexts/AuthContext';
 
-const useStyles = makeStyles({
-  rodape: {
-  }
-})
 
 function ItemRodape({ usuario }) {
   const oficina = usuario.idOficina;
@@ -28,12 +24,11 @@ function ItemRodape({ usuario }) {
 
 function Rodape() {
   const { usuario } = useContext(AuthContext);
-  const styles = useStyles();
   return (
-    <Container className={styles.rodape}>
+    <Container>
       {
         usuario && (
-          <ItemRodape usuario={usuario}/>
+          <ItemRodape usuario={usuario} />
         )
       }
     </Container>

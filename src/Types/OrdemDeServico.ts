@@ -19,7 +19,7 @@ export default interface OrdemDeServico{
   categoria: string;
   status: string;
   sintoma: string;
-  itensDeServico: ItemDeServico[] | undefined;
+  itensDeServico: ItemDeServico[];
   itensDePeca: ItemDePeca[] | undefined;
   pecas: Peca[] | undefined;
   fornecedores: Fornecedor[] | undefined;

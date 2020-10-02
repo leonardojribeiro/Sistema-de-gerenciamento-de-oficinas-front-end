@@ -9,6 +9,8 @@ import ItemDePeca from '../../../Types/ItemDePeca';
 import ItemDeServico from '../../../Types/ItemDeServico';
 import { Link } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
+import { agruparPecasPorFornecedor, agruparServicosPorFuncionario } from '../../../recursos/Agrupamento';
+import ItemDePecaOuServico from '../../../componentes/ItemDePecaOuServico'; 
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -24,12 +26,20 @@ const useStyles = makeStyles((theme) => ({
   listagem: {
     [theme.breakpoints.up("md")]: {
       minHeight: "200px"
-    }
+    },
+    '&>div>div>div:nth-child(2n+2)': {
+      background: theme.palette.background.paper
+    },
   },
   containerValorTotalListagem: {
     display: "flex",
     justifyContent: "flex-end",
     paddingRight: theme.spacing(1)
+  },
+  agrupamentoItem: {
+    paddingRight: theme.spacing(1),
+    paddingLeft: theme.spacing(1),
+    paddingBottom: theme.spacing(2),
   }
 }));
 
@@ -48,46 +58,8 @@ interface AgrupamentoServicosPorFuncionario extends Funcionario {
 const ItemOrdemDeServico: React.FC<ItemOrdemDeServicoProps> = ({ ordemDeServico }) => {
   const classes = useStyles();
 
-  const agruparPecasPorFornecedor = () => {
-    const agrupamentos: AgrupamentoPecasPorFornecedor[] = [];
-    ordemDeServico.itensDePeca?.forEach((itemDePeca) => {
-      if (agrupamentos.findIndex((agrupamento) =>
-        agrupamento._id === itemDePeca.fornecedor._id
-      ) === -1) {
-        agrupamentos.push({ ...itemDePeca.fornecedor, itensDePeca: [] });
-      }
-    })
-    agrupamentos.forEach((agrupamento) => {
-      ordemDeServico.itensDePeca?.forEach((itemDePeca, indice) => {
-        if (agrupamento._id === itemDePeca.fornecedor._id && ordemDeServico.itensDePeca) {
-          agrupamento.itensDePeca.push(ordemDeServico.itensDePeca[indice])
-        }
-      })
-    });
-    return agrupamentos;
-  }
-
-  const agruparServicosPorFuncionario = () => {
-    const agrupamentos: AgrupamentoServicosPorFuncionario[] = [];
-    ordemDeServico.itensDeServico?.forEach((itemDeServico) => {
-      if (agrupamentos.findIndex((agrupamento) =>
-        agrupamento._id === itemDeServico.funcionario._id
-      ) === -1) {
-        agrupamentos.push({ ...itemDeServico.funcionario, itensDeServico: [] });
-      }
-    })
-    agrupamentos.forEach((agrupamento) => {
-      ordemDeServico.itensDeServico?.forEach((itemDeServico, indice) => {
-        if (agrupamento._id === itemDeServico.funcionario._id && ordemDeServico.itensDeServico) {
-          agrupamento.itensDeServico.push(ordemDeServico.itensDeServico[indice])
-        }
-      })
-    });
-    return agrupamentos;
-  }
-
   return (
-    <Grid item xs={12} sm={12} lg={6} >
+    <Grid item xs={12} sm={11} lg={10} xl={8}>
       <Card className={classes.card} component={Paper} elevation={4}>
         <Paper elevation={4} square>
           <Box p={2}>
@@ -127,57 +99,63 @@ const ItemOrdemDeServico: React.FC<ItemOrdemDeServicoProps> = ({ ordemDeServico 
           </Grid>
           <Grid container spacing={1}>
             <Grid item xs={12} md={6}>
-              <Box className={classes.containerListagem}>
-                <Box className={classes.tituloListagem}>
+              <div className={classes.containerListagem}>
+                <div className={classes.tituloListagem}>
                   <Typography>Peças:</Typography>
-                </Box>
-                <Box className={classes.listagem}>
+                </div>
+                <div className={classes.listagem}>
                   {
-                    agruparPecasPorFornecedor()?.map((agrupamento, index) => (
-                      <Box mb={1} key={index} >
+                    ordemDeServico.itensDePeca && agruparPecasPorFornecedor(ordemDeServico.itensDePeca)?.map((agrupamento, index) => (
+                      <div key={index} >
                         <Typography>De {agrupamento.nomeFantasia}:</Typography>
-                        <Box ml={1}>
+                        <div className={classes.agrupamentoItem}>
                           {agrupamento.itensDePeca?.map((itemDePeca, index) => (
-                            <Grid container key={index} spacing={1} justify="space-between">
-                              <Grid item>
-                                <Typography>{itemDePeca.peca.descricao}</Typography>
-                              </Grid>
-                            </Grid>
+                            <ItemDePecaOuServico
+                              key={index}
+                              descricao={itemDePeca.peca.descricao}
+                              valorUnitario={itemDePeca.valorUnitario}
+                              valorTotal={itemDePeca.valorTotal}
+                              quantidade={itemDePeca.quantidade}
+                            />
                           ))}
-                        </Box>
-                      </Box>
+                        </div>
+                      </div>
                     ))
                   }
-                </Box>
-                <Box className={classes.containerValorTotalListagem}>
+                </div>
+                <div className={classes.containerValorTotalListagem}>
                   <Typography>Valor Total: R${Formato.formatarMoeda(ordemDeServico.valorTotalDasPecas)}</Typography>
-                </Box>
-              </Box>
+                </div>
+              </div>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Box className={classes.containerListagem}>
-                <Box className={classes.tituloListagem}>
+              <div className={classes.containerListagem}>
+                <div className={classes.tituloListagem}>
                   <Typography>Serviços:</Typography>
-                </Box>
-                <Box className={classes.listagem}>
+                </div>
+                <div className={classes.listagem}>
                   {
-                    agruparServicosPorFuncionario()?.map((agrupamento, index) => (
-                      <Box mb={1} key={index} >
+                    agruparServicosPorFuncionario(ordemDeServico.itensDeServico)?.map((agrupamento, index) => (
+                      <div key={index} >
                         <Typography>Por {agrupamento.nome}:</Typography>
-                        <Box ml={1}>
+                        <div className={classes.agrupamentoItem}>
                           {agrupamento.itensDeServico?.map((itemDeServico, index) => (
-                            <Grid container key={index}>
-                              <Typography>{itemDeServico.servico.descricao}</Typography>
-                            </Grid>
+                            <ItemDePecaOuServico
+                              key={index}
+                              descricao={itemDeServico.servico.descricao}
+                              valorUnitario={itemDeServico.valorUnitario}
+                              valorTotal={itemDeServico.valorTotal}
+                              quantidade={itemDeServico.quantidade}
+                            />
                           ))}
-                        </Box>
-                      </Box>
+                        </div>
+                      </div>
                     ))}
-                </Box>
-                <Box className={classes.containerValorTotalListagem}>
+                </div>
+                <div className={classes.containerValorTotalListagem}>
                   <Typography>Valor Total: R${Formato.formatarMoeda(ordemDeServico.valorTotalDosServicos)}</Typography>
-                </Box>
-              </Box>
+                </div>
+              </div>
             </Grid>
             <Grid item xs={12}>
               <Grid container spacing={2} justify="flex-end">
