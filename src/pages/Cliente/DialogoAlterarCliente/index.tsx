@@ -6,8 +6,9 @@ import { DialogActions, Button, Grid, FormControlLabel, Radio } from '@material-
 import useQuery from '../../../hooks/useQuery';
 import comparar from '../../../recursos/Comparar';
 import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
-import { Form, CampoDeTexto, CampoDeCpfOuCnpj, DateField, CampoDeRadio, PhoneField, CampoDeEmail, CepField, Node, NameField } from '../../../componentes/Form';
+import { Form, CampoDeCpfOuCnpj, DateField, CampoDeRadio, PhoneField, CampoDeEmail, NameField } from '../../../componentes/Form';
 import Cliente from '../../../Types/Cliente';
+import FormEndereco from '../../../componentes/FormEndereco';
 
 
 const DialogoAlterarCliente: React.FC = () => {
@@ -59,7 +60,7 @@ const DialogoAlterarCliente: React.FC = () => {
             <CampoDeCpfOuCnpj name="cpfCnpj" autoComplete="no" label="CPF/CNPJ" disabled fullWidth required />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <DateField name="dataNascimento" label="Data de nascimento" fullWidth required openTo="year"/>
+            <DateField name="dataNascimento" label="Data de nascimento" fullWidth required openTo="year" />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <CampoDeRadio name="sexo" label="Sexo" required>
@@ -76,29 +77,7 @@ const DialogoAlterarCliente: React.FC = () => {
           <Grid item xs={12} sm={12} md={8}>
             <CampoDeEmail name="email" label="E-mail" autoComplete="no" fullWidth />
           </Grid>
-          <Node node="endereco">
-            <Grid item xs={12} sm={12} md={6}>
-              <CampoDeTexto name="logradouro" label="Logradouro" autoComplete="no" fullWidth required />
-            </Grid>
-            <Grid item xs={12} sm={9} md={6}>
-              <CampoDeTexto name="bairro" label="Bairro" autoComplete="no" fullWidth required />
-            </Grid>
-            <Grid item xs={12} sm={3} md={2}>
-              <CampoDeTexto name="numero" label="Número" autoComplete="no" fullWidth required />
-            </Grid>
-            <Grid item xs={12} sm={9} md={7}>
-              <CampoDeTexto name="complemento" label="Complemento" autoComplete="no" fullWidth />
-            </Grid>
-            <Grid item xs={12} sm={3} md={3}>
-              <CepField name="cep" label="CEP" fullWidth autoComplete="no" required />
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <CampoDeTexto name="estado" label="Estado" fullWidth autoComplete="no" required />
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <CampoDeTexto name="cidade" label="Cidade" fullWidth autoComplete="no" required />
-            </Grid>
-          </Node>
+          <FormEndereco />
         </Grid>
         <DialogActions >
           <Button type="submit">Salvar</Button>

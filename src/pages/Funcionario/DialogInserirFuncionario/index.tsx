@@ -3,9 +3,10 @@ import Dialogo from '../../../componentes/Dialog';
 import ApiContext from '../../../contexts/ApiContext';
 import { useHistory } from 'react-router-dom';
 import { DialogActions, Button, Grid, FormControlLabel, Radio, MenuItem } from '@material-ui/core';
-import { CampoDeCpfOuCnpj, Form, CampoDeTexto, DateField, CampoDeRadio, PhoneField, CampoDeEmail, CepField, Node, NameField } from '../../../componentes/Form';
+import { CampoDeCpfOuCnpj, Form, DateField, CampoDeRadio, PhoneField, CampoDeEmail, NameField } from '../../../componentes/Form';
 import SelectField from '../../../componentes/Form/Fields/SelectField';
 import Especialidade from '../../../Types/Especialidade';
+import FormEndereco from '../../../componentes/FormEndereco';
 
 const DialogInserirFuncionario: React.FC = () => {
   const [especialidades, setEspecialidades] = useState<Especialidade[] | undefined>(undefined);
@@ -44,7 +45,7 @@ const DialogInserirFuncionario: React.FC = () => {
             <CampoDeCpfOuCnpj name="cpf" label="CPF" autoComplete="no" onlyCpf fullWidth required />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <DateField name="dataNascimento" label="Data de nascimento" fullWidth required openTo="year"/>
+            <DateField name="dataNascimento" label="Data de nascimento" fullWidth required openTo="year" />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <CampoDeRadio name="sexo" label="Sexo" required>
@@ -61,29 +62,7 @@ const DialogInserirFuncionario: React.FC = () => {
           <Grid item xs={12} sm={12} md={8}>
             <CampoDeEmail name="email" label="E-mail" autoComplete="no" fullWidth />
           </Grid>
-          <Node node="endereco">
-            <Grid item xs={12} sm={12} md={6}>
-              <CampoDeTexto name="logradouro" label="Logradouro" autoComplete="no" fullWidth required />
-            </Grid>
-            <Grid item xs={12} sm={9} md={6}>
-              <CampoDeTexto name="bairro" label="Bairro" fullWidth autoComplete="no" required />
-            </Grid>
-            <Grid item xs={12} sm={3} md={2}>
-              <CampoDeTexto name="numero" label="Número" fullWidth autoComplete="no" required />
-            </Grid>
-            <Grid item xs={12} sm={9} md={7}>
-              <CampoDeTexto name="complemento" label="Complemento" autoComplete="no" fullWidth />
-            </Grid>
-            <Grid item xs={12} sm={3} md={3}>
-              <CepField name="cep" label="CEP" fullWidth required autoComplete="no" />
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <CampoDeTexto name="estado" label="Estado" fullWidth required autoComplete="no" />
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <CampoDeTexto name="cidade" label="Cidade" fullWidth required autoComplete="no" />
-            </Grid>
-          </Node>
+          <FormEndereco />
         </Grid>
         <Grid container>
           <Grid item xs={12}>

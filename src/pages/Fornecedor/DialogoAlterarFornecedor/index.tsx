@@ -6,8 +6,9 @@ import { DialogActions, Button, Grid, } from '@material-ui/core';
 import useQuery from '../../../hooks/useQuery';
 import comparar from '../../../recursos/Comparar';
 import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
-import { Form, CampoDeTexto, CampoDeCpfOuCnpj, PhoneField, CampoDeEmail, CepField, Node, NameField } from '../../../componentes/Form';
+import { Form, CampoDeTexto, CampoDeCpfOuCnpj, PhoneField, CampoDeEmail, NameField } from '../../../componentes/Form';
 import Fornecedor from '../../../Types/Fornecedor';
+import FormEndereco from '../../../componentes/FormEndereco';
 
 const DialogoAlterarFornecedor: React.FC = () => {
   const { get, put, } = useContext(ApiContext);
@@ -69,29 +70,7 @@ const DialogoAlterarFornecedor: React.FC = () => {
           <Grid item xs={12} sm={12} md={8}>
             <CampoDeEmail name="email" required autoComplete="no" label="E-mail" fullWidth />
           </Grid>
-          <Node node="endereco">
-            <Grid item xs={12} sm={12} md={6}>
-              <CampoDeTexto name="logradouro" autoComplete="no" label="Logradouro" fullWidth required />
-            </Grid>
-            <Grid item xs={12} sm={9} md={6}>
-              <CampoDeTexto name="bairro" label="Bairro" autoComplete="no" fullWidth required />
-            </Grid>
-            <Grid item xs={12} sm={3} md={2}>
-              <CampoDeTexto name="numero" label="Número" autoComplete="no" fullWidth required />
-            </Grid>
-            <Grid item xs={12} sm={9} md={7}>
-              <CampoDeTexto name="complemento" autoComplete="no" label="Complemento" fullWidth />
-            </Grid>
-            <Grid item xs={12} sm={3} md={3}>
-              <CepField name="cep" label="CEP" autoComplete="no" fullWidth required />
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <CampoDeTexto name="estado" label="Estado" autoComplete="no" fullWidth required />
-            </Grid>
-            <Grid item xs={12} sm={6} md={6}>
-              <CampoDeTexto name="cidade" label="Cidade" autoComplete="no" fullWidth required />
-            </Grid>
-          </Node>
+          <FormEndereco />
         </Grid>
         <DialogActions >
           <Button type="submit">Salvar</Button>
