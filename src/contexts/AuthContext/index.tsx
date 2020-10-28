@@ -1,5 +1,6 @@
 import React, { createContext, useState, useCallback, SetStateAction } from 'react';
 import { useEffect } from 'react';
+import useQuery from '../../hooks/useQuery';
 import Usuario from '../../Types/Usuario';
 
 interface AuthContextValues {
@@ -12,6 +13,7 @@ const AuthContext = createContext<AuthContextValues>({} as AuthContextValues);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [usuario, setUsuario] = useState<Usuario>({} as Usuario);
+  const urlToken = useQuery('token');
 
   const logout = useCallback(() => {
     localStorage.removeItem("tokenUsuario");
@@ -23,7 +25,10 @@ export const AuthProvider: React.FC = ({ children }) => {
     if (token && !usuario.token) {
       setUsuario({ token } as Usuario);
     }
-  }, [usuario])
+    if (urlToken && !usuario.token) {
+      setUsuario({ token: urlToken } as Usuario);
+    }
+  }, [urlToken, usuario]);
 
   return (
     <AuthContext.Provider value={{ logout, usuario, setUsuario, }}>
