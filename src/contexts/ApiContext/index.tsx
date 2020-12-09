@@ -20,7 +20,8 @@ const ApiContext = createContext<ApiContextValues>({} as ApiContextValues);
 export const ApiProvider: React.FC = ({ children }) => {
   const refAlerta = useRef<AlertaHandles | undefined>(undefined);
   const refProgresso = useRef<ProgressoCircularHandles | undefined>(undefined);
-  const { token } = useAuth();
+  const { token } = useAuth(); 
+  
   const headers = {
     authorization: token,
   }

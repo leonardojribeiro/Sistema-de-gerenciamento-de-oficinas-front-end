@@ -4,7 +4,6 @@ import './App.css';
 import Routes from './Routes';
 import { AuthProvider } from './contexts/AuthContext';
 import { TemaProvider } from './contexts/TemaContext';
-import { ApiProvider } from './contexts/ApiContext';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import datefns from '@date-io/date-fns';
 import ptLocale from "date-fns/locale/pt-BR";
@@ -20,9 +19,7 @@ function App() {
       <MuiPickersUtilsProvider utils={LocalizedUtils} locale={ptLocale} >
         <TemaProvider>
           <AuthProvider>
-            <ApiProvider>
-              <Routes />
-            </ApiProvider>
+            <Routes />
           </AuthProvider>
         </TemaProvider>
       </MuiPickersUtilsProvider>

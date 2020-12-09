@@ -153,7 +153,7 @@ const PessoaItem: React.FC<PessoaItemProps> = (
         <Hidden smUp>
           <Grid item>
             <Tooltip title={linkToChangeText}>
-              <IconButton component={Link} to={`${linkToChangePath}?id=${_id}`}>
+              <IconButton component={Link} to={linkToChangePath}>
                 <EditIcon />
               </IconButton>
             </Tooltip>

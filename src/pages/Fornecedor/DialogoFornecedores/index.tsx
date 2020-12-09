@@ -13,7 +13,7 @@ const DialogoFornecedores: React.FC = () => {
         dominio="fornecedor"
         linkToChangeText={fornecedor => `Alterar o fornecerdor ${fornecedor.nomeFantasia}`}
         linkToChangePath={fornecedor => `fornecedores/alterarfornecedor?id=${fornecedor._id}`}
-        linkToInsertPath="fornecedores/inserirfornecedores"
+        linkToInsertPath="fornecedores/inserirfornecedor"
         linkToInsertText="Inserir fornecedor"
         listar={listar}
       />

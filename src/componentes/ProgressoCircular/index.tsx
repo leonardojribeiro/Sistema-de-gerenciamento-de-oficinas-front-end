@@ -11,8 +11,7 @@ export interface ProgressoCircularHandles {
 
 const useStyles = makeStyles((theme) => 
 {
-  console.log(theme
-    )
+  
   return({
   backdrop: {
     zIndex: theme.zIndex.modal + 1,
@@ -48,8 +47,6 @@ const ProgressoCircular = forwardRef<ProgressoCircularHandles | undefined>((prop
 
   const [aberto, setAberto] = useState<boolean>(false);
   const [valor, setValor] = useState<number>(0);
-  console.log('black')
-
   useImperativeHandle(ref, () => ({
     setValor,
     setAberto,
