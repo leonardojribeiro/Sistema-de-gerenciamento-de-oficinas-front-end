@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core';
+import { Box, Grid, Typography } from '@material-ui/core';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import Dialog from '../../../componentes/Dialog';
 import ApiContext from '../../../contexts/ApiContext';
@@ -28,6 +28,9 @@ const HistoricoVeiculo: React.FC = () => {
   return (
     <Dialog title="Histórico do veículo" open fullScreen>
       <Grid container spacing={3} justify="center">
+        <Box p={2}>
+          <Typography variant="h6">Ordens de Serviço efetuadas neste veículo:</Typography>
+        </Box>
         {ordensDeServico?.map((ordemDeServico, index) => (
           <ItemOrdemDeServico ordemDeServico={ordemDeServico} key={index} />
         ))}

@@ -45,7 +45,7 @@ const Dialog: React.FC<DialogProps> = ({ open, title, children, ...props }) => {
   return (
     <DialogMUI fullScreen={fullScreen} open={open} onClose={manipularFechamento} disableBackdropClick {...props}>
       <DialogTitle>
-        <Typography id="dialogo-titulo">{title}</Typography>
+        <Typography id="dialogo-titulo" variant="h6">{title}</Typography>
         <IconButton aria-label="Fechar" className={classes.botaofechar} onClick={manipularFechamento}>
           <CloseIcon />
         </IconButton>
