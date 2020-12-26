@@ -22,8 +22,6 @@ const DialogoVeiculosCliente: React.FC = () => {
     listar();
   }, [listar]);
 
-  console.log(vinculos);
-
   return (
     <Dialog title="Veículos do cliente" open maxWidth="sm" fullWidth>
       {

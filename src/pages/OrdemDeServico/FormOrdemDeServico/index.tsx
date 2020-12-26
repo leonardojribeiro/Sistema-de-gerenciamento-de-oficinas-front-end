@@ -4,6 +4,7 @@ import { Form, DateField, CampoDeTexto, MoneyField, CampoDeSelecao, } from '../.
 import OrdemDeServicoContext from '../OrdemDeServicoContext';
 import { FormProviderHandles } from '../../../componentes/Form/types';
 import AutoCompleteVeiculo from '../../../componentes/AutoComplete/AutoCompleteVeiculo';
+import useQuery from '../../../hooks/useQuery';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,9 +44,11 @@ const FormOrdemDeServico: React.FC = () => {
     }
   }, [calcularValorTotal, valorTotalServicos]);
 
+  const veiculo = useQuery("veiculo");
+
   return (
     <Container maxWidth="md" className={classes.root}>
-      <Form onSubmit={handleSubmit} ref={formRef} initialData={ordemDeServico}>
+      <Form onSubmit={handleSubmit} ref={formRef} initialData={veiculo ? { ...ordemDeServico, veiculo } : ordemDeServico}>
         <Card>
           <CardContent>
             <Grid container spacing={3}>
