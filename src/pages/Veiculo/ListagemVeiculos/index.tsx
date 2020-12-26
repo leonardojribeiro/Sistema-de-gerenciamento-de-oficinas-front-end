@@ -1,7 +1,7 @@
 import React, { memo, useEffect } from 'react';
 import { Box, TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Tooltip, IconButton, makeStyles, Typography } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Veiculo from '../../../Types/Veiculo';
 import BotaoInserir from '../../../componentes/BotaoInserir';
 import FormularioConsulta from '../../../componentes/FormularioConsulta';
@@ -26,11 +26,13 @@ const useStyles = makeStyles((theme) => ({
 
 const ListagemVeiculos: React.FC = () => {
   const classes = useStyles();
+  const {push} = useHistory();
   const { handlePageChange, handleSearch, itens, listar, page, total } = useListagem<Veiculo>("veiculos", "veiculo");
 
   useEffect(() => {
     listar();
-  },[listar]);
+  }, [listar]);
+
 
   return (
     <>
@@ -50,7 +52,10 @@ const ListagemVeiculos: React.FC = () => {
             <TableBody>
               {
                 itens?.map((veiculo, index) => (
-                  <TableRow className={classes.linhaTabela} key={index} hover >
+                  <TableRow className={classes.linhaTabela} key={index} hover onClick={() => {
+                    push(`veiculos/historico?veiculo=${veiculo._id}`)
+                  }}>
+
                     <TableCell padding="none">
                       <Typography>
                         {veiculo.placa}

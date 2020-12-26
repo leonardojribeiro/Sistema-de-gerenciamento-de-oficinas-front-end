@@ -5,6 +5,7 @@ import DialogoInserirVeiculo from '../DialogoInserirVeiculo';
 import DialogAlterarVeiculo from '../DialogoAlterarVeiculo';
 import ListagemVeiculos from '../ListagemVeiculos';
 import BotaoInserir from '../../../componentes/BotaoInserir';
+import HistoricoVeiculo from '../HistoricoVeiculo';
 
 const DialogoVeiculos: React.FC = () => {
 
@@ -15,6 +16,7 @@ const DialogoVeiculos: React.FC = () => {
       <Switch>
         <Route path="/veiculos/inserirveiculo" component={DialogoInserirVeiculo} />
         <Route path="/veiculos/alterarveiculo"  component={DialogAlterarVeiculo} />
+        <Route path="/veiculos/historico" component={HistoricoVeiculo}/>
       </Switch>
     </Dialogo>
   );

@@ -1,7 +1,6 @@
 import React, { createContext, useState, useCallback, SetStateAction, useContext } from 'react';
 import { useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import useQuery from '../../hooks/useQuery';
 import useAuth from '../../hooks/useAuth';
 import Usuario from '../../Types/Usuario';
 import ApiContext, { ApiProvider } from '../ApiContext';
@@ -16,25 +15,11 @@ const AuthContext = createContext<AuthContextValues>({} as AuthContextValues);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [usuario, setUsuario] = useState<Usuario>({} as Usuario);
-  const urlToken = useQuery('token');
-
-  console.log(usuario)
 
   const logout = useCallback(() => {
     localStorage.removeItem("tokenUsuario");
     setUsuario({} as Usuario);
   }, []);
-
-  useEffect(() => {
-    const token = localStorage.getItem("tokenUsuario");
-    if (token && !usuario.token) {
-      setUsuario({ token } as Usuario);
-    }
-    if (urlToken && !usuario.token) {
-      setUsuario({ token: urlToken } as Usuario);
-    }
-  }, [urlToken, usuario]);
-
 
   return (
     <AuthContext.Provider value={{ logout, usuario, setUsuario, }}>
@@ -48,49 +33,40 @@ export const AuthProvider: React.FC = ({ children }) => {
 }
 
 const AuthHelper: React.FC = ({ children }) => {
-  const authContext = useContext(AuthContext);
+  const { setUsuario, usuario } = useContext(AuthContext);
   const apiContext = useContext(ApiContext);
   const { logado } = useAuth();
   const { pathname } = useLocation()
   const { push, } = useHistory();
 
-  const efetuarLoginPorToken = useCallback(async () => {
+  const efetuarLoginPorToken = useCallback(async (token: String) => {
     if (apiContext) {
       const resposta = await apiContext.get(
-        "/usuario/loginPorToken"
-      )
+        "/usuario/loginPorToken", undefined, { headers: { authorization: `Bearer ${token}` } }
+      ) as Usuario;
       if (resposta) {
-        if (authContext) {
-          authContext.setUsuario({ ...authContext.usuario, ...resposta } as Usuario);
-        }
-        else {
-          throw new Error("Esse componente deve estar em uma sub-árvore depois do <AuthContext.Provider>.");
+        if (setUsuario) {
+          setUsuario({ ...resposta, token } as Usuario);
         }
       }
     }
-    else {
-      throw new Error("Esse componente deve estar em uma sub-árvore depois do <ApiContext.Provider>.");
-    }
-  }, [apiContext, authContext]);
+  }, [apiContext, setUsuario]);
 
 
   useEffect(() => {
-    console.log(logado);
-    if (!logado && authContext && authContext.usuario.token) {
-      efetuarLoginPorToken();
+    const token = localStorage.getItem("tokenUsuario");
+    if (token && !logado) {
+      efetuarLoginPorToken(token);
     }
-    else {
-      if (pathname !== '/' && pathname !== '/login' && !logado) {
-        push('/login', { login: true });
-      }
+    if (!token && pathname !== '/' && pathname !== '/login') {
+      push('/login');
     }
-  }, [authContext, efetuarLoginPorToken, logado, pathname, push]);
+  }, [efetuarLoginPorToken, logado, pathname, push, setUsuario, usuario.token]);
+
 
   return (
     <>
-      {
-        children
-      }
+      {children}
     </>
   );
 }

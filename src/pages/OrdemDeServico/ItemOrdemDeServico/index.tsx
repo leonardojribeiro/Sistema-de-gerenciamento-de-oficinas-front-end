@@ -2,15 +2,11 @@ import React, { memo } from 'react';
 import { Grid, Paper, Typography, Box, Card, makeStyles, IconButton, Tooltip } from '@material-ui/core';
 import Formato from '../../../recursos/Formato';
 import OrdemDeServico from '../../../Types/OrdemDeServico';
-import Fornecedor from '../../../Types/Fornecedor';
 import CircularProgressWithLabel from '../../../componentes/CircularProgressWithLabel';
-import Funcionario from '../../../Types/Funcionario';
-import ItemDePeca from '../../../Types/ItemDePeca';
-import ItemDeServico from '../../../Types/ItemDeServico';
 import { Link } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
 import { agruparPecasPorFornecedor, agruparServicosPorFuncionario } from '../../../recursos/Agrupamento';
-import ItemDePecaOuServico from '../../../componentes/ItemDePecaOuServico'; 
+import ItemDePecaOuServico from '../../../componentes/ItemDePecaOuServico';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -47,13 +43,6 @@ interface ItemOrdemDeServicoProps {
   ordemDeServico: OrdemDeServico;
 }
 
-interface AgrupamentoPecasPorFornecedor extends Fornecedor {
-  itensDePeca: ItemDePeca[];
-}
-
-interface AgrupamentoServicosPorFuncionario extends Funcionario {
-  itensDeServico: ItemDeServico[];
-}
 
 const ItemOrdemDeServico: React.FC<ItemOrdemDeServicoProps> = ({ ordemDeServico }) => {
   const classes = useStyles();
@@ -64,9 +53,11 @@ const ItemOrdemDeServico: React.FC<ItemOrdemDeServicoProps> = ({ ordemDeServico 
         <Paper elevation={4} square>
           <Box p={2}>
             <Grid container spacing={1} justify="space-between" alignItems="center">
-              <Grid item>
-                <Typography>Veículo: {ordemDeServico.veiculo?.placa.toLocaleUpperCase()}</Typography>
-              </Grid>
+              {ordemDeServico.veiculo?.placa && (
+                <Grid item>
+                  <Typography>Veículo: {ordemDeServico.veiculo?.placa.toLocaleUpperCase()}</Typography>
+                </Grid>
+              )}
               <Grid item>
                 <CircularProgressWithLabel value={Number(ordemDeServico.andamento)} />
               </Grid>

@@ -5,9 +5,10 @@ import dot from "dot-object";
 import Alerta, { AlertaHandles } from "../../componentes/Alerta";
 import { useRef } from "react";
 import useAuth from "../../hooks/useAuth";
+import { AxiosRequestConfig } from "axios";
 
 interface ApiContextValues {
-  get: (url: string, desablitarProgresso?: boolean) => Promise<object>,
+  get: (url: string, desablitarProgresso?: boolean, config?: AxiosRequestConfig) => Promise<object>,
   getTipoBlob: (url: string) => Promise<object>,
   post: (url: string, dados: object) => Promise<object>,
   put: (url: string, dados: object) => Promise<object>,
@@ -20,8 +21,8 @@ const ApiContext = createContext<ApiContextValues>({} as ApiContextValues);
 export const ApiProvider: React.FC = ({ children }) => {
   const refAlerta = useRef<AlertaHandles | undefined>(undefined);
   const refProgresso = useRef<ProgressoCircularHandles | undefined>(undefined);
-  const { token } = useAuth(); 
-  
+  const { token } = useAuth();
+
   const headers = {
     authorization: token,
   }
@@ -77,11 +78,16 @@ export const ApiProvider: React.FC = ({ children }) => {
     return null;
   }, []);
 
-  const get = useCallback(async (url: string, desablitarProgresso?: boolean) => {
+  const get = useCallback(async (url: string, desablitarProgresso?: boolean, config?: AxiosRequestConfig) => {
     !desablitarProgresso && refProgresso && refProgresso.current && refProgresso.current.setAberto(true);
     let resposta = null;
     try {
-      resposta = await api.get(url, { headers });
+      if (config) {
+        resposta = await api.get(url, config);
+      }
+      else {
+        resposta = await api.get(url, { headers });
+      }
     }
     catch (e) {
       handleErro(e)
