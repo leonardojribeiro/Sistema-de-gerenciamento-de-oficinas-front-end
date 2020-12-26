@@ -4,6 +4,7 @@ import DialogoInserirCliente from '../DialogoInserirCliente';
 import DialogoAlterarCliente from '../DialogoAlterarCliente';
 import ListagemPessoa from '../../../componentes/ListagemPessoa';
 import Dialog from '../../../componentes/Dialog';
+import DialogoVeiculosCliente from '../DialogoVeiculosCliente';
 
 const DialogoClientes: React.FC = () => {
   const listar = useLocation().pathname === "/clientes";
@@ -21,6 +22,7 @@ const DialogoClientes: React.FC = () => {
       <Switch>
         <Route path="/clientes/inserircliente" component={DialogoInserirCliente} />
         <Route path="/clientes/alterarcliente" component={DialogoAlterarCliente} />
+        <Route path="/clientes/veiculos" component={DialogoVeiculosCliente} />
       </Switch>
     </Dialog >
   );

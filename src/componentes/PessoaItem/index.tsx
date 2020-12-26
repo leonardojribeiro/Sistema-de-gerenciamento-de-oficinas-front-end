@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { Box, IconButton, Grid, Tooltip, Hidden, Typography, Accordion, AccordionSummary, AccordionDetails, AccordionActions, } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
 import EmailIcon from '@material-ui/icons/Email';
 import PhoneIcon from '@material-ui/icons/Phone';
@@ -14,6 +14,7 @@ import SchoolIcon from '@material-ui/icons/School';
 import Fornecedor from '../../Types/Fornecedor';
 import Cliente from '../../Types/Cliente';
 import Funcionario from '../../Types/Funcionario';
+import DriveEtaIcon from '@material-ui/icons/DriveEta';
 
 interface PessoaItemProps extends Funcionario, Cliente, Fornecedor {
   linkToChangeText: string;
@@ -22,6 +23,8 @@ interface PessoaItemProps extends Funcionario, Cliente, Fornecedor {
 
 const PessoaItem: React.FC<PessoaItemProps> = (
   { _id, nome, nomeFantasia, razaoSocial, cpf, cpfCnpj, dataNascimento, telefoneFixo, telefoneCelular, sexo, email, endereco, especialidades, linkToChangeText, linkToChangePath }) => {
+
+  const { pathname } = useLocation();
   return (
     <Accordion TransitionProps={{ unmountOnExit: true }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -51,6 +54,13 @@ const PessoaItem: React.FC<PessoaItemProps> = (
             }
             <Grid item sm={1}>
               <Box display="flex" justifyContent="flex-end" alignItems="center">
+                {pathname === '/clientes' && (
+                  <Tooltip title="Veículos deste cliente">
+                    <IconButton component={Link} to={`clientes/veiculos?cliente=${_id}`}>
+                      <DriveEtaIcon />
+                    </IconButton>
+                  </Tooltip>
+                )}
                 <Tooltip title={linkToChangeText}>
                   <IconButton component={Link} to={linkToChangePath}>
                     <EditIcon />

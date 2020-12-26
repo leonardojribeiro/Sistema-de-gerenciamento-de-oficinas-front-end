@@ -15,6 +15,7 @@ import { OrdemDeServicoProvider } from '../pages/OrdemDeServico/OrdemDeServicoCo
 import DialogoPecas from '../pages/Peca/DialogoPecas';
 import DialogServicos from '../pages/Servico/DialogServicos';
 import DialogoVeiculos from '../pages/Veiculo/DialogoVeiculos';
+import HistoricoVeiculo from '../pages/Veiculo/HistoricoVeiculo';
 import Teste from '../Teste';
 
 const AdminitradorOficinaRoutes: React.FC = () => {
@@ -32,6 +33,7 @@ const AdminitradorOficinaRoutes: React.FC = () => {
         <Route path="/funcionarios" component={DialogFuncionarios} />
         <Route path="/servicos" component={DialogServicos} />
         <Route path="/opcoes" component={DialogOpcoes} />
+        <Route path="/veiculos/historico" component={HistoricoVeiculo} />
         <SwipeableContextProvider initialIndexActive={1}>
           <OrdemDeServicoProvider>
             <Route path="/ordensdeservico/inserir" component={DialogInserirOrdemDeServico} />

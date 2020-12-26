@@ -2,7 +2,7 @@ import { Grid, IconButton, makeStyles, Tooltip, Typography } from '@material-ui/
 import React, { memo } from 'react';
 import Veiculo from '../../../Types/Veiculo';
 import HistoryIcon from '@material-ui/icons/History';
-import { useHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles((theme) => ({
@@ -30,7 +30,6 @@ interface VeiculoItemProps {
 
 const VeiculoItem: React.FC<VeiculoItemProps> = ({ veiculo }) => {
   const classes = useStyles();
-  const { push } = useHistory();
 
   return (
     <Grid container className={classes.linhaTabela} justify="space-between" alignItems="center">
@@ -42,10 +41,7 @@ const VeiculoItem: React.FC<VeiculoItemProps> = ({ veiculo }) => {
       </Grid>
       <Grid item>
         <Tooltip title={`Ver histórico deste veículo`}>
-          <IconButton
-            onClick={() => {
-              push(`veiculos/historico?veiculo=${veiculo._id}`)
-            }}>
+          <IconButton component={Link} to={`/veiculos/historico?veiculo=${veiculo._id}`}>
             <HistoryIcon />
           </IconButton>
         </Tooltip>

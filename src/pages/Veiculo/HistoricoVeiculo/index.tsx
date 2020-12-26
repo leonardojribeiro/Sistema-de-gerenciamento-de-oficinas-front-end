@@ -26,7 +26,7 @@ const HistoricoVeiculo: React.FC = () => {
 
 
   return (
-    <Dialog title="Histórico do veículo" open fullScreen>
+    <Dialog title={`Histórico do veículo ${ordensDeServico ? ordensDeServico[0]?.veiculo.placa : ""}`} open fullScreen>
       <Grid container spacing={3} justify="center">
         <Box p={2}>
           <Typography variant="h6">Ordens de Serviço efetuadas neste veículo:</Typography>
