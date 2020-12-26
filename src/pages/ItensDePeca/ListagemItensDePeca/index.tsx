@@ -4,6 +4,7 @@ import OrdemDeServicoContext from '../../OrdemDeServico/OrdemDeServicoContext';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { agruparPecasPorFornecedor } from '../../../recursos/Agrupamento';
+import Formato from '../../../recursos/Formato';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,13 +45,13 @@ const ListagemItensDePeca: React.FC = () => {
                     <Typography>Garantia: {itemDePeca.garantia}</Typography>
                   </Grid>
                   <Grid item >
-                    <Typography>Valor unitário: {itemDePeca.valorUnitario}</Typography>
+                    <Typography>Valor unitário: {Formato.formatarMoeda(itemDePeca.valorUnitario)}</Typography>
                   </Grid>
                   <Grid item >
                     <Typography>Quantidade: {itemDePeca.quantidade}</Typography>
                   </Grid>
                   <Grid item>
-                    <Typography>Valor total: {itemDePeca.valorTotal}</Typography>
+                    <Typography>Valor total: {Formato.formatarMoeda(itemDePeca.valorTotal)}</Typography>
                   </Grid>
                   <Grid item >
                     <Tooltip title={`Alterar `} onClick={() => alterarItemDePeca(itemDePeca._id)}>
@@ -71,7 +72,7 @@ const ListagemItensDePeca: React.FC = () => {
         ))}
       </Box>
       <Box alignSelf="flex-end" justifySelf="flex-end">
-        <Typography>Valor Total:{valorTotalPecas()}</Typography>
+        <Typography>Valor Total: {Formato.formatarMoeda(valorTotalPecas())}</Typography>
       </Box>
     </Box>
   )

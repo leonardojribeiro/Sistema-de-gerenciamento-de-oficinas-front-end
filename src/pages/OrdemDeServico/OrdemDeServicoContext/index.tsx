@@ -3,7 +3,7 @@ import ItemDePeca from '../../../Types/ItemDePeca';
 import ItemDeServico from '../../../Types/ItemDeServico';
 import ApiContext from '../../../contexts/ApiContext';
 import OrdemDeServico from '../../../Types/OrdemDeServico';
-import { useHistory } from 'react-router-dom'; 
+import { useHistory } from 'react-router-dom';
 
 interface OrdemDeServicoContextValues {
   itensDePeca: ItemDePeca[];
@@ -25,6 +25,7 @@ interface OrdemDeServicoContextValues {
   ordemDeServico: OrdemDeServico | undefined;
   handleSubmitFormItemDePeca: (dados: any) => void;
   handleSubmitFormItemDeServico: (dados: any) => void;
+  clearForm: () => void;
 }
 
 const OrdemDeServicoContext = createContext<OrdemDeServicoContextValues>({} as OrdemDeServicoContextValues);
@@ -37,7 +38,15 @@ export const OrdemDeServicoProvider: React.FC = ({ children }) => {
   const [ordemDeServico, setOrdemDeServico] = useState<OrdemDeServico | undefined>();
   const { post, get, put } = useContext(ApiContext);
   const history = useHistory();
-  
+
+  const clearForm = useCallback(() => {
+    setItensDeServico([]);
+    setItensDePeca([]);
+    setOrdemDeServico(undefined);
+    setItemDePecaSelecionado(undefined);
+    setItemDeServicoSelecionado(undefined);
+  }, []);
+
   const getOrdemDeServico = useCallback(async (_id: string) => {
     const resposta = await get(`ordemdeservico/id?_id=${_id}`) as OrdemDeServico | undefined;
     if (resposta) {
@@ -233,6 +242,7 @@ export const OrdemDeServicoProvider: React.FC = ({ children }) => {
         ordemDeServico,
         handleSubmitFormItemDePeca,
         handleSubmitFormItemDeServico,
+        clearForm,
       }}
     >
       {children}

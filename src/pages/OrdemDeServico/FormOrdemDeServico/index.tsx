@@ -1,5 +1,5 @@
 import React, { useContext, memo, useEffect, useRef, useCallback, } from 'react';
-import { Container, Grid, MenuItem, Button, makeStyles, CardHeader, Card, CardContent, CardActions } from '@material-ui/core';
+import { Container, Grid, MenuItem, Button, makeStyles, Card, CardContent, CardActions } from '@material-ui/core';
 import { Form, DateField, CampoDeTexto, MoneyField, CampoDeSelecao, } from '../../../componentes/Form';
 import OrdemDeServicoContext from '../OrdemDeServicoContext';
 import { FormProviderHandles } from '../../../componentes/Form/types';
@@ -14,8 +14,10 @@ const useStyles = makeStyles((theme) => ({
 
 const FormOrdemDeServico: React.FC = () => {
   const classes = useStyles();
-  const { handleSubmit, valorTotalPecas, valorTotalServicos, ordemDeServico } = useContext(OrdemDeServicoContext);
+  const { handleSubmit, valorTotalPecas, valorTotalServicos, ordemDeServico, clearForm } = useContext(OrdemDeServicoContext);
   const formRef = useRef<FormProviderHandles>({} as FormProviderHandles);
+
+  useEffect(() => () => clearForm(), [clearForm]);
 
   const calcularValorTotal = useCallback(() => {
     if (formRef.current) {
@@ -45,7 +47,6 @@ const FormOrdemDeServico: React.FC = () => {
     <Container maxWidth="md" className={classes.root}>
       <Form onSubmit={handleSubmit} ref={formRef} initialData={ordemDeServico}>
         <Card>
-          <CardHeader title="Inserir serviço" />
           <CardContent>
             <Grid container spacing={3}>
               <Grid item xs={12}>

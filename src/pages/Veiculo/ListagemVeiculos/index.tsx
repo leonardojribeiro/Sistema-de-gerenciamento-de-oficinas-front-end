@@ -6,12 +6,18 @@ import FormularioConsulta from '../../../componentes/FormularioConsulta';
 import useListagem from '../../../hooks/useListagem';
 import { Pagination } from '@material-ui/lab';
 import VeiculoItem from '../VeiculoItem';
+import { useLocation } from 'react-router-dom';
 
 const ListagemVeiculos: React.FC = () => {
+  const { pathname } = useLocation();
+
   const { handlePageChange, handleSearch, itens, listar, page, total } = useListagem<Veiculo>("veiculos", "veiculo");
+
   useEffect(() => {
-    listar();
-  }, [listar]);
+    if (pathname === "/veiculos") {
+      listar();
+    }
+  }, [listar, pathname]);
 
   return (
     <>

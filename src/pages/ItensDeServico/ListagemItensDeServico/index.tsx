@@ -4,6 +4,7 @@ import OrdemDeServicoContext from '../../OrdemDeServico/OrdemDeServicoContext';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { agruparServicosPorFuncionario } from '../../../recursos/Agrupamento';
+import Formato from '../../../recursos/Formato';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,13 +48,13 @@ const ListagemItensDeServico: React.FC = () => {
                     <Typography>Garantia: {itemDeServico.garantia}</Typography>
                   </Grid>
                   <Grid item >
-                    <Typography>Valor unitário: {itemDeServico.valorUnitario}</Typography>
+                    <Typography>Valor unitário: {Formato.formatarMoeda(itemDeServico.valorUnitario)}</Typography>
                   </Grid>
                   <Grid item >
                     <Typography>Quantidade: {itemDeServico.quantidade}</Typography>
                   </Grid>
                   <Grid item>
-                    <Typography>Valor total: {itemDeServico.valorTotal}</Typography>
+                    <Typography>Valor total: {Formato.formatarMoeda(itemDeServico.valorTotal)}</Typography>
                   </Grid>
                   <Grid item >
                     <Tooltip title={`Alterar `} onClick={() => alterarItemDeServico(itemDeServico._id)}>
@@ -82,7 +83,7 @@ const ListagemItensDeServico: React.FC = () => {
         {a}
       </Box>
       <Box alignSelf="flex-end" justifySelf="flex-end">
-        <Typography>Valor Total:{valorTotalServicos()}</Typography>
+        <Typography>Valor Total: {Formato.formatarMoeda(valorTotalServicos())}</Typography>
       </Box>
     </Box>
   )
