@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Peca from '../../../Types/Peca';
 import FormConsultaPeca from '../FormConsultaPeca';
 import { Pagination } from '@material-ui/lab';
-import BotaoInserir from '../../../componentes/BotaoInserir';
+import BotaoIncluir from '../../../componentes/BotaoIncluir';
 import useListagem from '../../../hooks/useListagem';
 
 const useStyles = makeStyles((theme) => ({
@@ -88,7 +88,7 @@ const ListagemPecas: React.FC = () => {
       <Box display="flex" justifyContent="center">
         <Pagination count={Math.ceil(Number(total) / 100)} onChange={handlePageChange} page={page} />
       </Box>
-      <BotaoInserir titulo="Inserir peça" linkTo="/pecas/inserirpeca" />
+      <BotaoIncluir titulo="incluir peça" linkTo="/pecas/incluirpeca" />
     </>
   );
 }

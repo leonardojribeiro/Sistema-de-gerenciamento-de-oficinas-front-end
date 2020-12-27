@@ -10,7 +10,7 @@ import { useMemo } from 'react';
 import { Form, CampoDeTexto } from '../../../componentes/Form';
 import Peca from '../../../Types/Peca';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
-import DialogInserirMarca from '../../Marca/DialogInserirMarca';
+import DialogoIncluirMarca from '../../Marca/DialogoIncluirMarca';
 import AutoCompleteMarca from '../../../componentes/AutoComplete/AutoCompleteMarca';
 
 const DialogoAlterarModelo: React.FC = () => {
@@ -60,8 +60,8 @@ const DialogoAlterarModelo: React.FC = () => {
       <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
       <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
         <AutoCompleteMarca label="Marca" name="marca" required listOptionsIn/>
-        <Link to={`${path}/inserirmarca`}>
-          <Tooltip title="Inserir marca">
+        <Link to={`${path}/incluirmarca`}>
+          <Tooltip title="incluir marca">
             <IconButton>
               <CreateNewFolderIcon />
             </IconButton>
@@ -79,7 +79,7 @@ const DialogoAlterarModelo: React.FC = () => {
       {conteudo}
       <Alerta ref={refAlerta} />
       <Switch>
-        <Route path={`${url}/inserirmarca`} component={DialogInserirMarca} />
+        <Route path={`${url}/incluirmarca`} component={DialogoIncluirMarca} />
       </Switch>
     </Dialogo>
   );

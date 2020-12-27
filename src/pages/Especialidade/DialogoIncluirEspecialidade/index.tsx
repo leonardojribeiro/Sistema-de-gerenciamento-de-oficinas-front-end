@@ -5,7 +5,7 @@ import ApiContext from '../../../contexts/ApiContext';
 import { useHistory } from 'react-router-dom';
 import { CampoDeTexto, Form, } from '../../../componentes/Form';
 
-function DialogInserirEspecialidade() {
+function DialogoIncluirEspecialidade() {
   const { post } = useContext(ApiContext);
   const history = useHistory();
 
@@ -19,7 +19,7 @@ function DialogInserirEspecialidade() {
   }, [history, post])
 
   return (
-    <Dialogo open title="Inserir especialidade">
+    <Dialogo open title="incluir especialidade">
       <Form onSubmit={manipularEnvio}>
         <CampoDeTexto name="descricao" autoComplete="no" label="Descrição" fullWidth required autoFocus />
         <DialogActions>
@@ -30,4 +30,4 @@ function DialogInserirEspecialidade() {
   );
 }
 
-export default memo(DialogInserirEspecialidade);
+export default memo(DialogoIncluirEspecialidade);

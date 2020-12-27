@@ -1,7 +1,7 @@
 import React, { memo, useEffect } from 'react';
 import { Box } from '@material-ui/core';
 import Veiculo from '../../../Types/Veiculo';
-import BotaoInserir from '../../../componentes/BotaoInserir';
+import BotaoIncluir from '../../../componentes/BotaoIncluir';
 import FormularioConsulta from '../../../componentes/FormularioConsulta';
 import useListagem from '../../../hooks/useListagem';
 import { Pagination } from '@material-ui/lab';
@@ -33,7 +33,7 @@ const ListagemVeiculos: React.FC = () => {
       <Box display="flex" justifyContent="center">
         <Pagination count={Math.ceil(Number(total) / 100)} onChange={handlePageChange} page={page} />
       </Box>
-      <BotaoInserir titulo="Inserir veiculo" linkTo="/veiculos/inserirveiculo" />
+      <BotaoIncluir titulo="incluir veiculo" linkTo="/veiculos/incluirveiculo" />
     </>
   );
 }

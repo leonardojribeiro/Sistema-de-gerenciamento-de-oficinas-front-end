@@ -27,7 +27,7 @@ const ArrowTop: React.FC = () => {
     <div className={classes.arrowContainer} >
       <Fab variant='extended' color='primary' onClick={handleClick}>
         <ExpandLess />
-        Inserir
+        incluir
       </Fab>
     </div>
   );

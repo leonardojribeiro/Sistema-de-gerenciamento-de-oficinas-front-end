@@ -8,7 +8,7 @@ import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
 import { Form, CampoDeTexto, DragAndDrop } from '../../../componentes/Form';
 import Marca from '../../../Types/Marca';
 
-const DialogAlterarMarca: React.FC = () => {
+const DialogoAlterarMarca: React.FC = () => {
   const imagensUrl = process.env.REACT_APP_IMAGENS_URL;
   const id = useQuery("id");
   const [marca, setMarca] = useState<Marca | undefined>(undefined);
@@ -74,4 +74,4 @@ const DialogAlterarMarca: React.FC = () => {
   )
 }
 
-export default memo(DialogAlterarMarca);
+export default memo(DialogoAlterarMarca);

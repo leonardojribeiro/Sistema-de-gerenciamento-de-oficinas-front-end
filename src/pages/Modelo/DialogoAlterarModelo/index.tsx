@@ -11,7 +11,7 @@ import comparar from '../../../recursos/Comparar';
 import { Form, CampoDeTexto } from '../../../componentes/Form';
 import Modelo from '../../../Types/Modelo';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
-import DialogInserirMarca from '../../Marca/DialogInserirMarca';
+import DialogoIncluirMarca from '../../Marca/DialogoIncluirMarca';
 import AutoCompleteMarca from '../../../componentes/AutoComplete/AutoCompleteMarca';
 
 const DialogoAlterarModelo: React.FC = () => {
@@ -62,8 +62,8 @@ const DialogoAlterarModelo: React.FC = () => {
       <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
       <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
         <AutoCompleteMarca name="marca" label="Marca" required listOptionsIn={pathname.endsWith("alterarmodelo")}/>
-        <Link to={`${path}/inserirmarca`}>
-          <Tooltip title="Inserir marca">
+        <Link to={`${path}/incluirmarca`}>
+          <Tooltip title="incluir marca">
             <IconButton>
               <CreateNewFolderIcon />
             </IconButton>
@@ -81,7 +81,7 @@ const DialogoAlterarModelo: React.FC = () => {
       {conteudo}
       <Alerta ref={refAlerta} />
       <Switch>
-        <Route path={`${url}/inserirmarca`} component={DialogInserirMarca} />
+        <Route path={`${url}/incluirmarca`} component={DialogoIncluirMarca} />
       </Switch>
     </Dialogo>
   );

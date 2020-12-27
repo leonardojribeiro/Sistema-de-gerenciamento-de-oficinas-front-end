@@ -5,7 +5,7 @@ import ApiContext from '../../../contexts/ApiContext';
 import { useHistory,} from 'react-router-dom';
 import { CampoDeTexto, Form, DragAndDrop } from '../../../componentes/Form';
 
-const DialogInserirMarca: React.FC = () => {
+const DialogoIncluirMarca: React.FC = () => {
   const { multipartPost } = useContext(ApiContext);
   const history = useHistory();
   const handleSubmit = useCallback(async (marca)=>{
@@ -18,7 +18,7 @@ const DialogInserirMarca: React.FC = () => {
   },[history, multipartPost])
 
   return (
-    <Dialogo open maxWidth="xs" fullWidth title="Inserir marca">
+    <Dialogo open maxWidth="xs" fullWidth title="incluir marca">
       <Form onSubmit={handleSubmit}>
         <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
         <DragAndDrop name="logomarca" required />
@@ -30,4 +30,4 @@ const DialogInserirMarca: React.FC = () => {
   );
 }
 
-export default memo(DialogInserirMarca);
+export default memo(DialogoIncluirMarca);

@@ -3,7 +3,7 @@ import { IconButton, makeStyles, Box, Tooltip, Grid, Typography } from '@materia
 import { Link } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
 import Especialidade from '../../../Types/Especialidade';
-import BotaoInserir from '../../../componentes/BotaoInserir';
+import BotaoIncluir from '../../../componentes/BotaoIncluir';
 import FormularioConsulta from '../../../componentes/FormularioConsulta';
 import useListagem from '../../../hooks/useListagem';
 import { Pagination } from '@material-ui/lab';
@@ -72,7 +72,7 @@ const ListagemEspecialidades: React.FC = () => {
       <Box display="flex" justifyContent="center">
         <Pagination count={Math.ceil(Number(total) / 100)} onChange={handlePageChange} page={page} />
       </Box>
-      <BotaoInserir titulo="Inserir especialidade" linkTo="especialidades/inserirespecialidade" />
+      <BotaoIncluir titulo="incluir especialidade" linkTo="especialidades/incluirespecialidade" />
     </>
   );
 }

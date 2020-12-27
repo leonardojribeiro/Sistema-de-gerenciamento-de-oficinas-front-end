@@ -1,6 +1,6 @@
 import { Box, Grid, Typography } from '@material-ui/core';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import BotaoInserir from '../../../componentes/BotaoInserir';
+import BotaoIncluir from '../../../componentes/BotaoIncluir';
 import Dialog from '../../../componentes/Dialog';
 import ApiContext from '../../../contexts/ApiContext';
 import useQuery from '../../../hooks/useQuery';
@@ -25,7 +25,7 @@ const HistoricoVeiculo: React.FC = () => {
 
 
   return (
-    <Dialog title={`Histórico do veículo ${ordensDeServico ? ordensDeServico[0]?.veiculo.placa : ""}`} open fullScreen>
+    <Dialog title={ordensDeServico ? `Histórico do veículo ${ordensDeServico[0]?.veiculo.placa.toLocaleUpperCase()}` : ""} open fullScreen>
       <Box mb={2}>
         <Grid container spacing={3} justify="center">
           <Box p={2}>
@@ -36,7 +36,7 @@ const HistoricoVeiculo: React.FC = () => {
           ))}
         </Grid>
       </Box>
-      <BotaoInserir titulo="Inserir ordem de serviço para este veículo" linkTo={`/ordensdeservico/inserir?veiculo=${veiculo}`} />
+      <BotaoIncluir titulo="incluir ordem de serviço para este veículo" linkTo={`/ordensdeservico/incluir?veiculo=${veiculo}`} />
     </Dialog>
   );
 }

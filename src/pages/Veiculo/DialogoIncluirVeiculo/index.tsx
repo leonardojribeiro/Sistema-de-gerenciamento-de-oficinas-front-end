@@ -6,13 +6,13 @@ import { DialogActions, Button, Box, Tooltip, IconButton, } from '@material-ui/c
 import { Form, CampoDeTexto, DateField, } from '../../../componentes/Form';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import DialogoInserirModelo from '../../Modelo/DialogoInserirModelo';
-import DialogoInserirCliente from '../../Cliente/DialogoInserirCliente';
+import DialogoIncluirModelo from '../../Modelo/DialogoIncluirModelo';
+import DialogoIncluirCliente from '../../Cliente/DialogoIncluirCliente';
 import AutoCompleteModelo from '../../../componentes/AutoComplete/AutoCompleteModelo';
 import AutoCompleteCliente from '../../../componentes/AutoComplete/AutoCompleteCliente';
 
 
-const DialogoInserirVeiculo: React.FC = () => {
+const DialogoIncluirVeiculo: React.FC = () => {
   const { post, } = useContext(ApiContext);
   const history = useHistory();
   const { path, url } = useRouteMatch();
@@ -28,15 +28,15 @@ const DialogoInserirVeiculo: React.FC = () => {
   }, [history, post]);
 
   return (
-    <Dialogo open title="Inserir veículo" maxWidth="sm" fullWidth>
+    <Dialogo open title="incluir veículo" maxWidth="sm" fullWidth>
       <Form onSubmit={manipularEnvio}>
         <CampoDeTexto name="placa" label="Placa" fullWidth required autoFocus />
         <DateField name="anoFabricacao" label="Ano de fabricação" fullWidth required views={["year"]} format="yyyy" />
         <DateField name="anoModelo" label="Ano de modelo" fullWidth required views={["year"]} format="yyyy" />
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-          <AutoCompleteModelo name="modelo" label="Modelo" required listOptionsIn={pathname.endsWith("inserirveiculo")} />
-          <Link to={`${path}/inserirmodelo`}>
-            <Tooltip title="Inserir modelo">
+          <AutoCompleteModelo name="modelo" label="Modelo" required listOptionsIn={pathname.endsWith("incluirveiculo")} />
+          <Link to={`${path}/incluirmodelo`}>
+            <Tooltip title="incluir modelo">
               <IconButton>
                 <CreateNewFolderIcon />
               </IconButton>
@@ -44,9 +44,9 @@ const DialogoInserirVeiculo: React.FC = () => {
           </Link>
         </Box>
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-          <AutoCompleteCliente name="cliente" label="Cliente"  listOptionsIn={pathname.endsWith("inserirveiculo")} />
-          <Link to={`${path}/inserircliente`}>
-            <Tooltip title="Inserir cliente">
+          <AutoCompleteCliente name="cliente" label="Cliente"  listOptionsIn={pathname.endsWith("incluirveiculo")} />
+          <Link to={`${path}/incluircliente`}>
+            <Tooltip title="incluir cliente">
               <IconButton>
                 <PersonAddIcon />
               </IconButton>
@@ -58,11 +58,11 @@ const DialogoInserirVeiculo: React.FC = () => {
         </DialogActions>
       </Form>
       <Switch>
-        <Route path={`${url}/inserirmodelo`} component={DialogoInserirModelo} />
-        <Route path={`${url}/inserircliente`} component={DialogoInserirCliente} />
+        <Route path={`${url}/incluirmodelo`} component={DialogoIncluirModelo} />
+        <Route path={`${url}/incluircliente`} component={DialogoIncluirCliente} />
       </Switch>
     </Dialogo>
   );
 }
 
-export default memo(DialogoInserirVeiculo);
+export default memo(DialogoIncluirVeiculo);

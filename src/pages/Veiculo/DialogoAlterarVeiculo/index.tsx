@@ -12,8 +12,8 @@ import comparar from '../../../recursos/Comparar';
 import Veiculo from '../../../Types/Veiculo'; 
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import DialogoInserirModelo from '../../Modelo/DialogoInserirModelo';
-import DialogoInserirCliente from '../../Cliente/DialogoInserirCliente';
+import DialogoIncluirModelo from '../../Modelo/DialogoIncluirModelo';
+import DialogoIncluirCliente from '../../Cliente/DialogoIncluirCliente';
 import AutoCompleteModelo from '../../../componentes/AutoComplete/AutoCompleteModelo';
 import AutoCompleteCliente from '../../../componentes/AutoComplete/AutoCompleteCliente';
 
@@ -49,7 +49,7 @@ const DialogAlterarVeiculo: React.FC = () => {
   const popular = useCallback(async () => {
     const resposta = await get(`/veiculo/id?_id=${id}`) as Veiculo;
     if (resposta) {
-      setVeiculo(resposta)
+      setVeiculo(resposta);
     }
   }, [get, id,]);
 
@@ -67,8 +67,8 @@ const DialogAlterarVeiculo: React.FC = () => {
       <DateField name="anoModelo" label="Ano de modelo" fullWidth required />
       <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
         <AutoCompleteModelo name="modelo" label="Modelo" required listOptionsIn/>
-        <Link to={`${path}/inserirmodelo`}>
-          <Tooltip title="Inserir modelo">
+        <Link to={`${path}/incluirmodelo`}>
+          <Tooltip title="incluir modelo">
             <IconButton>
               <CreateNewFolderIcon />
             </IconButton>
@@ -77,8 +77,8 @@ const DialogAlterarVeiculo: React.FC = () => {
       </Box>
       <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
       <AutoCompleteCliente name="cliente" label="Cliente" required listOptionsIn/>
-        <Link to={`${path}/inserircliente`}>
-          <Tooltip title="Inserir cliente">
+        <Link to={`${path}/incluircliente`}>
+          <Tooltip title="incluir cliente">
             <IconButton>
               <PersonAddIcon />
             </IconButton>
@@ -96,8 +96,8 @@ const DialogAlterarVeiculo: React.FC = () => {
       {conteudo}
       <Alerta ref={refAlerta} />
       <Switch>
-        <Route path={`${url}/inserirmodelo`} component={DialogoInserirModelo} />
-        <Route path={`${url}/inserircliente`} component={DialogoInserirCliente} />
+        <Route path={`${url}/incluirmodelo`} component={DialogoIncluirModelo} />
+        <Route path={`${url}/incluircliente`} component={DialogoIncluirCliente} />
       </Switch>
     </Dialogo>
   );

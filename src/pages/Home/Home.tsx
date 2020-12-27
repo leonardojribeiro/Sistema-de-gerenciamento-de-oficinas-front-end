@@ -14,7 +14,7 @@ import SchoolIcon from '@material-ui/icons/School';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import BuildIcon from '@material-ui/icons/Build';
 import ListagemOrdensDeServico from '../OrdemDeServico/ListagemOrdensDeServico';
-import BotaoInserir from '../../componentes/BotaoInserir';
+import BotaoIncluir from '../../componentes/BotaoIncluir';
 import ItemDrawer from '../../componentes/ItemDrawer';
 import GroupIcon from '@material-ui/icons/Group';
 
@@ -115,7 +115,7 @@ const Home: React.FC = () => {
           <ListagemOrdensDeServico />
           <Box className={classes.areaBtn}>
             <Box className={classes.btn}>
-              <BotaoInserir titulo="Nova ordem de serviço" linkTo="ordensdeservico/inserir" />
+              <BotaoIncluir titulo="Nova ordem de serviço" linkTo="ordensdeservico/incluir" />
             </Box>
           </Box>
         </Container>

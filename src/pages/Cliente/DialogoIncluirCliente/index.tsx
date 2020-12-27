@@ -6,7 +6,7 @@ import { DialogActions, Button, Grid, FormControlLabel, Radio } from '@material-
 import { CampoDeCpfOuCnpj, Form, DateField, CampoDeRadio, PhoneField, CampoDeEmail, NameField } from '../../../componentes/Form';
 import FormEndereco from '../../../componentes/FormEndereco';
 
-const DialogoInserirCliente: React.FC = () => {
+const DialogoIncluirCliente: React.FC = () => {
   const { post } = useContext(ApiContext);
   const history = useHistory();
 
@@ -21,7 +21,7 @@ const DialogoInserirCliente: React.FC = () => {
   }, [history, post]);
 
   return (
-    <Dialogo maxWidth="md" fullWidth open title="Inserir cliente">
+    <Dialogo maxWidth="md" fullWidth open title="incluir cliente">
       <Form onSubmit={manipularEnvio}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8} md={8}>
@@ -58,4 +58,4 @@ const DialogoInserirCliente: React.FC = () => {
   );
 }
 
-export default memo(DialogoInserirCliente);
+export default memo(DialogoIncluirCliente);

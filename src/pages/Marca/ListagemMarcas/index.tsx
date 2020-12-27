@@ -5,7 +5,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import Marca from '../../../Types/Marca';
 import FormConsultaMarca from '../FormConsultaMarca';
 import { Pagination } from '@material-ui/lab';
-import BotaoInserir from '../../../componentes/BotaoInserir';
+import BotaoIncluir from '../../../componentes/BotaoIncluir';
 import useListagem from '../../../hooks/useListagem';
 
 const useStyles = makeStyles((theme) => ({
@@ -84,8 +84,8 @@ const ListagemMarcas: React.FC = () => {
       <Box display="flex" justifyContent="center">
         <Pagination count={Math.ceil(Number(total) / 100)} onChange={handlePageChange} page={page} />
       </Box>
-      <Link to="marcas/inserirmarca" >
-        <BotaoInserir titulo="Inserir marca" />
+      <Link to="marcas/incluirmarca" >
+        <BotaoIncluir titulo="incluir marca" />
       </Link>
     </>
   );

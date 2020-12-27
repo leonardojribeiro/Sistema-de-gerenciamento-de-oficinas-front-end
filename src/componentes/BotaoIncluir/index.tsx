@@ -3,7 +3,7 @@ import { makeStyles, Tooltip, Fab, Box } from '@material-ui/core';
 import AddIcon from "@material-ui/icons/Add";
 import { Link } from 'react-router-dom';
 
-interface BotaoInserirProps {
+interface BotaoIncluirProps {
   titulo: string;
   linkTo?: string;
 }
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const BotaoInserir: React.FC<BotaoInserirProps> = ({ titulo, linkTo, ...props }) => {
+const BotaoIncluir: React.FC<BotaoIncluirProps> = ({ titulo, linkTo, ...props }) => {
   const classes = useStyles()
   const fab = (
     <Tooltip title={titulo}>
@@ -37,4 +37,4 @@ const BotaoInserir: React.FC<BotaoInserirProps> = ({ titulo, linkTo, ...props })
   );
 }
 
-export default memo(BotaoInserir);
+export default memo(BotaoIncluir);

@@ -11,7 +11,7 @@ import comparar from '../../../recursos/Comparar';
 import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
 
 
-const DialogInserirServico: React.FC = () => {
+const DialogoIncluirServico: React.FC = () => {
   const [servico, setServico] = useState<Servico | undefined>(undefined);
   const { put, get } = useContext(ApiContext);
   const history = useHistory();
@@ -63,4 +63,4 @@ const DialogInserirServico: React.FC = () => {
   );
 }
 
-export default memo(DialogInserirServico);
+export default memo(DialogoIncluirServico);

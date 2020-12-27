@@ -8,7 +8,7 @@ import SelectField from '../../../componentes/Form/Fields/SelectField';
 import Especialidade from '../../../Types/Especialidade';
 import FormEndereco from '../../../componentes/FormEndereco';
 
-const DialogInserirFuncionario: React.FC = () => {
+const DialogoIncluirFuncionario: React.FC = () => {
   const [especialidades, setEspecialidades] = useState<Especialidade[] | undefined>(undefined);
   const { post, get } = useContext(ApiContext);
   const history = useHistory();
@@ -35,7 +35,7 @@ const DialogInserirFuncionario: React.FC = () => {
   }, [history, post]);
 
   return (
-    <Dialogo maxWidth="md" fullWidth open title="Inserir funcionário">
+    <Dialogo maxWidth="md" fullWidth open title="incluir funcionário">
       <Form onSubmit={manipularEnvio}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8} md={8}>
@@ -81,4 +81,4 @@ const DialogInserirFuncionario: React.FC = () => {
   );
 }
 
-export default memo(DialogInserirFuncionario);
+export default memo(DialogoIncluirFuncionario);

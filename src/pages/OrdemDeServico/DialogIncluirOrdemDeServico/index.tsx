@@ -7,7 +7,7 @@ import FrameItensDePeca from '../../ItensDePeca/FrameItensDePeca';
 import FrameItensDeServico from '../../ItensDeServico/FrameItensDeServico';
 import SwipeableContext from '../../../contexts/SwipeableContext';
 
-const DialogInserirOrdemDeServico: React.FC = () => {
+const DialogoIncluirOrdemDeServico: React.FC = () => {
   //const { indexTab, setIndexTab } = useContext(OrdemDeServicoContext);
   const {activeIndex,setActiveIndex} = useContext(SwipeableContext);
   return (
@@ -26,4 +26,4 @@ const DialogInserirOrdemDeServico: React.FC = () => {
   );
 }
 
-export default memo(DialogInserirOrdemDeServico);
+export default memo(DialogoIncluirOrdemDeServico);

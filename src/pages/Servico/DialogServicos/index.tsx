@@ -1,20 +1,20 @@
 import React, { memo } from 'react';
 import Dialogo from '../../../componentes/Dialog';
 import { Switch, Route } from 'react-router-dom';
-import DialogInserirServico from '../DialogInserirServico';
+import DialogoIncluirServico from '../DialogoIncluirServico';
 import ListagemServicos from '../ListagemServicos';
-import DialogAlterarServico from '../DialogAlterarServico';
+import DialogAlterarServico from '../DialogoAlterarServico';
 
 
 const DialogServicos: React.FC = () => {
-  
+
 
   return (
     <Dialogo maxWidth="sm" fullWidth open title="Serviços">
-      <ListagemServicos/>
+      <ListagemServicos />
       <Switch>
-        <Route path="/servicos/inserirservico" component={DialogInserirServico}/>
-        <Route path="/servicos/alterarservico" component={DialogAlterarServico}/>
+        <Route path="/servicos/incluirservico" component={DialogoIncluirServico} />
+        <Route path="/servicos/alterarservico" component={DialogAlterarServico} />
       </Switch>
     </Dialogo>
   );

@@ -7,7 +7,7 @@ import { DialogActions, Button,  } from '@material-ui/core';
 import { Form, CampoDeTexto, MoneyField } from '../../../componentes/Form';
 
 
-const DialogInserirServico: React.FC = () => {
+const DialogoIncluirServico: React.FC = () => {
   const { post } = useContext(ApiContext);
   const history = useHistory();
 
@@ -24,7 +24,7 @@ const DialogInserirServico: React.FC = () => {
 
 
   return (
-    <Dialogo open title="Inserir Serviço">
+    <Dialogo open title="incluir Serviço">
       <Form onSubmit={manipularEnvio}>
         <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
         <CampoDeTexto name="tempoDuracao" type="number" required fullWidth label="Tempo de duração (minutos)"/>
@@ -37,4 +37,4 @@ const DialogInserirServico: React.FC = () => {
   );
 }
 
-export default memo(DialogInserirServico);
+export default memo(DialogoIncluirServico);

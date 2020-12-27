@@ -5,10 +5,10 @@ import { useHistory, useRouteMatch, Link, Switch, Route } from 'react-router-dom
 import { DialogActions, Button, Box, Tooltip, IconButton } from '@material-ui/core';
 import { Form, CampoDeTexto, } from '../../../componentes/Form';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
-import DialogInserirMarca from '../../Marca/DialogInserirMarca';
+import DialogoIncluirMarca from '../../Marca/DialogoIncluirMarca';
 import AutoCompleteMarca from '../../../componentes/AutoComplete/AutoCompleteMarca';
 
-const DialogoInserirPeca: React.FC = () => {
+const DialogoIncluirPeca: React.FC = () => {
   const { post } = useContext(ApiContext);
   const history = useHistory();
   const { path, url } = useRouteMatch();
@@ -23,13 +23,13 @@ const DialogoInserirPeca: React.FC = () => {
   }, [history, post]);
 
   return (
-    <Dialogo open title="Inserir peça" fullWidth maxWidth="xs">
+    <Dialogo open title="incluir peça" fullWidth maxWidth="xs">
       <Form onSubmit={manipularEnvio}>
         <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
           <AutoCompleteMarca name="marca" label="Marca" required listOptionsIn/>
-          <Link to={`${path}/inserirmarca`}>
-            <Tooltip title="Inserir marca">
+          <Link to={`${path}/incluirmarca`}>
+            <Tooltip title="incluir marca">
               <IconButton>
                 <CreateNewFolderIcon />
               </IconButton>
@@ -41,10 +41,10 @@ const DialogoInserirPeca: React.FC = () => {
         </DialogActions>
       </Form>
       <Switch>
-        <Route path={`${url}/inserirmarca`} component={DialogInserirMarca} />
+        <Route path={`${url}/incluirmarca`} component={DialogoIncluirMarca} />
       </Switch>
     </Dialogo>
   );
 }
 
-export default memo(DialogoInserirPeca);
+export default memo(DialogoIncluirPeca);

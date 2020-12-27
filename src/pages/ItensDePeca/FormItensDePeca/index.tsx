@@ -39,7 +39,7 @@ const FormItensDePeca: React.FC = () => {
       </Hidden>
       <Form onSubmit={handleSubmitFormItemDePeca} ref={formRef} clearOnSubmit initialData={intialData} >
         <Card>
-          <CardHeader title="Inserir peça" />
+          <CardHeader title="incluir peça" />
           <CardContent>
             <Grid container spacing={2} justify="flex-end">
               <Grid item xs={12} md={6}>

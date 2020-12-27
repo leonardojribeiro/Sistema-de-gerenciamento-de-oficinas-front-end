@@ -1,11 +1,11 @@
 import React, { memo, useCallback, useEffect } from 'react';
 import { Box, TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Tooltip, IconButton, makeStyles, Typography } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Servico from '../../../Types/Servico';
 import FormularioConsulta from '../../../componentes/FormularioConsulta';
 import useListagem from '../../../hooks/useListagem';
-import BotaoInserir from '../../../componentes/BotaoInserir';
+import BotaoIncluir from '../../../componentes/BotaoIncluir';
 import { Pagination } from '@material-ui/lab';
 
 
@@ -30,9 +30,13 @@ const ListagemServicos: React.FC = () => {
     "servico",
   );
 
+  const { pathname } = useLocation();
+
   useEffect(() => {
-    listar();
-  }, [listar]);
+    if (pathname === "/servicos") {
+      listar();
+    }
+  }, [listar, pathname]);
 
   const handleSubmitSearch = useCallback((data) => {
     handleSearch(`descricao=${data.consulta}`)
@@ -84,7 +88,7 @@ const ListagemServicos: React.FC = () => {
       <Box display="flex" justifyContent="center">
         <Pagination count={Math.ceil(total / 100)} onChange={handlePageChange} page={page} />
       </Box>
-      <BotaoInserir titulo="Inserir serviços" linkTo="/servicos/inserirservico" />
+      <BotaoIncluir titulo="incluir serviços" linkTo="/servicos/incluirservico" />
     </>
   );
 }

@@ -6,7 +6,7 @@ import usePessoa from '../../hooks/useListagemPessoa';
 import Cliente from '../../Types/Cliente';
 import Fornecedor from '../../Types/Fornecedor';
 import Funcionario from '../../Types/Funcionario';
-import BotaoInserir from '../BotaoInserir';
+import BotaoIncluir from '../BotaoIncluir';
 import FormConsultaPessoa from '../FormConsultaPessoa';
 import PessoaItem from '../PessoaItem';
 
@@ -50,7 +50,7 @@ const ListagemPessoa: React.FC<ListagemPessoaProps> = ({ linkToChangePath, linkT
         <Pagination count={Math.ceil(Number(total) / 100)} onChange={handlePageChange} page={page} />
       </Box>
       <Link to={linkToInsertPath}>
-        <BotaoInserir titulo={linkToInsertText} />
+        <BotaoIncluir titulo={linkToInsertText} />
       </Link>
     </>
   );

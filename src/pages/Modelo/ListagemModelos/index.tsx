@@ -4,7 +4,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { Link } from 'react-router-dom';
 import Modelo from '../../../Types/Modelo';
 import { Pagination } from '@material-ui/lab';
-import BotaoInserir from '../../../componentes/BotaoInserir';
+import BotaoIncluir from '../../../componentes/BotaoIncluir';
 import FormConsultaPeca from '../../Peca/FormConsultaPeca';
 import useListagem from '../../../hooks/useListagem';
 const useStyles = makeStyles((theme) => ({
@@ -93,7 +93,7 @@ const ListagemModelos: React.FC = () => {
       <Box display="flex" justifyContent="center">
         <Pagination count={Math.ceil(Number(total) / 100)} onChange={handlePageChange} page={page} />
       </Box>
-      <BotaoInserir titulo="Inserir modelo" linkTo="modelos/inserirmodelo" />
+      <BotaoIncluir titulo="incluir modelo" linkTo="modelos/incluirmodelo" />
     </>
   );
 }

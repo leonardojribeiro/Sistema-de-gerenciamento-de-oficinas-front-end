@@ -6,7 +6,7 @@ import { DialogActions, Button, Grid, } from '@material-ui/core';
 import { CampoDeCpfOuCnpj, Form, CampoDeTexto, PhoneField, CampoDeEmail, NameField } from '../../../componentes/Form';
 import FormEndereco from '../../../componentes/FormEndereco';
 
-const DialogoInserirFornecedor: React.FC = () => {
+const DialogoIncluirFornecedor: React.FC = () => {
   const { post } = useContext(ApiContext);
   const history = useHistory();
 
@@ -21,7 +21,7 @@ const DialogoInserirFornecedor: React.FC = () => {
   }, [history, post]);
 
   return (
-    <Dialogo maxWidth="md" fullWidth open title="Inserir fornecedor">
+    <Dialogo maxWidth="md" fullWidth open title="incluir fornecedor">
       <Form onSubmit={manipularEnvio}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8} md={8}>
@@ -52,4 +52,4 @@ const DialogoInserirFornecedor: React.FC = () => {
   );
 }
 
-export default memo(DialogoInserirFornecedor);
+export default memo(DialogoIncluirFornecedor);
