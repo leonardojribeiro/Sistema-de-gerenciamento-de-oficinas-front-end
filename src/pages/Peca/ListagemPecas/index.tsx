@@ -88,7 +88,7 @@ const ListagemPecas: React.FC = () => {
       <Box display="flex" justifyContent="center">
         <Pagination count={Math.ceil(Number(total) / 100)} onChange={handlePageChange} page={page} />
       </Box>
-      <BotaoIncluir titulo="incluir peça" linkTo="/pecas/incluirpeca" />
+      <BotaoIncluir titulo="Incluir peça" linkTo="/pecas/incluirpeca" />
     </>
   );
 }

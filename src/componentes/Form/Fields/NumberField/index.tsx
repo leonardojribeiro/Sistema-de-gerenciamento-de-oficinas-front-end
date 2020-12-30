@@ -24,10 +24,16 @@ const NumberField: React.FC<TextFieldProps> = ({ name, max, min, ...props }) => 
 
   const { ref, handleInputChange, valid, value } = useFormField(name, validate, undefined, undefined, props.required, props.onChange)
 
+  const handleChange = useCallback((event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    if(validate(event.target.value)){
+      handleInputChange(event);
+    }
+  }, [handleInputChange, validate]);
+
   return (
     <TextFieldMUI
       {...props}
-      onChange={handleInputChange}
+      onChange={handleChange}
       type="number"
       inputProps={{
         "min": min,

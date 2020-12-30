@@ -3,12 +3,13 @@ import { TextField, StandardTextFieldProps as TextFieldPropsMUI, InputAdornment,
 import SearchIcon from '@material-ui/icons/Search';
 import useField from '../../Hooks/useField';
 
-interface SearchFieldProps extends TextFieldPropsMUI{
+interface SearchFieldProps extends TextFieldPropsMUI {
   name: string,
-  disableButtonSearch?: boolean
+  disableButtonSearch?: boolean;
+  maxLength?: Number;
 }
 
-const SearchField: React.FC<SearchFieldProps> = ({name, disableButtonSearch, ...props }) => {
+const SearchField: React.FC<SearchFieldProps> = ({ name, disableButtonSearch, maxLength, ...props }) => {
   const ref = useRef();
   const { registerField, fieldName } = useField(name);
 
@@ -26,6 +27,9 @@ const SearchField: React.FC<SearchFieldProps> = ({name, disableButtonSearch, ...
       ...props
       }
       inputRef={ref}
+      inputProps={{
+        maxLength,
+      }}
       InputProps={{
         endAdornment: !disableButtonSearch && (
           <InputAdornment position="end">

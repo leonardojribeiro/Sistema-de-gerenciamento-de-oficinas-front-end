@@ -88,6 +88,8 @@ const DateField: React.FC<DateFieldProps> = ({ name, ...props }) => {
       error={!valid}
       invalidDateMessage="Formato de data inválido."
       inputRef={inputRef}
+      minDateMessage="A data não pode ser antes do que a data mínima."
+      maxDateMessage="A data não pode ser depois do que a data máxima."
       {...props}
     />
   );

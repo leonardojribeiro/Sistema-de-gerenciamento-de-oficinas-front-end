@@ -6,9 +6,10 @@ import useFormField from '../../Hooks/useFormField';
 interface EmailFieldProps extends StandardTextFieldProps {
   name: string;
   noValidate?: boolean;
+  maxLength?: Number
 }
 
-const EmailField: React.FC<EmailFieldProps> = ({ name, ...props }) => {
+const EmailField: React.FC<EmailFieldProps> = ({ name, maxLength, ...props }) => {
   const { handleInputChange, ref, valid, value } = useFormField(name, validacao.validarEmail, undefined, undefined, props.required, props.onChange)
 
   return (
@@ -17,6 +18,9 @@ const EmailField: React.FC<EmailFieldProps> = ({ name, ...props }) => {
       error={!valid}
       value={value}
       inputRef={ref}
+      inputProps={{
+        maxLength,
+      }}
       helperText={
         ref.current ?
           props.required

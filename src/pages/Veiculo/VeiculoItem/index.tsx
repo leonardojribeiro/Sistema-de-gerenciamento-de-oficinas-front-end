@@ -41,7 +41,7 @@ const VeiculoItem: React.FC<VeiculoItemProps> = ({ veiculo }) => {
           <Grid item xs={4} sm={3}>
             <Box display="flex" justifyContent="flex-end">
               <Tooltip title={`Nova ordem de serviço para este veículo`}>
-                <IconButton component={Link} to={`ordensdeservico/incluir?veiculo=${veiculo._id}`}>
+                <IconButton component={Link} to={`/ordensdeservico/incluir?veiculo=${veiculo._id}`}>
                   <AssignmentIcon />
                 </IconButton>
               </Tooltip>

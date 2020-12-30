@@ -1,4 +1,4 @@
-import React, { useState, useCallback,  memo } from 'react';
+import React, { useState, useCallback, memo } from 'react';
 import { TextField, InputAdornment, IconButton, Tooltip, StandardTextFieldProps } from '@material-ui/core';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -6,11 +6,12 @@ import useFormField from '../../Hooks/useFormField';
 
 interface PasswordField extends StandardTextFieldProps {
   name: string,
+  maxLength?: Number;
 }
 
-const CampoDeSenha: React.FC<PasswordField> = ({ name, ...props }) => {
+const CampoDeSenha: React.FC<PasswordField> = ({ name, maxLength, ...props }) => {
   const [visible, setVisible] = useState<boolean>(false);
-  const { handleInputChange, ref, valid, value } = useFormField(name, (password) => password.length > 0 , undefined, false, props.required, props.onChange);
+  const { handleInputChange, ref, valid, value } = useFormField(name, (password) => password.length > 0, undefined, false, props.required, props.onChange);
 
   const handleClick = useCallback(() => {
     setVisible(!visible);
@@ -31,6 +32,9 @@ const CampoDeSenha: React.FC<PasswordField> = ({ name, ...props }) => {
         && "Campo obrigatório."
       }
       type={visible ? "text" : "password"}
+      inputProps={{
+        maxLength,
+      }}
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">

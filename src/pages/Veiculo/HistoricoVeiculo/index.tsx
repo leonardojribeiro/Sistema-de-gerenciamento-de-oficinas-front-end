@@ -63,7 +63,8 @@ const HistoricoVeiculo: React.FC = () => {
   }, [listar]);
 
   return (
-    <Dialog title={`Histórico do veículo `} open fullScreen>
+    <Dialog title={`Histórico do veículo `} open maxWidth="lg" fullWidth>
+      <Typography align="center" variant="h6">Ordens de serviço desse veículo</Typography>
       <Box mb={2}>
         <List>
           {
@@ -99,7 +100,7 @@ const HistoricoVeiculo: React.FC = () => {
           }
         </List>
       </Box>
-      <BotaoIncluir titulo="incluir ordem de serviço para este veículo" linkTo={`/ordensdeservico/incluir?veiculo=${veiculo}`} />
+      <BotaoIncluir titulo="Incluir ordem de serviço para este veículo" linkTo={`/ordensdeservico/incluir?veiculo=${veiculo}`} />
     </Dialog>
   );
 }

@@ -85,7 +85,7 @@ const ListagemMarcas: React.FC = () => {
         <Pagination count={Math.ceil(Number(total) / 100)} onChange={handlePageChange} page={page} />
       </Box>
       <Link to="marcas/incluirmarca" >
-        <BotaoIncluir titulo="incluir marca" />
+        <BotaoIncluir titulo="Incluir marca" />
       </Link>
     </>
   );

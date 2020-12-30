@@ -12,7 +12,7 @@ const DialogoVeiculos: React.FC = () => {
   return (
     <Dialogo maxWidth="sm" fullWidth open title="Veículos">
       <ListagemVeiculos/>
-      <BotaoIncluir titulo="incluir veiculo" linkTo="/veiculos/incluirveiculo" />
+      <BotaoIncluir titulo="Incluir veiculo" linkTo="/veiculos/incluirveiculo" />
       <Switch>
         <Route path="/veiculos/incluirveiculo" component={DialogoIncluirVeiculo} />
         <Route path="/veiculos/alterarveiculo"  component={DialogAlterarVeiculo} />

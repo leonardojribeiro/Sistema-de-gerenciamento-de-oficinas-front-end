@@ -5,6 +5,7 @@ import OrdemDeServicoContext from '../OrdemDeServicoContext';
 import { FormProviderHandles } from '../../../componentes/Form/types';
 import AutoCompleteVeiculo from '../../../componentes/AutoComplete/AutoCompleteVeiculo';
 import useQuery from '../../../hooks/useQuery';
+import NumberField from '../../../componentes/Form/Fields/NumberField';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,7 +82,7 @@ const FormOrdemDeServico: React.FC = () => {
                 </CampoDeSelecao>
               </Grid>
               <Grid item xs={12} sm={6} md={4}>
-                <CampoDeTexto name="andamento" type="number" label="Andamento (%)" required fullWidth />
+                <NumberField name="andamento" min={0} max={100} label="Andamento (%)" required fullWidth />
               </Grid>
               <Grid item xs={12} sm={6} md={6}>
                 <MoneyField name="valorTotalDosServicos" label="Valor total dos serviços" disabled fullWidth />

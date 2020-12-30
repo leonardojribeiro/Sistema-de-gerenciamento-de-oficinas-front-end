@@ -6,15 +6,19 @@ import useFormField from '../../Hooks/useFormField';
 interface NameFieldProps extends TextFieldPropsMUI {
   name: string;
   noValidate?: boolean;
+  maxLength?: Number;
 }
 
-const NameField: React.FC<NameFieldProps> = ({ name, onChange, ...props }) => {
+const NameField: React.FC<NameFieldProps> = ({ name, onChange, maxLength, ...props }) => {
   const getMask = useCallback(value => value.replace(/[^A-zÀ-ÿ' ]/, ""), [])
   const { handleInputChange, ref, valid, value } = useFormField(name, validarNome, getMask, props.noValidate, props.required)
 
   return (
     <TextFieldMUI
       {...props}
+      inputProps={{
+        maxLength
+      }}
       onChange={handleInputChange}
       value={value}
       error={!valid}

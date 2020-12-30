@@ -18,11 +18,12 @@ const DialogoAlterarCliente: React.FC = () => {
   const id = useQuery("id");
   const refAlerta = useRef<AlertaHandles>({} as AlertaHandles);
 
-  const manipularEnvio = useCallback(async (dados) => {
+  const manipularEnvio = useCallback(async (dados ) => {
     if (dados && cliente) {
       if (!comparar(cliente, dados)) {
         dados._id = cliente._id;
         console.log(dados);
+        console.log(cliente);
         const resposta = await put("/cliente", dados);
         if (resposta) {
           history.goBack();

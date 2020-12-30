@@ -26,8 +26,8 @@ const PessoaItem: React.FC<PessoaItemProps> = (
 
   const { pathname } = useLocation();
   return (
-    <Accordion TransitionProps={{ unmountOnExit: true }}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+    <Accordion>
+      <AccordionSummary onClick={()=>{}} expandIcon={<ExpandMoreIcon />}>
         <Grid container justify="space-between" alignItems="center" >
           <Grid item sm={6} md={4}>
             {nome &&
@@ -48,7 +48,7 @@ const PessoaItem: React.FC<PessoaItemProps> = (
               <Grid item sm={5} md={3}>
                 <Box display="flex" alignItems="center">
                   <PhoneAndroidIcon />
-                  <Typography> {Formato.formatarTelefone(telefoneCelular)}</Typography>
+                  <Typography> {` ${Formato.formatarTelefone(telefoneCelular)}`}</Typography>
                 </Box>
               </Grid>
             }
@@ -103,7 +103,7 @@ const PessoaItem: React.FC<PessoaItemProps> = (
               <Grid item>
                 <Box display="flex" alignItems="center">
                   <PhoneIcon />
-                  <Typography>{Formato.formatarTelefone(telefoneFixo)}</Typography>
+                  <Typography>{" "+ Formato.formatarTelefone(telefoneFixo)}</Typography>
                 </Box>
               </Grid>
             }
@@ -113,7 +113,7 @@ const PessoaItem: React.FC<PessoaItemProps> = (
                   <Box display="flex" alignItems="center">
                     <PhoneAndroidIcon />
                     <Typography>
-                      {Formato.formatarTelefone(telefoneCelular)}
+                      {" "+Formato.formatarTelefone(telefoneCelular)}
                     </Typography>
                   </Box>
                 </Grid>
@@ -123,7 +123,7 @@ const PessoaItem: React.FC<PessoaItemProps> = (
               <Grid item>
                 <Box display="flex" alignItems="center">
                   <CakeIcon />
-                  <Typography >{Formato.formatarData(dataNascimento)}</Typography>
+                  <Typography >{" "+Formato.formatarData(dataNascimento)}</Typography>
                 </Box>
               </Grid>
             }
@@ -135,7 +135,7 @@ const PessoaItem: React.FC<PessoaItemProps> = (
           </Grid>
           <Grid container spacing={2} justify="space-between">
             <Grid item>
-              <Typography >Endereço</Typography>
+              <Typography >Endereço:</Typography>
             </Grid>
           </Grid>
           <Grid container spacing={2} justify="space-between">

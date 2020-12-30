@@ -93,7 +93,7 @@ const ListagemModelos: React.FC = () => {
       <Box display="flex" justifyContent="center">
         <Pagination count={Math.ceil(Number(total) / 100)} onChange={handlePageChange} page={page} />
       </Box>
-      <BotaoIncluir titulo="incluir modelo" linkTo="modelos/incluirmodelo" />
+      <BotaoIncluir titulo="Incluir modelo" linkTo="modelos/incluirmodelo" />
     </>
   );
 }

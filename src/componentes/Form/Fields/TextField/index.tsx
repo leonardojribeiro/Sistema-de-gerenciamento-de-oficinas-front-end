@@ -6,14 +6,18 @@ import validacao from '../../../../recursos/Validacao';
 interface TextFieldProps extends TextFieldPropsMUI {
   name: string;
   noValidate?: boolean;
+  maxLength?: Number;
 }
 
-const TextField: React.FC<TextFieldProps> = ({ name, onChange, ...props }) => {
+const TextField: React.FC<TextFieldProps> = ({ name, onChange, maxLength, ...props }) => {
   const { handleInputChange, ref, valid, value } = useFormField(name, validacao.validarTexto, undefined, props.noValidate, props.required, onChange)
 
   return (
     <TextFieldMUI
       {...props}
+      inputProps={{
+        maxLength
+      }}
       onChange={handleInputChange}
       value={value}
       error={!valid}
