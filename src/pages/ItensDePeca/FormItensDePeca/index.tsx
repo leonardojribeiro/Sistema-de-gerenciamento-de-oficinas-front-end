@@ -39,7 +39,7 @@ const FormItensDePeca: React.FC = () => {
       </Hidden>
       <Form onSubmit={handleSubmitFormItemDePeca} ref={formRef} clearOnSubmit initialData={intialData} >
         <Card>
-          <CardHeader title="incluir peça" />
+          <CardHeader title="Incluir peça" />
           <CardContent>
             <Grid container spacing={2} justify="flex-end">
               <Grid item xs={12} md={6}>
@@ -58,7 +58,7 @@ const FormItensDePeca: React.FC = () => {
                 </CampoDeSelecao>
               </Grid>
               <Grid item xs={6} md={3}>
-                <MoneyField name="valorUnitario" fullWidth required label="Valor unitário" onChange={calcularValorTotal} />
+                <MoneyField name="valorUnitario"  min={0} max={10000}  fullWidth required label="Valor unitário" onChange={calcularValorTotal} />
               </Grid>
               <Grid item xs={6} md={2} >
                 <NumberField name="quantidade" min={0} fullWidth required label="Quantidade" onChange={calcularValorTotal} />

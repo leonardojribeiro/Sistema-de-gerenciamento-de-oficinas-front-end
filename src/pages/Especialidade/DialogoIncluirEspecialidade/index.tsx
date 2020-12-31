@@ -19,7 +19,7 @@ function DialogoIncluirEspecialidade() {
   }, [history, post])
 
   return (
-    <Dialogo open title="incluir especialidade">
+    <Dialogo open title="Incluir especialidade">
       <Form onSubmit={manipularEnvio}>
         <CampoDeTexto name="descricao" autoComplete="no" label="Descrição" fullWidth required autoFocus />
         <DialogActions>

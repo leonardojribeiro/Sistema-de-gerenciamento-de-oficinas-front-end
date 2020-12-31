@@ -36,7 +36,7 @@ const FormItensDeServico: React.FC = () => {
       </Hidden>
       <Form onSubmit={handleSubmitFormItemDeServico} ref={formRef} initialData={intialData} clearOnSubmit>
         <Card>
-          <CardHeader title="incluir serviço" />
+          <CardHeader title="Incluir serviço" />
           <CardContent>
             <Grid container spacing={2} justify="flex-end">
               <Grid item xs={12} md={6} >

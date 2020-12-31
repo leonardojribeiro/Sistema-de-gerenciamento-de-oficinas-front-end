@@ -21,7 +21,7 @@ const DialogoIncluirCliente: React.FC = () => {
   }, [history, post]);
 
   return (
-    <Dialogo maxWidth="md" fullWidth open title="incluir cliente">
+    <Dialogo maxWidth="md" fullWidth open title="Incluir cliente">
       <Form onSubmit={manipularEnvio}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8} md={8}>

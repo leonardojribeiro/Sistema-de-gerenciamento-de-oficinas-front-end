@@ -21,7 +21,7 @@ const DialogoIncluirFornecedor: React.FC = () => {
   }, [history, post]);
 
   return (
-    <Dialogo maxWidth="md" fullWidth open title="incluir fornecedor">
+    <Dialogo maxWidth="md" fullWidth open title="Incluir fornecedor">
       <Form onSubmit={manipularEnvio}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8} md={8}>

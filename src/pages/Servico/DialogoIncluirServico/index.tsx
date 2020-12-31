@@ -24,11 +24,11 @@ const DialogoIncluirServico: React.FC = () => {
 
 
   return (
-    <Dialogo open title="incluir Serviço">
+    <Dialogo open title="Incluir Serviço" maxWidth="xs" fullWidth>
       <Form onSubmit={manipularEnvio}>
         <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
+        <MoneyField name="valor" min={0.01} max={10000} label="Valor" required fullWidth/>
         <CampoDeTexto name="tempoDuracao" type="number" required fullWidth label="Tempo de duração (minutos)"/>
-        <MoneyField name="valor" label="Valor" required fullWidth/>
         <DialogActions >
           <Button type="submit">Salvar</Button>
         </DialogActions>

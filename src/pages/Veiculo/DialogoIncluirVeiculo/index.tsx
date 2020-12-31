@@ -28,7 +28,7 @@ const DialogoIncluirVeiculo: React.FC = () => {
   }, [history, post]);
 
   return (
-    <Dialogo open title="incluir veículo" maxWidth="sm" fullWidth>
+    <Dialogo open title="Incluir veículo" maxWidth="sm" fullWidth>
       <Form onSubmit={manipularEnvio}>
         <CampoDeTexto name="placa" label="Placa" fullWidth required autoFocus />
         <DateField name="anoFabricacao" label="Ano de fabricação" fullWidth required views={["year"]} format="yyyy" />
@@ -36,7 +36,7 @@ const DialogoIncluirVeiculo: React.FC = () => {
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
           <AutoCompleteModelo name="modelo" label="Modelo" required listOptionsIn={pathname.endsWith("incluirveiculo")} />
           <Link to={`${path}/incluirmodelo`}>
-            <Tooltip title="incluir modelo">
+            <Tooltip title="Incluir modelo">
               <IconButton>
                 <CreateNewFolderIcon />
               </IconButton>
@@ -46,7 +46,7 @@ const DialogoIncluirVeiculo: React.FC = () => {
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
           <AutoCompleteCliente name="cliente" label="Cliente"  listOptionsIn={pathname.endsWith("incluirveiculo")} />
           <Link to={`${path}/incluircliente`}>
-            <Tooltip title="incluir cliente">
+            <Tooltip title="Incluir cliente">
               <IconButton>
                 <PersonAddIcon />
               </IconButton>

@@ -23,13 +23,13 @@ const DialogoIncluirPeca: React.FC = () => {
   }, [history, post]);
 
   return (
-    <Dialogo open title="incluir peça" fullWidth maxWidth="xs">
+    <Dialogo open title="Incluir peça" fullWidth maxWidth="xs">
       <Form onSubmit={manipularEnvio}>
         <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
           <AutoCompleteMarca name="marca" label="Marca" required listOptionsIn/>
           <Link to={`${path}/incluirmarca`}>
-            <Tooltip title="incluir marca">
+            <Tooltip title="Incluir marca">
               <IconButton>
                 <CreateNewFolderIcon />
               </IconButton>

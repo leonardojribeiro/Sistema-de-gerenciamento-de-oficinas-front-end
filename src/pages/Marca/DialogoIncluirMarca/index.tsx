@@ -18,7 +18,7 @@ const DialogoIncluirMarca: React.FC = () => {
   },[history, multipartPost])
 
   return (
-    <Dialogo open maxWidth="xs" fullWidth title="incluir marca">
+    <Dialogo open maxWidth="xs" fullWidth title="Incluir marca">
       <Form onSubmit={handleSubmit}>
         <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
         <DragAndDrop name="logomarca" required />

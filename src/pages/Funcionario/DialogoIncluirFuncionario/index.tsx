@@ -35,7 +35,7 @@ const DialogoIncluirFuncionario: React.FC = () => {
   }, [history, post]);
 
   return (
-    <Dialogo maxWidth="md" fullWidth open title="incluir funcionário">
+    <Dialogo maxWidth="md" fullWidth open title="Incluir funcionário">
       <Form onSubmit={manipularEnvio}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8} md={8}>

@@ -38,7 +38,7 @@ const Dialog: React.FC<DialogProps> = ({ open, title, children, ...props }) => {
       history.goBack();
     }
     else {
-      history.replace("/", true)
+      history.replace("/")
     }
   }, [history]);
 

@@ -5,13 +5,16 @@ import useField from '../../Hooks/useField';
 
 interface TextFieldProps extends TextFieldPropsMUI {
   name: string,
+  min?: number;
+  max?: number;
 }
 
-const MoneyField: React.FC<TextFieldProps> = ({ name, ...props }) => {
+const MoneyField: React.FC<TextFieldProps> = ({ name, min, max, ...props }) => {
   const [valid, setValid] = useState<boolean>(true);
   const [value, setValue] = useState<string>("0,00");
   const ref = useRef<HTMLInputElement | undefined>(undefined);
   const { registerField, fieldName, defaultValue } = useField(name);
+  const invalidReason = useRef<"less" | "bigger" | undefined>(undefined);
 
   const convertToLocaleString = useCallback((value: number) => {
     return value.toLocaleString(
@@ -24,36 +27,66 @@ const MoneyField: React.FC<TextFieldProps> = ({ name, ...props }) => {
     );
   }, []);
 
+
+
   const convertToNumber = useCallback((value: string) => {
-    let valueNumeric = value.replace(/[^\d]/g, "") as string;
-    if (valueNumeric.length) {
-      valueNumeric = valueNumeric.substring(0, valueNumeric.length - 2) + "." + valueNumeric.substring(valueNumeric.length - 2);
+    let decimals = value.replace(/[^\d]/g, "") as string;
+    if (decimals.length) {
+      decimals = decimals.substring(0, decimals.length - 2) + "." + decimals.substring(decimals.length - 2);
     }
-    return Number(valueNumeric);
+    return Number(decimals);
   }, []);
 
-  const validate = useCallback(() => {
-    if (ref && ref.current) {
-      if (!props.required) {
-        return true;
-      }
-      if (convertToNumber(ref.current.value)) {
+  const validateNumberValue = useCallback((numberValue: Number) => {
+    if (min !== undefined && max !== undefined) {
+      if (numberValue >= min && numberValue <= max) {
         setValid(true);
-        return (true);
+        return true
       }
       else {
-        if (ref) {
-          ref.current.focus();
+        if (numberValue < min) {
+          invalidReason.current = 'less';
+        }
+        else {
+          invalidReason.current = 'bigger';
         }
         setValid(false);
+        return false;
+      }
+    }
+    if (min !== undefined) {
+      if (numberValue < min) {
+        invalidReason.current = 'less';
+        setValid(false);
+        return false;
+      }
+      setValid(true);
+      return true
+    }
+    if (max !== undefined) {
+      if (numberValue > max) {
+        invalidReason.current = 'bigger';
+        setValid(false);
+        return false;
+      }
+      setValid(true);
+      return true;
+    }
+    return false;
+  }, [max, min]);
+
+  const validate = useCallback(() => {
+    if (ref.current) {
+      if (!validateNumberValue(convertToNumber(ref.current.value))) {
+        ref.current.focus();
         return (false);
       }
+      return true;
     }
     else {
       throw new Error("");
-
     }
-  }, [convertToNumber, props.required]);
+  }, [convertToNumber, validateNumberValue]);
 
   const clear = useCallback(() => {
     setValue("");
@@ -63,7 +96,7 @@ const MoneyField: React.FC<TextFieldProps> = ({ name, ...props }) => {
 
   const setFieldValue = useCallback((ref, value) => {
     setValue(convertToLocaleString(convertToNumber(convertToLocaleString(Number(value)))));
-    if (ref.current){
+    if (ref.current) {
       ref.current.value = convertToLocaleString(convertToNumber(convertToLocaleString(Number(value))));
     }
   }, [convertToLocaleString, convertToNumber])
@@ -95,14 +128,26 @@ const MoneyField: React.FC<TextFieldProps> = ({ name, ...props }) => {
 
   const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     let value = event.target.value;
+    validateNumberValue(convertToNumber(value));
     setValue(convertToLocaleString(convertToNumber(value)));
-    if (!valid) {
-      validate();
-    }
     if (props.onChange) {
       props.onChange(event);
     }
-  }, [convertToLocaleString, convertToNumber, props, valid, validate]);
+  }, [convertToLocaleString, convertToNumber, props, validateNumberValue]);
+
+  const helperText = useCallback(() => {
+    if (!valid) {
+      switch (invalidReason.current) {
+        case 'bigger': {
+          return "Valor deve ser menor do que o valor máximo.";
+        }
+        case 'less': {
+          return "Valor deve ser maior do que o valor mínimo."
+        }
+      }
+    }
+    return ""
+  }, [valid]);
 
   return (
     <TextFieldMUI
@@ -111,13 +156,7 @@ const MoneyField: React.FC<TextFieldProps> = ({ name, ...props }) => {
       value={value}
       error={!valid}
       inputRef={ref}
-      helperText={
-        ref.current &&
-        props.required
-        && !Number(ref.current.value)
-        && !valid
-        && "Campo obrigatório."
-      }
+      helperText={helperText()}
     />
   );
 }

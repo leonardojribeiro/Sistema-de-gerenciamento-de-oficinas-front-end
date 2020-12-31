@@ -68,7 +68,7 @@ const DialogAlterarVeiculo: React.FC = () => {
       <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
         <AutoCompleteModelo name="modelo" label="Modelo" required listOptionsIn/>
         <Link to={`${path}/incluirmodelo`}>
-          <Tooltip title="incluir modelo">
+          <Tooltip title="Incluir modelo">
             <IconButton>
               <CreateNewFolderIcon />
             </IconButton>
@@ -78,7 +78,7 @@ const DialogAlterarVeiculo: React.FC = () => {
       <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
       <AutoCompleteCliente name="cliente" label="Cliente" required listOptionsIn/>
         <Link to={`${path}/incluircliente`}>
-          <Tooltip title="incluir cliente">
+          <Tooltip title="Incluir cliente">
             <IconButton>
               <PersonAddIcon />
             </IconButton>

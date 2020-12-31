@@ -61,7 +61,7 @@ const DialogoAlterarModelo: React.FC = () => {
       <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
         <AutoCompleteMarca label="Marca" name="marca" required listOptionsIn/>
         <Link to={`${path}/incluirmarca`}>
-          <Tooltip title="incluir marca">
+          <Tooltip title="Incluir marca">
             <IconButton>
               <CreateNewFolderIcon />
             </IconButton>
