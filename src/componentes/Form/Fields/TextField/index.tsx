@@ -10,7 +10,12 @@ interface TextFieldProps extends TextFieldPropsMUI {
 }
 
 const TextField: React.FC<TextFieldProps> = ({ name, onChange, maxLength, ...props }) => {
-  const { handleInputChange, ref, valid, value } = useFormField(name, validacao.validarTexto, undefined, props.noValidate, props.required, onChange)
+  const { handleInputChange, ref, valid, value } = useFormField({
+    name,
+    validacao: validacao.validarTexto,
+    noValidate: props.noValidate,
+    required: props.required, onChange
+  })
 
   return (
     <TextFieldMUI

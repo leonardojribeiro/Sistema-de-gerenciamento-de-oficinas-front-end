@@ -22,10 +22,15 @@ const NumberField: React.FC<TextFieldProps> = ({ name, max, min, ...props }) => 
     return false;
   }, [max, min])
 
-  const { ref, handleInputChange, valid, value } = useFormField(name, validate, undefined, undefined, props.required, props.onChange)
+  const { ref, handleInputChange, valid, value } = useFormField({
+    name,
+    validacao: validate,
+    required: props.required,
+    onChange: props.onChange
+  })
 
   const handleChange = useCallback((event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    if(validate(event.target.value)){
+    if (validate(event.target.value)) {
       handleInputChange(event);
     }
   }, [handleInputChange, validate]);

@@ -1,28 +1,33 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import dot from "dot-object";
+import { Ref, useCallback, useEffect, useRef, useState } from "react";
+import { Field } from "../types";
 import useField from "./useField";
 
-export default function useFormField<T>(
+interface UseFormFieldProps {
   name: string,
   validacao: (value: string) => boolean,
   getMask?: (value: string) => string,
   noValidate?: boolean,
   required?: boolean,
   onChange?: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
-) {
+  getUnmask?: (value: string) => string,
+}
+
+export default function useFormField<T>(props: UseFormFieldProps) {
   const [valid, setValid] = useState<boolean>(true);
   const [value, setValue] = useState<string>("");
   const ref = useRef<HTMLInputElement | undefined>(undefined);
-  const { registerField, fieldName, defaultValue } = useField(name);
+  const { registerField, fieldName, defaultValue } = useField(props.name);
 
   const validate = useCallback(() => {
     if (ref && ref.current) {
-      if (noValidate) {
+      if (props.noValidate) {
         return true;
       }
-      if (!required && !ref.current.value.length) {
+      if (!props.required && !ref.current.value.length) {
         return true; //retorna verdadeiro quando não é obrigatório e não tem nenhum valor
       }
-      if (validacao(ref.current.value)) {
+      if (props.validacao(ref.current.value)) {
         setValid(true);
         return (true);
       }
@@ -36,9 +41,8 @@ export default function useFormField<T>(
     }
     else {
       throw new Error("");
-
     }
-  }, [noValidate, required, validacao]);
+  }, [props]);
 
   const clear = useCallback(() => {
     setValue("");
@@ -52,34 +56,38 @@ export default function useFormField<T>(
     }
   }, []);
 
+  const getValue = useCallback((ref: Ref<Field>) => {
+    return props.getUnmask ? props.getUnmask(dot.pick("value", ref)) : dot.pick("value", ref);
+  }, [props]);
+
   useEffect(() => {
     registerField({
       validate,
       ref: ref.current,
       name: fieldName,
-      path: "value",
       clear,
-      setFieldValue
+      setFieldValue,
+      getValue
     });
-  }, [clear, fieldName, registerField, setFieldValue, validate]);
+  }, [clear, fieldName, getValue, registerField, setFieldValue, validate]);
 
   useEffect(() => {
     if (defaultValue) {
-      setValue(getMask ? getMask(defaultValue) : defaultValue);
+      setValue(props.getMask ? props.getMask(defaultValue) : defaultValue);
     }
-  }, [defaultValue, getMask])
+  }, [defaultValue, props])
 
   const handleInputChange = useCallback((event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    const value = getMask ? getMask(event.target.value) : event.target.value;
+    const value = props.getMask ? props.getMask(event.target.value) : event.target.value;
     setValue(value);
     if (!valid) {
       validate();
     }
-    if (onChange) {
+    if (props.onChange) {
       event.target.value = value;
-      onChange(event)
+      props.onChange(event)
     }
-  }, [getMask, onChange, validate, valid])
+  }, [props, valid, validate])
 
   return {
     handleInputChange,

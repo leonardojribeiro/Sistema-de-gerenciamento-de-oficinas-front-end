@@ -1,4 +1,4 @@
-import React, { useCallback, memo,} from 'react';
+import React, { useCallback, memo, } from 'react';
 import { TextField, StandardTextFieldProps } from '@material-ui/core';
 import validacao from '../../../../recursos/Validacao';
 import numberMask from '../../../../recursos/NumberMask';
@@ -16,7 +16,15 @@ const PhoneField: React.FC<PhoneFieldProps> = ({ name, ...props }) => {
       ? "(00) 0000-0000"
       : "(00) 00000-0000"
   ), []);
-  const { handleInputChange, ref, valid, value } = useFormField(name, validacao.validarTelefone, getMask, props.noValidate, props.required, props.onChange)
+  const getUnmask = useCallback((value) => value.replace(/[^/d]/, ""), []);
+  const { handleInputChange, ref, valid, value } = useFormField({
+    name,
+    validacao: validacao.validarTelefone,
+    getMask, noValidate: props.noValidate,
+    required: props.required,
+    onChange: props.onChange,
+    getUnmask,
+  })
 
   return (
     <TextField

@@ -19,7 +19,16 @@ const CampoCpfCnpj: React.FC<CpfCnpjFieldProps> = ({ name, onlyCpf, ...props }) 
           ? "000.000.000-00"
           : "00.000.000/0000-00"
     ), []);
-  const { handleInputChange, ref, valid, value } = useFormField(name, validacao.validarCpfCnpj, getMask, props.noValidate, props.required, props.onChange)
+  const getUnmask = useCallback((value) => value.replace(/[^/d]/, ""), []);
+  const { handleInputChange, ref, valid, value } = useFormField({
+    name,
+    validacao: validacao.validarCpfCnpj,
+    getMask,
+    noValidate: props.noValidate,
+    required: props.required,
+    onChange: props.onChange,
+    getUnmask,
+  })
 
   return (
     <TextField

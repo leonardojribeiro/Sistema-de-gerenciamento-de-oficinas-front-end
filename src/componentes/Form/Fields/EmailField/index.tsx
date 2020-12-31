@@ -10,7 +10,12 @@ interface EmailFieldProps extends StandardTextFieldProps {
 }
 
 const EmailField: React.FC<EmailFieldProps> = ({ name, maxLength, ...props }) => {
-  const { handleInputChange, ref, valid, value } = useFormField(name, validacao.validarEmail, undefined, undefined, props.required, props.onChange)
+  const { handleInputChange, ref, valid, value } = useFormField({
+    name,
+    validacao: validacao.validarEmail,
+    required: props.required,
+    onChange: props.onChange
+  })
 
   return (
     <TextField

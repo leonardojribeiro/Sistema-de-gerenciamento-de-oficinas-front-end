@@ -14,7 +14,15 @@ const CepField: React.FC<CepFieldProps> = ({ name, ...props }) => {
       value,
       () => "00000-000"
     ), []);
-  const { handleInputChange, ref, valid, value } = useFormField(name, validacao.validarCep, getMask, undefined, props.required, props.onChange)
+
+  const getUnmask = useCallback((value) => value.replace(/[^/d]/, ""), []);
+  const { handleInputChange, ref, valid, value } = useFormField({
+    name,
+    validacao: validacao.validarCep,
+    getMask, required: props.required,
+    onChange: props.onChange,
+    getUnmask
+  })
 
 
   return (
