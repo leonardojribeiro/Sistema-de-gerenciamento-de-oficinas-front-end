@@ -12,7 +12,7 @@ import { AlertaHandles } from '../../../componentes/Alerta';
 import useQuery from '../../../hooks/useQuery';
 import comparar from '../../../recursos/Comparar';
 
-const DialogoIncluirPeca: React.FC = () => {
+const DialogoIncluirOuAlterarPeca: React.FC = () => {
   const { post } = useContext(ApiContext);
   const history = useHistory();
   const { get, put } = useContext(ApiContext);
@@ -90,4 +90,4 @@ const DialogoIncluirPeca: React.FC = () => {
   );
 }
 
-export default memo(DialogoIncluirPeca);
+export default memo(DialogoIncluirOuAlterarPeca);

@@ -9,9 +9,10 @@ import Servico from '../../../Types/Servico';
 import useQuery from '../../../hooks/useQuery';
 import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
 import comparar from '../../../recursos/Comparar';
+import BotaoIncluirOuAlterar from '../../../componentes/BotaoIncluirOuAlterar';
 
 
-const DialogoIncluirServico: React.FC = () => {
+const DialogoIncluirOuAlterarServico: React.FC = () => {
   const [servico, setServico] = useState<Servico | undefined>(undefined);
   const { post, put, get } = useContext(ApiContext);
   const history = useHistory();
@@ -68,13 +69,11 @@ const DialogoIncluirServico: React.FC = () => {
         <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
         <MoneyField name="valor" min={0.01} max={10000} label="Valor" required fullWidth />
         <CampoDeTexto name="tempoDuracao" type="number" required fullWidth label="Tempo de duração (minutos)" />
-        <DialogActions >
-          <Button type="submit">{isEdit ? "Alterar" : "Incluir"}</Button>
-        </DialogActions>
+        <BotaoIncluirOuAlterar isEdit={isEdit} />
       </Form>
       <Alerta ref={refAlerta} />
     </Dialogo>
   );
 }
 
-export default memo(DialogoIncluirServico);
+export default memo(DialogoIncluirOuAlterarServico);
