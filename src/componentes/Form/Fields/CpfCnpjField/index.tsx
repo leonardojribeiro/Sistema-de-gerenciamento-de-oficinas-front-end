@@ -19,7 +19,7 @@ const CampoCpfCnpj: React.FC<CpfCnpjFieldProps> = ({ name, onlyCpf, ...props }) 
           ? "000.000.000-00"
           : "00.000.000/0000-00"
     ), []);
-  const getUnmask = useCallback((value) => value.replace(/[^/d]/, ""), []);
+  const getUnmask = useCallback((value) => value.replace(/[^\d]/, ""), []);
   const { handleInputChange, ref, valid, value } = useFormField({
     name,
     validacao: validacao.validarCpfCnpj,

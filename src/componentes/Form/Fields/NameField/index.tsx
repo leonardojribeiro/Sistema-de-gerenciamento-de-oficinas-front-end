@@ -11,6 +11,7 @@ interface NameFieldProps extends TextFieldPropsMUI {
 
 const NameField: React.FC<NameFieldProps> = ({ name, onChange, maxLength, ...props }) => {
   const getMask = useCallback(value => value.replace(/[^A-zÀ-ÿ' ]/, ""), [])
+
   const { handleInputChange, ref, valid, value } = useFormField({
     name,
     validacao: validarNome,
@@ -18,6 +19,8 @@ const NameField: React.FC<NameFieldProps> = ({ name, onChange, maxLength, ...pro
     noValidate: props.noValidate,
     required: props.required
   });
+
+  console.log(value)
 
   return (
     <TextFieldMUI

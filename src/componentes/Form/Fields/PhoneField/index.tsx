@@ -16,7 +16,7 @@ const PhoneField: React.FC<PhoneFieldProps> = ({ name, ...props }) => {
       ? "(00) 0000-0000"
       : "(00) 00000-0000"
   ), []);
-  const getUnmask = useCallback((value) => value.replace(/[^/d]/, ""), []);
+  const getUnmask = useCallback((value) => value.replace(/[^\d]/, ""), []);
   const { handleInputChange, ref, valid, value } = useFormField({
     name,
     validacao: validacao.validarTelefone,
