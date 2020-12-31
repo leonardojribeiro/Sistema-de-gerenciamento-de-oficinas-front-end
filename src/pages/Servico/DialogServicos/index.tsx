@@ -14,7 +14,7 @@ const DialogServicos: React.FC = () => {
       <ListagemServicos />
       <Switch>
         <Route path="/servicos/incluirservico" component={DialogoIncluirServico} />
-        <Route path="/servicos/alterarservico" component={DialogAlterarServico} />
+        <Route path="/servicos/alterarservico" component={DialogoIncluirServico} />
       </Switch>
     </Dialogo>
   );
