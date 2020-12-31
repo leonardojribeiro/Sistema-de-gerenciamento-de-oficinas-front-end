@@ -7,6 +7,7 @@ import FormularioConsulta from '../../../componentes/FormularioConsulta';
 import useListagem from '../../../hooks/useListagem';
 import BotaoIncluir from '../../../componentes/BotaoIncluir';
 import { Pagination } from '@material-ui/lab';
+import Formato from '../../../recursos/Formato';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -69,7 +70,7 @@ const ListagemServicos: React.FC = () => {
                       <Typography>{servico.tempoDuracao}</Typography>
                     </TableCell>
                     <TableCell padding="none">
-                      <Typography>{servico.valor}</Typography>
+                      <Typography>{Formato.formatarMoeda(servico.valor)}</Typography>
                     </TableCell>
                     <TableCell padding="none" align="center">
                       <Tooltip title={`Alterar o serviço ${servico.descricao}`}>
