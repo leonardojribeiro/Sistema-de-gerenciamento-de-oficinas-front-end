@@ -2,7 +2,7 @@ import React, { useContext, useRef, memo, useEffect, useCallback, useState } fro
 import Dialogo from '../../../componentes/Dialog';
 import ApiContext from '../../../contexts/ApiContext';
 import { useHistory } from 'react-router-dom';
-import { DialogActions, Button, Grid, FormControlLabel, Radio, MenuItem } from '@material-ui/core';
+import { Grid, FormControlLabel, Radio, MenuItem } from '@material-ui/core';
 import useQuery from '../../../hooks/useQuery';
 import comparar from '../../../recursos/Comparar';
 import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
@@ -12,14 +12,17 @@ import SelectField from '../../../componentes/Form/Fields/SelectField';
 import Especialidade from '../../../Types/Especialidade';
 import FuncionarioD from '../../../Types/FuncionarioD';
 import FormEndereco from '../../../componentes/FormEndereco';
+import BotaoIncluirOuAlterar from '../../../componentes/BotaoIncluirOuAlterar';
+import AutoCompleteEspecialidade from '../../../componentes/AutoComplete/AutoCompleteEspecialidade';
 
-const DialogAlterarFuncionario: React.FC = () => {
+const DialogoIncluirOuAlterarFuncionario: React.FC = () => {
   const [especialidades, setEspecialidades] = useState<Especialidade[] | undefined>(undefined);
-  const { get, put, } = useContext(ApiContext);
+  const { get, put, post } = useContext(ApiContext);
   const history = useHistory();
   const [funcionario, setFuncionario] = useState<FuncionarioD | undefined>(undefined);
   const id = useQuery("id");
   const refAlerta = useRef<AlertaHandles | undefined>(undefined);
+  const isEdit = id !== null;
 
   const listarEspecialidades = useCallback(async () => {
     const especialidades = await get('especialidade') as Especialidade[] as any;
@@ -28,29 +31,34 @@ const DialogAlterarFuncionario: React.FC = () => {
     }
   }, [get]);
 
-  useEffect(() => {
-    listarEspecialidades()
-  }, [listarEspecialidades])
-
   const manipularEnvio = useCallback(async (dados) => {
-    if (dados) {
-      if (!comparar(funcionario, dados)) {
-        dados._id = funcionario?._id;
-        console.log(dados);
-        const resposta = await put("/funcionario", dados);
-        if (resposta) {
-          history.goBack();
+    console.log(dados);
+    if (isEdit) {
+      if (dados) {
+        if (!comparar(funcionario, dados)) {
+          dados._id = funcionario?._id;
+          console.log(dados);
+          const resposta = await put("/funcionario", dados);
+          if (resposta) {
+            history.goBack();
+          }
         }
-      }
-      else {
-        if (refAlerta.current) {
-          refAlerta.current.setTipo("warning");
-          refAlerta.current.setMensagem("Nenhuma alteração foi efetuada.");
-          refAlerta.current.setAberto(true);
+        else {
+          if (refAlerta.current) {
+            refAlerta.current.setTipo("warning");
+            refAlerta.current.setMensagem("Nenhuma alteração foi efetuada.");
+            refAlerta.current.setAberto(true);
+          }
         }
       }
     }
-  }, [funcionario, history, put]);
+    else {
+      const resposta = await post("/funcionario", dados);
+      if (resposta) {
+        history.goBack();
+      }
+    }
+  }, [funcionario, history, isEdit, post, put]);
 
   const popular = useCallback(async () => {
     const resposta = await get(`funcionario/id?_id=${id}`) as Funcionario;
@@ -64,18 +72,21 @@ const DialogAlterarFuncionario: React.FC = () => {
   }, [get, id]);
 
   useEffect(() => {
-    popular();
-  }, [popular])
+    //listarEspecialidades()
+    if (isEdit) {
+      popular()
+    }
+  }, [isEdit, listarEspecialidades, popular])
 
   return (
-    <Dialogo maxWidth="md" fullWidth open title="Alterar Funcionário">
+    <Dialogo maxWidth="md" fullWidth open title={isEdit ? "Alterar funcionário" : "Incluir funcionário"}>
       <Form initialData={funcionario} onSubmit={manipularEnvio}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8} md={8}>
             <NameField name="nome" label="Nome" autoComplete="no" fullWidth required autoFocus />
           </Grid>
           <Grid item xs={12} sm={4} md={4}>
-            <CampoDeCpfOuCnpj name="cpf" label="CPF" autoComplete="no" disabled fullWidth required />
+            <CampoDeCpfOuCnpj name="cpf" label="CPF" autoComplete="no" onlyCpf fullWidth required />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <DateField name="dataNascimento" label="Data de nascimento" fullWidth required openTo="year" />
@@ -99,20 +110,14 @@ const DialogAlterarFuncionario: React.FC = () => {
         </Grid>
         <Grid container>
           <Grid item xs={12}>
-            <SelectField name="especialidades" multiple label="Especialidades" autoComplete="no" required fullWidth>
-              {especialidades?.map((especialidade, index) => (
-                <MenuItem key={index} value={especialidade._id} >{especialidade.descricao}</MenuItem>
-              ))}
-            </SelectField>
+            <AutoCompleteEspecialidade label="Especialidades" multiple name="especialidades" listOptionsIn />
           </Grid>
         </Grid>
-        <DialogActions >
-          <Button type="submit">Salvar</Button>
-        </DialogActions>
+        <BotaoIncluirOuAlterar isEdit={isEdit} />
       </Form>
       <Alerta ref={refAlerta} />
     </Dialogo>
   );
 }
 
-export default memo(DialogAlterarFuncionario);
+export default memo(DialogoIncluirOuAlterarFuncionario);

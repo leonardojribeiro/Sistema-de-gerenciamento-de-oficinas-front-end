@@ -1,8 +1,11 @@
-export default interface AutoCompleteProps<T>{
-  onChange?: (data: T | null) => void;
+import { AutocompleteChangeDetails, AutocompleteChangeReason } from "@material-ui/lab";
+
+export default interface AutoCompleteProps<T> {
+  onChange?: (event: React.ChangeEvent<{}>, value: any, reason: AutocompleteChangeReason, details?: AutocompleteChangeDetails<any> | undefined) => void;
   label: string;
   name: string;
   required?: boolean;
   listOptionsIn: boolean;
-  disabled?: boolean
+  disabled?: boolean;
+  multiple?: boolean;
 }

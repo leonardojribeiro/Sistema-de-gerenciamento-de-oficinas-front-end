@@ -4,7 +4,7 @@ import useAutoComplete from '../../../hooks/useAutoComplete';
 import AutoCompleteProps from '../Types';
 import Especialidade from '../../../Types/Especialidade';
 
-const AutoCompleteEspecialidade: React.FC<AutoCompleteProps<Especialidade>> = ({ onChange, label, name, required, listOptionsIn }) => {
+const AutoCompleteEspecialidade: React.FC<AutoCompleteProps<Especialidade>> = ({ onChange, multiple, label, name, required, listOptionsIn }) => {
   const { getDefaultValue, handleInputChange, options } = useAutoComplete<Especialidade>("especialidades", "especialidade", "descricao", listOptionsIn);
 
   return (
@@ -13,7 +13,7 @@ const AutoCompleteEspecialidade: React.FC<AutoCompleteProps<Especialidade>> = ({
       onInputChange={handleInputChange}
       name={name}
       label={label}
-      path="current._id"
+      path="_id"
       fullWidth
       options={options}
       loading={options.length === 0}
@@ -22,8 +22,10 @@ const AutoCompleteEspecialidade: React.FC<AutoCompleteProps<Especialidade>> = ({
       clearText="Limpar"
       openText="Abrir"
       required={required}
-      getOptionLabel={(option) => option.nome}
-      getOptionSelected={(option, value) => option.nome === value.nome}
+      getOptionLabel={(option) => option.descricao}
+      getOptionSelected={(option, value) => option._id === value._id}
+      multiple={multiple}
+      onChange={onChange}
     />
   );
 }

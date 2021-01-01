@@ -13,7 +13,7 @@ const AutoCompleteVeiculo: React.FC<AutoCompleteProps<Veiculo>> = ({ label, name
       onInputChange={handleInputChange}
       name={name}
       label={label}
-      path="current._id"
+      path="_id"
       fullWidth
       options={options}
       loading={options?.length === 0}

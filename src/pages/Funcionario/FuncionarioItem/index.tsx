@@ -38,7 +38,7 @@ const FuncionarioItem: React.FC<FuncionarioItemProps> = ({ funcionario }) => {
             </Grid>
             <Grid item>
               <Tooltip title={`Alterar o funcionario ${funcionario.nome}`}>
-                <IconButton component={Link} to={`/funcionarios/alterarfuncionario?id=${funcionario._id}`}>
+                <IconButton component={Link} to={`/funcionarios/incluiralterarfuncionario?id=${funcionario._id}`}>
                   <EditIcon />
                 </IconButton>
               </Tooltip>
@@ -118,7 +118,7 @@ const FuncionarioItem: React.FC<FuncionarioItemProps> = ({ funcionario }) => {
         <Hidden smUp>
           <Grid item>
             <Tooltip title={`Alterar o funcionario ${funcionario.nome}`}>
-              <IconButton component={Link} to={`/funcionarios/alterarfuncionario?id=${funcionario._id}`}>
+              <IconButton component={Link} to={`/funcionarios/incluiralterarfuncionario?id=${funcionario._id}`}>
                 <EditIcon />
               </IconButton>
             </Tooltip>

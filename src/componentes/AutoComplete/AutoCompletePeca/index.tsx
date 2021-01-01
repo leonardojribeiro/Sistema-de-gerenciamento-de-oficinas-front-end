@@ -14,7 +14,7 @@ const AutoCompletePeca: React.FC<AutoCompleteProps<Peca>> = ({ onChange, label, 
       onInputChange={handleInputChange}
       name={name}
       label={label}
-      path="current"
+      path=""
       fullWidth
       options={options}
       loading={options.length === 0}

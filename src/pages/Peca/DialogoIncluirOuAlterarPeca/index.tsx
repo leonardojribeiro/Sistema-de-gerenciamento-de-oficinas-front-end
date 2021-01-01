@@ -8,7 +8,7 @@ import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import DialogoIncluirMarca from '../../Marca/DialogoIncluirMarca';
 import AutoCompleteMarca from '../../../componentes/AutoComplete/AutoCompleteMarca';
 import Peca from '../../../Types/Peca';
-import { AlertaHandles } from '../../../componentes/Alerta';
+import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
 import useQuery from '../../../hooks/useQuery';
 import comparar from '../../../recursos/Comparar';
 import BotaoIncluirOuAlterar from '../../../componentes/BotaoIncluirOuAlterar';
@@ -84,6 +84,7 @@ const DialogoIncluirOuAlterarPeca: React.FC = () => {
       <Switch>
         <Route path={`${url}/incluirmarca`} component={DialogoIncluirMarca} />
       </Switch>
+      <Alerta ref={refAlerta} />
     </Dialogo>
   );
 }

@@ -13,7 +13,7 @@ const AutoCompleteFornecedor: React.FC<AutoCompleteProps<Fornecedor>> = ({ label
       onInputChange={handleInputChange}
       name={name}
       label={label}
-      path="current"
+      path=""
       fullWidth
       options={options}
       loading={options?.length === 0}

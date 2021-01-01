@@ -4,7 +4,7 @@ import useField from '../../Hooks/useField';
 import dot from 'dot-object';
 import { TextField } from '@material-ui/core';
 
-interface ComboBoxProps<T> extends Omit<AutocompleteProps<T, false, false, false>, 'renderInput'> {
+interface ComboBoxProps<T> extends Omit<AutocompleteProps<T, boolean | undefined, false, false>, 'renderInput'> {
   name: string;
   path: string;
   label: string;
@@ -14,32 +14,53 @@ interface ComboBoxProps<T> extends Omit<AutocompleteProps<T, false, false, false
 
 const AutoComplete: React.FC<ComboBoxProps<any>> =
   ({ getDefaultValue, path, name, label, required, onChange, ...props }) => {
-    const [value, setValue] = useState<any>(null);
+    const [value, setValue] = useState<any>(props.multiple ? [] : null);
     const [valid, setValid] = useState(true);
     const ref = useRef<any>();
     const valueSelected = useRef<any>(null);
     const { fieldName, registerField, defaultValue } = useField(name);
 
     const getValue = useCallback((ref) => {
-      return ref.current ? dot.pick(path, ref) ? dot.pick(path, ref) : "" : "";
-    }, [path]);
+      if (ref.current) {
+        if (props.multiple) {
+          return ref.current.map((value: any) => dot.pick(path, value))
+        }
+        else {
+          return dot.pick(`current${path.length ? `.${path}` : ""}`, ref);
+        }
+      }
+      return "";
+
+    }, [path, props.multiple]);
 
     const validate = useCallback(() => {
       if (!required) {
         return true;
       }
-      if (required && dot.pick(path, valueSelected)) {
-        setValid(true);
-        return (true);
+      if (required) {
+        if (props.multiple) {
+          if (valueSelected.current.length) {
+            setValid(true);
+            return true;
+          }
+        }
+        else {
+          if (dot.pick(`current${path.length ? `.${path}` : ""}`, valueSelected)) {
+            setValid(true);
+            return true;
+          }
+        }
+        setValid(false);
+        return false;
       }
       else {
         if (ref) {
           ref.current.focus();
         }
         setValid(false);
-        return (false);
+        return false;
       }
-    }, [path, required])
+    }, [path, props.multiple, required])
 
     useEffect(() => {
       registerField({
@@ -51,14 +72,25 @@ const AutoComplete: React.FC<ComboBoxProps<any>> =
     }, [fieldName, getValue, path, registerField, validate]);
 
     const fill = useCallback(async () => {
+      let value;
       if (getDefaultValue && defaultValue && !valueSelected.current && props.options?.length > 0) {
-        const value = await getDefaultValue(defaultValue);
-        if (value) {
-          valueSelected.current = value;
-          setValue(value);
+        if (props.multiple) {
+          Promise.all(defaultValue.map(async (defaultValue: any) =>
+            await getDefaultValue(defaultValue)
+          )).then(values => {
+            valueSelected.current = values;
+            setValue(values);
+          });
+        }
+        else {
+          value = await getDefaultValue(defaultValue);
+          if (value) {
+            valueSelected.current = value;
+            setValue(value);
+          }
         }
       }
-    }, [defaultValue, getDefaultValue, props.options]);
+    }, [defaultValue, getDefaultValue, props.multiple, props.options]);
 
     useEffect(() => {
       fill()

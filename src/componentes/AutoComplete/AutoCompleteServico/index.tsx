@@ -13,7 +13,7 @@ const AutoCompleteServico: React.FC<AutoCompleteProps<Servico>> = ({ label, name
       onInputChange={handleInputChange}
       name={name}
       label={label}
-      path="current"
+      path=""
       fullWidth
       options={options}
       loading={options?.length === 0}
