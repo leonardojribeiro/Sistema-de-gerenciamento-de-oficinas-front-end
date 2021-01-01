@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
-import DialogoIncluirAlterarCliente from '../DialogoIncluirAlterarCliente';
+import DialogoIncluirOuAlterarCliente from '../DialogoIncluirOuAlterarCliente';
 import ListagemPessoa from '../../../componentes/ListagemPessoa';
 import Dialog from '../../../componentes/Dialog';
 import DialogoVeiculosCliente from '../DialogoVeiculosCliente';
@@ -19,7 +19,7 @@ const DialogoClientes: React.FC = () => {
         listar={listar}
       />
       <Switch>
-        <Route path="/clientes/incluiralterarcliente" component={DialogoIncluirAlterarCliente} />
+        <Route path="/clientes/incluiralterarcliente" component={DialogoIncluirOuAlterarCliente} />
         <Route path="/clientes/veiculos" component={DialogoVeiculosCliente} />
       </Switch>
     </Dialog >

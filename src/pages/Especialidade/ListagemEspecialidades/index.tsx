@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useEffect } from 'react';
 import { IconButton, makeStyles, Box, Tooltip, Grid, Typography } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
 import Especialidade from '../../../Types/Especialidade';
 import BotaoIncluir from '../../../componentes/BotaoIncluir';
@@ -29,11 +29,14 @@ const useStyles = makeStyles((theme) => ({
 
 const ListagemEspecialidades: React.FC = () => {
   const classes = useStyles();
+  const { pathname } = useLocation();
   const { handlePageChange, handleSearch, itens, listar, page, total } = useListagem<Especialidade>("especialidades", "especialidade");
 
   useEffect(() => {
-    listar();
-  }, [listar]);
+    if (pathname === "/especialidades") {
+      listar();
+    }
+  }, [listar, pathname]);
 
   const manipularBusca = useCallback(async ({ consulta }) => {
     handleSearch(`descricao=${consulta}`);
@@ -60,7 +63,7 @@ const ListagemEspecialidades: React.FC = () => {
               </Grid>
               <Grid item>
                 <Tooltip title={`Alterar a especialidade ${especialidade.descricao}`}>
-                  <IconButton component={Link} to={`/especialidades/alterarespecialidade?id=${especialidade._id}`}>
+                  <IconButton component={Link} to={`/especialidades/incluiralterarespecialidade?id=${especialidade._id}`}>
                     <EditIcon />
                   </IconButton>
                 </Tooltip>
@@ -72,7 +75,7 @@ const ListagemEspecialidades: React.FC = () => {
       <Box display="flex" justifyContent="center">
         <Pagination count={Math.ceil(Number(total) / 100)} onChange={handlePageChange} page={page} />
       </Box>
-      <BotaoIncluir titulo="Incluir especialidade" linkTo="especialidades/incluirespecialidade" />
+      <BotaoIncluir titulo="Incluir especialidade" linkTo="/especialidades/incluiralterarespecialidade" />
     </>
   );
 }

@@ -12,7 +12,7 @@ import FormEndereco from '../../../componentes/FormEndereco';
 import BotaoIncluirOuAlterar from '../../../componentes/BotaoIncluirOuAlterar';
 
 
-const DialogoIncluirAlterarCliente: React.FC = () => {
+const DialogoIncluirOuAlterarCliente: React.FC = () => {
   const { get, put, post } = useContext(ApiContext);
   const history = useHistory();
   const [cliente, setCliente] = useState<Cliente | undefined>();
@@ -99,4 +99,4 @@ const DialogoIncluirAlterarCliente: React.FC = () => {
   );
 }
 
-export default memo(DialogoIncluirAlterarCliente);
+export default memo(DialogoIncluirOuAlterarCliente);

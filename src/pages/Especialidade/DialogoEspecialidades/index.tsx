@@ -1,8 +1,7 @@
 import React, { memo, } from 'react';
 import Dialogo from '../../../componentes/Dialog';
 import { Switch, Route, } from 'react-router-dom';
-import DialogoIncluirEspecialidade from '../DialogoIncluirEspecialidade';
-import DialogAlterarEspecialidade from '../DialogoAlterarEspecialidade';
+import DialogIncluirOuAlterarEspecialidade from '../DialogoIncluirOuAlterarEspecialidade';
 import ListagemEspecialidades from '../ListagemEspecialidades';
 
 
@@ -11,8 +10,7 @@ function DialgoEspecialidades() {
     <Dialogo open fullWidth maxWidth="xs" title="Especialidades">
       <ListagemEspecialidades />
       <Switch>
-        <Route path="/especialidades/incluirespecialidade" component={DialogoIncluirEspecialidade} />
-        <Route path="/especialidades/alterarespecialidade" component={DialogAlterarEspecialidade} />
+        <Route path="/especialidades/incluiralterarespecialidade" component={DialogIncluirOuAlterarEspecialidade} />
       </Switch>
     </Dialogo>
   );
