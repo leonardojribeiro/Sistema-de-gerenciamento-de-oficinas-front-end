@@ -1,8 +1,7 @@
 import React from 'react';
 import Dialogo from '../../../componentes/Dialog';
 import { Switch, Route, useLocation } from 'react-router-dom';
-import DialogoIncluirCliente from '../DialogoIncluirFornecedor';
-import DialogoAlterarCilente from '../DialogoAlterarFornecedor';
+import DialogoIncluirOuAlterarCliente from '../DialogoIncluirOuAlterarFornecedor';
 import ListagemPessoa from '../../../componentes/ListagemPessoa';
 
 const DialogoFornecedores: React.FC = () => {
@@ -12,14 +11,13 @@ const DialogoFornecedores: React.FC = () => {
       <ListagemPessoa
         dominio="fornecedor"
         linkToChangeText={fornecedor => `Alterar o fornecerdor ${fornecedor.nomeFantasia}`}
-        linkToChangePath={fornecedor => `fornecedores/alterarfornecedor?id=${fornecedor._id}`}
-        linkToInsertPath="fornecedores/incluirfornecedor"
+        linkToChangePath={fornecedor => `/fornecedores/incluiralterarfornecedor?id=${fornecedor._id}`}
+        linkToInsertPath="/fornecedores/incluiralterarfornecedor"
         linkToInsertText="incluir fornecedor"
         listar={listar}
       />
       <Switch>
-        <Route path="/fornecedores/incluirfornecedor" component={DialogoIncluirCliente} />
-        <Route path="/fornecedores/alterarfornecedor" component={DialogoAlterarCilente} />
+        <Route path="/fornecedores/incluiralterarfornecedor" component={DialogoIncluirOuAlterarCliente} />
       </Switch>
     </Dialogo>
   );
