@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useCallback, useEffect, memo } from 'react';
 import Dialogo from '../../../componentes/Dialog';
 import ApiContext from '../../../contexts/ApiContext';
-import { useHistory, Link, useRouteMatch, Switch, Route, useLocation } from 'react-router-dom';
+import { useHistory, Link, useRouteMatch, Switch, Route } from 'react-router-dom';
 import { Box, Tooltip, IconButton, } from '@material-ui/core';
 import { useState } from 'react';
 import useQuery from '../../../hooks/useQuery';
@@ -24,8 +24,7 @@ const DialogoIncluirOuAlterarVeiculo: React.FC = () => {
   const refAlerta = useRef<AlertaHandles>();
   const id = useQuery("id");
   const { path, url } = useRouteMatch();
-  const { pathname } = useLocation();
-  const isEdit = pathname.endsWith("alterarveiculo");
+  const isEdit = id !== null;
 
   const manipularEnvio = useCallback(async (dados) => {
     if (isEdit) {
@@ -69,7 +68,7 @@ const DialogoIncluirOuAlterarVeiculo: React.FC = () => {
     if (isEdit) {
       popular();
     }
-  }, [isEdit, pathname, popular]);
+  }, [isEdit, popular]);
 
   return (
     <Dialogo open title={isEdit ? "Alterar veículo" : "Incluir veículo"} fullWidth maxWidth="sm">

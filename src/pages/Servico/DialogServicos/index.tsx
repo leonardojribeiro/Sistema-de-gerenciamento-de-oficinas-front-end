@@ -9,8 +9,7 @@ const DialogServicos: React.FC = () => {
     <Dialogo maxWidth="sm" fullWidth open title="Serviços">
       <ListagemServicos />
       <Switch>
-        <Route path="/servicos/incluirservico" component={DialogoIncluirOuAlterarServico} />
-        <Route path="/servicos/alterarservico" component={DialogoIncluirOuAlterarServico} />
+        <Route path="/servicos/incluiralterarservico" component={DialogoIncluirOuAlterarServico} />
       </Switch>
     </Dialogo>
   );

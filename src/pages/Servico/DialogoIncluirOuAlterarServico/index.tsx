@@ -1,7 +1,7 @@
 import React, { useContext, useCallback, memo, useState, useRef, useEffect } from 'react';
 import Dialogo from '../../../componentes/Dialog';
 import ApiContext from '../../../contexts/ApiContext';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { Form, CampoDeTexto, MoneyField } from '../../../componentes/Form';
 import Servico from '../../../Types/Servico';
@@ -15,12 +15,10 @@ const DialogoIncluirOuAlterarServico: React.FC = () => {
   const [servico, setServico] = useState<Servico | undefined>(undefined);
   const { post, put, get } = useContext(ApiContext);
   const history = useHistory();
-  const { pathname } = useLocation();
-  const isEdit = pathname.endsWith("alterarservico");
   const id = useQuery("id");
+  const isEdit = id !== null;
   const refAlerta = useRef<AlertaHandles | undefined>(undefined);
 
-  console.log(isEdit)
 
   const manipularEnvio = useCallback(async (dados) => {
     if (dados) {

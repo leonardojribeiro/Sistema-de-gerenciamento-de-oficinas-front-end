@@ -8,7 +8,7 @@ interface CircularProgressWithLabelProps extends CircularProgressProps {
 const CircularProgressWithLabel: React.FC<CircularProgressWithLabelProps> = ({value,}) => {
   return (
     <Box position="relative" display="inline-flex">
-      <CircularProgress variant="static" color="primary" value={value}/>
+      <CircularProgress variant="determinate" color="primary" value={value}/>
       <Box
         top={0}
         left={0}

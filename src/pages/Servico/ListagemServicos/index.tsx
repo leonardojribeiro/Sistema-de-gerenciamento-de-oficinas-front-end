@@ -74,7 +74,7 @@ const ListagemServicos: React.FC = () => {
                     </TableCell>
                     <TableCell padding="none" align="center">
                       <Tooltip title={`Alterar o serviço ${servico.descricao}`}>
-                        <IconButton component={Link} to={`/servicos/alterarservico?id=${servico._id}`}>
+                        <IconButton component={Link} to={`/servicos/incluiralterarservico?id=${servico._id}`}>
                           <EditIcon />
                         </IconButton>
                       </Tooltip>
@@ -89,7 +89,7 @@ const ListagemServicos: React.FC = () => {
       <Box display="flex" justifyContent="center">
         <Pagination count={Math.ceil(total / 100)} onChange={handlePageChange} page={page} />
       </Box>
-      <BotaoIncluir titulo="Incluir serviços" linkTo="/servicos/incluirservico" />
+      <BotaoIncluir titulo="Incluir serviços" linkTo="/servicos/incluiralterarservico" />
     </>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useContext, useCallback, memo, useState, useRef, useEffect } from 'react';
 import Dialogo from '../../../componentes/Dialog';
 import ApiContext from '../../../contexts/ApiContext';
-import { useHistory, Link, Switch, Route, useLocation, useRouteMatch } from 'react-router-dom';
+import { useHistory, Link, Switch, Route, useRouteMatch } from 'react-router-dom';
 import { Box, Tooltip, IconButton } from '@material-ui/core';
 import { Form, CampoDeTexto, } from '../../../componentes/Form';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
@@ -20,9 +20,8 @@ const DialogoIncluirOuAlterarPeca: React.FC = () => {
   const [peca, setPeca] = useState<Peca | undefined>();
   const refAlerta = useRef<AlertaHandles>();
   const id = useQuery("id");
-  const { pathname } = useLocation();
   const { path, url } = useRouteMatch();
-  const isEdit = pathname.endsWith("alterarpeca");
+  const isEdit = id !== null;
 
   const manipularEnvio = useCallback(async (dados) => {
     if (dados) {
@@ -63,7 +62,7 @@ const DialogoIncluirOuAlterarPeca: React.FC = () => {
     if (isEdit) {
       popular();
     }
-  }, [popular, pathname, isEdit])
+  }, [popular, isEdit])
 
 
   return (

@@ -51,7 +51,7 @@ const VeiculoItem: React.FC<VeiculoItemProps> = ({ veiculo }) => {
                 </IconButton>
               </Tooltip>
               <Tooltip title={`Alterar este veículo`}>
-                <IconButton component={Link} to={`/veiculos/alterarveiculo?id=${veiculo._id}`}>
+                <IconButton component={Link} to={`/veiculos/incluiralterarveiculo?id=${veiculo._id}`}>
                   <EditIcon />
                 </IconButton>
               </Tooltip>
