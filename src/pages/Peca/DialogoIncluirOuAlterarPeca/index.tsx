@@ -2,7 +2,7 @@ import React, { useContext, useCallback, memo, useState, useRef, useEffect } fro
 import Dialogo from '../../../componentes/Dialog';
 import ApiContext from '../../../contexts/ApiContext';
 import { useHistory, Link, Switch, Route, useLocation, useRouteMatch } from 'react-router-dom';
-import { DialogActions, Button, Box, Tooltip, IconButton } from '@material-ui/core';
+import { Box, Tooltip, IconButton } from '@material-ui/core';
 import { Form, CampoDeTexto, } from '../../../componentes/Form';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import DialogoIncluirMarca from '../../Marca/DialogoIncluirMarca';
@@ -11,6 +11,7 @@ import Peca from '../../../Types/Peca';
 import { AlertaHandles } from '../../../componentes/Alerta';
 import useQuery from '../../../hooks/useQuery';
 import comparar from '../../../recursos/Comparar';
+import BotaoIncluirOuAlterar from '../../../componentes/BotaoIncluirOuAlterar';
 
 const DialogoIncluirOuAlterarPeca: React.FC = () => {
   const { post } = useContext(ApiContext);
@@ -79,9 +80,7 @@ const DialogoIncluirOuAlterarPeca: React.FC = () => {
             </Tooltip>
           </Link>
         </Box>
-        <DialogActions >
-          <Button type="submit">{isEdit ? "Alterar" : "Incluir"}</Button>
-        </DialogActions>
+        <BotaoIncluirOuAlterar isEdit={isEdit} />
       </Form>
       <Switch>
         <Route path={`${url}/incluirmarca`} component={DialogoIncluirMarca} />

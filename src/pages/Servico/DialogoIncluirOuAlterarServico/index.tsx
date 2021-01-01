@@ -2,7 +2,6 @@ import React, { useContext, useCallback, memo, useState, useRef, useEffect } fro
 import Dialogo from '../../../componentes/Dialog';
 import ApiContext from '../../../contexts/ApiContext';
 import { useHistory, useLocation } from 'react-router-dom';
-import { DialogActions, Button, } from '@material-ui/core';
 
 import { Form, CampoDeTexto, MoneyField } from '../../../componentes/Form';
 import Servico from '../../../Types/Servico';
