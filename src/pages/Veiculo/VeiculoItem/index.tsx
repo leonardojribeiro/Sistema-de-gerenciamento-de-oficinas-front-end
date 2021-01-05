@@ -23,9 +23,10 @@ const useStyles = makeStyles((theme) => ({
 
 interface VeiculoItemProps {
   veiculo: Veiculo;
+  baseUrlToHistory: string
 }
 
-const VeiculoItem: React.FC<VeiculoItemProps> = ({ veiculo }) => {
+const VeiculoItem: React.FC<VeiculoItemProps> = ({ veiculo, baseUrlToHistory }) => {
   const classes = useStyles();
 
   return (
@@ -46,7 +47,7 @@ const VeiculoItem: React.FC<VeiculoItemProps> = ({ veiculo }) => {
                 </IconButton>
               </Tooltip>
               <Tooltip title={`Ver histórico deste veículo`}>
-                <IconButton component={Link} to={`/veiculos/historico?veiculo=${veiculo._id}`}>
+                <IconButton component={Link} to={`${baseUrlToHistory}?veiculo=${veiculo._id}`}>
                   <HistoryIcon />
                 </IconButton>
               </Tooltip>

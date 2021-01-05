@@ -12,10 +12,10 @@ import Veiculo from '../../../Types/Veiculo';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import DialogoIncluirModelo from '../../Modelo/DialogoIncluirOuAlterarModelo';
-import DialogoIncluirCliente from '../../Cliente/DialogoIncluirCliente';
 import AutoCompleteModelo from '../../../componentes/AutoComplete/AutoCompleteModelo';
 import AutoCompleteCliente from '../../../componentes/AutoComplete/AutoCompleteCliente';
 import BotaoIncluirOuAlterar from '../../../componentes/BotaoIncluirOuAlterar';
+import DialogoIncluirOuAlterarCliente from '../../Cliente/DialogoIncluirOuAlterarCliente';
 
 const DialogoIncluirOuAlterarVeiculo: React.FC = () => {
   const { get, put, post } = useContext(ApiContext);
@@ -101,7 +101,7 @@ const DialogoIncluirOuAlterarVeiculo: React.FC = () => {
       <Alerta ref={refAlerta} />
       <Switch>
         <Route path={`${url}/incluiralterarmodelo`} component={DialogoIncluirModelo} />
-        <Route path={`${url}/incluiralterarcliente`} component={DialogoIncluirCliente} />
+        <Route path={`${url}/incluiralterarcliente`} component={DialogoIncluirOuAlterarCliente} />
       </Switch>
     </Dialogo>
   );

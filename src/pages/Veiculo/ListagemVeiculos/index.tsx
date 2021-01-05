@@ -26,7 +26,7 @@ const ListagemVeiculos: React.FC = () => {
       <Box mb={2}>
         {
           itens?.map((veiculo, index) => (
-            <VeiculoItem key={index} veiculo={veiculo} />
+            <VeiculoItem baseUrlToHistory="/veiculos/historico" key={index} veiculo={veiculo} />
           ))
         }
       </Box>

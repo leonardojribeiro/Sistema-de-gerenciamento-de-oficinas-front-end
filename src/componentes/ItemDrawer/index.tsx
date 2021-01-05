@@ -1,4 +1,4 @@
-import { ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
+import { ListItem, ListItemIcon, ListItemText, Tooltip, Typography } from '@material-ui/core';
 import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -11,9 +11,11 @@ interface ItemDrawerProps {
 const ItemDrawer: React.FC<ItemDrawerProps> = ({ icon, navigateTo, title }) => {
   return (
     <ListItem button component={Link} to={navigateTo}>
-      <ListItemIcon>
-        {icon}
-      </ListItemIcon>
+      <Tooltip title={title}>
+        <ListItemIcon>
+          {icon}
+        </ListItemIcon>
+      </Tooltip>
       <ListItemText>
         <Typography>
           {title}

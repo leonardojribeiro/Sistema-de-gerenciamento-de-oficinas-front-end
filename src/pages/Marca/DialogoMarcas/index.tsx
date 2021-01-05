@@ -5,12 +5,11 @@ import DialogoIncluirOuAlterarMarca from '../DialogoIncluirOuAlterarMarca';
 import ListagemMarcas from '../ListagemMarcas';
 
 const DialogMarcas: React.FC = () => {
-
   return (
     <Dialogo open fullWidth maxWidth="xs" title="Marcas">
       <ListagemMarcas />
       <Switch>
-        <Route path="/marcas/incluiralterarmarca">
+        <Route path={["/marcas/incluiralterarmarca"]}>
           <DialogoIncluirOuAlterarMarca />
         </Route>
       </Switch>
