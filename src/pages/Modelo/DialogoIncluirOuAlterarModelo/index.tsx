@@ -1,34 +1,34 @@
-import React, { useContext, useCallback, memo, useState, useRef, useEffect } from 'react';
+import React, { useContext, useRef, useCallback, useEffect, memo } from 'react';
 import Dialogo from '../../../componentes/Dialog';
 import ApiContext from '../../../contexts/ApiContext';
-import { useHistory, Link, Switch, Route, useRouteMatch } from 'react-router-dom';
+import { useHistory, useRouteMatch, Switch, Route, Link } from 'react-router-dom';
 import { Box, Tooltip, IconButton } from '@material-ui/core';
-import { Form, CampoDeTexto, } from '../../../componentes/Form';
+import { useState } from 'react';
+import useQuery from '../../../hooks/useQuery';
+import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
+import comparar from '../../../recursos/Comparar';
+import { Form, CampoDeTexto } from '../../../componentes/Form';
+import Modelo from '../../../Types/Modelo';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import DialogoIncluirOuAlterarMarca from '../../Marca/DialogoIncluirOuAlterarMarca';
 import AutoCompleteMarca from '../../../componentes/AutoComplete/AutoCompleteMarca';
-import Peca from '../../../Types/Peca';
-import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
-import useQuery from '../../../hooks/useQuery';
-import comparar from '../../../recursos/Comparar';
 import BotaoIncluirOuAlterar from '../../../componentes/BotaoIncluirOuAlterar';
 
-const DialogoIncluirOuAlterarPeca: React.FC = () => {
-  const { post } = useContext(ApiContext);
+const DialogoIncluirOuAlterarModelo: React.FC = () => {
+  const { get, put, post } = useContext(ApiContext);
   const history = useHistory();
-  const { get, put } = useContext(ApiContext);
-  const [peca, setPeca] = useState<Peca | undefined>();
+  const [modelo, setModelo] = useState<Modelo | undefined>();
   const refAlerta = useRef<AlertaHandles>();
-  const id = useQuery("id");
   const { path, url } = useRouteMatch();
+  const id = useQuery("id");
   const isEdit = id !== null;
 
-  const manipularEnvio = useCallback(async (dados) => {
-    if (dados) {
-      if (isEdit) {
-        if (!comparar(peca, dados)) {
-          dados._id = peca?._id;
-          const resposta = await put("/peca", dados);
+  const manipularEnvio = useCallback(async (modeloASerAlterado) => {
+    if (isEdit) {
+      if (modeloASerAlterado && modelo) {
+        if (!comparar(modelo, modeloASerAlterado)) {
+          modeloASerAlterado._id = modelo._id
+          const resposta = await put("/modelo", modeloASerAlterado);
           if (resposta) {
             history.goBack();
           }
@@ -41,37 +41,36 @@ const DialogoIncluirOuAlterarPeca: React.FC = () => {
           }
         }
       }
-      else {
-        const resposta = await post("/peca", dados);
-        if (resposta) {
-          history.goBack();
-        }
+    }
+    else {
+      const resposta = await post("/modelo", modeloASerAlterado);
+      if (resposta) {
+        history.goBack();
       }
     }
-  }, [history, isEdit, peca, post, put]);
-
+  }, [history, isEdit, modelo, post, put]);
 
   const popular = useCallback(async () => {
-    const resposta = await get(`/peca/id?_id=${id}`) as Peca;
+    const resposta = await get(`/modelo/id?_id=${id}`) as Modelo;
     if (resposta) {
-      setPeca(resposta)
+      setModelo(resposta)
     }
-  }, [get, id,]);
+  }, [get, id]);
+
 
   useEffect(() => {
     if (isEdit) {
-      popular();
+      popular()
     }
-  }, [popular, isEdit])
-
+  }, [isEdit, popular]);
 
   return (
-    <Dialogo open title={isEdit ? "Alterar peça" : "Incluir peça"} fullWidth maxWidth="xs">
-      <Form onSubmit={manipularEnvio} initialData={peca}>
+    <Dialogo open title={isEdit ? "Alterar modelo" : "Incluir modelo"} maxWidth="xs" fullWidth>
+      <Form onSubmit={manipularEnvio} initialData={modelo}>
         <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-          <AutoCompleteMarca name="marca" label="Marca" required listOptionsIn />
-          <Link to={`${path}/incluirmarca`}>
+          <AutoCompleteMarca name="marca" label="Marca" required listOptionsIn={isEdit} />
+          <Link to={`${path}/incluiralterarmarca`}>
             <Tooltip title="Incluir marca">
               <IconButton>
                 <CreateNewFolderIcon />
@@ -81,12 +80,12 @@ const DialogoIncluirOuAlterarPeca: React.FC = () => {
         </Box>
         <BotaoIncluirOuAlterar isEdit={isEdit} />
       </Form>
+      <Alerta ref={refAlerta} />
       <Switch>
         <Route path={`${url}/incluiralterarmarca`} component={DialogoIncluirOuAlterarMarca} />
       </Switch>
-      <Alerta ref={refAlerta} />
     </Dialogo>
   );
 }
 
-export default memo(DialogoIncluirOuAlterarPeca);
+export default memo(DialogoIncluirOuAlterarModelo);

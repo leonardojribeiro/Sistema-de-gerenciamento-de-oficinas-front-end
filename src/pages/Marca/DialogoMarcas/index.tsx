@@ -1,8 +1,7 @@
 import React, { memo } from 'react';
 import Dialogo from '../../../componentes/Dialog';
 import { Route, Switch } from 'react-router-dom';
-import DialogoIncluirMarca from '../DialogoIncluirMarca';
-import DialogoAlterarMarca from '../DialogoAlterarMarca';
+import DialogoIncluirOuAlterarMarca from '../DialogoIncluirOuAlterarMarca';
 import ListagemMarcas from '../ListagemMarcas';
 
 const DialogMarcas: React.FC = () => {
@@ -11,11 +10,8 @@ const DialogMarcas: React.FC = () => {
     <Dialogo open fullWidth maxWidth="xs" title="Marcas">
       <ListagemMarcas />
       <Switch>
-        <Route path="/marcas/incluirmarca">
-          <DialogoIncluirMarca />
-        </Route>
-        <Route path="/marcas/alterarmarca">
-          <DialogoAlterarMarca />
+        <Route path="/marcas/incluiralterarmarca">
+          <DialogoIncluirOuAlterarMarca />
         </Route>
       </Switch>
     </Dialogo>

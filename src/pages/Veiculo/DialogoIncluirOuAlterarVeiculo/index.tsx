@@ -11,7 +11,7 @@ import comparar from '../../../recursos/Comparar';
 import Veiculo from '../../../Types/Veiculo';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import DialogoIncluirModelo from '../../Modelo/DialogoIncluirModelo';
+import DialogoIncluirModelo from '../../Modelo/DialogoIncluirOuAlterarModelo';
 import DialogoIncluirCliente from '../../Cliente/DialogoIncluirCliente';
 import AutoCompleteModelo from '../../../componentes/AutoComplete/AutoCompleteModelo';
 import AutoCompleteCliente from '../../../componentes/AutoComplete/AutoCompleteCliente';
@@ -78,7 +78,7 @@ const DialogoIncluirOuAlterarVeiculo: React.FC = () => {
         <DateField name="anoModelo" label="Ano de modelo" fullWidth required />
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
           <AutoCompleteModelo name="modelo" label="Modelo" required listOptionsIn />
-          <Link to={`${path}/incluirmodelo`}>
+          <Link to={`${path}/incluiralterarmodelo`}>
             <Tooltip title="Incluir modelo">
               <IconButton>
                 <CreateNewFolderIcon />
@@ -88,7 +88,7 @@ const DialogoIncluirOuAlterarVeiculo: React.FC = () => {
         </Box>
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
           <AutoCompleteCliente name="cliente" label="Cliente" required listOptionsIn />
-          <Link to={`${path}/incluircliente`}>
+          <Link to={`${path}/incluiralterarcliente`}>
             <Tooltip title="Incluir cliente">
               <IconButton>
                 <PersonAddIcon />
@@ -100,8 +100,8 @@ const DialogoIncluirOuAlterarVeiculo: React.FC = () => {
       </Form>
       <Alerta ref={refAlerta} />
       <Switch>
-        <Route path={`${url}/incluirmodelo`} component={DialogoIncluirModelo} />
-        <Route path={`${url}/incluircliente`} component={DialogoIncluirCliente} />
+        <Route path={`${url}/incluiralterarmodelo`} component={DialogoIncluirModelo} />
+        <Route path={`${url}/incluiralterarcliente`} component={DialogoIncluirCliente} />
       </Switch>
     </Dialogo>
   );

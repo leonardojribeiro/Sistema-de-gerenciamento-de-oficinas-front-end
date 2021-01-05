@@ -2,21 +2,18 @@ import React, { useContext, useRef, memo, useEffect, useCallback, useState } fro
 import Dialogo from '../../../componentes/Dialog';
 import ApiContext from '../../../contexts/ApiContext';
 import { useHistory } from 'react-router-dom';
-import { Grid, FormControlLabel, Radio, MenuItem } from '@material-ui/core';
+import { Grid, FormControlLabel, Radio } from '@material-ui/core';
 import useQuery from '../../../hooks/useQuery';
 import comparar from '../../../recursos/Comparar';
 import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
 import { Form, CampoDeCpfOuCnpj, DateField, CampoDeRadio, PhoneField, CampoDeEmail, NameField } from '../../../componentes/Form';
 import Funcionario from '../../../Types/Funcionario';
-import SelectField from '../../../componentes/Form/Fields/SelectField';
-import Especialidade from '../../../Types/Especialidade';
 import FuncionarioD from '../../../Types/FuncionarioD';
 import FormEndereco from '../../../componentes/FormEndereco';
 import BotaoIncluirOuAlterar from '../../../componentes/BotaoIncluirOuAlterar';
 import AutoCompleteEspecialidade from '../../../componentes/AutoComplete/AutoCompleteEspecialidade';
 
 const DialogoIncluirOuAlterarFuncionario: React.FC = () => {
-  const [especialidades, setEspecialidades] = useState<Especialidade[] | undefined>(undefined);
   const { get, put, post } = useContext(ApiContext);
   const history = useHistory();
   const [funcionario, setFuncionario] = useState<FuncionarioD | undefined>(undefined);
@@ -24,12 +21,6 @@ const DialogoIncluirOuAlterarFuncionario: React.FC = () => {
   const refAlerta = useRef<AlertaHandles | undefined>(undefined);
   const isEdit = id !== null;
 
-  const listarEspecialidades = useCallback(async () => {
-    const especialidades = await get('especialidade') as Especialidade[] as any;
-    if (especialidades) {
-      setEspecialidades(especialidades.especialidades as Especialidade[]);
-    }
-  }, [get]);
 
   const manipularEnvio = useCallback(async (dados) => {
     console.log(dados);
@@ -72,11 +63,10 @@ const DialogoIncluirOuAlterarFuncionario: React.FC = () => {
   }, [get, id]);
 
   useEffect(() => {
-    //listarEspecialidades()
     if (isEdit) {
       popular()
     }
-  }, [isEdit, listarEspecialidades, popular])
+  }, [isEdit, popular])
 
   return (
     <Dialogo maxWidth="md" fullWidth open title={isEdit ? "Alterar funcionário" : "Incluir funcionário"}>
@@ -110,7 +100,7 @@ const DialogoIncluirOuAlterarFuncionario: React.FC = () => {
         </Grid>
         <Grid container>
           <Grid item xs={12}>
-            <AutoCompleteEspecialidade label="Especialidades" multiple name="especialidades" listOptionsIn />
+            <AutoCompleteEspecialidade label="Especialidades" multiple required name="especialidades" listOptionsIn />
           </Grid>
         </Grid>
         <BotaoIncluirOuAlterar isEdit={isEdit} />
