@@ -55,7 +55,7 @@ const PessoaItem: React.FC<PessoaItemProps> = (
             <Grid item sm={1}>
               <Box display="flex" justifyContent="flex-end" alignItems="center">
                 {pathname === '/clientes' && (
-                  <Tooltip title="Veículos deste cliente">
+                  <Tooltip title="Veículos desse cliente">
                     <IconButton component={Link} to={`clientes/veiculos?cliente=${_id}`}>
                       <DriveEtaIcon />
                     </IconButton>

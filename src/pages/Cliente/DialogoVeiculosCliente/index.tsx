@@ -41,7 +41,7 @@ const DialogoVeiculosCliente: React.FC = () => {
             <Typography align="center" variant="h6">Não existem veículos vinculados a esse cliente!</Typography>
           )
       }
-      <BotaoIncluir titulo="Incluir veículo para esse cliente" linkTo="/clientes/veiculos/incluirveiculo"/>
+      <BotaoIncluir titulo="Incluir veículo para esse cliente" linkTo={`/clientes/veiculos/incluirveiculo?cliente=${cliente}`}/>
       <Switch>
         <Route path="/clientes/veiculos/historico" component={HistoricoVeiculo} />
         <Route path="/clientes/veiculos/incluirveiculo" component={DialogoIncluirOuAlterarVeiculo} />

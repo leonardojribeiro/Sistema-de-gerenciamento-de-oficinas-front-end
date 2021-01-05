@@ -46,7 +46,7 @@ const VeiculoItem: React.FC<VeiculoItemProps> = ({ veiculo, baseUrlToHistory }) 
                   <AssignmentIcon />
                 </IconButton>
               </Tooltip>
-              <Tooltip title={`Ver histórico deste veículo`}>
+              <Tooltip title={`Ver histórico desse veículo`}>
                 <IconButton component={Link} to={`${baseUrlToHistory}?veiculo=${veiculo._id}`}>
                   <HistoryIcon />
                 </IconButton>

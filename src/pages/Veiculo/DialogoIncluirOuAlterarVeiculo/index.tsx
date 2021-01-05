@@ -21,6 +21,7 @@ const DialogoIncluirOuAlterarVeiculo: React.FC = () => {
   const { get, put, post } = useContext(ApiContext);
   const history = useHistory();
   const [veiculo, setVeiculo] = useState<Veiculo | undefined>();
+  const cliente = useQuery("cliente");
   const refAlerta = useRef<AlertaHandles>();
   const id = useQuery("id");
   const { path, url } = useRouteMatch();
@@ -72,7 +73,7 @@ const DialogoIncluirOuAlterarVeiculo: React.FC = () => {
 
   return (
     <Dialogo open title={isEdit ? "Alterar veículo" : "Incluir veículo"} fullWidth maxWidth="sm">
-      <Form onSubmit={manipularEnvio} initialData={veiculo}>
+      <Form onSubmit={manipularEnvio} initialData={veiculo ? veiculo : cliente ? { cliente } : undefined}>
         <CampoDeTexto name="placa" label="Placa" fullWidth required autoFocus />
         <DateField name="anoFabricacao" label="Ano de fabricação" fullWidth required />
         <DateField name="anoModelo" label="Ano de modelo" fullWidth required />
