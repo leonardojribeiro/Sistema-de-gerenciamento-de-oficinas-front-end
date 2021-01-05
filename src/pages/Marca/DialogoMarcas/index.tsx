@@ -9,7 +9,7 @@ const DialogMarcas: React.FC = () => {
     <Dialogo open fullWidth maxWidth="xs" title="Marcas">
       <ListagemMarcas />
       <Switch>
-        <Route path={["/marcas/incluiralterarmarca"]}>
+        <Route path={["/marcas/incluirmarca", "/marcas/alterarmarca"]}>
           <DialogoIncluirOuAlterarMarca />
         </Route>
       </Switch>

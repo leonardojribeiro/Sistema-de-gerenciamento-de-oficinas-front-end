@@ -70,7 +70,7 @@ const DialogoIncluirOuAlterarModelo: React.FC = () => {
         <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
           <AutoCompleteMarca name="marca" label="Marca" required listOptionsIn={isEdit} />
-          <Link to={`${path}/incluiralterarmarca`}>
+          <Link to={`${path}/incluirmarca`}>
             <Tooltip title="Incluir marca">
               <IconButton>
                 <CreateNewFolderIcon />
@@ -82,7 +82,7 @@ const DialogoIncluirOuAlterarModelo: React.FC = () => {
       </Form>
       <Alerta ref={refAlerta} />
       <Switch>
-        <Route path={`${url}/incluiralterarmarca`} component={DialogoIncluirOuAlterarMarca} />
+        <Route path={`${url}/incluirmarca`} component={DialogoIncluirOuAlterarMarca} />
       </Switch>
     </Dialogo>
   );

@@ -11,13 +11,13 @@ const DialogoFornecedores: React.FC = () => {
       <ListagemPessoa
         dominio="fornecedor"
         linkToChangeText={fornecedor => `Alterar o fornecerdor ${fornecedor.nomeFantasia}`}
-        linkToChangePath={fornecedor => `/fornecedores/incluiralterarfornecedor?id=${fornecedor._id}`}
-        linkToInsertPath="/fornecedores/incluiralterarfornecedor"
+        linkToChangePath={fornecedor => `/fornecedores/alterarfornecedor?id=${fornecedor._id}`}
+        linkToInsertPath="/fornecedores/incluirfornecedor"
         linkToInsertText="incluir fornecedor"
         listar={listar}
       />
       <Switch>
-        <Route path="/fornecedores/incluiralterarfornecedor" component={DialogoIncluirOuAlterarCliente} />
+        <Route path={["/fornecedores/incluirfornecedor","/fornecedores/alterarfornecedor"]} component={DialogoIncluirOuAlterarCliente} />
       </Switch>
     </Dialogo>
   );

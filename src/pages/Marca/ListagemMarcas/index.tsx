@@ -72,7 +72,7 @@ const ListagemMarcas: React.FC = () => {
               </Grid>
               <Grid item>
                 <Tooltip title={`Alterar a marca ${marca.descricao}`}>
-                  <IconButton component={Link} to={`/marcas/incluiralterarmarca?id=${marca._id}`}>
+                  <IconButton component={Link} to={`/marcas/alterarmarca?id=${marca._id}`}>
                     <EditIcon />
                   </IconButton>
                 </Tooltip>
@@ -84,7 +84,7 @@ const ListagemMarcas: React.FC = () => {
       <Box display="flex" justifyContent="center">
         <Pagination count={Math.ceil(Number(total) / 100)} onChange={handlePageChange} page={page} />
       </Box>
-      <Link to="marcas/incluiralterarmarca" >
+      <Link to="marcas/incluirmarca" >
         <BotaoIncluir titulo="Incluir marca" />
       </Link>
     </>

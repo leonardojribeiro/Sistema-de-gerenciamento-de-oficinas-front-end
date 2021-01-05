@@ -88,7 +88,7 @@ const DialogoIncluirOuAlterarVeiculo: React.FC = () => {
         </Box>
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
           <AutoCompleteCliente name="cliente" label="Cliente" required listOptionsIn />
-          <Link to={`${path}/incluiralterarcliente`}>
+          <Link to={`${path}/incluircliente`}>
             <Tooltip title="Incluir cliente">
               <IconButton>
                 <PersonAddIcon />
@@ -100,8 +100,8 @@ const DialogoIncluirOuAlterarVeiculo: React.FC = () => {
       </Form>
       <Alerta ref={refAlerta} />
       <Switch>
-        <Route path={`${url}/incluiralterarmodelo`} component={DialogoIncluirModelo} />
-        <Route path={`${url}/incluiralterarcliente`} component={DialogoIncluirOuAlterarCliente} />
+        <Route path={`${url}/incluirmodelo`} component={DialogoIncluirModelo} />
+        <Route path={`${url}/incluircliente`} component={DialogoIncluirOuAlterarCliente} />
       </Switch>
     </Dialogo>
   );

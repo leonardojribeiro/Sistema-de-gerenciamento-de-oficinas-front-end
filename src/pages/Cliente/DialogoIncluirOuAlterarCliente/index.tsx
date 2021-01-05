@@ -63,7 +63,7 @@ const DialogoIncluirOuAlterarCliente: React.FC = () => {
   }, [isEdit, popular])
 
   return (
-    <Dialogo maxWidth="md" fullWidth open title={isEdit ? "Incluir cliente" : "Alterar cliente"}>
+    <Dialogo maxWidth="md" fullWidth open title={isEdit ? "Alterar cliente" : "Incluir cliente"}>
       <Form initialData={cliente} onSubmit={manipularEnvio}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8} md={8}>

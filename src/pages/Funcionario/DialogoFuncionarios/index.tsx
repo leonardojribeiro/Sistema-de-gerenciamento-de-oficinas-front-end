@@ -12,13 +12,13 @@ const DialogFuncionarios: React.FC = () => {
       <ListagemPessoa
         dominio="funcionario"
         linkToChangeText={funcionario => `Alterar o funcionário ${funcionario.nome}`}
-        linkToChangePath={funcionario => `/funcionarios/incluiralterarfuncionario?id=${funcionario._id}`}
-        linkToInsertPath="/funcionarios/incluiralterarfuncionario"
+        linkToChangePath={funcionario => `/funcionarios/alterarfuncionario?id=${funcionario._id}`}
+        linkToInsertPath="/funcionarios/incluirfuncionario"
         linkToInsertText="incluir funcionário"
         listar={listar}
       />
       <Switch>
-        <Route path="/funcionarios/incluiralterarfuncionario">
+        <Route path={["/funcionarios/incluirfuncionario", "/funcionarios/alterarfuncionario"]}>
           <DialogoIncluirOuAlterarFuncionario />
         </Route>
       </Switch>

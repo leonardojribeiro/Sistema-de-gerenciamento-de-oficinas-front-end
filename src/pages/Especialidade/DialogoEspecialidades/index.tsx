@@ -10,7 +10,7 @@ function DialgoEspecialidades() {
     <Dialogo open fullWidth maxWidth="xs" title="Especialidades">
       <ListagemEspecialidades />
       <Switch>
-        <Route path="/especialidades/incluiralterarespecialidade" component={DialogIncluirOuAlterarEspecialidade} />
+        <Route path={["/especialidades/incluirespecialidade", "/especialidades/alterarespecialidade"]} component={DialogIncluirOuAlterarEspecialidade} />
       </Switch>
     </Dialogo>
   );

@@ -10,7 +10,7 @@ const DialogoPecas: React.FC = () => {
     <Dialogo maxWidth="sm" fullWidth open title="Peças">
       <ListagemPeca />
       <Switch>
-        <Route path="/pecas/incluiralterarpeca" component={DialogoIncluirOuAlterarPeca} />
+        <Route path={["/pecas/incluirpeca", "/pecas/alterarpeca"]} component={DialogoIncluirOuAlterarPeca} />
       </Switch>
     </Dialogo>
   );

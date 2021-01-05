@@ -73,7 +73,7 @@ const ListagemPecas: React.FC = () => {
                     </TableCell>
                     <TableCell padding="none" align="center">
                       <Tooltip title={`Alterar a peça ${peca.descricao}`}>
-                        <IconButton component={Link} to={`/pecas/incluiralterarpeca?id=${peca._id}`}>
+                        <IconButton component={Link} to={`/pecas/alterarpeca?id=${peca._id}`}>
                           <EditIcon />
                         </IconButton>
                       </Tooltip>
@@ -88,7 +88,7 @@ const ListagemPecas: React.FC = () => {
       <Box display="flex" justifyContent="center">
         <Pagination count={Math.ceil(Number(total) / 100)} onChange={handlePageChange} page={page} />
       </Box>
-      <BotaoIncluir titulo="Incluir peça" linkTo="/pecas/incluiralterarpeca" />
+      <BotaoIncluir titulo="Incluir peça" linkTo="/pecas/incluirpeca" />
     </>
   );
 }

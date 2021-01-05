@@ -63,7 +63,7 @@ const ListagemEspecialidades: React.FC = () => {
               </Grid>
               <Grid item>
                 <Tooltip title={`Alterar a especialidade ${especialidade.descricao}`}>
-                  <IconButton component={Link} to={`/especialidades/incluiralterarespecialidade?id=${especialidade._id}`}>
+                  <IconButton component={Link} to={`/especialidades/alterarespecialidade?id=${especialidade._id}`}>
                     <EditIcon />
                   </IconButton>
                 </Tooltip>
@@ -75,7 +75,7 @@ const ListagemEspecialidades: React.FC = () => {
       <Box display="flex" justifyContent="center">
         <Pagination count={Math.ceil(Number(total) / 100)} onChange={handlePageChange} page={page} />
       </Box>
-      <BotaoIncluir titulo="Incluir especialidade" linkTo="/especialidades/incluiralterarespecialidade" />
+      <BotaoIncluir titulo="Incluir especialidade" linkTo="/especialidades/incluirespecialidade" />
     </>
   );
 }

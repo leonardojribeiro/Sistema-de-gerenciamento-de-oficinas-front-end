@@ -13,7 +13,7 @@ const AutoCompleteCliente: React.FC<AutoCompleteProps<Cliente>> = ({ onChange, l
       onInputChange={handleInputChange}
       name={name}
       label={label}
-      path="._id"
+      path="_id"
       fullWidth
       options={options}
       loading={options.length === 0}

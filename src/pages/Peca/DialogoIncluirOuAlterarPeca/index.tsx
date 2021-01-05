@@ -82,7 +82,7 @@ const DialogoIncluirOuAlterarPeca: React.FC = () => {
         <BotaoIncluirOuAlterar isEdit={isEdit} />
       </Form>
       <Switch>
-        <Route path={`${url}/incluiralterarmarca`} component={DialogoIncluirOuAlterarMarca} />
+        <Route path={`${url}/incluirmarca`} component={DialogoIncluirOuAlterarMarca} />
       </Switch>
       <Alerta ref={refAlerta} />
     </Dialogo>

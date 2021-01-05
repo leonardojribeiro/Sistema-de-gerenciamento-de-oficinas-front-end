@@ -13,13 +13,13 @@ const DialogoClientes: React.FC = () => {
       <ListagemPessoa
         dominio="cliente"
         linkToChangeText={cliente => `Alterar o cliente ${cliente.nome}`}
-        linkToChangePath={cliente => `/clientes/incluiralterarcliente?id=${cliente._id}`}
-        linkToInsertPath="/clientes/incluiralterarcliente"
+        linkToChangePath={cliente => `/clientes/alterarcliente?id=${cliente._id}`}
+        linkToInsertPath="/clientes/incluircliente"
         linkToInsertText="incluir cliente"
         listar={listar}
       />
       <Switch>
-        <Route path="/clientes/incluiralterarcliente" component={DialogoIncluirOuAlterarCliente} />
+        <Route path={["/clientes/incluircliente", "/clientes/alterarcliente"]} component={DialogoIncluirOuAlterarCliente} />
         <Route path="/clientes/veiculos" component={DialogoVeiculosCliente} />
       </Switch>
     </Dialog >

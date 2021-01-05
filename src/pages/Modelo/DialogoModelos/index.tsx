@@ -10,7 +10,7 @@ const DialogoModelos: React.FC = () => {
     <Dialogo maxWidth="sm" fullWidth open title="Modelos">
       <ListagemModelos />
       <Switch>
-        <Route path="//marcas/incluiralterarmodelo" component={DialogoIncluirOuAlterarModelo} />
+        <Route path={["/modelos/incluirmodelo", "/modelos/alterarmodelo"]} component={DialogoIncluirOuAlterarModelo} />
       </Switch>
     </Dialogo>
   );
