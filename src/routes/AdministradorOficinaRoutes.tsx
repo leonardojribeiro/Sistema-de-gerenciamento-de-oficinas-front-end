@@ -34,13 +34,13 @@ const AdminitradorOficinaRoutes: React.FC = () => {
         <Route path="/servicos" component={DialogServicos} />
         <Route path="/opcoes" component={DialogOpcoes} />
         <Route path="/veiculos/historico" component={HistoricoVeiculo} />
+        <Route path="/teste" component={Teste} />
         <SwipeableContextProvider initialIndexActive={1}>
           <OrdemDeServicoProvider>
             <Route path="/ordensdeservico/incluir" component={DialogoIncluirOrdemDeServico} />
             <Route path="/ordensdeservico/alterarordemdeservico" component={DialogoAlterarOrdemDeServico} />
           </OrdemDeServicoProvider>
         </SwipeableContextProvider>
-        <Route path="/popular" exact component={Teste} />
       </Switch>
     </>
   );

@@ -34,7 +34,7 @@ const Dialog: React.FC<DialogProps> = ({ open, title, children, ...props }) => {
   const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
 
   const manipularFechamento = useCallback(() => {
-    if (history.length > 0) {
+    if (history.length > 2) {
       history.goBack();
     }
     else {

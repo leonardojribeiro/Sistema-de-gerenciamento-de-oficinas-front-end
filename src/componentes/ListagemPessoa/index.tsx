@@ -2,7 +2,7 @@ import { Box } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import React, { memo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import usePessoa from '../../hooks/useListagemPessoa';
+import useListagem from '../../hooks/useListagem';
 import Cliente from '../../Types/Cliente';
 import Fornecedor from '../../Types/Fornecedor';
 import Funcionario from '../../Types/Funcionario';
@@ -18,11 +18,12 @@ interface ListagemPessoaProps {
   linkToInsertText: string;
   linkToInsertPath: string;
   dominio: "funcionario" | "cliente" | "fornecedor";
+  pathToItens: "funcionarios" | "clientes" | "fornecedores";
   listar?: boolean;
 }
 
-const ListagemPessoa: React.FC<ListagemPessoaProps> = ({ linkToChangePath, linkToChangeText, linkToInsertPath, linkToInsertText, dominio, ...props }) => {
-  const { manipularBusca, handlePageChange, pessoas, listar, total, page } = usePessoa<Pessoa>(dominio);
+const ListagemPessoa: React.FC<ListagemPessoaProps> = ({ linkToChangePath, linkToChangeText, linkToInsertPath, linkToInsertText, dominio, pathToItens, ...props }) => {
+  const { handleSearch, handlePageChange, itens, listar, total, page } = useListagem<Pessoa>(pathToItens, dominio);
 
   useEffect(() => {
     if (props.listar) {
@@ -32,11 +33,10 @@ const ListagemPessoa: React.FC<ListagemPessoaProps> = ({ linkToChangePath, linkT
 
   return (
     <>
-      <FormConsultaPessoa onSubmit={manipularBusca} />
-      <Box display="flex" justifyContent="center" pt={2}>Listagem</Box>
+      <FormConsultaPessoa onSubmit={handleSearch} />
       <Box mb={2}>
         {
-          pessoas?.map((pessoa, index) => (
+          itens?.map((pessoa, index) => (
             <PessoaItem
               key={index}
               {...pessoa}

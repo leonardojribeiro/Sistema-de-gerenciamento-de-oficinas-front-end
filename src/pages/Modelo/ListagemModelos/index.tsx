@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { Box, Tooltip, IconButton, makeStyles, Typography, Grid } from '@material-ui/core';
+import { Box, Tooltip, IconButton, makeStyles, List, ListItemText, ListItem, ListItemAvatar, ListItemSecondaryAction } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import { Link } from 'react-router-dom';
 import Modelo from '../../../Types/Modelo';
@@ -42,53 +42,30 @@ const ListagemModelos: React.FC = () => {
   return (
     <>
       <FormConsultaPeca onSubmit={handleSubmitSearch} />
-      <Box display="flex" justifyContent="center" pt={2}>Listagem</Box>
       <Box mb={2}>
-        <Grid container justify="space-between">
-          <Grid item xs={5}>
-            <Typography>Descrição</Typography>
-          </Grid>
-          <Grid item>
-            <Typography>Marca</Typography>
-          </Grid>
-          <Grid item>
-            <Typography>Editar</Typography>
-          </Grid>
-        </Grid>
-        {
-          itens?.map((modelo, index) => (
-            <Grid container alignItems="center" justify="space-between" className={classes.linhaTabela} key={index}>
-              <Grid item xs={4}>
-                <Typography>
-                  {modelo.descricao}
-                </Typography>
-              </Grid>
-              <Grid item xs={5}>
-                <Grid container alignItems="center" justify="space-between">
-                  <Grid item >
-                    <Typography>
-                      {modelo.marca.descricao}
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <img
-                      className={classes.imgLogomarca}
-                      src={modelo.marca && modelo.marca.uriLogo && `${imagensUrl}/${modelo.marca.uriLogo}`}
-                      alt={`logomarca da marca ${modelo.marca ? modelo.marca.descricao : ""}`}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid item>
-                <Tooltip title={`Alterar o modelo ${modelo.descricao}`}>
-                  <IconButton component={Link} to={`/modelos/alterarmodelo?id=${modelo._id}`}>
-                    <EditIcon />
-                  </IconButton>
-                </Tooltip>
-              </Grid>
-            </Grid >
-          ))
-        }
+        <List>
+          {
+            itens?.map((modelo, index) => (
+              <ListItem divider key={index}>
+                <ListItemAvatar>
+                  <img
+                    className={classes.imgLogomarca}
+                    src={modelo.marca && modelo.marca.uriLogo && `${imagensUrl}/${modelo.marca.uriLogo}`}
+                    alt={`logomarca da marca ${modelo.marca ? modelo.marca.descricao : ""}`}
+                  />
+                </ListItemAvatar>
+                <ListItemText primary={modelo.descricao} secondary={modelo.marca.descricao} />
+                <ListItemSecondaryAction>
+                  <Tooltip title={`Alterar o modelo ${modelo.descricao}`}>
+                    <IconButton component={Link} to={`/modelos/alterarmodelo?id=${modelo._id}`}>
+                      <EditIcon />
+                    </IconButton>
+                  </Tooltip>
+                </ListItemSecondaryAction>
+              </ListItem>
+            ))
+          }
+        </List>
       </Box >
       <Box display="flex" justifyContent="center">
         <Pagination count={Math.ceil(Number(total) / 100)} onChange={handlePageChange} page={page} />

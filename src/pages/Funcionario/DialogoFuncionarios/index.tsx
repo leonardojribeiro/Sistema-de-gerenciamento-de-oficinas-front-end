@@ -11,6 +11,7 @@ const DialogFuncionarios: React.FC = () => {
     <Dialogo maxWidth="lg" fullWidth open title="Funcionários">
       <ListagemPessoa
         dominio="funcionario"
+        pathToItens="funcionarios"
         linkToChangeText={funcionario => `Alterar o funcionário ${funcionario.nome}`}
         linkToChangePath={funcionario => `/funcionarios/alterarfuncionario?id=${funcionario._id}`}
         linkToInsertPath="/funcionarios/incluirfuncionario"

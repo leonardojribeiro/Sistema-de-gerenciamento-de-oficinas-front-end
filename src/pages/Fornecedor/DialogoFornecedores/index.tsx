@@ -10,6 +10,7 @@ const DialogoFornecedores: React.FC = () => {
     <Dialogo maxWidth="lg" fullWidth open title="Fornecedores">
       <ListagemPessoa
         dominio="fornecedor"
+        pathToItens="fornecedores"
         linkToChangeText={fornecedor => `Alterar o fornecerdor ${fornecedor.nomeFantasia}`}
         linkToChangePath={fornecedor => `/fornecedores/alterarfornecedor?id=${fornecedor._id}`}
         linkToInsertPath="/fornecedores/incluirfornecedor"

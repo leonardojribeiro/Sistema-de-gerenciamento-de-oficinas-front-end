@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useEffect } from 'react';
-import { Box, TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Tooltip, IconButton, makeStyles, Typography } from '@material-ui/core';
+import { Box, Tooltip, IconButton, makeStyles, List, ListItem, ListItemAvatar, ListItemText, ListItemSecondaryAction } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import { Link } from 'react-router-dom';
 import Peca from '../../../Types/Peca';
@@ -15,11 +15,6 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "48px",
     objectFit: "scale-down",
   },
-  linhaTabela: {
-    maxHeight: "78px",
-    padding: 0,
-    position: "relative",
-  }
 }));
 
 
@@ -39,51 +34,30 @@ const ListagemPecas: React.FC = () => {
   return (
     <>
       <FormConsultaPeca onSubmit={handleSubmitSearch} />
-      <Box display="flex" justifyContent="center" pt={2}>Listagem</Box>
       <Box mb={2}>
-        <TableContainer >
-          <Table size="small">
-            <TableHead>
-              <TableRow >
-                <TableCell padding="none">Descrição</TableCell>
-                <TableCell padding="none">Marca</TableCell>
-                <TableCell padding="none" align="center">Alterar</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {
-                itens?.map((peca, index) => (
-                  <TableRow className={classes.linhaTabela} key={index} hover >
-                    <TableCell padding="none">
-                      <Typography>
-                        {peca.descricao}
-                      </Typography>
-                    </TableCell>
-                    <TableCell padding="none">
-                      <Box display="flex" alignItems="center" justifyContent="space-between">
-                        <Typography>
-                          {peca.marca ? peca.marca.descricao : ""}
-                        </Typography>
-                        <img
-                          className={classes.imgLogomarca}
-                          src={peca.marca && peca.marca.uriLogo && `${imagensUrl}/${peca.marca.uriLogo}`}
-                          alt={`logomarca ${peca.marca ? peca.marca.descricao : ""}`}
-                        />
-                      </Box>
-                    </TableCell>
-                    <TableCell padding="none" align="center">
-                      <Tooltip title={`Alterar a peça ${peca.descricao}`}>
-                        <IconButton component={Link} to={`/pecas/alterarpeca?id=${peca._id}`}>
-                          <EditIcon />
-                        </IconButton>
-                      </Tooltip>
-                    </TableCell>
-                  </TableRow>
-                ))
-              }
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <List>
+          {
+            itens?.map((peca, index) => (
+              <ListItem key={index}>
+                <ListItemAvatar>
+                  <img
+                    className={classes.imgLogomarca}
+                    src={peca.marca && peca.marca.uriLogo && `${imagensUrl}/${peca.marca.uriLogo}`}
+                    alt={`logomarca ${peca.marca ? peca.marca.descricao : ""}`}
+                  />
+                </ListItemAvatar>
+                <ListItemText primary={peca.descricao} secondary={peca.marca?.descricao} />
+                <ListItemSecondaryAction>
+                  <Tooltip title={`Alterar a peça ${peca.descricao}`}>
+                    <IconButton component={Link} to={`/pecas/alterarpeca?id=${peca._id}`}>
+                      <EditIcon />
+                    </IconButton>
+                  </Tooltip>
+                </ListItemSecondaryAction>
+              </ListItem>
+            ))
+          }
+        </List>
       </Box>
       <Box display="flex" justifyContent="center">
         <Pagination count={Math.ceil(Number(total) / 100)} onChange={handlePageChange} page={page} />

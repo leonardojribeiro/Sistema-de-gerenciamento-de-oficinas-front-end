@@ -79,7 +79,7 @@ const DialogoIncluirOuAlterarVeiculo: React.FC = () => {
         <DateField name="anoModelo" label="Ano de modelo" fullWidth required />
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
           <AutoCompleteModelo name="modelo" label="Modelo" required listOptionsIn />
-          <Link to={`${path}/incluiralterarmodelo`}>
+          <Link to={`${path}/incluirmodelo`}>
             <Tooltip title="Incluir modelo">
               <IconButton>
                 <CreateNewFolderIcon />
@@ -89,13 +89,16 @@ const DialogoIncluirOuAlterarVeiculo: React.FC = () => {
         </Box>
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
           <AutoCompleteCliente name="cliente" label="Cliente" required listOptionsIn />
-          <Link to={`${path}/incluircliente`}>
-            <Tooltip title="Incluir cliente">
-              <IconButton>
-                <PersonAddIcon />
-              </IconButton>
-            </Tooltip>
-          </Link>
+          {cliente
+            ? null
+            : (<Link to={`${path}/incluircliente`}>
+              <Tooltip title="Incluir cliente">
+                <IconButton>
+                  <PersonAddIcon />
+                </IconButton>
+              </Tooltip>
+            </Link>)
+          }
         </Box>
         <BotaoIncluirOuAlterar isEdit={isEdit} />
       </Form>

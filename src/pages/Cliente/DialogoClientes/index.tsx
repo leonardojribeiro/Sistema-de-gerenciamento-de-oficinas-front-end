@@ -12,6 +12,7 @@ const DialogoClientes: React.FC = () => {
     <Dialog maxWidth="lg" fullWidth open title="Clientes">
       <ListagemPessoa
         dominio="cliente"
+        pathToItens="clientes"
         linkToChangeText={cliente => `Alterar o cliente ${cliente.nome}`}
         linkToChangePath={cliente => `/clientes/alterarcliente?id=${cliente._id}`}
         linkToInsertPath="/clientes/incluircliente"
