@@ -1,16 +1,12 @@
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import ApiContext from "../contexts/ApiContext";
+import Query from "../Types/Query";
 import useAuth from "./useAuth";
 
 interface ListaItens<T> {
   itens: T[];
   total: number
-}
-
-interface Query {
-  name: string;
-  value: string;
 }
 
 export default function useListagem<T>(pathToItens: string, dominio: string) {
@@ -57,9 +53,9 @@ export default function useListagem<T>(pathToItens: string, dominio: string) {
     }
   }, [dominio, get, page, pathToItens]);
 
-  const handleSearch = useCallback(async (dados: Query) => {
+  const handleSearch = useCallback(async (dados: Query[]) => {
     consultaValues.current = dados;
-    const resposta = await get(`/${dominio}/consulta?${dados.name}=${dados.value}&limite=100&pagina=${page}`) as any;
+    const resposta = await get(`/${dominio}/consulta?${dados.map(query=>`${query.name}=${query.value}&`)}limite=100&pagina=${page}`) as any;
     if (resposta) {
       setItens({
         total: resposta.total,

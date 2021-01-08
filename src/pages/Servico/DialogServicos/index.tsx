@@ -6,7 +6,7 @@ import ListagemServicos from '../ListagemServicos';
 
 const DialogServicos: React.FC = () => {
   return (
-    <Dialogo maxWidth="sm" fullWidth open title="Serviços">
+    <Dialogo maxWidth="xs" fullWidth open title="Serviços">
       <ListagemServicos />
       <Switch>
         <Route path={["/servicos/incluirservico", "/servicos/alterarservico"]} component={DialogoIncluirOuAlterarServico} />

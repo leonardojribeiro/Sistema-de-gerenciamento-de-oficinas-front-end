@@ -38,7 +38,7 @@ export default function Listagem<T>({ itens, getPrimaryText, getSecondaryText, l
         <List>
           {
             itens?.map((item, index) => (
-              <ListItem key={index}>
+              <ListItem key={index} divider>
                 {getURLAvatar
                   ? <ListItemAvatar>
                     <img src={getURLAvatar(item)}

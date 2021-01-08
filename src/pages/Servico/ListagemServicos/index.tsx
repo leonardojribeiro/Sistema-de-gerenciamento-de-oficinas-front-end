@@ -1,13 +1,10 @@
-import React, { memo, useCallback, useEffect } from 'react';
-import { Box, Tooltip, IconButton, List, ListItem, ListItemText, ListItemSecondaryAction } from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
-import { Link, useLocation } from 'react-router-dom';
+import React, { memo, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Servico from '../../../Types/Servico';
-import FormularioConsulta from '../../../componentes/FormularioConsulta';
 import useListagem from '../../../hooks/useListagem';
-import BotaoIncluir from '../../../componentes/BotaoIncluir';
-import { Pagination } from '@material-ui/lab';
 import Formato from '../../../recursos/Formato';
+import Listagem from '../../../componentes/Listagem';
+import FormConsultaPessoa from '../../../componentes/FormConsultaPessoa';
 
 
 const ListagemServicos: React.FC = () => {
@@ -24,38 +21,21 @@ const ListagemServicos: React.FC = () => {
     }
   }, [listar, pathname]);
 
-  const handleSubmitSearch = useCallback((data) => {
-   // handleSearch(`descricao=${data.consulta}`)
-  }, [handleSearch]);
-
   return (
     <>
-      <FormularioConsulta onSubmit={handleSubmitSearch} />
-      <Box mb={2}>
-        <List dense>
-          {
-            itens?.map((servico, index) => (
-              <ListItem key={index} divider>
-                <ListItemText
-                  primary={servico.descricao}
-                  secondary={`${servico.tempoDuracao} minutos | R$${Formato.formatarMoeda(servico.valor)}`}
-                />
-                <ListItemSecondaryAction>
-                  <Tooltip title={`Alterar o serviço ${servico.descricao}`}>
-                    <IconButton component={Link} to={`/servicos/alterarservico?id=${servico._id}`}>
-                      <EditIcon />
-                    </IconButton>
-                  </Tooltip>
-                </ListItemSecondaryAction>
-              </ListItem>
-            ))
-          }
-        </List>
-      </Box>
-      <Box display="flex" justifyContent="center">
-        <Pagination count={Math.ceil(total / 100)} onChange={handlePageChange} page={page} />
-      </Box>
-      <BotaoIncluir titulo="Incluir serviços" linkTo="/servicos/incluirservico" />
+      <FormConsultaPessoa onSubmit={handleSearch} filters={['descricao']} />
+      <Listagem
+        itens={itens}
+        getPrimaryText={item => item.descricao}
+        getSecondaryText={item => `${item.tempoDuracao} minutos | R$${Formato.formatarMoeda(item.valor)}`}
+        page={page}
+        total={total}
+        getLinkToChange={item => `/servicos/alterarservico?id=${item._id}`}
+        getTitleLinkToChange={item => `Alterar o servico ${item.descricao}`}
+        onPageChange={handlePageChange}
+        linkToInsertTitle="Incluir serviço"
+        linkToInsert="/servicos/incluirservico"
+      />
     </>
   );
 }

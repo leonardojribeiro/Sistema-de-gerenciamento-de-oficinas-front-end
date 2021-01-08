@@ -7,7 +7,7 @@ import ListagemPeca from '../ListagemPecas';
 const DialogoPecas: React.FC = () => {
 
   return (
-    <Dialogo maxWidth="sm" fullWidth open title="Peças">
+    <Dialogo maxWidth="xs" fullWidth open title="Peças">
       <ListagemPeca />
       <Switch>
         <Route path={["/pecas/incluirpeca", "/pecas/alterarpeca"]} component={DialogoIncluirOuAlterarPeca} />

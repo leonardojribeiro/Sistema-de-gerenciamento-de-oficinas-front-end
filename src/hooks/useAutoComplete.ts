@@ -8,10 +8,10 @@ export default function useAutoComplete<T>(pathToItens: string, dominio: string,
   const { get } = useContext(ApiContext);
 
   const getMoreOptions = useCallback(async (search) => {
-    handleSearch({
+    handleSearch([{
       name: filterToSearch,
       value: search
-    });
+    }]);
   }, [filterToSearch, handleSearch]);
 
   const getDefaultValueInOptions = useCallback((value) => {

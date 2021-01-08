@@ -1,24 +1,11 @@
-import React, { memo, useCallback, useEffect } from 'react';
-import { IconButton, makeStyles, Box, Tooltip, List, ListItem, ListItemText, ListItemSecondaryAction, ListItemAvatar, } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import EditIcon from '@material-ui/icons/Edit';
+import React, { memo, useEffect } from 'react';
 import Marca from '../../../Types/Marca';
-import FormConsultaMarca from '../FormConsultaMarca';
-import { Pagination } from '@material-ui/lab';
-import BotaoIncluir from '../../../componentes/BotaoIncluir';
 import useListagem from '../../../hooks/useListagem';
+import Listagem from '../../../componentes/Listagem';
+import FormConsultaPessoa from '../../../componentes/FormConsultaPessoa';
 
-const useStyles = makeStyles((theme) => ({
-  imgLogomarca: {
-    backgroundSize: "100%",
-    maxHeight: "48px",
-    maxWidth: "48px",
-    borderRadius: "5px",
-  },
-}));
 
 const ListagemMarcas: React.FC = () => {
-  const classes = useStyles();
   const imagensUrl = process.env.REACT_APP_IMAGENS_URL as string;
   const { handlePageChange, handleSearch, itens, listar, page, total } = useListagem<Marca>("marcas", "marca");
 
@@ -26,44 +13,22 @@ const ListagemMarcas: React.FC = () => {
     listar();
   }, [listar]);
 
-  const handleSubmitFormSearch = useCallback((search) => {
-    //handleSearch(`descricao=${search}`)
-  }, [handleSearch]);
-
   return (
     <>
-      <FormConsultaMarca onSubmit={handleSubmitFormSearch} />
-      <Box mb={3}>
-        <List>
-          {
-            itens?.map((marca, index) => (
-              <ListItem divider key={index}>
-                <ListItemAvatar>
-                  <img
-                    className={classes.imgLogomarca}
-                    src={marca.uriLogo && `${imagensUrl}/${marca.uriLogo}`}
-                    alt={`logomarca ${marca.descricao}`}
-                  />
-                </ListItemAvatar>
-                <ListItemText primary={marca.descricao} />
-                <ListItemSecondaryAction>
-                  <Tooltip title={`Alterar a marca ${marca.descricao}`}>
-                    <IconButton component={Link} to={`/marcas/alterarmarca?id=${marca._id}`}>
-                      <EditIcon />
-                    </IconButton>
-                  </Tooltip>
-                </ListItemSecondaryAction>
-              </ListItem>
-            ))
-          }
-        </List>
-      </Box>
-      <Box display="flex" justifyContent="center">
-        <Pagination count={Math.ceil(Number(total) / 100)} onChange={handlePageChange} page={page} />
-      </Box>
-      <Link to="marcas/incluirmarca" >
-        <BotaoIncluir titulo="Incluir marca" />
-      </Link>
+      <FormConsultaPessoa onSubmit={handleSearch} filters={['descricao']}/>
+      <Listagem
+        itens={itens}
+        getPrimaryText={item => item.descricao}
+        getURLAvatar={item => `${imagensUrl}/${item.uriLogo}`}
+        getAltAvatar={item => item.descricao}
+        page={page}
+        total={total}
+        getLinkToChange={item => `/marcas/alterarmarca?id=${item._id}`}
+        getTitleLinkToChange={item => `Alterar a marca ${item.descricao}`}
+        onPageChange={handlePageChange}
+        linkToInsertTitle="Incluir marca"
+        linkToInsert="/marcas/incluirmarca"
+      />
     </>
   );
 }

@@ -7,7 +7,7 @@ import ListagemModelos from '../ListagemModelos';
 const DialogoModelos: React.FC = () => {
 
   return (
-    <Dialogo maxWidth="sm" fullWidth open title="Modelos">
+    <Dialogo maxWidth="xs" fullWidth open title="Modelos">
       <ListagemModelos />
       <Switch>
         <Route path={["/modelos/incluirmodelo", "/modelos/alterarmodelo"]} component={DialogoIncluirOuAlterarModelo} />
