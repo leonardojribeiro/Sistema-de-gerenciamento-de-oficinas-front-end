@@ -22,8 +22,8 @@ const AutoCompleteVeiculo: React.FC<AutoCompleteProps<Veiculo>> = ({ label, name
       clearText="Limpar"
       openText="Abrir"
       required={required}
-      getOptionLabel={(option) => option.placa}
-      getOptionSelected={(option, value) => option._id === value._id}
+      getOptionLabel={(option) => option ? option.placa : ""}
+      getOptionSelected={(option, value) => option?._id === value?._id}
       disabled={disabled}
     />
   );

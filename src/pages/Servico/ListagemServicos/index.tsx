@@ -25,7 +25,7 @@ const ListagemServicos: React.FC = () => {
   }, [listar, pathname]);
 
   const handleSubmitSearch = useCallback((data) => {
-    handleSearch(`descricao=${data.consulta}`)
+   // handleSearch(`descricao=${data.consulta}`)
   }, [handleSearch]);
 
   return (

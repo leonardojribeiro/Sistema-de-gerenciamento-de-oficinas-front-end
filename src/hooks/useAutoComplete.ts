@@ -4,15 +4,18 @@ import ApiContext from "../contexts/ApiContext";
 import useListagem from "./useListagem";
 
 export default function useAutoComplete<T>(pathToItens: string, dominio: string, filterToSearch: string, listOptionsIn: boolean) {
-  const { itens, listar, handleSearch, setItens } = useListagem<T | any>(pathToItens, dominio);
+  const { itens, listar, handleSearch, setItens } = useListagem<T>(pathToItens, dominio);
   const { get } = useContext(ApiContext);
 
   const getMoreOptions = useCallback(async (search) => {
-    handleSearch(`${filterToSearch}=${search}`);
+    handleSearch({
+      name: filterToSearch,
+      value: search
+    });
   }, [filterToSearch, handleSearch]);
 
   const getDefaultValueInOptions = useCallback((value) => {
-    return itens.find(item => item._id === value);
+    return itens.find((item: any) => item._id === value);
   }, [itens]);
 
   const getDefaultValue = useCallback(async (value) => {
@@ -55,6 +58,5 @@ export default function useAutoComplete<T>(pathToItens: string, dominio: string,
     handleInputChange,
     getDefaultValue,
     options: itens,
-
   }
 }

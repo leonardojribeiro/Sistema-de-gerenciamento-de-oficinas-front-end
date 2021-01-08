@@ -22,8 +22,8 @@ const AutoCompleteFornecedor: React.FC<AutoCompleteProps<Fornecedor>> = ({ label
       clearText="Limpar"
       openText="Abrir"
       required={required}
-      getOptionLabel={(option) => option.nomeFantasia}
-      getOptionSelected={(option, value) => option._id === value._id}
+      getOptionLabel={(option) => option ? option.nomeFantasia : ""}
+      getOptionSelected={(option, value) => option?._id === value?._id}
     />
   );
 }

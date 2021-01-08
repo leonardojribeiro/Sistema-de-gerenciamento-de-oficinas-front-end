@@ -27,7 +27,7 @@ const ListagemMarcas: React.FC = () => {
   }, [listar]);
 
   const handleSubmitFormSearch = useCallback((search) => {
-    handleSearch(`descricao=${search}`)
+    //handleSearch(`descricao=${search}`)
   }, [handleSearch]);
 
   return (

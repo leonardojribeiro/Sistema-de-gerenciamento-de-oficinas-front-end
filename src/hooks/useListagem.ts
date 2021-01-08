@@ -8,6 +8,11 @@ interface ListaItens<T> {
   total: number
 }
 
+interface Query {
+  name: string;
+  value: string;
+}
+
 export default function useListagem<T>(pathToItens: string, dominio: string) {
   const [itens, setItens] = useState<ListaItens<T>>({ total: 1, itens: [] });
   const [page, setPage] = useState<number>(1);
@@ -52,9 +57,9 @@ export default function useListagem<T>(pathToItens: string, dominio: string) {
     }
   }, [dominio, get, page, pathToItens]);
 
-  const handleSearch = useCallback(async (dados) => {
+  const handleSearch = useCallback(async (dados: Query) => {
     consultaValues.current = dados;
-    const resposta = await get(`/${dominio}/consulta?${dados.filtro}=${dados.consulta}&limite=100&pagina=${page}`) as any;
+    const resposta = await get(`/${dominio}/consulta?${dados.name}=${dados.value}&limite=100&pagina=${page}`) as any;
     if (resposta) {
       setItens({
         total: resposta.total,

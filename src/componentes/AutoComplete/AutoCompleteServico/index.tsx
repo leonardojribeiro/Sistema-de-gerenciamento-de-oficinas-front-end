@@ -22,8 +22,8 @@ const AutoCompleteServico: React.FC<AutoCompleteProps<Servico>> = ({ label, name
       clearText="Limpar"
       openText="Abrir"
       required={required}
-      getOptionLabel={(option) => option.descricao}
-      getOptionSelected={(option, value) => option.descricao === value.descricao}
+      getOptionLabel={(option) => option ? option.descricao : ""}
+      getOptionSelected={(option, value) => option?.descricao === value?.descricao}
     />
   );
 }

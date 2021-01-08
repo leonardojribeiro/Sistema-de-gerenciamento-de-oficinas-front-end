@@ -31,9 +31,9 @@ const ListagemPessoa: React.FC<ListagemPessoaProps> = ({ linkToChangePath, linkT
     }
   }, [props.listar, listar])
 
+  //<FormConsultaPessoa onSubmit={handleSearch} />
   return (
     <>
-      <FormConsultaPessoa onSubmit={handleSearch} />
       <Box mb={2}>
         {
           itens?.map((pessoa, index) => (

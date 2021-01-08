@@ -22,8 +22,8 @@ const AutoCompleteEspecialidade: React.FC<AutoCompleteProps<Especialidade>> = ({
       clearText="Limpar"
       openText="Abrir"
       required={required}
-      getOptionLabel={(option) => option.descricao}
-      getOptionSelected={(option, value) => option._id === value._id}
+      getOptionLabel={(option) => option ? option.descricao : ""}
+      getOptionSelected={(option, value) => option?._id === value?._id}
       multiple={multiple}
       onChange={onChange}
     />

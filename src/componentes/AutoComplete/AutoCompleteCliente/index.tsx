@@ -22,8 +22,8 @@ const AutoCompleteCliente: React.FC<AutoCompleteProps<Cliente>> = ({ onChange, l
       clearText="Limpar"
       openText="Abrir"
       required={required}
-      getOptionLabel={(option) => option.nome}
-      getOptionSelected={(option, value) => option.nome === value.nome}
+      getOptionLabel={(option) => option ? option.nome : ""}
+      getOptionSelected={(option, value) => option?.nome === value?.nome}
     />
   );
 }

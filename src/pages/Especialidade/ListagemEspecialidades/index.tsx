@@ -20,7 +20,7 @@ const ListagemEspecialidades: React.FC = () => {
   }, [listar, pathname]);
 
   const manipularBusca = useCallback(async ({ consulta }) => {
-    handleSearch(`descricao=${consulta}`);
+   // handleSearch(`descricao=${consulta}`);
   }, [handleSearch]);
 
   return (

@@ -24,7 +24,7 @@ const ListagemPecas: React.FC = () => {
   const { handlePageChange, handleSearch, listar, total, itens, page } = useListagem<Peca>("pecas", "peca");
 
   const handleSubmitSearch = useCallback(async (dados) => {
-    handleSearch(`descricao=${dados.consulta}&marca=${dados.marca}`)
+    //handleSearch(`descricao=${dados.consulta}&marca=${dados.marca}`)
   }, [handleSearch]);
 
   useEffect(() => {
