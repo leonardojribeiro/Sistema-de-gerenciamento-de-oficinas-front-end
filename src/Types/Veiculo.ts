@@ -5,5 +5,5 @@ export default interface Veiculo{
   placa: string;
   anoModelo: Date;
   anoFabricacao: Date;
-  modelo?: Modelo;
+  modelo: Modelo;
 }

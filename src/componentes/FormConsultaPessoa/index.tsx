@@ -8,7 +8,7 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import Query from '../../Types/Query';
 import TextField from '../Form/Fields/TextField';
 
-type Filter = "nome" | "nomeFantasia" | "cpfCnpj" | "cpf" | "email" | "telefone" | "descricao" | "placa";
+export type Filter = "nome" | "nomeFantasia" | "cpfCnpj" | "cpf" | "email" | "telefone" | "descricao" | "placa";
 
 interface FormConsultaPessoaProps {
   onSubmit: (query: Query[]) => void;

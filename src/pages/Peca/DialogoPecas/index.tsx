@@ -2,13 +2,24 @@ import React, { memo } from 'react';
 import Dialogo from '../../../componentes/Dialog';
 import { Switch, Route } from 'react-router-dom';
 import DialogoIncluirOuAlterarPeca from '../DialogoIncluirOuAlterarPeca';
-import ListagemPeca from '../ListagemPecas';
+import Listagem from '../../../componentes/Listagem';
 
 const DialogoPecas: React.FC = () => {
-
+  const imagensUrl = process.env.REACT_APP_IMAGENS_URL;
   return (
     <Dialogo maxWidth="xs" fullWidth open title="Peças">
-      <ListagemPeca />
+      <Listagem
+        dominio="peca"
+        formSearchFilters={["descricao"]}
+        getPrimaryText={item => item.descricao}
+        getSecondaryText={item => item.marca.descricao}
+        getURLAvatar={item => `${imagensUrl}/${item.marca.uriLogo}`}
+        getAltAvatar={item => item.marca.descricao}
+        getLinkToChange={item => `/pecas/alterarpeca?id=?id=${item._id}`}
+        getTitleLinkToChange={item => `Alterar a peça ${item.descricao}`}
+        linkToInsertTitle="Incluir peça"
+        linkToInsert="/pecas/incluirpeca"
+      />
       <Switch>
         <Route path={["/pecas/incluirpeca", "/pecas/alterarpeca"]} component={DialogoIncluirOuAlterarPeca} />
       </Switch>
