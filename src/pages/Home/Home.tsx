@@ -99,15 +99,15 @@ const Home: React.FC = () => {
       <Box display="flex">
         <MiniDrawer open={open} setOpen={setOpen}>
           <List onClick={() => setOpen(false)}>
-            <ItemDrawer icon={<FolderIcon />} title="Marcas" navigateTo="/marcas" />
-            <ItemDrawer icon={<FolderIcon />} title="Modelos" navigateTo="/modelos" />
-            <ItemDrawer icon={<ExtensionIcon />} title="Peças" navigateTo="/pecas" />
-            <ItemDrawer icon={<PersonIcon />} title="Clientes" navigateTo="/clientes" />
-            <ItemDrawer icon={<DriveEtaIcon />} title="Veículos" navigateTo="/veiculos" />
-            <ItemDrawer icon={<LocalShippingIcon />} title="Fornecedores" navigateTo="/fornecedores" />
-            <ItemDrawer icon={<SchoolIcon />} title="Especialidades" navigateTo="/especialidades" />
-            <ItemDrawer icon={<GroupIcon />} title="Funcionários" navigateTo="/funcionarios" />
-            <ItemDrawer icon={<BuildIcon />} title="Serviços" navigateTo="/servicos" />
+            <ItemDrawer icon={<FolderIcon />} title="Marcas" dominio="marca" navigateTo="/marcas" />
+            <ItemDrawer icon={<FolderIcon />} title="Modelos" dominio="modelo" navigateTo="/modelos" />
+            <ItemDrawer icon={<ExtensionIcon />} title="Peças" dominio="peca" navigateTo="/pecas" />
+            <ItemDrawer icon={<PersonIcon />} title="Clientes" dominio="cliente" navigateTo="/clientes" />
+            <ItemDrawer icon={<DriveEtaIcon />} title="Veículos" dominio="veiculo" navigateTo="/veiculos" />
+            <ItemDrawer icon={<LocalShippingIcon />} title="Fornecedores" dominio="fornecedor" navigateTo="/fornecedores" />
+            <ItemDrawer icon={<SchoolIcon />} title="Especialidades" dominio="especialidade" navigateTo="/especialidades" />
+            <ItemDrawer icon={<GroupIcon />} title="Funcionários" dominio="funcionario" navigateTo="/funcionarios" />
+            <ItemDrawer icon={<BuildIcon />} title="Serviços" dominio="servico" navigateTo="/servicos" />
             <ItemDrawer icon={<SettingsIcon />} title="Opções" navigateTo="/opcoes" />
           </List>
         </MiniDrawer>

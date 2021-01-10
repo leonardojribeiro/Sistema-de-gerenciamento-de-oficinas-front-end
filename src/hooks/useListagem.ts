@@ -1,8 +1,7 @@
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
-import { io } from "socket.io-client";
 import ApiContext from "../contexts/ApiContext";
+import WebSocketContext from "../contexts/WebSocketContext";
 import Query from "../Types/Query";
-import useAuth from "./useAuth";
 
 interface ListaItens<T> {
   itens: T[];
@@ -14,32 +13,28 @@ export default function useListagem<T = any>(pathToItens: string, dominio: strin
   const [page, setPage] = useState<number>(1);
   const { get } = useContext(ApiContext);
   const consultaValues = useRef<any>();
-  const auth = useAuth();
-
-  console.log(dominio)
+  const { webSocket } = useContext(WebSocketContext);
+  const componentMounted = useRef<Boolean>(false);
 
   useEffect(() => {
-    const socket = io(process.env.REACT_APP_API_URL as string, { auth: { token: auth.token }, });
-    socket.on("connect", () => {
-      console.log("conectou");
-    })
-
-    socket.on(`${dominio}Incluido`, (item: T) => {
-      console.log(item);
-      setItens(itens => {
-        return {
-          total: itens.total + 1,
-          itens: [item, ...itens.itens]
-        }
-      })
-    })
-
+    componentMounted.current = true;
     return () => {
-      console.log('desmontando')
-      socket.disconnect()
-    }
+      componentMounted.current = false
+    };
+  }, [])
 
-  }, [auth.token, dominio])
+  useEffect(() => {
+    webSocket.on(`${dominio}Incluido`, (item: T) => {
+      if (componentMounted.current) {
+        setItens(itens => {
+          return {
+            total: itens.total + 1,
+            itens: [item, ...itens.itens]
+          }
+        })
+      }
+    })
+  }, [dominio, webSocket]);
 
   const listar = useCallback(async () => {
     if (!consultaValues.current) {
@@ -52,7 +47,7 @@ export default function useListagem<T = any>(pathToItens: string, dominio: strin
 
   const handleSearch = useCallback(async (dados: Query[]) => {
     consultaValues.current = dados;
-    const resposta = await get(`/${dominio}/consulta?${dados.map(query=>`${query.name}=${query.value}&`)}limite=100&pagina=${page}`) as any;
+    const resposta = await get(`/${dominio}/consulta?${dados.map(query => `${query.name}=${query.value}&`)}limite=100&pagina=${page}`) as any;
     if (resposta) {
       setItens(resposta as ListaItens<T>);
     }

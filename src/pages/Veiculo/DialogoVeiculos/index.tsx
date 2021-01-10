@@ -33,7 +33,7 @@ const DialogoVeiculos: React.FC = () => {
               </IconButton>
             </Tooltip>
             <Tooltip title={`Ver histórico desse veículo`}>
-              <IconButton component={Link} to={`/veiculos/historico?veiculo=${item._id}`}>
+              <IconButton  component={Link} to={`/veiculos/historico?veiculo=${item._id}`}>
                 <HistoryIcon />
               </IconButton>
             </Tooltip>

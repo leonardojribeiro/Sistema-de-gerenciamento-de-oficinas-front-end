@@ -7,6 +7,7 @@ import { TemaProvider } from './contexts/TemaContext';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import datefns from '@date-io/date-fns';
 import ptLocale from "date-fns/locale/pt-BR";
+import { WebSocketProvider } from './contexts/WebSocketContext';
 
 class LocalizedUtils extends datefns {
   getDatePickerHeaderText(date: Date) {
@@ -19,7 +20,9 @@ function App() {
       <MuiPickersUtilsProvider utils={LocalizedUtils} locale={ptLocale} >
         <TemaProvider>
           <AuthProvider>
-            <Routes />
+            <WebSocketProvider>
+              <Routes />
+            </WebSocketProvider>
           </AuthProvider>
         </TemaProvider>
       </MuiPickersUtilsProvider>

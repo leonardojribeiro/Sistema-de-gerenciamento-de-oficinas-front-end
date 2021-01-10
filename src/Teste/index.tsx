@@ -14,11 +14,11 @@ function Teste() {
 
       await post('servico', {
         descricao: Math.random().toString(36).replace(/[^a-z]+/g, ''),
-        valor: 1,
-        tempoDuracao: 25
+        valor: Math.random()*1000,
+        tempoDuracao: Math.random()*10000
       } )
 
-    },1000);
+    },300);
   }, [post]);
 
 

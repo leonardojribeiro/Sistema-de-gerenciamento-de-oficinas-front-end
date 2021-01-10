@@ -1,5 +1,5 @@
 import React, { createContext, useCallback } from "react";
-import api from "../../servicos/api";
+import api from "../../services/api";
 import ProgressoCircular, { ProgressoCircularHandles } from "../../componentes/ProgressoCircular";
 import dot from "dot-object";
 import Alerta, { AlertaHandles } from "../../componentes/Alerta";
