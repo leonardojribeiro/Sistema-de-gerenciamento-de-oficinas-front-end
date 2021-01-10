@@ -15,7 +15,7 @@ const DialogoPecas: React.FC = () => {
         getSecondaryText={item => item.marca.descricao}
         getURLAvatar={item => `${imagensUrl}/${item.marca.uriLogo}`}
         getAltAvatar={item => item.marca.descricao}
-        getLinkToChange={item => `/pecas/alterarpeca?id=?id=${item._id}`}
+        getLinkToChange={item => `/pecas/alterarpeca?id=${item._id}`}
         getTitleLinkToChange={item => `Alterar a peça ${item.descricao}`}
         linkToInsertTitle="Incluir peça"
         linkToInsert="/pecas/incluirpeca"

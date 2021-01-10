@@ -81,6 +81,30 @@ const Provider: React.FC<ProviderProps> = ({ webSocket, children }) => {
       updateNotifications("marca", "inserted")
     })
 
+    webSocket.on(`pecaIncluido`, (item: any) => {
+      updateNotifications("peca", "inserted")
+    })
+
+    webSocket.on(`modeloIncluido`, (item: any) => {
+      updateNotifications("modelo", "inserted")
+    })
+
+    webSocket.on(`clienteIncluido`, (item: any) => {
+      updateNotifications("cliente", "inserted")
+    })
+    
+    webSocket.on(`fornecedorIncluido`, (item: any) => {
+      updateNotifications("fornecedor", "inserted")
+    })
+
+    webSocket.on(`funcionarioIncluido`, (item: any) => {
+      updateNotifications("funcionario", "inserted")
+    })
+
+    webSocket.on(`especialidadeIncluido`, (item: any) => {
+      updateNotifications("especialidade", "inserted")
+    })
+
     return () => {
       webSocket.close()
     }
