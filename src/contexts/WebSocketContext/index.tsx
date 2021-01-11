@@ -23,9 +23,10 @@ export type Dominio =
 interface WebSocketValues {
   webSocket: Socket;
   getNotification: (dominio: Dominio) => Notification;
+  dismissNotification: (dominio: Dominio) => void;
 }
 
-type Action = "changed" | "inserted"
+type Action = "changed" | "inserted" | "dismiss"
 
 
 interface Notifications {
@@ -63,10 +64,14 @@ const Provider: React.FC<ProviderProps> = ({ webSocket, children }) => {
     setNotifications(notifications => {
       return {
         ...notifications,
-        [dominio]: {
-          changed: action === "changed" ? notifications[dominio].changed + 1 : notifications[dominio].changed,
-          inserted: action === "inserted" ? notifications[dominio].inserted + 1 : notifications[dominio].inserted,
-        }
+        [dominio]: action === "dismiss"
+          ? {
+            changed: 0, inserted: 0
+          }
+          : {
+            changed: action === "changed" ? notifications[dominio].changed + 1 : notifications[dominio].changed,
+            inserted: action === "inserted" ? notifications[dominio].inserted + 1 : notifications[dominio].inserted,
+          }
       }
     })
   }, []);
@@ -92,7 +97,7 @@ const Provider: React.FC<ProviderProps> = ({ webSocket, children }) => {
     webSocket.on(`clienteIncluido`, (item: any) => {
       updateNotifications("cliente", "inserted")
     })
-    
+
     webSocket.on(`fornecedorIncluido`, (item: any) => {
       updateNotifications("fornecedor", "inserted")
     })
@@ -115,8 +120,12 @@ const Provider: React.FC<ProviderProps> = ({ webSocket, children }) => {
     return notifications[dominio]
   }, [notifications])
 
+  const dismissNotification = useCallback((dominio: Dominio) => {
+    updateNotifications(dominio, "dismiss");
+  }, [updateNotifications])
+
   return (
-    <WebSocketContext.Provider value={{ webSocket, getNotification }}>
+    <WebSocketContext.Provider value={{ webSocket, getNotification, dismissNotification }}>
       {children}
     </WebSocketContext.Provider>
   )
