@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import ApiContext from "../contexts/ApiContext";
-import WebSocketContext from "../contexts/WebSocketContext";
+import WebSocketContext, { Dominio } from "../contexts/WebSocketContext";
 import Query from "../Types/Query";
 
 interface ListaItens<T> {
@@ -8,12 +8,12 @@ interface ListaItens<T> {
   total: number
 }
 
-export default function useListagem<T = any>(pathToItens: string, dominio: string) {
+export default function useListagem<T = any>(dominio: Dominio) {
   const [itens, setItens] = useState<ListaItens<T>>({ total: 1, itens: [] });
   const [page, setPage] = useState<number>(1);
   const { get } = useContext(ApiContext);
   const consultaValues = useRef<any>();
-  const { webSocket } = useContext(WebSocketContext);
+  const { webSocket, setIsOpen } = useContext(WebSocketContext);
   const componentMounted = useRef<Boolean>(false);
 
   useEffect(() => {
@@ -22,6 +22,13 @@ export default function useListagem<T = any>(pathToItens: string, dominio: strin
       componentMounted.current = false
     };
   }, [])
+
+  useEffect(() => {
+    setIsOpen(dominio);
+    return () => {
+      setIsOpen(undefined);
+    };
+  }, [dominio, setIsOpen])
 
   useEffect(() => {
     webSocket.on(`${dominio}Incluido`, (item: T) => {

@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useState } from "react"
+import React, { createContext, useCallback, useRef, useState } from "react"
 import { useEffect, } from "react";
 import { io, Socket } from "socket.io-client";
 import useAuth from "../../hooks/useAuth";
@@ -24,6 +24,7 @@ interface WebSocketValues {
   webSocket: Socket;
   getNotification: (dominio: Dominio) => Notification;
   dismissNotification: (dominio: Dominio) => void;
+  setIsOpen: (dominio: Dominio | undefined) => void;
 }
 
 type Action = "changed" | "inserted" | "dismiss"
@@ -60,20 +61,24 @@ const Provider: React.FC<ProviderProps> = ({ webSocket, children }) => {
     veiculo: { changed: 0, inserted: 0 },
   } as Notifications);
 
+  const isOpen = useRef<Dominio | undefined>(undefined);
+
   const updateNotifications = useCallback((dominio: Dominio, action: Action) => {
-    setNotifications(notifications => {
-      return {
-        ...notifications,
-        [dominio]: action === "dismiss"
-          ? {
-            changed: 0, inserted: 0
-          }
-          : {
-            changed: action === "changed" ? notifications[dominio].changed + 1 : notifications[dominio].changed,
-            inserted: action === "inserted" ? notifications[dominio].inserted + 1 : notifications[dominio].inserted,
-          }
-      }
-    })
+    if (isOpen.current !== dominio) {
+      setNotifications(notifications => {
+        return {
+          ...notifications,
+          [dominio]: action === "dismiss"
+            ? {
+              changed: 0, inserted: 0
+            }
+            : {
+              changed: action === "changed" ? notifications[dominio].changed + 1 : notifications[dominio].changed,
+              inserted: action === "inserted" ? notifications[dominio].inserted + 1 : notifications[dominio].inserted,
+            }
+        }
+      })
+    }
   }, []);
 
   useEffect(() => {
@@ -124,8 +129,12 @@ const Provider: React.FC<ProviderProps> = ({ webSocket, children }) => {
     updateNotifications(dominio, "dismiss");
   }, [updateNotifications])
 
+  const setIsOpen = useCallback((dominio: Dominio | undefined) => {
+    isOpen.current = dominio;
+  }, [])
+
   return (
-    <WebSocketContext.Provider value={{ webSocket, getNotification, dismissNotification }}>
+    <WebSocketContext.Provider value={{ webSocket, getNotification, dismissNotification, setIsOpen }}>
       {children}
     </WebSocketContext.Provider>
   )

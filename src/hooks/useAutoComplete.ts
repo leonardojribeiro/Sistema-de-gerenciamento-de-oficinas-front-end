@@ -1,10 +1,11 @@
 import { AutocompleteInputChangeReason } from "@material-ui/lab";
 import { useCallback, useContext, useEffect } from "react";
 import ApiContext from "../contexts/ApiContext";
+import { Dominio } from "../contexts/WebSocketContext";
 import useListagem from "./useListagem";
 
 export default function useAutoComplete<T>(pathToItens: string, dominio: string, filterToSearch: string, listOptionsIn: boolean) {
-  const { itens, listar, handleSearch, setItens } = useListagem<T>(pathToItens, dominio);
+  const { itens, listar, handleSearch, setItens } = useListagem<T>(dominio as Dominio);
   const { get } = useContext(ApiContext);
 
   const getMoreOptions = useCallback(async (search) => {

@@ -23,7 +23,7 @@ interface ListagemPessoaProps {
 }
 
 const ListagemPessoa: React.FC<ListagemPessoaProps> = ({ linkToChangePath, linkToChangeText, linkToInsertPath, linkToInsertText, dominio, pathToItens, ...props }) => {
-  const { handleSearch, handlePageChange, itens, listar, total, page } = useListagem<Pessoa>(pathToItens, dominio);
+  const { handleSearch, handlePageChange, itens, listar, total, page } = useListagem(dominio);
 
   useEffect(() => {
     if (props.listar) {

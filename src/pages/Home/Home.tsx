@@ -123,6 +123,7 @@ const Home: React.FC = () => {
       <Rodape />
     </>
   );
+  
 }
 
 export default memo(Home);

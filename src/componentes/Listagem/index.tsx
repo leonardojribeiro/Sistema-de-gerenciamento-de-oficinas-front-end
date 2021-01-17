@@ -64,10 +64,7 @@ export default function Listagem({
   dominio
 }: Props): JSX.Element {
 
-  const { handlePageChange, handleSearch, itens, listar, page, total } = useListagem(
-    "servicos",
-    dominio,
-  );
+  const { handlePageChange, handleSearch, itens, listar, page, total } = useListagem(dominio);
 
   useEffect(() => {
     listar()
