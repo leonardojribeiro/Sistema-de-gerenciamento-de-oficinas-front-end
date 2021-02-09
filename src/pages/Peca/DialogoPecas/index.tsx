@@ -13,8 +13,8 @@ const DialogoPecas: React.FC = () => {
         formSearchFilters={["descricao", "marca"]}
         getPrimaryText={item => item.descricao}
         getSecondaryText={item => item.marca.descricao}
-        getURLAvatar={item => `${imagensUrl}/${item.marca.uriLogo}`}
-        getAltAvatar={item => item.marca.descricao}
+        // getURLAvatar={item => `${imagensUrl}/${item.marca.uriLogo}`}
+        // getAltAvatar={item => item.marca.descricao}
         getLinkToChange={item => `/pecas/alterarpeca?id=${item._id}`}
         getTitleLinkToChange={item => `Alterar a peça ${item.descricao}`}
         linkToInsertTitle="Incluir peça"

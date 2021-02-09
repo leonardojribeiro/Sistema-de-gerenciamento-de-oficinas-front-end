@@ -8,7 +8,7 @@ interface CepFieldProps extends StandardTextFieldProps {
   name: string,
 }
 
-const CepField: React.FC<CepFieldProps> = ({ name, ...props }) => {
+const CepField: React.FC<CepFieldProps> = ({ name, onChange, ...props }) => {
   const getMask = useCallback((value) =>
     numberMask(
       value,
@@ -20,7 +20,7 @@ const CepField: React.FC<CepFieldProps> = ({ name, ...props }) => {
     name,
     validacao: validacao.validarCep,
     getMask, required: props.required,
-    onChange: props.onChange,
+    onChange: onChange,
     getUnmask
   })
 

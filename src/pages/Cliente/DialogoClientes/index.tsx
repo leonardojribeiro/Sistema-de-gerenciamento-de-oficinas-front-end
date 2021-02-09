@@ -1,23 +1,31 @@
 import React, { memo } from 'react';
-import { Switch, Route, useLocation } from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom';
 import DialogoIncluirOuAlterarCliente from '../DialogoIncluirOuAlterarCliente';
-import ListagemPessoa from '../../../componentes/ListagemPessoa';
+import Listagem from '../../../componentes/Listagem';
 import Dialog from '../../../componentes/Dialog';
 import DialogoVeiculosCliente from '../DialogoVeiculosCliente';
+import DriveEtaIcon from '@material-ui/icons/DriveEta';
+import { IconButton, Tooltip } from '@material-ui/core';
 
 const DialogoClientes: React.FC = () => {
-  const listar = useLocation().pathname === "/clientes";
-  
   return (
     <Dialog maxWidth="lg" fullWidth open title="Clientes">
-      <ListagemPessoa
+      <Listagem
         dominio="cliente"
-        pathToItens="clientes"
-        linkToChangeText={cliente => `Alterar o cliente ${cliente.nome}`}
-        linkToChangePath={cliente => `/clientes/alterarcliente?id=${cliente._id}`}
-        linkToInsertPath="/clientes/incluircliente"
-        linkToInsertText="incluir cliente"
-        listar={listar}
+        formSearchFilters={['nome', 'cpf', 'email', 'telefone']}
+        linkToInsert="/clientes/incluircliente"
+        linkToInsertTitle="incluir cliente"
+        getPrimaryText={cliente => cliente.nome}
+        getSecondaryText={cliente=>`Celular: ${cliente.telefoneCelular}`}
+        getTitleLinkToChange={cliente => `Alterar o cliente ${cliente.nome}`}
+        getLinkToChange={cliente => `/clientes/alterarcliente?id=${cliente._id}`}
+        renderSecondaryActions={cliente => (
+          <Tooltip title="Veículos desse cliente">
+            <IconButton component={Link} to={`clientes/veiculos?cliente=${cliente._id}`}>
+              <DriveEtaIcon />
+            </IconButton>
+          </Tooltip>
+        )}
       />
       <Switch>
         <Route path={["/clientes/incluircliente", "/clientes/alterarcliente"]} component={DialogoIncluirOuAlterarCliente} />

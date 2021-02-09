@@ -17,7 +17,8 @@ const NameField: React.FC<NameFieldProps> = ({ name, onChange, maxLength, ...pro
     validacao: validarNome,
     getMask,
     noValidate: props.noValidate,
-    required: props.required
+    required: props.required,
+    onChange: onChange,
   });
 
   console.log(value)

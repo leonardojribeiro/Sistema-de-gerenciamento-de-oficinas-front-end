@@ -1,21 +1,21 @@
 import React from 'react';
 import Dialogo from '../../../componentes/Dialog';
-import { Switch, Route, useLocation } from 'react-router-dom';
+import { Switch, Route, } from 'react-router-dom';
 import DialogoIncluirOuAlterarCliente from '../DialogoIncluirOuAlterarFornecedor';
-import ListagemPessoa from '../../../componentes/ListagemPessoa';
+import Listagem from '../../../componentes/Listagem';
 
 const DialogoFornecedores: React.FC = () => {
-  const listar = useLocation().pathname === "/fornecedores";
   return (
     <Dialogo maxWidth="lg" fullWidth open title="Fornecedores">
-      <ListagemPessoa
+      <Listagem
         dominio="fornecedor"
-        pathToItens="fornecedores"
-        linkToChangeText={fornecedor => `Alterar o fornecerdor ${fornecedor.nomeFantasia}`}
-        linkToChangePath={fornecedor => `/fornecedores/alterarfornecedor?id=${fornecedor._id}`}
-        linkToInsertPath="/fornecedores/incluirfornecedor"
-        linkToInsertText="incluir fornecedor"
-        listar={listar}
+        formSearchFilters={['nome', 'cpf', 'email', 'telefone']}
+        linkToInsert="/fornecedores/incluirfornecedor"
+        linkToInsertTitle="incluir fornecedor"
+        getPrimaryText={cliente => cliente.nomeFantasia}
+        getSecondaryText={cliente=>`Celular: ${cliente.telefoneCelular}`}
+        getTitleLinkToChange={cliente => `Alterar o fornecedor ${cliente.nomeFantasia}`}
+        getLinkToChange={cliente => `/fornecedores/alterarfornecedor?id=${cliente._id}`}
       />
       <Switch>
         <Route path={["/fornecedores/incluirfornecedor","/fornecedores/alterarfornecedor"]} component={DialogoIncluirOuAlterarCliente} />

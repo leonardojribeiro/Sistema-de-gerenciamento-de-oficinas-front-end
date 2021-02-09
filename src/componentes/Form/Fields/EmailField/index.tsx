@@ -9,12 +9,13 @@ interface EmailFieldProps extends StandardTextFieldProps {
   maxLength?: Number
 }
 
-const EmailField: React.FC<EmailFieldProps> = ({ name, maxLength, ...props }) => {
+const EmailField: React.FC<EmailFieldProps> = ({ name, maxLength, onChange, ...props }) => {
   const { handleInputChange, ref, valid, value } = useFormField({
     name,
     validacao: validacao.validarEmail,
     required: props.required,
-    onChange: props.onChange
+    onChange: onChange,
+    noValidate: props.noValidate
   })
 
   return (

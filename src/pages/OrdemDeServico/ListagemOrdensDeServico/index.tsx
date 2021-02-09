@@ -18,7 +18,7 @@ const ListagemOrdensDeServico: React.FC = () => {
         getTitleLinkToChange={() => ""}
         linkToInsert="/ordensdeservico/incluirordemdeservico"
         linkToInsertTitle="Incluir ordem de serviço"
-        formSearchFilters={["veiculo", "status", "categoria" ,]}
+        formSearchFilters={["status", "veiculo",]}
       />
       <Switch>
         <Route path="/ordensdeservico/incluir" component={DialogIncluirOrdemDeServico} />

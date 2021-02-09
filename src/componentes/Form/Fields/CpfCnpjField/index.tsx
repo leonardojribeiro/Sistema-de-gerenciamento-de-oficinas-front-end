@@ -10,7 +10,7 @@ interface CpfCnpjFieldProps extends StandardTextFieldProps {
   noValidate?: boolean;
 }
 
-const CampoCpfCnpj: React.FC<CpfCnpjFieldProps> = ({ name, onlyCpf, ...props }) => {
+const CampoCpfCnpj: React.FC<CpfCnpjFieldProps> = ({ name, onlyCpf, onChange, ...props }) => {
   const getMask = useCallback((value) =>
     numberMask(
       value,
@@ -26,7 +26,7 @@ const CampoCpfCnpj: React.FC<CpfCnpjFieldProps> = ({ name, onlyCpf, ...props }) 
     getMask,
     noValidate: props.noValidate,
     required: props.required,
-    onChange: props.onChange,
+    onChange: onChange,
     getUnmask,
   })
 

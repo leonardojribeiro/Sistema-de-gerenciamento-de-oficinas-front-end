@@ -9,7 +9,7 @@ interface PhoneFieldProps extends StandardTextFieldProps {
   noValidate?: boolean;
 }
 
-const PhoneField: React.FC<PhoneFieldProps> = ({ name, ...props }) => {
+const PhoneField: React.FC<PhoneFieldProps> = ({ name, onChange, ...props }) => {
   const getMask = useCallback(value => numberMask(
     value,
     length => length < 11
@@ -22,7 +22,7 @@ const PhoneField: React.FC<PhoneFieldProps> = ({ name, ...props }) => {
     validacao: validacao.validarTelefone,
     getMask, noValidate: props.noValidate,
     required: props.required,
-    onChange: props.onChange,
+    onChange: onChange,
     getUnmask,
   })
 

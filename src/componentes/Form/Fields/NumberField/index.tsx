@@ -8,7 +8,7 @@ interface TextFieldProps extends TextFieldPropsMUI {
   max?: number;
 }
 
-const NumberField: React.FC<TextFieldProps> = ({ name, max, min, ...props }) => {
+const NumberField: React.FC<TextFieldProps> = ({ name, max, min, onChange, ...props }) => {
   const validate = useCallback((value: string) => {
     if (min !== undefined && max !== undefined) {
       return Number(value) >= min && Number(value) <= max;
@@ -26,7 +26,7 @@ const NumberField: React.FC<TextFieldProps> = ({ name, max, min, ...props }) => 
     name,
     validacao: validate,
     required: props.required,
-    onChange: props.onChange
+    onChange: onChange
   })
 
   const handleChange = useCallback((event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {

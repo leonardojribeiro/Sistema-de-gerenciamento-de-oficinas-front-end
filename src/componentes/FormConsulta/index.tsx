@@ -1,4 +1,4 @@
-import { Box, Chip, ChipProps, ClickAwayListener, Tooltip } from '@material-ui/core';
+import { Box, Chip, ChipProps, ClickAwayListener, createStyles, Divider, makeStyles, Theme, Tooltip } from '@material-ui/core';
 import React, { memo, useCallback, useRef, useState } from 'react';
 import { Form, PhoneField } from '../Form';
 import CpfCnpjField from '../Form/Fields/CpfCnpjField';
@@ -18,7 +18,26 @@ interface FormConsultaPessoaProps {
   filters: Filter[];
 }
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    chipContainer: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      
+    },
+    container: {
+      border: `solid 1px ${theme.palette.background.default}`,
+      borderRadius: theme.spacing(0.5),
+      padding: theme.spacing(1)
+    },
+    chip:{
+      margin: theme.spacing(0.5),
+    }
+  }),
+);
+
 const FormConsulta: React.FC<FormConsultaPessoaProps> = ({ onSubmit, filters }) => {
+  const classes = useStyles();
   const [filtersSelected, setFiltersSelected] = useState<Filter[]>([filters[0]]);
   const valuesSelected = useRef<string[]>([""]);
   const labelValuesSelected = useRef<any>({});
@@ -90,6 +109,7 @@ const FormConsulta: React.FC<FormConsultaPessoaProps> = ({ onSubmit, filters }) 
       variant: filtersSelected.includes(filter) && filtersSelected[filtersSelected.length - 1] === filter ? "default" : "outlined",
       size: "small",
       key: filter,
+      className: classes.chip,
       onDelete: filtersSelected.length > 0 && filtersSelected[filtersSelected.length - 1] === filter
         && filtersSelected[0] !== filters[0]
         ? () => {
@@ -107,6 +127,18 @@ const FormConsulta: React.FC<FormConsultaPessoaProps> = ({ onSubmit, filters }) 
       case 'placa': {
         return <Chip label="Placa" {...props} />
       }
+      case 'descricao': {
+        return <Chip label="Descrição" {...props} />
+      }
+      case 'nome': {
+        return <Chip label="Nome" {...props} />
+      }
+      case 'telefone': {
+        return <Chip label="Telefone" {...props} />
+      }
+      case 'email': {
+        return <Chip label="Email" {...props} />
+      }
       case 'status': {
         return <Chip label="Status" {...props} />
       }
@@ -119,22 +151,21 @@ const FormConsulta: React.FC<FormConsultaPessoaProps> = ({ onSubmit, filters }) 
       case 'modelo': {
         return <Chip label={`Modelo${labelValuesSelected.current['modelo'] ? `: ${labelValuesSelected.current['modelo']}` : ""}`} {...props} />
       }
-      case 'descricao': {
-        return <Chip label="Descricao" {...props} />
-      }
     }
-    return <Chip />
-  }, [filters, filtersSelected, handleFilterAdition, handleFilterDelete, isAditionAllowed,])
+    return <Chip {...props} />
+  }, [classes.chip, filters, filtersSelected, handleFilterAdition, handleFilterDelete, isAditionAllowed])
 
   const getFieldForCurrentFilter = useCallback(() => {
     const props = {
       name: "value",
       fullWidth: true,
       noValidate: true,
+      label: "",
       placeholder: 'Consultar',
       InputProps: {
         startAdornment: filtersSelected.map(filter => getChipForCurrentFilter(filter, true))
-      }
+      },
+      onChange: (event: any) => { handleValueChange(event.target.value) }
     };
     switch (filtersSelected[filtersSelected.length - 1]) {
       case "nome" || "nomeFantasia": {
@@ -155,11 +186,19 @@ const FormConsulta: React.FC<FormConsultaPessoaProps> = ({ onSubmit, filters }) 
       case "cpf": {
         return <CpfCnpjField {...props} />
       }
+      case "descricao": {
+        return <TextField {...props} />
+      }
       case "veiculo": {
-        return <AutoCompleteVeiculo {...props} label="" />
+        return <AutoCompleteVeiculo {...props} onChange={(_, value) => {
+          if (value) {
+            handleValueChange(value._id)
+            labelValuesSelected.current['veiculo'] = value.descricao;
+          }
+        }} />
       }
       case "marca": {
-        return <AutoCompleteMarca {...props} label="" onChange={(_, value) => {
+        return <AutoCompleteMarca {...props} onChange={(_, value) => {
           if (value) {
             handleValueChange(value._id)
             labelValuesSelected.current['marca'] = value.descricao;
@@ -167,7 +206,7 @@ const FormConsulta: React.FC<FormConsultaPessoaProps> = ({ onSubmit, filters }) 
         }} />
       }
       case "modelo": {
-        return <AutoCompleteModelo {...props} label="" onChange={(_, value) => {
+        return <AutoCompleteModelo {...props} onChange={(_, value) => {
           if (value) {
             handleValueChange(value._id)
             labelValuesSelected.current['modelo'] = value.descricao;
@@ -175,16 +214,16 @@ const FormConsulta: React.FC<FormConsultaPessoaProps> = ({ onSubmit, filters }) 
         }} />
       }
     }
-    return <TextField {...props} onChange={(e) => handleValueChange(e.target.value)} />
+
   }, [filtersSelected, getChipForCurrentFilter, handleValueChange]);
 
   return (
-    <Form onSubmit={handleSubmit} initialData={{ filtro: filtersSelected }}>
-      <Box >
+    <Form onSubmit={handleSubmit}>
+      <div className={classes.container} >
         <Box>
           {getFieldForCurrentFilter()}
         </Box>
-        <Box>
+        <div className={classes.chipContainer}>
           {filters.length > 1 ? filters.map((filter, key) => {
             return (
               <ClickAwayListener key={key} onClickAway={() => {
@@ -203,8 +242,8 @@ const FormConsulta: React.FC<FormConsultaPessoaProps> = ({ onSubmit, filters }) 
               </ClickAwayListener>
             )
           }) : ""}
-        </Box>
-      </Box>
+        </div>
+      </div>
     </Form>
   );
 }

@@ -14,7 +14,8 @@ const TextField: React.FC<TextFieldProps> = ({ name, onChange, maxLength, ...pro
     name,
     validacao: validacao.validarTexto,
     noValidate: props.noValidate,
-    required: props.required, onChange
+    required: props.required,
+    onChange
   })
 
   return (

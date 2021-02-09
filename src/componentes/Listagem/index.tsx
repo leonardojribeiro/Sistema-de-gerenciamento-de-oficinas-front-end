@@ -13,6 +13,9 @@ import Especialidade from '../../Types/Especialidade';
 import FormConsulta, { Filter } from '../FormConsulta';
 import Veiculo from '../../Types/Veiculo';
 import OrdemDeServico from '../../Types/OrdemDeServico';
+import Cliente from '../../Types/Cliente';
+import Fornecedor from '../../Types/Fornecedor';
+import Funcionario from '../../Types/Funcionario';
 
 type Value<T = any> = T;
 
@@ -25,31 +28,29 @@ interface BaseListagemProps<T,> {
   linkToInsertTitle: string;
   formSearchFilters: Filter[];
   renderSecondaryActions?: (item: Value<T>) => JSX.Element;
+  renderAvatar?: (item: Value<T>) => JSX.Element;
 }
 
-interface ListagemAvatarProps<T> extends BaseListagemProps<T> {
-  getURLAvatar: (item: Value<T>) => string;
-  getAltAvatar: (item: Value<T>) => string;
-}
 
-interface ListagemProps<T> extends BaseListagemProps<T> {
-  getURLAvatar?: undefined;
-  getAltAvatar?: undefined;
-}
-
-type Props = (ListagemAvatarProps<Peca> & {
+type Props = (BaseListagemProps<Peca> & {
   dominio: "peca"
-}) | (ListagemProps<Servico> & {
+}) | (BaseListagemProps<Servico> & {
   dominio: "servico"
-}) | (ListagemAvatarProps<Modelo> & {
+}) | (BaseListagemProps<Modelo> & {
   dominio: "modelo"
-}) | (ListagemAvatarProps<Marca> & {
+}) | (BaseListagemProps<Marca> & {
   dominio: "marca"
-}) | (ListagemProps<Especialidade> & {
+}) | (BaseListagemProps<Especialidade> & {
   dominio: "especialidade"
-}) | (ListagemAvatarProps<Veiculo> & {
+}) | (BaseListagemProps<Veiculo> & {
   dominio: "veiculo"
-})| (ListagemProps<OrdemDeServico> & {
+}) | (BaseListagemProps<Cliente> & {
+  dominio: "cliente"
+}) | (BaseListagemProps<Fornecedor> & {
+  dominio: "fornecedor"
+}) | (BaseListagemProps<Funcionario> & {
+  dominio: "funcionario"
+}) | (BaseListagemProps<OrdemDeServico> & {
   dominio: "ordemdeservico"
 })
 
@@ -60,8 +61,7 @@ export default function Listagem({
   getTitleLinkToChange,
   linkToInsertTitle,
   getLinkToChange,
-  getAltAvatar,
-  getURLAvatar,
+  renderAvatar,
   renderSecondaryActions,
   formSearchFilters,
   dominio
@@ -81,15 +81,9 @@ export default function Listagem({
           {
             itens?.map((item, index) => (
               <ListItem key={index} divider>
-                {getURLAvatar
-                  ? <ListItemAvatar>
-                    <img src={getURLAvatar(item)}
-                      style={{
-                        maxHeight: "48px",
-                        maxWidth: "48px",
-                      }}
-                      alt={getAltAvatar ? getAltAvatar(item) : ""}
-                    />
+                {renderAvatar
+                  ? <ListItemAvatar >
+                    {renderAvatar(item)}
                   </ListItemAvatar>
                   : null
                 }

@@ -19,8 +19,8 @@ const DialogoVeiculos: React.FC = () => {
         formSearchFilters={["placa"]}
         getPrimaryText={item => item.placa}
         getSecondaryText={item => item.modelo.descricao}
-        getURLAvatar={item => `${imagensUrl}/${item.modelo.marca.uriLogo}`}
-        getAltAvatar={item => item.modelo.marca.descricao}
+        // getURLAvatar={item => `${imagensUrl}/${item.modelo.marca.uriLogo}`}
+        // getAltAvatar={item => item.modelo.marca.descricao}
         getLinkToChange={item => `/veiculos/alterarveiculo?id=?id=${item._id}`}
         getTitleLinkToChange={item => `Alterar o veículo ${item.placa}`}
         linkToInsertTitle="Incluir veículo"

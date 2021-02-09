@@ -13,8 +13,8 @@ const DialogoModelos: React.FC = () => {
         dominio="modelo"
         getPrimaryText={item => item.descricao}
         getSecondaryText={item => item.marca.descricao}
-        getURLAvatar={item => `${imagensUrl}/${item.marca.uriLogo}`}
-        getAltAvatar={item => item.marca.descricao}
+        // getURLAvatar={item => `${imagensUrl}/${item.marca.uriLogo}`}
+        // getAltAvatar={item => item.marca.descricao}
         getLinkToChange={item => `/modelos/alterarmodelo?id=${item._id}`}
         getTitleLinkToChange={item => `Alterar o modelo ${item.descricao}`}
         linkToInsertTitle="Incluir modelo"

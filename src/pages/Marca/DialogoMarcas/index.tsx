@@ -16,8 +16,8 @@ const DialogMarcas: React.FC = () => {
         getTitleLinkToChange={item => `Alterar a marca ${item.descricao}`}
         linkToInsertTitle="Incluir marca"
         linkToInsert="/marcas/incluirmarca"
-        getURLAvatar={item => `${imagensUrl}/${item.uriLogo}`}
-        getAltAvatar={item => item.descricao}
+        // getURLAvatar={item => `${imagensUrl}/${item.uriLogo}`}
+        // getAltAvatar={item => item.descricao}
       />
       <Switch>
         <Route path={["/marcas/incluirmarca", "/marcas/alterarmarca"]}>

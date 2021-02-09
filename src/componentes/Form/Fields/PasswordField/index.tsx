@@ -9,14 +9,14 @@ interface PasswordField extends StandardTextFieldProps {
   maxLength?: Number;
 }
 
-const CampoDeSenha: React.FC<PasswordField> = ({ name, maxLength, ...props }) => {
+const CampoDeSenha: React.FC<PasswordField> = ({ name, maxLength, onChange, ...props }) => {
   const [visible, setVisible] = useState<boolean>(false);
   const { handleInputChange, ref, valid, value } = useFormField({
     name,
     validacao: (password) => password.length > 0,
     noValidate: false,
     required: props.required,
-    onChange: props.onChange
+    onChange: onChange
   });
 
   const handleClick = useCallback(() => {
