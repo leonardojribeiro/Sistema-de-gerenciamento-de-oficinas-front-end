@@ -54,7 +54,7 @@ const FormOrdemDeServico: React.FC = () => {
           <CardContent>
             <Grid container spacing={3}>
               <Grid item xs={12}>
-                <AutoCompleteVeiculo disabled={ordemDeServico !== undefined} name="veiculo" label="Veículo" required listOptionsIn />
+                <AutoCompleteVeiculo disabled={ordemDeServico !== undefined} name="veiculo" label="Veículo" required  />
               </Grid>
               <Grid item xs={12} sm={4} md={4} >
                 <DateField name="dataDeRegistro" label="Data de registro" disabled={ordemDeServico !== undefined} required fullWidth allowKeyboardControl />

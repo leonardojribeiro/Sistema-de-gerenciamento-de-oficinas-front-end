@@ -11,9 +11,12 @@ interface ComboBoxProps<T> extends Omit<AutocompleteProps<T, boolean | undefined
   label: string;
   required?: boolean;
   getDefaultValue?: (value: T) => Promise<T>;
+  InputProps?: {
+    startAdornment?: React.ReactNode;
+  }
 }
 
-function AutoComplete<T>({ getDefaultValue, path, name, label, required, onChange, ...props }: ComboBoxProps<T>): JSX.Element {
+function AutoComplete<T>({ getDefaultValue, path, name, label, required, onChange, InputProps, ...props }: ComboBoxProps<T>): JSX.Element {
   const [value, setValue] = useState<T | T[] | null>(props.multiple ? [] : null);
   const [valid, setValid] = useState(true);
   const ref = useRef<any>();
@@ -118,8 +121,11 @@ function AutoComplete<T>({ getDefaultValue, path, name, label, required, onChang
           helperText={!valid && "Campo obrigatório"}
           inputRef={ref}
           InputProps={{
-            ...params.InputProps
+            ...params.InputProps,
+            startAdornment: InputProps?.startAdornment,
+            className: ""
           }}
+          size="medium"
         />
       )}
       {...props}

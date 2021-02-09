@@ -4,15 +4,12 @@ import AutoComplete from '../../Form/Fields/AutoComplete';
 import useAutoComplete from '../../../hooks/useAutoComplete';
 import AutoCompleteProps from '../Types';
 
-const AutoCompleteMarca: React.FC<AutoCompleteProps<Marca>> = ({ onChange, label, name, required, listOptionsIn }) => {
-  const { handleInputChange, getDefaultValue, options } = useAutoComplete<Marca>("marcas", "marca", "descricao", listOptionsIn);
-
+const AutoCompleteMarca: React.FC<AutoCompleteProps<Marca>> = props => {
+  const { handleInputChange, getDefaultValue, options } = useAutoComplete<Marca>("marcas", "marca", "descricao");
   return (
     <AutoComplete
       getDefaultValue={getDefaultValue}
       onInputChange={handleInputChange}
-      name={name}
-      label={label}
       path="_id"
       fullWidth
       options={options}
@@ -21,9 +18,9 @@ const AutoCompleteMarca: React.FC<AutoCompleteProps<Marca>> = ({ onChange, label
       loadingText="Carregando"
       clearText="Limpar"
       openText="Abrir"
-      required={required}
       getOptionLabel={(option) => option ? option.descricao : ""}
       getOptionSelected={(option, value) => option?.descricao === value?.descricao}
+      {...props}
     />
   );
 }

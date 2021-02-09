@@ -40,10 +40,10 @@ const FormItensDeServico: React.FC = () => {
           <CardContent>
             <Grid container spacing={2} justify="flex-end">
               <Grid item xs={12} md={6} >
-                <AutoCompleteServico name="servico" label="Serviço" listOptionsIn />
+                <AutoCompleteServico name="servico" label="Serviço"  />
               </Grid>
               <Grid item xs={12} md={6}>
-                <AutoCompleteFuncionario name="funcionario" required label="Funcionário" listOptionsIn />
+                <AutoCompleteFuncionario name="funcionario" required label="Funcionário"  />
               </Grid>
               <Grid item xs={7} md={2} >
                 <CampoDeTexto type="number" name="garantia" fullWidth required label="Garantia" onChange={calcularValorTotal} />

@@ -100,7 +100,7 @@ const DialogoIncluirOuAlterarFuncionario: React.FC = () => {
         </Grid>
         <Grid container>
           <Grid item xs={12}>
-            <AutoCompleteEspecialidade label="Especialidades" multiple required name="especialidades" listOptionsIn />
+            <AutoCompleteEspecialidade label="Especialidades" multiple required name="especialidades"  />
           </Grid>
         </Grid>
         <BotaoIncluirOuAlterar isEdit={isEdit} />

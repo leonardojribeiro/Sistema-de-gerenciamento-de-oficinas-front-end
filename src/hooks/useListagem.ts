@@ -8,7 +8,7 @@ interface ListaItens<T> {
   total: number
 }
 
-export default function useListagem<T = any>(dominio: Dominio) {
+export default function useListagem<T = any>(dominio: Dominio, desbilitarProgresso: boolean = false) {
   const [itens, setItens] = useState<ListaItens<T>>({ total: 1, itens: [] });
   const [page, setPage] = useState<number>(1);
   const { get } = useContext(ApiContext);
@@ -45,20 +45,22 @@ export default function useListagem<T = any>(dominio: Dominio) {
 
   const listar = useCallback(async () => {
     if (!consultaValues.current) {
-      const resposta = await get(`/${dominio}?pagina=${page}&limite=100`) as any;
+      const resposta = await get(`/${dominio}?pagina=${page}&limite=100`, desbilitarProgresso) as any;
       if (resposta) {
         setItens(resposta as ListaItens<T>);
       }
     }
-  }, [dominio, get, page]);
+  }, [desbilitarProgresso, dominio, get, page]);
 
   const handleSearch = useCallback(async (dados: Query[]) => {
-    consultaValues.current = dados;
-    const resposta = await get(`/${dominio}/consulta?${dados.map(query => `${query.name}=${query.value}&`)}limite=100&pagina=${page}`) as any;
+    let queryStr = "";
+    dados.forEach(query => queryStr = `${queryStr}${query.name}=${query.value}&`)
+    consultaValues.current = queryStr;
+    const resposta = await get(`/${dominio}/consulta?${queryStr}limite=100&pagina=${page}`, desbilitarProgresso) as any;
     if (resposta) {
       setItens(resposta as ListaItens<T>);
     }
-  }, [dominio, get, page]);
+  }, [desbilitarProgresso, dominio, get, page]);
 
   const handlePageChange = useCallback((event, value: number) => {
     setPage(value);

@@ -5,7 +5,9 @@ export default interface AutoCompleteProps<T> {
   label: string;
   name: string;
   required?: boolean;
-  listOptionsIn: boolean;
   disabled?: boolean;
   multiple?: boolean;
+  InputProps?: {
+    startAdornment?: React.ReactNode; 
+  }
 }

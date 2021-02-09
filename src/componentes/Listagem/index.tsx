@@ -10,8 +10,9 @@ import Servico from '../../Types/Servico';
 import Peca from '../../Types/Peca';
 import Marca from '../../Types/Marca';
 import Especialidade from '../../Types/Especialidade';
-import FormConsultaPessoa, { Filter } from '../FormConsultaPessoa';
+import FormConsulta, { Filter } from '../FormConsulta';
 import Veiculo from '../../Types/Veiculo';
+import OrdemDeServico from '../../Types/OrdemDeServico';
 
 type Value<T = any> = T;
 
@@ -48,6 +49,8 @@ type Props = (ListagemAvatarProps<Peca> & {
   dominio: "especialidade"
 }) | (ListagemAvatarProps<Veiculo> & {
   dominio: "veiculo"
+})| (ListagemProps<OrdemDeServico> & {
+  dominio: "ordemdeservico"
 })
 
 export default function Listagem({
@@ -72,7 +75,7 @@ export default function Listagem({
 
   return (
     <>
-      <FormConsultaPessoa onSubmit={handleSearch} filters={formSearchFilters} />
+      <FormConsulta onSubmit={handleSearch} filters={formSearchFilters} />
       <Box mb={2}>
         <List>
           {

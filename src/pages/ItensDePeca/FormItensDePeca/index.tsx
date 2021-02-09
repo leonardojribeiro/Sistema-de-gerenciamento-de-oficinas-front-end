@@ -43,10 +43,10 @@ const FormItensDePeca: React.FC = () => {
           <CardContent>
             <Grid container spacing={2} justify="flex-end">
               <Grid item xs={12} md={6}>
-                <AutoCompletePeca label="Peça" name="peca" required listOptionsIn />
+                <AutoCompletePeca label="Peça" name="peca" required  />
               </Grid>
               <Grid item xs={12} md={6}>
-                <AutoCompleteFornecedor label="Fornecedor" name="fornecedor" required listOptionsIn />
+                <AutoCompleteFornecedor label="Fornecedor" name="fornecedor" required  />
               </Grid>
               <Grid item xs={7} md={2} >
                 <NumberField name="garantia" min={0} fullWidth required label="Garantia" onChange={calcularValorTotal} />

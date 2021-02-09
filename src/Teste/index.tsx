@@ -1,9 +1,6 @@
 import React, { useCallback, useEffect, } from 'react';
 import { useContext } from 'react';
 import ApiContext from '../contexts/ApiContext';
-//import { io } from 'socket.io-client'
-
-// import { Container } from './styles';
 
 function Teste() {
   const { post,  } = useContext(ApiContext);

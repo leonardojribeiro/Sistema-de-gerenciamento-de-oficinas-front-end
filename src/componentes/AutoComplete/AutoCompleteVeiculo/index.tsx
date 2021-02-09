@@ -4,15 +4,12 @@ import Veiculo from '../../../Types/Veiculo';
 import AutoComplete from '../../Form/Fields/AutoComplete';
 import AutoCompleteProps from '../Types';
 
-const AutoCompleteVeiculo: React.FC<AutoCompleteProps<Veiculo>> = ({ label, name, onChange, required, listOptionsIn, disabled }) => {
-  const { getDefaultValue, handleInputChange, options } = useAutoComplete<Veiculo>("veiculos", "veiculo", "placa", listOptionsIn);
-
+const AutoCompleteVeiculo: React.FC<AutoCompleteProps<Veiculo>> = props => {
+  const { getDefaultValue, handleInputChange, options } = useAutoComplete<Veiculo>("veiculos", "veiculo", "placa");
   return (
     <AutoComplete
       getDefaultValue={getDefaultValue}
       onInputChange={handleInputChange}
-      name={name}
-      label={label}
       path="_id"
       fullWidth
       options={options}
@@ -21,10 +18,9 @@ const AutoCompleteVeiculo: React.FC<AutoCompleteProps<Veiculo>> = ({ label, name
       loadingText="Carregando"
       clearText="Limpar"
       openText="Abrir"
-      required={required}
       getOptionLabel={(option) => option ? option.placa : ""}
       getOptionSelected={(option, value) => option?._id === value?._id}
-      disabled={disabled}
+      {...props}
     />
   );
 }

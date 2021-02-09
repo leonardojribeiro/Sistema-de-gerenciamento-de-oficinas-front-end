@@ -10,7 +10,7 @@ const DialogoPecas: React.FC = () => {
     <Dialogo maxWidth="xs" fullWidth open title="Peças">
       <Listagem
         dominio="peca"
-        formSearchFilters={["descricao"]}
+        formSearchFilters={["descricao", "marca"]}
         getPrimaryText={item => item.descricao}
         getSecondaryText={item => item.marca.descricao}
         getURLAvatar={item => `${imagensUrl}/${item.marca.uriLogo}`}

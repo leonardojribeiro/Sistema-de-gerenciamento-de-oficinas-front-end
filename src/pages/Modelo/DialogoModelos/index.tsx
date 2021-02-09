@@ -9,7 +9,7 @@ const DialogoModelos: React.FC = () => {
   return (
     <Dialogo maxWidth="xs" fullWidth open title="Modelos">
       <Listagem
-        formSearchFilters={['descricao']}
+        formSearchFilters={['descricao', 'marca', ]}
         dominio="modelo"
         getPrimaryText={item => item.descricao}
         getSecondaryText={item => item.marca.descricao}

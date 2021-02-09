@@ -19,6 +19,7 @@ export type Dominio =
   | "fornecedor"
   | "funcionario"
   | "especialidade"
+  | "ordemdeservico"
 
 interface WebSocketValues {
   webSocket: Socket;
@@ -40,6 +41,7 @@ interface Notifications {
   fornecedor: Notification;
   funcionario: Notification;
   especialidade: Notification;
+  ordemdeservico: Notification;
 }
 
 const WebSocketContext = createContext<WebSocketValues>({} as WebSocketValues)
@@ -59,6 +61,7 @@ const Provider: React.FC<ProviderProps> = ({ webSocket, children }) => {
     modelo: { changed: 0, inserted: 0 },
     peca: { changed: 0, inserted: 0 },
     veiculo: { changed: 0, inserted: 0 },
+    ordemdeservico: {changed: 0, inserted: 0 }
   } as Notifications);
 
   const isOpen = useRef<Dominio | undefined>(undefined);

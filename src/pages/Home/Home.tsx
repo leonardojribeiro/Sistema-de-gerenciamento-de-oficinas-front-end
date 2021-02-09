@@ -13,8 +13,6 @@ import PersonIcon from '@material-ui/icons/Person';
 import SchoolIcon from '@material-ui/icons/School';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import BuildIcon from '@material-ui/icons/Build';
-import ListagemOrdensDeServico from '../OrdemDeServico/ListagemOrdensDeServico';
-import BotaoIncluir from '../../componentes/BotaoIncluir';
 import ItemDrawer from '../../componentes/ItemDrawer';
 import GroupIcon from '@material-ui/icons/Group';
 
@@ -99,6 +97,7 @@ const Home: React.FC = () => {
       <Box display="flex">
         <MiniDrawer open={open} setOpen={setOpen}>
           <List onClick={() => setOpen(false)}>
+            <ItemDrawer icon={<FolderIcon />} title="Ordens de Serviço" dominio="ordemdeservico" navigateTo="/ordensdeservico" />
             <ItemDrawer icon={<FolderIcon />} title="Marcas" dominio="marca" navigateTo="/marcas" />
             <ItemDrawer icon={<FolderIcon />} title="Modelos" dominio="modelo" navigateTo="/modelos" />
             <ItemDrawer icon={<ExtensionIcon />} title="Peças" dominio="peca" navigateTo="/pecas" />
@@ -112,18 +111,13 @@ const Home: React.FC = () => {
           </List>
         </MiniDrawer>
         <Container className="h-min-barra-rodape" maxWidth="xl" >
-          <ListagemOrdensDeServico />
-          <Box className={classes.areaBtn}>
-            <Box className={classes.btn}>
-              <BotaoIncluir titulo="Nova ordem de serviço" linkTo="ordensdeservico/incluir" />
-            </Box>
-          </Box>
+          <></>
         </Container>
       </Box >
       <Rodape />
     </>
   );
-  
+
 }
 
 export default memo(Home);

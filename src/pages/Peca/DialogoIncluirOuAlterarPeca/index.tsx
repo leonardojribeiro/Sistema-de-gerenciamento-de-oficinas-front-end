@@ -70,7 +70,7 @@ const DialogoIncluirOuAlterarPeca: React.FC = () => {
       <Form onSubmit={manipularEnvio} initialData={peca}>
         <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-          <AutoCompleteMarca name="marca" label="Marca" required listOptionsIn />
+          <AutoCompleteMarca name="marca" label="Marca" required  />
           <Link to={`${path}/incluirmarca`}>
             <Tooltip title="Incluir marca">
               <IconButton>

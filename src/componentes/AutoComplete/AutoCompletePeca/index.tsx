@@ -5,15 +5,12 @@ import useAutoComplete from '../../../hooks/useAutoComplete';
 import AutoCompleteProps from '../Types';
 
 
-const AutoCompletePeca: React.FC<AutoCompleteProps<Peca>> = ({ onChange, label, name, required, listOptionsIn }) => {
-  const { getDefaultValue, handleInputChange, options } = useAutoComplete<Peca>("pecas", "peca", "descricao", listOptionsIn);
-
+const AutoCompletePeca: React.FC<AutoCompleteProps<Peca>> = props=> {
+  const { getDefaultValue, handleInputChange, options } = useAutoComplete<Peca>("pecas", "peca", "descricao");
   return (
     <AutoComplete
       getDefaultValue={getDefaultValue}
       onInputChange={handleInputChange}
-      name={name}
-      label={label}
       path=""
       fullWidth
       options={options}
@@ -22,9 +19,9 @@ const AutoCompletePeca: React.FC<AutoCompleteProps<Peca>> = ({ onChange, label, 
       loadingText="Carregando"
       clearText="Limpar"
       openText="Abrir"
-      required={required}
       getOptionLabel={(option) => option ? option.descricao : ""}
       getOptionSelected={(option, value) => option?.descricao === value?.descricao}
+      {...props}
     />
   );
 }

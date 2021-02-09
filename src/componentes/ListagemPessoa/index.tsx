@@ -7,7 +7,7 @@ import Cliente from '../../Types/Cliente';
 import Fornecedor from '../../Types/Fornecedor';
 import Funcionario from '../../Types/Funcionario';
 import BotaoIncluir from '../BotaoIncluir';
-import FormConsultaPessoa from '../FormConsultaPessoa';
+import FormConsulta from '../FormConsulta';
 import PessoaItem from '../PessoaItem';
 
 interface Pessoa extends Funcionario, Fornecedor, Cliente { };
@@ -33,7 +33,7 @@ const ListagemPessoa: React.FC<ListagemPessoaProps> = ({ linkToChangePath, linkT
 
   return (
     <>
-      <FormConsultaPessoa onSubmit={handleSearch} filters={['nome', 'cpf',]} />
+      <FormConsulta onSubmit={handleSearch} filters={['nome', 'cpf',]} />
       <Box mb={2}>
         {
           itens?.map((pessoa, index) => (

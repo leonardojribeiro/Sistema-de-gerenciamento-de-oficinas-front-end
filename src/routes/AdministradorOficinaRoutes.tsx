@@ -11,6 +11,7 @@ import DialogoModelos from '../pages/Modelo/DialogoModelos';
 import DialogOpcoes from '../pages/Opcoes';
 import DialogoIncluirOrdemDeServico from '../pages/OrdemDeServico/DialogIncluirOrdemDeServico';
 import DialogoAlterarOrdemDeServico from '../pages/OrdemDeServico/DialogoAlterarOrdemDeServico';
+import ListagemOrdensDeServico from '../pages/OrdemDeServico/ListagemOrdensDeServico';
 import { OrdemDeServicoProvider } from '../pages/OrdemDeServico/OrdemDeServicoContext';
 import DialogoPecas from '../pages/Peca/DialogoPecas';
 import DialogServicos from '../pages/Servico/DialogServicos';
@@ -37,6 +38,7 @@ const AdminitradorOficinaRoutes: React.FC = () => {
         <Route path="/teste" component={Teste} />
         <SwipeableContextProvider initialIndexActive={1}>
           <OrdemDeServicoProvider>
+            <Route path="/ordensdeservico" component={ListagemOrdensDeServico} />
             <Route path="/ordensdeservico/incluir" component={DialogoIncluirOrdemDeServico} />
             <Route path="/ordensdeservico/alterarordemdeservico" component={DialogoAlterarOrdemDeServico} />
           </OrdemDeServicoProvider>

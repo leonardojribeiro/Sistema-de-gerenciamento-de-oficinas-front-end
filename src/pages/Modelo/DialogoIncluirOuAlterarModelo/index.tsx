@@ -69,7 +69,7 @@ const DialogoIncluirOuAlterarModelo: React.FC = () => {
       <Form onSubmit={manipularEnvio} initialData={modelo}>
         <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-          <AutoCompleteMarca name="marca" label="Marca" required listOptionsIn={isEdit} />
+          <AutoCompleteMarca name="marca" label="Marca" required  />
           <Link to={`${path}/incluirmarca`}>
             <Tooltip title="Incluir marca">
               <IconButton>

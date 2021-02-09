@@ -4,15 +4,13 @@ import Cliente from '../../../Types/Cliente';
 import useAutoComplete from '../../../hooks/useAutoComplete';
 import AutoCompleteProps from '../Types';
 
-const AutoCompleteCliente: React.FC<AutoCompleteProps<Cliente>> = ({ onChange, label, name, required, listOptionsIn }) => {
-  const { getDefaultValue, handleInputChange, options } = useAutoComplete<Cliente>("clientes", "cliente", "nome", listOptionsIn);
+const AutoCompleteCliente: React.FC<AutoCompleteProps<Cliente>> = props => {
+  const { getDefaultValue, handleInputChange, options } = useAutoComplete<Cliente>("clientes", "cliente", "nome");
 
   return (
     <AutoComplete
       getDefaultValue={getDefaultValue}
       onInputChange={handleInputChange}
-      name={name}
-      label={label}
       path="_id"
       fullWidth
       options={options}
@@ -21,9 +19,9 @@ const AutoCompleteCliente: React.FC<AutoCompleteProps<Cliente>> = ({ onChange, l
       loadingText="Carregando"
       clearText="Limpar"
       openText="Abrir"
-      required={required}
       getOptionLabel={(option) => option ? option.nome : ""}
       getOptionSelected={(option, value) => option?.nome === value?.nome}
+      {...props}
     />
   );
 }

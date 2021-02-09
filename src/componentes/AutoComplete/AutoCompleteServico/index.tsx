@@ -4,15 +4,12 @@ import Servico from '../../../Types/Servico';
 import AutoComplete from '../../Form/Fields/AutoComplete';
 import AutoCompleteProps from '../Types';
 
-const AutoCompleteServico: React.FC<AutoCompleteProps<Servico>> = ({ label, name, onChange, required, listOptionsIn }) => {
-  const { getDefaultValue, handleInputChange, options } = useAutoComplete<Servico>("servicos", "servico", "descricao", listOptionsIn);
-
+const AutoCompleteServico: React.FC<AutoCompleteProps<Servico>> = props => {
+  const { getDefaultValue, handleInputChange, options } = useAutoComplete<Servico>("servicos", "servico", "descricao");
   return (
     <AutoComplete
       getDefaultValue={getDefaultValue}
       onInputChange={handleInputChange}
-      name={name}
-      label={label}
       path=""
       fullWidth
       options={options}
@@ -21,9 +18,9 @@ const AutoCompleteServico: React.FC<AutoCompleteProps<Servico>> = ({ label, name
       loadingText="Carregando"
       clearText="Limpar"
       openText="Abrir"
-      required={required}
       getOptionLabel={(option) => option ? option.descricao : ""}
       getOptionSelected={(option, value) => option?.descricao === value?.descricao}
+      {...props}
     />
   );
 }

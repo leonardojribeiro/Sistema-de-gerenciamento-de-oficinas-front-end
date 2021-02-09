@@ -78,7 +78,7 @@ const DialogoIncluirOuAlterarVeiculo: React.FC = () => {
         <DateField name="anoFabricacao" label="Ano de fabricação" fullWidth required />
         <DateField name="anoModelo" label="Ano de modelo" fullWidth required />
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-          <AutoCompleteModelo name="modelo" label="Modelo" required listOptionsIn />
+          <AutoCompleteModelo name="modelo" label="Modelo" required  />
           <Link to={`${path}/incluirmodelo`}>
             <Tooltip title="Incluir modelo">
               <IconButton>
@@ -88,7 +88,7 @@ const DialogoIncluirOuAlterarVeiculo: React.FC = () => {
           </Link>
         </Box>
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-          <AutoCompleteCliente name="cliente" label="Cliente" required listOptionsIn />
+          <AutoCompleteCliente name="cliente" label="Cliente" required  />
           {cliente
             ? null
             : (<Link to={`${path}/incluircliente`}>

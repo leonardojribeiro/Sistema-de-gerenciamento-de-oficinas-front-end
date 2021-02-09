@@ -4,15 +4,13 @@ import Funcionario from '../../../Types/Funcionario';
 import AutoComplete from '../../Form/Fields/AutoComplete';
 import AutoCompleteProps from '../Types';
 
-const AutoCompleteFornecedor: React.FC<AutoCompleteProps<Funcionario>> = ({ label, name, onChange, required, listOptionsIn }) => {
-  const { getDefaultValue, handleInputChange, options } = useAutoComplete<Funcionario>("funcionarios", "funcionario", "nome", listOptionsIn);
+const AutoCompleteFornecedor: React.FC<AutoCompleteProps<Funcionario>> = props => {
+  const { getDefaultValue, handleInputChange, options } = useAutoComplete<Funcionario>("funcionarios", "funcionario", "nome");
 
   return (
     <AutoComplete
       getDefaultValue={getDefaultValue}
       onInputChange={handleInputChange}
-      name={name}
-      label={label}
       path=""
       fullWidth
       options={options}
@@ -21,9 +19,9 @@ const AutoCompleteFornecedor: React.FC<AutoCompleteProps<Funcionario>> = ({ labe
       loadingText="Carregando"
       clearText="Limpar"
       openText="Abrir"
-      required={required}
       getOptionLabel={(option) => option ? option.nome : ""}
       getOptionSelected={(option, value) => option?._id === value?._id}
+      {...props}
     />
   );
 }

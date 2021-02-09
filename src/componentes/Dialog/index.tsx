@@ -16,14 +16,10 @@ const useStyles = makeStyles((theme) => ({
     top: theme.spacing(1),
     color: theme.palette.grey[500],
   },
-  fullHeight: {
-    height: "100%",
-  },
   dialogo: {
     [theme.breakpoints.down("xs")]: {
       padding: "8px"
     },
-    height: "100%"
   },
 }));
 
