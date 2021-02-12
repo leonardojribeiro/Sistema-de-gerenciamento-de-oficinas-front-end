@@ -1,7 +1,7 @@
 import { Box, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, Tooltip } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useCallback, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import BotaoIncluir from '../BotaoIncluir';
 import EditIcon from '@material-ui/icons/Edit';
 import useListagem from '../../hooks/useListagem';
@@ -20,15 +20,17 @@ import Funcionario from '../../Types/Funcionario';
 type Value<T = any> = T;
 
 interface BaseListagemProps<T,> {
-  getPrimaryText: (item: Value<T>) => string;
-  getSecondaryText?: (item: Value<T>) => string | JSX.Element;
-  getLinkToChange: (item: Value<T>) => string;
-  getTitleLinkToChange: (item: Value<T>) => string;
+  getPrimaryText: (item: T) => string;
+  getSecondaryText?: (item: T) => string | JSX.Element;
+  getLinkToChange: (item: T) => string;
+  getTitleLinkToChange: (item: T) => string;
+  getLinkToShow?: (item: T) => string;
   linkToInsert: string;
   linkToInsertTitle: string;
   formSearchFilters: Filter[];
-  renderSecondaryActions?: (item: Value<T>) => JSX.Element;
-  renderAvatar?: (item: Value<T>) => JSX.Element;
+  renderSecondaryActions?: (item: T) => JSX.Element;
+  renderAvatar?: (item: T) => JSX.Element;
+  onClick?: (item: T) => void;
 }
 
 
@@ -64,14 +66,25 @@ export default function Listagem({
   renderAvatar,
   renderSecondaryActions,
   formSearchFilters,
-  dominio
+  dominio,
+  onClick,
+  getLinkToShow
 }: Props): JSX.Element {
-
+  const history = useHistory();
   const { handlePageChange, handleSearch, itens, listar, page, total } = useListagem(dominio);
 
   useEffect(() => {
     listar()
   }, [listar])
+
+  const handleClick = useCallback((item: any) => {
+    if (getLinkToShow){
+      history.push(getLinkToShow(item));
+    }
+    if (onClick) {
+      onClick(item)
+    }
+  }, [getLinkToShow, history, onClick]);
 
   return (
     <>
@@ -79,27 +92,33 @@ export default function Listagem({
       <Box mb={2}>
         <List>
           {
-            itens?.map((item, index) => (
-              <ListItem key={index} divider>
-                {renderAvatar
-                  ? <ListItemAvatar >
-                    {renderAvatar(item)}
-                  </ListItemAvatar>
-                  : null
-                }
-                <ListItemText primary={getPrimaryText(item)} secondary={getSecondaryText ? getSecondaryText(item) : null} />
-                <ListItemSecondaryAction>
-                  {
-                    renderSecondaryActions && renderSecondaryActions(item)
+            itens?.map((item, index) => {
+              const props: object = onClick || getLinkToShow ? {
+                button: true,
+                onClick: () => handleClick(item)
+              } : {}
+              return (
+                <ListItem key={index} divider {...props}>
+                  {renderAvatar
+                    ? <ListItemAvatar >
+                      {renderAvatar(item)}
+                    </ListItemAvatar>
+                    : null
                   }
-                  <Tooltip title={getTitleLinkToChange(item)}>
-                    <IconButton component={Link} to={getLinkToChange(item)}>
-                      <EditIcon />
-                    </IconButton>
-                  </Tooltip>
-                </ListItemSecondaryAction>
-              </ListItem>
-            ))
+                  <ListItemText primary={getPrimaryText(item)} secondary={getSecondaryText ? getSecondaryText(item) : null} />
+                  <ListItemSecondaryAction>
+                    {
+                      renderSecondaryActions && renderSecondaryActions(item)
+                    }
+                    <Tooltip title={getTitleLinkToChange(item)}>
+                      <IconButton component={Link} to={getLinkToChange(item)}>
+                        <EditIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              )
+            })
           }
         </List>
       </Box >

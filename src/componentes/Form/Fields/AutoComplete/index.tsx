@@ -122,7 +122,7 @@ function AutoComplete<T>({ getDefaultValue, path, name, label, required, onChang
           inputRef={ref}
           InputProps={{
             ...params.InputProps,
-            startAdornment: InputProps?.startAdornment,
+            startAdornment: <>{params.InputProps?.startAdornment}{InputProps?.startAdornment}</>,
             className: ""
           }}
           size="medium"

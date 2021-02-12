@@ -15,6 +15,8 @@ import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import BuildIcon from '@material-ui/icons/Build';
 import ItemDrawer from '../../componentes/ItemDrawer';
 import GroupIcon from '@material-ui/icons/Group';
+import Dashboard from '../Dashboard';
+import AssignmentIcon from '@material-ui/icons/Assignment'
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -97,7 +99,7 @@ const Home: React.FC = () => {
       <Box display="flex">
         <MiniDrawer open={open} setOpen={setOpen}>
           <List onClick={() => setOpen(false)}>
-            <ItemDrawer icon={<FolderIcon />} title="Ordens de Serviço" dominio="ordemdeservico" navigateTo="/ordensdeservico" />
+            <ItemDrawer icon={<AssignmentIcon/>} title="Ordens de Serviço" dominio="ordemdeservico" navigateTo="/ordensdeservico" />
             <ItemDrawer icon={<FolderIcon />} title="Marcas" dominio="marca" navigateTo="/marcas" />
             <ItemDrawer icon={<FolderIcon />} title="Modelos" dominio="modelo" navigateTo="/modelos" />
             <ItemDrawer icon={<ExtensionIcon />} title="Peças" dominio="peca" navigateTo="/pecas" />
@@ -111,7 +113,7 @@ const Home: React.FC = () => {
           </List>
         </MiniDrawer>
         <Container className="h-min-barra-rodape" maxWidth="xl" >
-          <></>
+          <Dashboard/>
         </Container>
       </Box >
       <Rodape />
