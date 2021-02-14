@@ -3,18 +3,20 @@ import Dialogo from '../../../componentes/Dialog';
 import { Switch, Route } from 'react-router-dom';
 import DialogoIncluirOuAlterarModelo from '../DialogoIncluirOuAlterarModelo';
 import Listagem from '../../../componentes/Listagem';
+import { Avatar } from '@material-ui/core';
 
 const DialogoModelos: React.FC = () => {
   const imagensUrl = process.env.REACT_APP_IMAGENS_URL;
   return (
     <Dialogo maxWidth="xs" fullWidth open title="Modelos">
       <Listagem
-        formSearchFilters={['descricao', 'marca', ]}
+        formSearchFilters={['descricao', 'marca',]}
         dominio="modelo"
         getPrimaryText={item => item.descricao}
         getSecondaryText={item => item.marca.descricao}
-        // getURLAvatar={item => `${imagensUrl}/${item.marca.uriLogo}`}
-        // getAltAvatar={item => item.marca.descricao}
+        renderAvatar={item => (
+          <Avatar src={`${imagensUrl}/${item.marca.uriLogo}`} alt={item.marca.descricao} />
+        )}
         getLinkToChange={item => `/modelos/alterarmodelo?id=${item._id}`}
         getTitleLinkToChange={item => `Alterar o modelo ${item.descricao}`}
         linkToInsertTitle="Incluir modelo"

@@ -55,7 +55,7 @@ export default function useListagem<T = any>(dominio: Dominio, desbilitarProgres
   const handleSearch = useCallback(async (dados: Query[]) => {
     let queryStr = "";
     dados.forEach(query => queryStr = `${queryStr}${query.name}=${query.value}&`)
-    consultaValues.current = queryStr;
+    consultaValues.current = dados;
     const resposta = await get(`/${dominio}/consulta?${queryStr}limite=100&pagina=${page}`, desbilitarProgresso) as any;
     if (resposta) {
       setItens(resposta as ListaItens<T>);

@@ -4,7 +4,6 @@ import Chart from 'react-google-charts';
 import ApiContext from '../../contexts/ApiContext';
 import OrdemDeServico from '../../Types/OrdemDeServico';
 
-// import { Container } from './styles';
 
 const Dashboard: React.FC = () => {
   const { get } = useContext(ApiContext)

@@ -5,8 +5,7 @@ import DialogoIncluirOuAlterarVeiculo from '../DialogoIncluirOuAlterarVeiculo';
 import BotaoIncluir from '../../../componentes/BotaoIncluir';
 import HistoricoVeiculo from '../HistoricoVeiculo';
 import Listagem from '../../../componentes/Listagem';
-import { IconButton, Tooltip } from '@material-ui/core';
-import HistoryIcon from '@material-ui/icons/History';
+import { Avatar, IconButton, Tooltip } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
@@ -19,25 +18,20 @@ const DialogoVeiculos: React.FC = () => {
         formSearchFilters={["placa"]}
         getPrimaryText={item => item.placa}
         getSecondaryText={item => item.modelo.descricao}
-        // getURLAvatar={item => `${imagensUrl}/${item.modelo.marca.uriLogo}`}
-        // getAltAvatar={item => item.modelo.marca.descricao}
-        getLinkToChange={item => `/veiculos/alterarveiculo?id=?id=${item._id}`}
+        renderAvatar={item => (
+          <Avatar src={`${imagensUrl}/${item.modelo.marca.uriLogo}`} alt={item.modelo.marca.descricao} />
+        )}
+        getLinkToChange={item => `/veiculos/alterarveiculo?id=${item._id}`}
         getTitleLinkToChange={item => `Alterar o veículo ${item.placa}`}
         linkToInsertTitle="Incluir veículo"
         linkToInsert="/veiculos/incluirveiculo"
-        renderSecondaryActions={(item) => (
-          <>
-            <Tooltip title={`Nova ordem de serviço para este veículo`}>
-              <IconButton component={Link} to={`/ordensdeservico/incluir?veiculo=${item._id}`}>
-                <AssignmentIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title={`Ver histórico desse veículo`}>
-              <IconButton  component={Link} to={`/veiculos/historico?veiculo=${item._id}`}>
-                <HistoryIcon />
-              </IconButton>
-            </Tooltip>
-          </>
+        getLinkToShow={item => `/veiculos/historico?veiculo=${item._id}`}
+        renderSecondaryActions={item => (
+          <Tooltip title={`Nova ordem de serviço para este veículo`}>
+            <IconButton component={Link} to={`/ordensdeservico/incluir?veiculo=${item._id}`}>
+              <AssignmentIcon />
+            </IconButton>
+          </Tooltip>
         )}
       />
       <BotaoIncluir titulo="Incluir veiculo" linkTo="/veiculos/incluirveiculo" />

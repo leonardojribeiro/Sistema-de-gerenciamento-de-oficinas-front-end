@@ -1,5 +1,7 @@
+import { Avatar } from '@material-ui/core';
 import React, { memo } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import CircularProgressWithLabel from '../../../componentes/CircularProgressWithLabel';
 import Dialog from '../../../componentes/Dialog';
 import Listagem from '../../../componentes/Listagem';
 import DialogIncluirOrdemDeServico from '../DialogIncluirOrdemDeServico';
@@ -19,9 +21,14 @@ const ListagemOrdensDeServico: React.FC = () => {
         linkToInsert="/ordensdeservico/incluirordemdeservico"
         linkToInsertTitle="Incluir ordem de serviço"
         formSearchFilters={["status", "veiculo",]}
+        renderAvatar={ordemDeServico => (
+          <Avatar>
+            <CircularProgressWithLabel value={ordemDeServico.andamento} />
+          </Avatar>
+        )}
       />
       <Switch>
-        <Route path="/ordensdeservico/incluir" component={DialogIncluirOrdemDeServico} />
+        <Route path="/ordensdeservico/incluirordemdeservico" component={DialogIncluirOrdemDeServico} />
         <Route path="/ordensdeservico/alterarordemdeservico" component={DialogoAlterarOrdemDeServico} />
       </Switch>
     </Dialog>
