@@ -72,11 +72,12 @@ const MoneyField: React.FC<TextFieldProps> = ({ name, min, max, ...props }) => {
       setValid(true);
       return true;
     }
-    return false;
+    return true;
   }, [max, min]);
 
   const validate = useCallback(() => {
     if (ref.current) {
+      console.log(ref.current.value, convertToNumber(ref.current.value))
       if (!validateNumberValue(convertToNumber(ref.current.value))) {
         ref.current.focus();
         return (false);

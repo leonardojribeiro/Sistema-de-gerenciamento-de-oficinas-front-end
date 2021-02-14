@@ -1,9 +1,9 @@
-import React, { memo, KeyboardEvent, RefForwardingComponent, forwardRef} from 'react';
+import React, { memo, KeyboardEvent, ForwardRefRenderFunction, forwardRef} from 'react';
 import  FormProvider from '../Context/FormProvider';
 import FormContext from '../Context/FormContext';
 import { FormProviderHandles, FormProviderProps } from '../types';
 
-const Formulario: RefForwardingComponent<FormProviderHandles, FormProviderProps> = (({...props }, formRef) => {
+const Formulario: ForwardRefRenderFunction<FormProviderHandles, FormProviderProps> = (({...props }, formRef) => {
   return (
     <FormProvider ref={formRef} {...props}>
       <FormContext.Consumer>

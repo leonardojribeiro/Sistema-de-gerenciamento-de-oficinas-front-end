@@ -46,7 +46,7 @@ const FormItensDeServico: React.FC = () => {
                 <AutoCompleteFuncionario name="funcionario" required label="Funcionário"  />
               </Grid>
               <Grid item xs={7} md={2} >
-                <CampoDeTexto type="number" name="garantia" fullWidth required label="Garantia" onChange={calcularValorTotal} />
+                <CampoDeTexto type="number" name="garantia" fullWidth required label="Garantia" />
               </Grid>
               <Grid item xs={5} md={2}>
                 <CampoDeSelecao name="unidadeDeGarantia" label="Tipo" fullWidth required>

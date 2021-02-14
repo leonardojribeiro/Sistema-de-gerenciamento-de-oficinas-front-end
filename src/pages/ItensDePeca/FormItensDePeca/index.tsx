@@ -49,7 +49,7 @@ const FormItensDePeca: React.FC = () => {
                 <AutoCompleteFornecedor label="Fornecedor" name="fornecedor" required  />
               </Grid>
               <Grid item xs={7} md={2} >
-                <NumberField name="garantia" min={0} fullWidth required label="Garantia" onChange={calcularValorTotal} />
+                <NumberField name="garantia" min={0} fullWidth required label="Garantia" />
               </Grid>
               <Grid item xs={5} md={2}>
                 <CampoDeSelecao name="unidadeDeGarantia" label="Tipo" fullWidth required>
