@@ -11,7 +11,7 @@ import comparar from '../../../recursos/Comparar';
 import BotaoIncluirOuAlterar from '../../../componentes/BotaoIncluirOuAlterar';
 
 
-const DialogoIncluirOuAlterarServico: React.FC = () => {
+const FormServico: React.FC = () => {
   const [servico, setServico] = useState<Servico | undefined>(undefined);
   const { post, put, get } = useContext(ApiContext);
   const history = useHistory();
@@ -73,4 +73,4 @@ const DialogoIncluirOuAlterarServico: React.FC = () => {
   );
 }
 
-export default memo(DialogoIncluirOuAlterarServico);
+export default memo(FormServico);

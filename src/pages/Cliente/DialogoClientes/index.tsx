@@ -1,6 +1,6 @@
 import React, { memo, useMemo } from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
-import DialogoIncluirOuAlterarCliente from '../DialogoIncluirOuAlterarCliente';
+import FormCliente from '../FormCliente';
 import Listagem from '../../../componentes/Listagem';
 import Dialog from '../../../componentes/Dialog';
 import DialogoVeiculosCliente from '../DialogoVeiculosCliente';
@@ -36,7 +36,7 @@ const DialogoClientes: React.FC = () => {
     <Dialog maxWidth="lg" fullWidth open title="Clientes">
       {listagem}
       <Switch>
-        <Route path={["/clientes/incluircliente", "/clientes/alterarcliente"]} component={DialogoIncluirOuAlterarCliente} />
+        <Route path={["/clientes/incluircliente", "/clientes/alterarcliente"]} component={FormCliente} />
         <Route path="/clientes/veiculos" component={DialogoVeiculosCliente} />
         <Route path="/clientes/exibircliente">
           <ShowPessoa

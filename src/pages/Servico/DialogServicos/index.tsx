@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import Dialogo from '../../../componentes/Dialog';
 import { Switch, Route } from 'react-router-dom';
-import DialogoIncluirOuAlterarServico from '../DialogoIncluirOuAlterarServico';
+import FormServico from '../FormServico';
 import Listagem from '../../../componentes/Listagem';
 import Formato from '../../../recursos/Formato';
 
@@ -19,7 +19,7 @@ const DialogServicos: React.FC = () => {
         linkToInsert="/servicos/incluirservico"
       />
       <Switch>
-        <Route path={["/servicos/incluirservico", "/servicos/alterarservico"]} component={DialogoIncluirOuAlterarServico} />
+        <Route path={["/servicos/incluirservico", "/servicos/alterarservico"]} component={FormServico} />
       </Switch>
     </Dialogo>
   );

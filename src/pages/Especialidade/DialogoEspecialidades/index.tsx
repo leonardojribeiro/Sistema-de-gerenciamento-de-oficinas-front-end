@@ -1,7 +1,7 @@
 import React, { memo, } from 'react';
 import Dialogo from '../../../componentes/Dialog';
 import { Switch, Route, } from 'react-router-dom';
-import DialogIncluirOuAlterarEspecialidade from '../DialogoIncluirOuAlterarEspecialidade';
+import DialogIncluirOuAlterarEspecialidade from '../FormEspecialidade';
 import Listagem from '../../../componentes/Listagem';
 
 

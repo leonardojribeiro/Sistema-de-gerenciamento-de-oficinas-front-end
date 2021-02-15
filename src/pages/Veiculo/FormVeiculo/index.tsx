@@ -6,18 +6,18 @@ import { Box, Tooltip, IconButton, } from '@material-ui/core';
 import { useState } from 'react';
 import useQuery from '../../../hooks/useQuery';
 import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
-import { Form, CampoDeTexto, DateField } from '../../../componentes/Form';
+import { Form, DateField, PlacaField } from '../../../componentes/Form';
 import comparar from '../../../recursos/Comparar';
 import Veiculo from '../../../Types/Veiculo';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import DialogoIncluirModelo from '../../Modelo/DialogoIncluirOuAlterarModelo';
+import DialogoIncluirModelo from '../../Modelo/FormModelo';
 import AutoCompleteModelo from '../../../componentes/AutoComplete/AutoCompleteModelo';
 import AutoCompleteCliente from '../../../componentes/AutoComplete/AutoCompleteCliente';
 import BotaoIncluirOuAlterar from '../../../componentes/BotaoIncluirOuAlterar';
-import DialogoIncluirOuAlterarCliente from '../../Cliente/DialogoIncluirOuAlterarCliente';
+import FormCliente from '../../Cliente/FormCliente';
 
-const DialogoIncluirOuAlterarVeiculo: React.FC = () => {
+const FormVeiculo: React.FC = () => {
   const { get, put, post } = useContext(ApiContext);
   const history = useHistory();
   const [veiculo, setVeiculo] = useState<Veiculo | undefined>();
@@ -74,7 +74,7 @@ const DialogoIncluirOuAlterarVeiculo: React.FC = () => {
   return (
     <Dialogo open title={isEdit ? "Alterar veículo" : "Incluir veículo"} fullWidth maxWidth="sm">
       <Form onSubmit={manipularEnvio} initialData={veiculo ? veiculo : cliente ? { cliente } : undefined}>
-        <CampoDeTexto name="placa" label="Placa" fullWidth required autoFocus />
+        <PlacaField name="placa" label="Placa" fullWidth required autoFocus />
         <DateField name="anoFabricacao" label="Ano de fabricação" fullWidth required />
         <DateField name="anoModelo" label="Ano de modelo" fullWidth required />
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
@@ -105,10 +105,10 @@ const DialogoIncluirOuAlterarVeiculo: React.FC = () => {
       <Alerta ref={refAlerta} />
       <Switch>
         <Route path={`${url}/incluirmodelo`} component={DialogoIncluirModelo} />
-        <Route path={`${url}/incluircliente`} component={DialogoIncluirOuAlterarCliente} />
+        <Route path={`${url}/incluircliente`} component={FormCliente} />
       </Switch>
     </Dialogo>
   );
 }
 
-export default memo(DialogoIncluirOuAlterarVeiculo);
+export default memo(FormVeiculo);

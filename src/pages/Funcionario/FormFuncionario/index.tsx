@@ -7,27 +7,29 @@ import useQuery from '../../../hooks/useQuery';
 import comparar from '../../../recursos/Comparar';
 import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
 import { Form, CampoDeCpfOuCnpj, DateField, CampoDeRadio, PhoneField, CampoDeEmail, NameField } from '../../../componentes/Form';
-import Cliente from '../../../Types/Cliente';
+import Funcionario from '../../../Types/Funcionario';
+import FuncionarioD from '../../../Types/FuncionarioD';
 import FormEndereco from '../../../componentes/FormEndereco';
 import BotaoIncluirOuAlterar from '../../../componentes/BotaoIncluirOuAlterar';
+import AutoCompleteEspecialidade from '../../../componentes/AutoComplete/AutoCompleteEspecialidade';
 
-
-const DialogoIncluirOuAlterarCliente: React.FC = () => {
+const FormFuncionario: React.FC = () => {
   const { get, put, post } = useContext(ApiContext);
   const history = useHistory();
-  const [cliente, setCliente] = useState<Cliente | undefined>();
+  const [funcionario, setFuncionario] = useState<FuncionarioD | undefined>(undefined);
   const id = useQuery("id");
+  const refAlerta = useRef<AlertaHandles | undefined>(undefined);
   const isEdit = id !== null;
-  const refAlerta = useRef<AlertaHandles>({} as AlertaHandles);
+
 
   const manipularEnvio = useCallback(async (dados) => {
+    console.log(dados);
     if (isEdit) {
-      if (dados && cliente) {
-        if (!comparar(cliente, dados)) {
-          dados._id = cliente._id;
+      if (dados) {
+        if (!comparar(funcionario, dados)) {
+          dados._id = funcionario?._id;
           console.log(dados);
-          console.log(cliente);
-          const resposta = await put("/cliente", dados);
+          const resposta = await put("/funcionario", dados);
           if (resposta) {
             history.goBack();
           }
@@ -42,35 +44,39 @@ const DialogoIncluirOuAlterarCliente: React.FC = () => {
       }
     }
     else {
-      const resposta = await post("/cliente", dados);
+      const resposta = await post("/funcionario", dados);
       if (resposta) {
         history.goBack();
       }
     }
-  }, [cliente, history, isEdit, post, put]);
+  }, [funcionario, history, isEdit, post, put]);
 
   const popular = useCallback(async () => {
-    const resposta = await get(`/cliente/id?_id=${id}`) as Cliente;
+    const resposta = await get(`funcionario/id?_id=${id}`) as Funcionario;
     if (resposta) {
-      setCliente(resposta)
+      const funcionario = {
+        ...resposta,
+        especialidades: resposta.especialidades.map(especialidade => especialidade._id)
+      } as FuncionarioD
+      setFuncionario(funcionario)
     }
-  }, [get, id,]);
+  }, [get, id]);
 
   useEffect(() => {
     if (isEdit) {
-      popular();
+      popular()
     }
   }, [isEdit, popular])
 
   return (
-    <Dialogo maxWidth="md" fullWidth open title={isEdit ? "Alterar cliente" : "Incluir cliente"}>
-      <Form initialData={cliente} onSubmit={manipularEnvio}>
+    <Dialogo maxWidth="md" fullWidth open title={isEdit ? "Alterar funcionário" : "Incluir funcionário"}>
+      <Form initialData={funcionario} onSubmit={manipularEnvio}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8} md={8}>
             <NameField name="nome" label="Nome" autoComplete="no" fullWidth required autoFocus />
           </Grid>
           <Grid item xs={12} sm={4} md={4}>
-            <CampoDeCpfOuCnpj name="cpfCnpj" autoComplete="no" label="CPF/CNPJ" disabled={isEdit} fullWidth required />
+            <CampoDeCpfOuCnpj name="cpf" label="CPF" autoComplete="no" onlyCpf fullWidth required />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <DateField name="dataNascimento" label="Data de nascimento" fullWidth required openTo="year" />
@@ -82,15 +88,20 @@ const DialogoIncluirOuAlterarCliente: React.FC = () => {
             </CampoDeRadio>
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <PhoneField name="telefoneFixo" autoComplete="no" label="Telefone fixo" fullWidth />
+            <PhoneField name="telefoneFixo" label="Telefone fixo" autoComplete="no" fullWidth />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <PhoneField name="telefoneCelular" autoComplete="no" label="Telefone celular" fullWidth required />
+            <PhoneField name="telefoneCelular" label="Telefone celular" autoComplete="no" fullWidth required />
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
             <CampoDeEmail name="email" label="E-mail" autoComplete="no" fullWidth />
           </Grid>
           <FormEndereco />
+        </Grid>
+        <Grid container>
+          <Grid item xs={12}>
+            <AutoCompleteEspecialidade label="Especialidades" multiple required name="especialidades"  />
+          </Grid>
         </Grid>
         <BotaoIncluirOuAlterar isEdit={isEdit} />
       </Form>
@@ -99,4 +110,4 @@ const DialogoIncluirOuAlterarCliente: React.FC = () => {
   );
 }
 
-export default memo(DialogoIncluirOuAlterarCliente);
+export default memo(FormFuncionario);

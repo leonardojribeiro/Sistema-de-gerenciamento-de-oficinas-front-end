@@ -8,7 +8,7 @@ import { Form, CampoDeTexto, DragAndDrop } from '../../../componentes/Form';
 import Marca from '../../../Types/Marca';
 import BotaoIncluirOuAlterar from '../../../componentes/BotaoIncluirOuAlterar';
 
-const DialogoIncluirOuAlterarMarca: React.FC = () => {
+const FormMarca: React.FC = () => {
   const imagensUrl = process.env.REACT_APP_IMAGENS_URL;
   const id = useQuery("id");
   const [marca, setMarca] = useState<Marca | undefined>(undefined);
@@ -83,4 +83,4 @@ const DialogoIncluirOuAlterarMarca: React.FC = () => {
   )
 }
 
-export default memo(DialogoIncluirOuAlterarMarca);
+export default memo(FormMarca);

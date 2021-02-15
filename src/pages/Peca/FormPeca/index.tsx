@@ -5,7 +5,7 @@ import { useHistory, Link, Switch, Route, useRouteMatch } from 'react-router-dom
 import { Box, Tooltip, IconButton } from '@material-ui/core';
 import { Form, CampoDeTexto, } from '../../../componentes/Form';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
-import DialogoIncluirOuAlterarMarca from '../../Marca/DialogoIncluirOuAlterarMarca';
+import FormMarca from '../../Marca/FormMarca'; 
 import AutoCompleteMarca from '../../../componentes/AutoComplete/AutoCompleteMarca';
 import Peca from '../../../Types/Peca';
 import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
@@ -13,7 +13,7 @@ import useQuery from '../../../hooks/useQuery';
 import comparar from '../../../recursos/Comparar';
 import BotaoIncluirOuAlterar from '../../../componentes/BotaoIncluirOuAlterar';
 
-const DialogoIncluirOuAlterarPeca: React.FC = () => {
+const FormPeca: React.FC = () => {
   const { post } = useContext(ApiContext);
   const history = useHistory();
   const { get, put } = useContext(ApiContext);
@@ -82,11 +82,11 @@ const DialogoIncluirOuAlterarPeca: React.FC = () => {
         <BotaoIncluirOuAlterar isEdit={isEdit} />
       </Form>
       <Switch>
-        <Route path={`${url}/incluirmarca`} component={DialogoIncluirOuAlterarMarca} />
+        <Route path={`${url}/incluirmarca`} component={FormMarca} />
       </Switch>
       <Alerta ref={refAlerta} />
     </Dialogo>
   );
 }
 
-export default memo(DialogoIncluirOuAlterarPeca);
+export default memo(FormPeca);

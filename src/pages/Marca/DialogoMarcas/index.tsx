@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import Dialogo from '../../../componentes/Dialog';
 import { Route, Switch } from 'react-router-dom';
-import DialogoIncluirOuAlterarMarca from '../DialogoIncluirOuAlterarMarca';
+import FormMarca from '../FormMarca';
 import Listagem from '../../../componentes/Listagem';
 import { Avatar } from '@material-ui/core';
 
@@ -23,7 +23,7 @@ const DialogMarcas: React.FC = () => {
       />
       <Switch>
         <Route path={["/marcas/incluirmarca", "/marcas/alterarmarca"]}>
-          <DialogoIncluirOuAlterarMarca />
+          <FormMarca />
         </Route>
       </Switch>
     </Dialogo>

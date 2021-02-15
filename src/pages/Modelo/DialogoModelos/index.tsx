@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import Dialogo from '../../../componentes/Dialog';
 import { Switch, Route } from 'react-router-dom';
-import DialogoIncluirOuAlterarModelo from '../DialogoIncluirOuAlterarModelo';
+import FormModelo from '../FormModelo';
 import Listagem from '../../../componentes/Listagem';
 import { Avatar } from '@material-ui/core';
 
@@ -23,7 +23,7 @@ const DialogoModelos: React.FC = () => {
         linkToInsert="/modelos/incluirmodelo"
       />
       <Switch>
-        <Route path={["/modelos/incluirmodelo", "/modelos/alterarmodelo"]} component={DialogoIncluirOuAlterarModelo} />
+        <Route path={["/modelos/incluirmodelo", "/modelos/alterarmodelo"]} component={FormModelo} />
       </Switch>
     </Dialogo>
   );

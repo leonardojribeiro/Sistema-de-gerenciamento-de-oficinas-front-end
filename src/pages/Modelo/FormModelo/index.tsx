@@ -10,11 +10,11 @@ import comparar from '../../../recursos/Comparar';
 import { Form, CampoDeTexto } from '../../../componentes/Form';
 import Modelo from '../../../Types/Modelo';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
-import DialogoIncluirOuAlterarMarca from '../../Marca/DialogoIncluirOuAlterarMarca';
+import FormMarca from '../../Marca/FormMarca';
 import AutoCompleteMarca from '../../../componentes/AutoComplete/AutoCompleteMarca';
 import BotaoIncluirOuAlterar from '../../../componentes/BotaoIncluirOuAlterar';
 
-const DialogoIncluirOuAlterarModelo: React.FC = () => {
+const FormModelo: React.FC = () => {
   const { get, put, post } = useContext(ApiContext);
   const history = useHistory();
   const [modelo, setModelo] = useState<Modelo | undefined>();
@@ -82,10 +82,10 @@ const DialogoIncluirOuAlterarModelo: React.FC = () => {
       </Form>
       <Alerta ref={refAlerta} />
       <Switch>
-        <Route path={`${url}/incluirmarca`} component={DialogoIncluirOuAlterarMarca} />
+        <Route path={`${url}/incluirmarca`} component={FormMarca} />
       </Switch>
     </Dialogo>
   );
 }
 
-export default memo(DialogoIncluirOuAlterarModelo);
+export default memo(FormModelo);

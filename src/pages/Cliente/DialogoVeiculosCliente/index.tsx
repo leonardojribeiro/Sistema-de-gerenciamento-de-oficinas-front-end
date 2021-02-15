@@ -6,7 +6,7 @@ import Dialog from '../../../componentes/Dialog';
 import ApiContext from '../../../contexts/ApiContext';
 import useQuery from '../../../hooks/useQuery';
 import Vinculo from '../../../Types/Vinculo';
-import DialogoIncluirOuAlterarVeiculo from '../../Veiculo/DialogoIncluirOuAlterarVeiculo';
+import FormVeiculo from '../../Veiculo/FormVeiculo';
 import HistoricoVeiculo from '../../Veiculo/HistoricoVeiculo';
 import VeiculoItem from '../../Veiculo/VeiculoItem';
 
@@ -44,7 +44,7 @@ const DialogoVeiculosCliente: React.FC = () => {
       <BotaoIncluir titulo="Incluir veículo para esse cliente" linkTo={`/clientes/veiculos/incluirveiculo?cliente=${cliente}`}/>
       <Switch>
         <Route path="/clientes/veiculos/historico" component={HistoricoVeiculo} />
-        <Route path="/clientes/veiculos/incluirveiculo" component={DialogoIncluirOuAlterarVeiculo} />
+        <Route path="/clientes/veiculos/incluirveiculo" component={FormVeiculo} />
       </Switch>
     </Dialog>
   );

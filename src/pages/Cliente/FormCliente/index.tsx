@@ -2,30 +2,32 @@ import React, { useContext, useRef, memo, useEffect, useCallback, useState } fro
 import Dialogo from '../../../componentes/Dialog';
 import ApiContext from '../../../contexts/ApiContext';
 import { useHistory } from 'react-router-dom';
-import { Grid, } from '@material-ui/core';
+import { Grid, FormControlLabel, Radio } from '@material-ui/core';
 import useQuery from '../../../hooks/useQuery';
 import comparar from '../../../recursos/Comparar';
 import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
-import { Form, CampoDeTexto, CampoDeCpfOuCnpj, PhoneField, CampoDeEmail, NameField } from '../../../componentes/Form';
-import Fornecedor from '../../../Types/Fornecedor';
+import { Form, CampoDeCpfOuCnpj, DateField, CampoDeRadio, PhoneField, CampoDeEmail, NameField } from '../../../componentes/Form';
+import Cliente from '../../../Types/Cliente';
 import FormEndereco from '../../../componentes/FormEndereco';
 import BotaoIncluirOuAlterar from '../../../componentes/BotaoIncluirOuAlterar';
 
-const DialogoIncluirOuAlterarFornecedor: React.FC = () => {
+
+const FormCliente: React.FC = () => {
   const { get, put, post } = useContext(ApiContext);
   const history = useHistory();
-  const [fornecedor, setFornecedor] = useState<Fornecedor | undefined>();
+  const [cliente, setCliente] = useState<Cliente | undefined>();
   const id = useQuery("id");
   const isEdit = id !== null;
-  const refAlerta = useRef<AlertaHandles>();
+  const refAlerta = useRef<AlertaHandles>({} as AlertaHandles);
 
   const manipularEnvio = useCallback(async (dados) => {
     if (isEdit) {
-      if (dados && fornecedor) {
-        if (!comparar(fornecedor, dados)) {
-          dados._id = fornecedor._id;
+      if (dados && cliente) {
+        if (!comparar(cliente, dados)) {
+          dados._id = cliente._id;
           console.log(dados);
-          const resposta = await put("/fornecedor", dados);
+          console.log(cliente);
+          const resposta = await put("/cliente", dados);
           if (resposta) {
             history.goBack();
           }
@@ -40,17 +42,17 @@ const DialogoIncluirOuAlterarFornecedor: React.FC = () => {
       }
     }
     else {
-      const resposta = await post("/fornecedor", dados);
+      const resposta = await post("/cliente", dados);
       if (resposta) {
         history.goBack();
       }
     }
-  }, [fornecedor, history, isEdit, post, put]);
+  }, [cliente, history, isEdit, post, put]);
 
   const popular = useCallback(async () => {
-    const resposta = await get(`/fornecedor/id?_id=${id}`) as Fornecedor;
+    const resposta = await get(`/cliente/id?_id=${id}`) as Cliente;
     if (resposta) {
-      setFornecedor(resposta)
+      setCliente(resposta)
     }
   }, [get, id,]);
 
@@ -61,17 +63,23 @@ const DialogoIncluirOuAlterarFornecedor: React.FC = () => {
   }, [isEdit, popular])
 
   return (
-    <Dialogo maxWidth="md" fullWidth open title={isEdit ? "Alterar fornecedor" : "Incluir fornecedor"}>
-      <Form initialData={fornecedor} onSubmit={manipularEnvio}>
+    <Dialogo maxWidth="md" fullWidth open title={isEdit ? "Alterar cliente" : "Incluir cliente"}>
+      <Form initialData={cliente} onSubmit={manipularEnvio}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={8} md={8}>
-            <NameField name="nomeFantasia" autoComplete="no" label="Nome fantasia" fullWidth required autoFocus />
+            <NameField name="nome" label="Nome" autoComplete="no" fullWidth required autoFocus />
           </Grid>
           <Grid item xs={12} sm={4} md={4}>
             <CampoDeCpfOuCnpj name="cpfCnpj" autoComplete="no" label="CPF/CNPJ" disabled={isEdit} fullWidth required />
           </Grid>
-          <Grid item xs={12} sm={12} md={8}>
-            <CampoDeTexto name="razaoSocial" autoComplete="no" label="Razão Social" fullWidth required />
+          <Grid item xs={12} sm={6} md={4}>
+            <DateField name="dataNascimento" label="Data de nascimento" fullWidth required openTo="year" />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <CampoDeRadio name="sexo" label="Sexo" required>
+              <FormControlLabel value="f" control={<Radio color="primary" />} label="Feminino" />
+              <FormControlLabel value="m" control={<Radio color="primary" />} label="Masculino" />
+            </CampoDeRadio>
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <PhoneField name="telefoneFixo" autoComplete="no" label="Telefone fixo" fullWidth />
@@ -80,7 +88,7 @@ const DialogoIncluirOuAlterarFornecedor: React.FC = () => {
             <PhoneField name="telefoneCelular" autoComplete="no" label="Telefone celular" fullWidth required />
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
-            <CampoDeEmail name="email" required autoComplete="no" label="E-mail" fullWidth />
+            <CampoDeEmail name="email" label="E-mail" autoComplete="no" fullWidth />
           </Grid>
           <FormEndereco />
         </Grid>
@@ -91,4 +99,4 @@ const DialogoIncluirOuAlterarFornecedor: React.FC = () => {
   );
 }
 
-export default memo(DialogoIncluirOuAlterarFornecedor);
+export default memo(FormCliente);

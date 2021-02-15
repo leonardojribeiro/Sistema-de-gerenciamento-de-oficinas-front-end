@@ -11,5 +11,6 @@ export { default as PhoneField } from "./Fields/PhoneField";
 export { default as CampoDeTexto } from "./Fields/TextField";
 export { default as DragAndDrop } from "./Fields/ImageDragAndDrop";
 export { default as NameField } from "./Fields/NameField";
+export { default as PlacaField } from './Fields/PlacaField'
 export { default as Form } from "./Form";
 export { default as Node } from "./Node";

@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import Dialogo from '../../../componentes/Dialog';
 import { Route, Switch } from 'react-router-dom';
-import DialogoIncluirOuAlterarFuncionario from '../DialogoIncluirOuAlterarFuncionario';
+import FormFuncionario from '../FormFuncionario';
 import Listagem from '../../../componentes/Listagem';
 import ShowPessoa from '../../../componentes/ShowPessoa';
 
@@ -26,7 +26,7 @@ const DialogFuncionarios: React.FC = () => {
     <Dialogo maxWidth="lg" fullWidth open title="Funcionários">
       {listagem}
       <Switch>
-        <Route path={["/funcionarios/incluirfuncionario", "/funcionarios/alterarfuncionario"]} component={DialogoIncluirOuAlterarFuncionario} />
+        <Route path={["/funcionarios/incluirfuncionario", "/funcionarios/alterarfuncionario"]} component={FormFuncionario} />
         <Route path="/funcionarios/exibirfuncionario">
           <ShowPessoa
             dominio="funcionario"

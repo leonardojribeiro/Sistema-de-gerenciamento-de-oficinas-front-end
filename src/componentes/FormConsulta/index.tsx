@@ -1,6 +1,6 @@
-import { Box, Chip, ChipProps, ClickAwayListener, createStyles, Divider, makeStyles, Theme, Tooltip } from '@material-ui/core';
+import { Box, Chip, ChipProps, ClickAwayListener, createStyles, makeStyles, Theme, Tooltip } from '@material-ui/core';
 import React, { memo, useCallback, useRef, useState } from 'react';
-import { Form, PhoneField } from '../Form';
+import { Form, PhoneField, PlacaField } from '../Form';
 import CpfCnpjField from '../Form/Fields/CpfCnpjField';
 import EmailField from '../Form/Fields/EmailField';
 import NameField from '../Form/Fields/NameField';
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
       
     },
     container: {
-      border: `solid 1px ${theme.palette.background.default}`,
+      border: `solid 1px ${theme.palette.divider}`,
       borderRadius: theme.spacing(0.5),
       padding: theme.spacing(1)
     },
@@ -181,7 +181,7 @@ const FormConsulta: React.FC<FormConsultaPessoaProps> = ({ onSubmit, filters }) 
         return <CpfCnpjField {...props} />
       }
       case "placa": {
-        return <NameField {...props} />
+        return <PlacaField {...props} />
       }
       case "cpf": {
         return <CpfCnpjField {...props} />

@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import Dialogo from '../../../componentes/Dialog';
 import { Switch, Route } from 'react-router-dom';
-import DialogoIncluirOuAlterarVeiculo from '../DialogoIncluirOuAlterarVeiculo';
+import FormVeiculo from '../FormVeiculo';
 import BotaoIncluir from '../../../componentes/BotaoIncluir';
 import HistoricoVeiculo from '../HistoricoVeiculo';
 import Listagem from '../../../componentes/Listagem';
@@ -15,7 +15,7 @@ const DialogoVeiculos: React.FC = () => {
     <Dialogo maxWidth="sm" fullWidth open title="Veículos">
       <Listagem
         dominio="veiculo"
-        formSearchFilters={["placa"]}
+        formSearchFilters={["placa", "modelo",]}
         getPrimaryText={item => item.placa}
         getSecondaryText={item => item.modelo.descricao}
         renderAvatar={item => (
@@ -36,7 +36,7 @@ const DialogoVeiculos: React.FC = () => {
       />
       <BotaoIncluir titulo="Incluir veiculo" linkTo="/veiculos/incluirveiculo" />
       <Switch>
-        <Route path={["/veiculos/incluirveiculo", "/veiculos/alterarveiculo"]} component={DialogoIncluirOuAlterarVeiculo} />
+        <Route path={["/veiculos/incluirveiculo", "/veiculos/alterarveiculo"]} component={FormVeiculo} />
         <Route path="/veiculos/historico" component={HistoricoVeiculo} />
       </Switch>
     </Dialogo>
