@@ -9,7 +9,7 @@ import EmailIcon from '@material-ui/icons/Email';
 import PhoneIcon from '@material-ui/icons/Phone';
 import PhoneAndroidIcon from '@material-ui/icons/PhoneAndroid';
 import PersonIcon from '@material-ui/icons/Person';
-import CakeIcon from '@material-ui/icons/Cake';
+//import CakeIcon from '@material-ui/icons/Cake';
 import Formato from '../../recursos/Formato';
 import SchoolIcon from '@material-ui/icons/School';
 import Fornecedor from '../../Types/Fornecedor';

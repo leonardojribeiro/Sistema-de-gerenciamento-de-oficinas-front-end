@@ -61,9 +61,9 @@ const Funcionalidades: React.FC = () => {
     [0, 1]
   );
   return (
-    <motion.div className={classes.absoluteFlexFull} style={{opacity}}>
-      
-    </motion.div>
+    <motion.div className={classes.absoluteFlexFull} style={{ opacity }}>
+    </motion.div >
+
   );
 }
 

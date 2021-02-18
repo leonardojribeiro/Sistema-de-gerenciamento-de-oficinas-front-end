@@ -5,6 +5,7 @@ import HistoryIcon from '@material-ui/icons/History';
 import { Link } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import Formato from '../../../recursos/Formato';
 
 const useStyles = makeStyles((theme) => ({
   listagem: {
@@ -34,7 +35,7 @@ const VeiculoItem: React.FC<VeiculoItemProps> = ({ veiculo, baseUrlToHistory }) 
       <ListItem button>
         <Grid container className={classes.linhaTabela} justify="flex-end" alignItems="center">
           <Grid item xs={4} sm={3}>
-            <Typography>{veiculo.placa.toLocaleUpperCase()}</Typography>
+            <Typography>{Formato.formatarPlaca(veiculo.placa)}</Typography>
           </Grid>
           <Grid item xs={4} sm={6}>
             <Typography>{`${veiculo.modelo?.marca.descricao}/${veiculo.modelo?.descricao} `}</Typography>

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Box, Grid, Typography, makeStyles, } from '@material-ui/core';
+import { Box, Grid, Typography, makeStyles, Link } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   rodape: {
     backgroundColor: theme.palette.background.paper,
-  }
+  },
 }));
 
 const Rodape: React.FC = () => {
@@ -18,11 +18,11 @@ const Rodape: React.FC = () => {
           </Typography>
         </Grid>
         <Grid item>
-          <a href="http://www.ueg.br/" target="blank" >
+          <Link color="inherit" href="http://www.ueg.br/" target="blank"  >
             <Typography >
               Universidade Estadual de Goiás
             </Typography>
-          </a>
+          </Link>
         </Grid>
         <Grid item>
           <Typography>
@@ -30,11 +30,11 @@ const Rodape: React.FC = () => {
           </Typography>
         </Grid>
         <Grid item>
-          <a href="https://github.com/LeonardoJRibeiro/Sistema-de-gerenciamento-de-oficinas-front-end" target="blank">
+          <Link color="inherit" href="https://github.com/LeonardoJRibeiro/Sistema-de-gerenciamento-de-oficinas-front-end" target="blank">
             <Typography >
               Ver código fonte no Github
             </Typography>
-          </a>
+          </Link>
         </Grid>
       </Grid>
     </Box>

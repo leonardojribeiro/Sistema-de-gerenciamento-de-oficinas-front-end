@@ -61,7 +61,7 @@ const Dashboard: React.FC = () => {
     return 0
   })
 
-  return (
+  return 0 ? (
     <Box display="flex" justifyContent="center" alignItems="center" style={{ height: "100%" }}>
       <Chart
         chartType="Calendar"
@@ -86,7 +86,7 @@ const Dashboard: React.FC = () => {
         rootProps={{ 'data-testid': '1' }}
       />
     </Box>
-  );
+  ) : <div/>;
 }
 
 export default Dashboard;

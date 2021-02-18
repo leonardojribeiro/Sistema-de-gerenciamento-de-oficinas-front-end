@@ -8,6 +8,7 @@ import Listagem from '../../../componentes/Listagem';
 import { Avatar, IconButton, Tooltip } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import Formato from '../../../recursos/Formato';
 
 const DialogoVeiculos: React.FC = () => {
   const imagensUrl = process.env.REACT_APP_IMAGENS_URL;
@@ -16,13 +17,13 @@ const DialogoVeiculos: React.FC = () => {
       <Listagem
         dominio="veiculo"
         formSearchFilters={["placa", "modelo",]}
-        getPrimaryText={item => item.placa}
+        getPrimaryText={item => Formato.formatarPlaca(item.placa)}
         getSecondaryText={item => item.modelo.descricao}
         renderAvatar={item => (
           <Avatar src={`${imagensUrl}/${item.modelo.marca.uriLogo}`} alt={item.modelo.marca.descricao} />
         )}
         getLinkToChange={item => `/veiculos/alterarveiculo?id=${item._id}`}
-        getTitleLinkToChange={item => `Alterar o veículo ${item.placa}`}
+        getTitleLinkToChange={item => `Alterar o veículo ${Formato.formatarPlaca(item.placa)}`}
         linkToInsertTitle="Incluir veículo"
         linkToInsert="/veiculos/incluirveiculo"
         getLinkToShow={item => `/veiculos/historico?veiculo=${item._id}`}

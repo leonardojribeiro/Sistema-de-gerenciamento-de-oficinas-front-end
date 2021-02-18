@@ -50,5 +50,59 @@ export default {
         minimumFractionDigits: 2
       }
     );
+  },
+  formatarTipoOrdemDeServico(tipo: string) {
+    switch (tipo) {
+      case "0": return "Predetiva";
+      case "1": return "Corretiva";
+      case "2": return "Preventiva";
+      default: return "";
+    }
+  },
+  formatarTipoGarantia(tipo: string) {
+    switch (tipo) {
+      case "0": return "Km";
+      case "1": return "Dias";
+      default: return "";
+    }
+  },
+  formatarPlaca(placa: string) {
+    if (!placa) {
+      return ""
+    }
+    let formatado = placa.replace(/[^a-zA-Z0-9]/g, '').toLocaleUpperCase().substring(0, 7);
+    if (placa.length > 3) {
+      if (/\d/.test(formatado.charAt(3))) {
+        const letrasAposNumero = formatado.substring(4).match(/[A-Z]/g)
+        if (letrasAposNumero) {
+          if (letrasAposNumero.length < 2) {
+            const letrasAJAposNumero = formatado.substring(4).match(/[A-J]/g)
+            if (letrasAJAposNumero) {
+              if (formatado.length === 7 && !/\d/.test(formatado.charAt(6))) {
+                return `${formatado.substring(0, 3)}-${formatado.substring(3, formatado.length - 1)}`
+              }
+              return formatado;
+            }
+            else {
+              return `${formatado.substring(0, 3)}-${formatado.substring(3, formatado.length - 1)}`
+            }
+          }
+          return `${formatado.substring(0, 3)}-${formatado.substring(3, formatado.length - 1)}`
+        }
+        else {
+          return `${formatado.substring(0, 3)}-${formatado.substring(3)}`
+        }
+      }
+      else {
+        return formatado.substring(0, 3);
+      }
+    }
+    else {
+      const numeros = formatado.match(/[0-9]/g)
+      if (numeros) {
+        return '';
+      }
+    }
+    return formatado
   }
 }
