@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
     }),
     overflowX: 'hidden',
     width: theme.spacing(7) + 1,
-    
   },
   toolbar: {
     padding: theme.spacing(0, 1),

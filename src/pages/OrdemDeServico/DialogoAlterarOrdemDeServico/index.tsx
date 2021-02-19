@@ -1,4 +1,4 @@
-import React, { memo, useContext, useEffect } from 'react';
+import React, { memo, useContext, useEffect, useMemo, useState } from 'react';
 import Dialog from '../../../componentes/Dialog';
 import SwipeableViews from 'react-swipeable-views';
 import { Tabs, Tab, } from '@material-ui/core';
@@ -7,11 +7,10 @@ import FormOrdemDeServico from '../FormOrdemDeServico';
 import FrameItensDePeca from '../../ItensDePeca/FrameItensDePeca';
 import FrameItensDeServico from '../../ItensDeServico/FrameItensDeServico';
 import useQuery from '../../../hooks/useQuery';
-import SwipeableContext from '../../../contexts/SwipeableContext';
 
 const DialogAlterarOrdemDeServico: React.FC = () => {
   const { getOrdemDeServico } = useContext(OrdemDeServicoContext);
-  const {activeIndex, setActiveIndex} = useContext(SwipeableContext);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
   const id = useQuery("id");
 
   useEffect(() => {
@@ -19,20 +18,45 @@ const DialogAlterarOrdemDeServico: React.FC = () => {
       getOrdemDeServico(id);
     }
   }, [getOrdemDeServico, id]);
+  const isEdit = id !== null;
+
+  const itensDePeca = useMemo(() => (
+    <FrameItensDePeca />
+  ), []);
+
+  const itensDeServico = useMemo(() => (
+    <FrameItensDeServico />
+  ), []);
+
+  const formOrdemDeServico = useMemo(() => (
+    <FormOrdemDeServico />
+  ), []);
+
+  const tabPecas = useMemo(() => (
+    <Tab label="Peças" wrapped />
+  ), []);
+
+  const tabForm = useMemo(() => (
+    <Tab label="Ordem de serviço" wrapped />
+  ), []);
+
+  const tabServicos = useMemo(() => (
+    <Tab label="Serviços" wrapped />
+  ), []);
 
   return (
-    <Dialog title="Nova ordem de serviço" open maxWidth="lg" fullWidth fullScreen>
-      <Tabs value={activeIndex} onChange={(e, v) => setActiveIndex(v)} variant="fullWidth" indicatorColor="primary">
-        <Tab label="Peças" wrapped />
-        <Tab label="Ordem de serviço" wrapped />
-        <Tab label="Serviços" wrapped />
-      </Tabs>
+    <Dialog title={isEdit ? "Alterar ordem de serviço" : "Incluir ordem de serviço"} open maxWidth="lg" fullWidth fullScreen>
+      <Tabs value={activeIndex} onChange={(e, v) => setActiveIndex(v)} variant="fullWidth" indicatorColor="primary" >
+        {tabPecas}
+        {tabForm}
+        {tabServicos}
+      </Tabs >
       <SwipeableViews style={{ height: "calc(100% - 64px)", }} containerStyle={{ height: "calc(100% )", }} enableMouseEvents index={activeIndex} onChangeIndex={(e) => setActiveIndex(e)} resistance animateTransitions >
-        <FrameItensDePeca />
-        <FormOrdemDeServico />
-        <FrameItensDeServico />
+        {itensDePeca}
+        {formOrdemDeServico}
+        {itensDeServico}
       </SwipeableViews>
-    </Dialog>
+    </Dialog >
   );
 }
 

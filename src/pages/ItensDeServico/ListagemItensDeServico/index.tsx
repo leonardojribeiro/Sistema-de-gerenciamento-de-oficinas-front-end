@@ -1,19 +1,14 @@
-import React, { memo, useContext, useMemo, } from 'react';
-import { Box, Grid, Typography, makeStyles, Tooltip, IconButton } from '@material-ui/core';
+import React, { memo, useContext, } from 'react';
+import { Box, Grid, Typography, makeStyles, List, ListItemText, ListItem, ListItemSecondaryAction, Tooltip, IconButton } from '@material-ui/core';
 import OrdemDeServicoContext from '../../OrdemDeServico/OrdemDeServicoContext';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import PersonIcon from '@material-ui/icons/Person';
 import { agruparServicosPorFuncionario } from '../../../recursos/Agrupamento';
 import Formato from '../../../recursos/Formato';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    '&:nth-child(odd)': {
-      background: theme.palette.background.default,
-    },
-    '&:nth-child(even)': {
-      background: theme.palette.background.paper,
-    },
     height: "calc(100% - 64px)",
     overflowY: "auto",
     display: "flex",
@@ -30,60 +25,56 @@ const ListagemItensDeServico: React.FC = () => {
   const classes = useStyles();
   const { itensDeServico, valorTotalServicos, alterarItemDeServico, removerItemDeServico } = useContext(OrdemDeServicoContext);
 
-  console.log("rend")
-
-  const a = useMemo(() => (
-    <>
-      {
-        agruparServicosPorFuncionario(itensDeServico).map((agrupamento, index) => (
-          <Box mb={1} key={index} >
-            <Typography>De {agrupamento.nome}:</Typography>
-            <Box ml={1}>
-              {agrupamento.itensDeServico?.map((itemDeServico, index) => (
-                <Grid key={index} container justify="space-between" alignItems="center" >
-                  <Grid item md={4} lg={3}>
-                    <Typography>{itemDeServico.servico.descricao}</Typography>
-                  </Grid>
-                  <Grid item >
-                    <Typography>Garantia: {itemDeServico.garantia}</Typography>
-                  </Grid>
-                  <Grid item >
-                    <Typography>Valor unitário: {Formato.formatarMoeda(itemDeServico.valorUnitario)}</Typography>
-                  </Grid>
-                  <Grid item >
-                    <Typography>Quantidade: {itemDeServico.quantidade}</Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography>Valor total: {Formato.formatarMoeda(itemDeServico.valorTotal)}</Typography>
-                  </Grid>
-                  <Grid item >
-                    <Tooltip title={`Alterar `} onClick={() => alterarItemDeServico(itemDeServico._id)}>
-                      <IconButton >
-                        <EditIcon />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title={`Excluir `} onClick={() => removerItemDeServico(itemDeServico._id)}>
-                      <IconButton >
-                        <DeleteIcon />
-                      </IconButton>
-                    </Tooltip>
-                  </Grid>
-                </Grid>
-              ))}
-            </Box>
-          </Box>
-        ))
-      }
-    </>
-  ), [alterarItemDeServico, itensDeServico, removerItemDeServico]);
-
   return (
     <Box className={classes.root}>
-      <Box className={classes.listagem}>
-        {a}
+      <Box className={classes.listagem} px={1}>
+        {
+          agruparServicosPorFuncionario(itensDeServico).map((agrupamento, key) => (
+            <Grid container key={key} spacing={1}>
+              <Grid item>
+                <PersonIcon />
+              </Grid>
+              <Grid item>
+                <Typography>{agrupamento.nome}</Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <List dense >
+                  {
+                    agrupamento.itensDeServico.map((itemDeServico, key) => (
+                      <ListItem divider key={key}>
+                        <ListItemText
+                          primary={itemDeServico.servico.descricao}
+                          secondary={
+                            <>
+                              {`Valor unitário: R$ ${Formato.formatarMoeda(itemDeServico.valorUnitario)}. Quantidade: ${itemDeServico.quantidade}. Valor Total: R$ ${Formato.formatarMoeda(itemDeServico.valorTotal)}`}
+                              <br />
+                              {`Garantia: ${itemDeServico.garantia} ${Formato.formatarTipoGarantia(itemDeServico.unidadeDeGarantia)}`}
+                            </>
+                          }
+                        />
+                        <ListItemSecondaryAction>
+                          <Tooltip title={`Alterar `} onClick={() => alterarItemDeServico(itemDeServico._id)}>
+                            <IconButton >
+                              <EditIcon />
+                            </IconButton>
+                          </Tooltip>
+                          <Tooltip title={`Excluir `} onClick={() => removerItemDeServico(itemDeServico._id)}>
+                            <IconButton >
+                              <DeleteIcon />
+                            </IconButton>
+                          </Tooltip>
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                    ))
+                  }
+                </List>
+              </Grid>
+            </Grid>
+          ))
+        }
       </Box>
-      <Box alignSelf="flex-end" justifySelf="flex-end">
-        <Typography>Valor Total: {Formato.formatarMoeda(valorTotalServicos())}</Typography>
+      <Box alignSelf="flex-end" justifySelf="flex-end" py={1}>
+        <Typography>{`Valor Total dos serviços: R$${Formato.formatarMoeda(valorTotalServicos())}`}</Typography>
       </Box>
     </Box>
   )

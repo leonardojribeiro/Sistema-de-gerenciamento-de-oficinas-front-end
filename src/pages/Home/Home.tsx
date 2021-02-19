@@ -22,10 +22,6 @@ const useStyles = makeStyles((theme) => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
     position: "relative",
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
   },
   btn: {
     position: "fixed",
@@ -34,6 +30,13 @@ const useStyles = makeStyles((theme) => ({
   },
   areaBtn: {
     height: "88px",
+  },
+  dashboardContainer:{
+    height: `calc(100vh - 128px)`
+  },
+  toolbar:{
+    display: 'flex',
+    justifyContent: 'space-between'
   }
 }));
 
@@ -62,7 +65,7 @@ const Home: React.FC = () => {
   return (
     <>
       <AppBar color="primary" position="relative" className={classes.appBar}>
-        <Toolbar className="flex justify-between">
+        <Toolbar className={classes.toolbar}>
           <IconButton onClick={() => setOpen(!open)}>
             {open ? <ChevronLeftIcon /> : <MenuIcon />}
           </IconButton>
@@ -74,7 +77,7 @@ const Home: React.FC = () => {
             onClick={handleMenu}
             color="inherit"
           >
-            <Avatar src={`${process.env.REACT_APP_API_URL}/files/${usuario?.oficina.uriLogo}`} />
+            <Avatar src={`${process.env.REACT_APP_API_URL}/${usuario?.oficina.uriLogo}`} />
           </IconButton>
           <Menu
             id="menu-appbar"
@@ -112,7 +115,7 @@ const Home: React.FC = () => {
             <ItemDrawer icon={<SettingsIcon />} title="Opções" navigateTo="/opcoes" />
           </List>
         </MiniDrawer>
-        <Container className="h-min-barra-rodape" maxWidth="xl" >
+        <Container className={classes.dashboardContainer} maxWidth="xl" >
           <Dashboard/>
         </Container>
       </Box >

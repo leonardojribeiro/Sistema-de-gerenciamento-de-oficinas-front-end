@@ -1,8 +1,6 @@
 import { Fab, makeStyles } from '@material-ui/core';
 import { ExpandLess } from '@material-ui/icons';
-import React, { memo, useCallback, useContext } from 'react';
-import SwipeableContext from '../../contexts/SwipeableContext';
-
+import React, { memo, useCallback } from 'react';
 const useStyles = makeStyles((theme) => ({
   arrowContainer: {
     marginTop: '-64px',
@@ -17,11 +15,10 @@ const useStyles = makeStyles((theme) => ({
 
 const ArrowTop: React.FC = () => {
   const classes = useStyles();
-  const { setActiveIndex } = useContext(SwipeableContext);
 
   const handleClick = useCallback(() => {
-    setActiveIndex(1);
-  }, [setActiveIndex]);
+    // setActiveIndex(1);
+  }, []);
 
   return (
     <div className={classes.arrowContainer} >

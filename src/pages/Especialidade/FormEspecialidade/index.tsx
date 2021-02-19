@@ -8,7 +8,7 @@ import { Form, CampoDeTexto, } from '../../../componentes/Form';
 import Especialidade from '../../../Types/Especialidade';
 import BotaoIncluirOuAlterar from '../../../componentes/BotaoIncluirOuAlterar';
 
-const DialogIncluirOuAlterarEspecialidade: React.FC = () => {
+const FormEspecialidade: React.FC = () => {
   const id = useQuery("id");
   const [especialidade, setEspecialidade] = useState<Especialidade | undefined>();
   const { get, put, post } = useContext(ApiContext);
@@ -69,4 +69,4 @@ const DialogIncluirOuAlterarEspecialidade: React.FC = () => {
   )
 }
 
-export default memo(DialogIncluirOuAlterarEspecialidade);
+export default memo(FormEspecialidade);

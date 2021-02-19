@@ -5,7 +5,6 @@ import CircularProgressWithLabel from '../../../componentes/CircularProgressWith
 import Dialog from '../../../componentes/Dialog';
 import Listagem from '../../../componentes/Listagem';
 import Formato from '../../../recursos/Formato';
-import DialogIncluirOrdemDeServico from '../DialogIncluirOrdemDeServico';
 import DialogoAlterarOrdemDeServico from '../DialogoAlterarOrdemDeServico';
 import ShowOrdemDeServico from '../ShowOrdemDeServico';
 
@@ -31,8 +30,7 @@ const ListagemOrdensDeServico: React.FC = () => {
         )}
       />
       <Switch>
-        <Route path="/ordensdeservico/incluirordemdeservico" component={DialogIncluirOrdemDeServico} />
-        <Route path="/ordensdeservico/alterarordemdeservico" component={DialogoAlterarOrdemDeServico} />
+        <Route path={["/ordensdeservico/alterarordemdeservico", "/ordensdeservico/incluirordemdeservico" ]} component={DialogoAlterarOrdemDeServico} />
         <Route path="/ordensdeservico/exibirordemdeservico" component={ShowOrdemDeServico} />
       </Switch>
     </Dialog>

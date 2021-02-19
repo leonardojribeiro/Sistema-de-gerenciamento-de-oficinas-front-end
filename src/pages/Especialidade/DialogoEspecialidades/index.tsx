@@ -1,7 +1,7 @@
 import React, { memo, } from 'react';
 import Dialogo from '../../../componentes/Dialog';
 import { Switch, Route, } from 'react-router-dom';
-import DialogIncluirOuAlterarEspecialidade from '../FormEspecialidade';
+import FormEspecialidade from '../FormEspecialidade';
 import Listagem from '../../../componentes/Listagem';
 
 
@@ -18,7 +18,7 @@ function DialgoEspecialidades() {
         linkToInsert="/especialidades/incluirespecialidade"
       />
       <Switch>
-        <Route path={["/especialidades/incluirespecialidade", "/especialidades/alterarespecialidade"]} component={DialogIncluirOuAlterarEspecialidade} />
+        <Route path={["/especialidades/incluirespecialidade", "/especialidades/alterarespecialidade"]} component={FormEspecialidade} />
       </Switch>
     </Dialogo>
   );

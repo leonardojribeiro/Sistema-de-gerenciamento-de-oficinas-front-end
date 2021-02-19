@@ -1,19 +1,14 @@
 import React, { memo, useContext, } from 'react';
-import { Box, Grid, Typography, makeStyles, IconButton, Tooltip } from '@material-ui/core';
+import { Box, Grid, Typography, makeStyles, IconButton, Tooltip, ListItemSecondaryAction, ListItemText, ListItem, List } from '@material-ui/core';
 import OrdemDeServicoContext from '../../OrdemDeServico/OrdemDeServicoContext';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { agruparPecasPorFornecedor } from '../../../recursos/Agrupamento';
 import Formato from '../../../recursos/Formato';
+import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    '&:nth-child(odd)': {
-      background: theme.palette.background.default,
-    },
-    '&:nth-child(even)': {
-      background: theme.palette.background.paper,
-    },
     height: "calc(100% - 64px)",
     overflowY: "auto",
     display: "flex",
@@ -28,51 +23,55 @@ const useStyles = makeStyles((theme) => ({
 const ListagemItensDePeca: React.FC = () => {
   const classes = useStyles();
   const { itensDePeca, removerItemDePeca, alterarItemDePeca, valorTotalPecas } = useContext(OrdemDeServicoContext);
-
   return (
     <Box className={classes.root}>
-      <Box className={classes.listagem}>
-        {agruparPecasPorFornecedor(itensDePeca).map((agrupamento, index) => (
-          <Box mb={1} key={index} >
-            <Typography>De {agrupamento.nomeFantasia}:</Typography>
-            <Box ml={1}>
-              {agrupamento.itensDePeca?.map((itemDePeca, index) => (
-                <Grid key={index} container justify="space-between" alignItems="center" >
-                  <Grid item md={4} lg={3}>
-                    <Typography>{itemDePeca.peca.descricao}</Typography>
-                  </Grid>
-                  <Grid item >
-                    <Typography>Garantia: {itemDePeca.garantia}</Typography>
-                  </Grid>
-                  <Grid item >
-                    <Typography>Valor unitário: {Formato.formatarMoeda(itemDePeca.valorUnitario)}</Typography>
-                  </Grid>
-                  <Grid item >
-                    <Typography>Quantidade: {itemDePeca.quantidade}</Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography>Valor total: {Formato.formatarMoeda(itemDePeca.valorTotal)}</Typography>
-                  </Grid>
-                  <Grid item >
-                    <Tooltip title={`Alterar `} onClick={() => alterarItemDePeca(itemDePeca._id)}>
-                      <IconButton >
-                        <EditIcon />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title={`Excluir `} onClick={() => removerItemDePeca(itemDePeca._id)}>
-                      <IconButton >
-                        <DeleteIcon />
-                      </IconButton>
-                    </Tooltip>
-                  </Grid>
-                </Grid>
-              ))}
-            </Box>
-          </Box>
-        ))}
+      <Box className={classes.listagem} px={1}>
+        {agruparPecasPorFornecedor(itensDePeca).map((agrupamento, key) => (
+          <Grid container key={key} spacing={1}>
+            <Grid item>
+              <LocalShippingIcon />
+            </Grid>
+            <Grid item>
+              <Typography>{agrupamento.nomeFantasia}</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <List dense>
+                {
+                  agrupamento.itensDePeca.map((itemDePeca, key) => (
+                    <ListItem divider key={key}>
+                      <ListItemText
+                        primary={itemDePeca.peca.descricao}
+                        secondary={
+                          <>
+                            {`Valor unitário: R$ ${Formato.formatarMoeda(itemDePeca.valorUnitario)}. Quantidade: ${itemDePeca.quantidade}. Valor Total: R$ ${Formato.formatarMoeda(itemDePeca.valorTotal)}`}
+                            <br />
+                            {`Garantia: ${itemDePeca.garantia} ${Formato.formatarTipoGarantia(itemDePeca.unidadeDeGarantia)}`}
+                          </>
+                        }
+                      />
+                      <ListItemSecondaryAction>
+                        <Tooltip title={`Alterar `} onClick={() => alterarItemDePeca(itemDePeca._id)}>
+                          <IconButton >
+                            <EditIcon />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title={`Excluir `} onClick={() => removerItemDePeca(itemDePeca._id)}>
+                          <IconButton >
+                            <DeleteIcon />
+                          </IconButton>
+                        </Tooltip>
+                      </ListItemSecondaryAction>
+                    </ListItem>
+                  ))
+                }
+              </List>
+            </Grid>
+          </Grid>
+        ))
+        }
       </Box>
-      <Box alignSelf="flex-end" justifySelf="flex-end">
-        <Typography>Valor Total: {Formato.formatarMoeda(valorTotalPecas())}</Typography>
+      <Box alignSelf="flex-end" justifySelf="flex-end" py={1}>
+        <Typography>{`Valor Total das peças: R$${Formato.formatarMoeda(valorTotalPecas())}`}</Typography>
       </Box>
     </Box>
   )
