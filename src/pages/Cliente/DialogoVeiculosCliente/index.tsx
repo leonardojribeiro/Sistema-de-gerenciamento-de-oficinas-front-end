@@ -1,14 +1,14 @@
-import { Typography } from '@material-ui/core';
+import { List, Typography } from '@material-ui/core';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import BotaoIncluir from '../../../componentes/BotaoIncluir';
 import Dialog from '../../../componentes/Dialog';
+import ItemVeiculo from '../../../componentes/ItemVeiculo';
 import ApiContext from '../../../contexts/ApiContext';
 import useQuery from '../../../hooks/useQuery';
 import Vinculo from '../../../Types/Vinculo';
 import FormVeiculo from '../../Veiculo/FormVeiculo';
 import HistoricoVeiculo from '../../Veiculo/HistoricoVeiculo';
-import VeiculoItem from '../../Veiculo/VeiculoItem';
 
 
 const DialogoVeiculosCliente: React.FC = () => {
@@ -34,14 +34,16 @@ const DialogoVeiculosCliente: React.FC = () => {
     <Dialog title="Veículos do cliente" open maxWidth="sm" fullWidth>
       {
         vinculos?.length
-          ? vinculos?.map((vinculo, index) => (
-            <VeiculoItem key={index} baseUrlToHistory="/clientes/veiculos/historico" veiculo={vinculo.veiculo} />
-          ))
-          : (
-            <Typography align="center" variant="h6">Não existem veículos vinculados a esse cliente!</Typography>
-          )
+          ? <List>
+            {vinculos?.map((vinculo, index) => <ItemVeiculo
+              key={index}
+              veiculo={vinculo.veiculo}
+              baseURLToHistory="/clientes/veiculos/historico"
+            />)}
+          </List>
+          : <Typography align="center" variant="h6">Não existem veículos vinculados a esse cliente!</Typography>
       }
-      <BotaoIncluir titulo="Incluir veículo para esse cliente" linkTo={`/clientes/veiculos/incluirveiculo?cliente=${cliente}`}/>
+      <BotaoIncluir titulo="Incluir veículo para esse cliente" linkTo={`/clientes/veiculos/incluirveiculo?cliente=${cliente}`} />
       <Switch>
         <Route path="/clientes/veiculos/historico" component={HistoricoVeiculo} />
         <Route path="/clientes/veiculos/incluirveiculo" component={FormVeiculo} />

@@ -70,7 +70,7 @@ const HistoricoVeiculo: React.FC = () => {
       <Box mb={2}>
         <List dense >
           {
-            agrupamento?.map((agrupamento, index) => (
+            agrupamento?.map((agrupamento, index) =>
               <React.Fragment key={index}>
                 <ListItem>
                   <ListItemAvatar>
@@ -85,7 +85,7 @@ const HistoricoVeiculo: React.FC = () => {
                 </ListItem>
                 {
                   agrupamento.ordensDeServico.length > 0
-                    ? agrupamento.ordensDeServico.map((ordemDeServico, index) => (
+                    ? agrupamento.ordensDeServico.map((ordemDeServico, index) =>
                       <Box pl={2} key={index}>
                         <ListItem divider button component={Link} to={`${path}/exibirordemdeservico?id=${ordemDeServico._id}`}>
                           <ListItemAvatar>
@@ -99,15 +99,13 @@ const HistoricoVeiculo: React.FC = () => {
                           />
                         </ListItem>
                       </Box>
-                    ))
-                    : (
-                      <ListItem divider>
-                        <ListItemText primary="Não houveram ordens de serviço nesse período!" />
-                      </ListItem>
                     )
+                    : <ListItem divider>
+                      <ListItemText primary="Não houveram ordens de serviço nesse período!" />
+                    </ListItem>
                 }
               </React.Fragment>
-            ))}
+            )}
         </List>
       </Box >
       <BotaoIncluir titulo="Incluir ordem de serviço para este veículo" linkTo={`/ordensdeservico/incluir?veiculo=${veiculo}`} />

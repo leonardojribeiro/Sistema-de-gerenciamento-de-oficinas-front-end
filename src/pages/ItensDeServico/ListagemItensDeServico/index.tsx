@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const ListagemItensDeServico: React.FC = () => {
+function ListagemItensDeServico(): JSX.Element {
   const classes = useStyles();
   const { itensDeServico, valorTotalServicos, alterarItemDeServico, removerItemDeServico } = useContext(OrdemDeServicoContext);
 
@@ -29,7 +29,7 @@ const ListagemItensDeServico: React.FC = () => {
     <Box className={classes.root}>
       <Box className={classes.listagem} px={1}>
         {
-          agruparServicosPorFuncionario(itensDeServico).map((agrupamento, key) => (
+          agruparServicosPorFuncionario(itensDeServico).map((agrupamento, key) =>
             <Grid container key={key} spacing={1}>
               <Grid item>
                 <PersonIcon />
@@ -40,7 +40,7 @@ const ListagemItensDeServico: React.FC = () => {
               <Grid item xs={12}>
                 <List dense >
                   {
-                    agrupamento.itensDeServico.map((itemDeServico, key) => (
+                    agrupamento.itensDeServico.map((itemDeServico, key) =>
                       <ListItem divider key={key}>
                         <ListItemText
                           primary={itemDeServico.servico.descricao}
@@ -65,12 +65,12 @@ const ListagemItensDeServico: React.FC = () => {
                           </Tooltip>
                         </ListItemSecondaryAction>
                       </ListItem>
-                    ))
+                    )
                   }
                 </List>
               </Grid>
             </Grid>
-          ))
+          )
         }
       </Box>
       <Box alignSelf="flex-end" justifySelf="flex-end" py={1}>

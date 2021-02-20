@@ -17,21 +17,22 @@ import Cliente from '../../Types/Cliente';
 import Fornecedor from '../../Types/Fornecedor';
 import Funcionario from '../../Types/Funcionario';
 
-type Value<T = any> = T;
-
 interface BaseListagemProps<T,> {
-  getPrimaryText: (item: T) => string;
+  getPrimaryText?: (item: T) => string;
   getSecondaryText?: (item: T) => string | JSX.Element;
-  getLinkToChange: (item: T) => string;
-  getTitleLinkToChange: (item: T) => string;
+  getLinkToChange?: (item: T) => string;
+  getTitleLinkToChange?: (item: T) => string;
   getLinkToShow?: (item: T) => string;
   linkToInsert: string;
   linkToInsertTitle: string;
   formSearchFilters: Filter[];
   renderSecondaryActions?: (item: T) => JSX.Element;
   renderAvatar?: (item: T) => JSX.Element;
+  renderListItem?: (item: T) => JSX.Element;
   onClick?: (item: T) => void;
 }
+
+
 
 
 type Props = (BaseListagemProps<Peca> & {
@@ -68,7 +69,8 @@ export default function Listagem({
   formSearchFilters,
   dominio,
   onClick,
-  getLinkToShow
+  getLinkToShow,
+  renderListItem
 }: Props): JSX.Element {
   const history = useHistory();
   const { handlePageChange, handleSearch, itens, listar, page, total } = useListagem(dominio);
@@ -78,7 +80,7 @@ export default function Listagem({
   }, [listar])
 
   const handleClick = useCallback((item: any) => {
-    if (getLinkToShow){
+    if (getLinkToShow) {
       history.push(getLinkToShow(item));
     }
     if (onClick) {
@@ -98,25 +100,32 @@ export default function Listagem({
                 onClick: () => handleClick(item)
               } : {}
               return (
-                <ListItem key={index} divider {...props}>
-                  {renderAvatar
-                    ? <ListItemAvatar >
-                      {renderAvatar(item)}
-                    </ListItemAvatar>
-                    : null
-                  }
-                  <ListItemText primary={getPrimaryText(item)} secondary={getSecondaryText ? getSecondaryText(item) : null} />
-                  <ListItemSecondaryAction>
-                    {
-                      renderSecondaryActions && renderSecondaryActions(item)
+                renderListItem
+                  ? <React.Fragment key={index}>
+                    {renderListItem(item)}
+                  </React.Fragment>
+                  : <ListItem key={index} divider {...props}>
+                    {renderAvatar
+                      ? <ListItemAvatar >
+                        {renderAvatar(item)}
+                      </ListItemAvatar>
+                      : null
                     }
-                    <Tooltip title={getTitleLinkToChange(item)}>
-                      <IconButton component={Link} to={getLinkToChange(item)}>
-                        <EditIcon />
-                      </IconButton>
-                    </Tooltip>
-                  </ListItemSecondaryAction>
-                </ListItem>
+                    <ListItemText primary={getPrimaryText ? getPrimaryText(item) : ""} secondary={getSecondaryText ? getSecondaryText(item) : null} />
+                    <ListItemSecondaryAction>
+                      {
+                        renderSecondaryActions && renderSecondaryActions(item)
+                      }
+                      {
+                        getTitleLinkToChange && getLinkToChange
+                        && <Tooltip title={getTitleLinkToChange(item)}>
+                          <IconButton component={Link} to={getLinkToChange(item)}>
+                            <EditIcon />
+                          </IconButton>
+                        </Tooltip>
+                      }
+                    </ListItemSecondaryAction>
+                  </ListItem>
               )
             })
           }

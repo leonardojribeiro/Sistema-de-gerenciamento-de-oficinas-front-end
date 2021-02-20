@@ -2,40 +2,20 @@ import React, { memo } from 'react';
 import Dialogo from '../../../componentes/Dialog';
 import { Switch, Route } from 'react-router-dom';
 import FormVeiculo from '../FormVeiculo';
-import BotaoIncluir from '../../../componentes/BotaoIncluir';
 import HistoricoVeiculo from '../HistoricoVeiculo';
 import Listagem from '../../../componentes/Listagem';
-import { Avatar, IconButton, Tooltip } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import Formato from '../../../recursos/Formato';
+import ItemVeiculo from '../../../componentes/ItemVeiculo';
 
 const DialogoVeiculos: React.FC = () => {
-  const imagensUrl = process.env.REACT_APP_IMAGENS_URL;
   return (
     <Dialogo maxWidth="sm" fullWidth open title="Veículos">
       <Listagem
         dominio="veiculo"
         formSearchFilters={["placa", "modelo",]}
-        getPrimaryText={item => Formato.formatarPlaca(item.placa)}
-        getSecondaryText={item => item.modelo.descricao}
-        renderAvatar={item => (
-          <Avatar src={`${imagensUrl}/${item.modelo.marca.uriLogo}`} alt={item.modelo.marca.descricao} />
-        )}
-        getLinkToChange={item => `/veiculos/alterarveiculo?id=${item._id}`}
-        getTitleLinkToChange={item => `Alterar o veículo ${Formato.formatarPlaca(item.placa)}`}
         linkToInsertTitle="Incluir veículo"
         linkToInsert="/veiculos/incluirveiculo"
-        getLinkToShow={item => `/veiculos/historico?veiculo=${item._id}`}
-        renderSecondaryActions={item => (
-          <Tooltip title={`Nova ordem de serviço para este veículo`}>
-            <IconButton component={Link} to={`/ordensdeservico/incluir?veiculo=${item._id}`}>
-              <AssignmentIcon />
-            </IconButton>
-          </Tooltip>
-        )}
+        renderListItem={veiculo => <ItemVeiculo veiculo={veiculo} baseURLToHistory="/veiculos/historico"/>}
       />
-      <BotaoIncluir titulo="Incluir veiculo" linkTo="/veiculos/incluirveiculo" />
       <Switch>
         <Route path={["/veiculos/incluirveiculo", "/veiculos/alterarveiculo"]} component={FormVeiculo} />
         <Route path="/veiculos/historico" component={HistoricoVeiculo} />

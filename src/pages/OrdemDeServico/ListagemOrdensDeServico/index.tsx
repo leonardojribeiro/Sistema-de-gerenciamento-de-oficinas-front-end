@@ -8,9 +8,7 @@ import { formatarData, formatarMoeda, formatarPlaca } from '../../../recursos/Fo
 import DialogoAlterarOrdemDeServico from '../DialogoAlterarOrdemDeServico';
 import ShowOrdemDeServico from '../ShowOrdemDeServico';
 
-
-const ListagemOrdensDeServico: React.FC = () => {
-
+function ListagemOrdensDeServico(): JSX.Element {
   return (
     <Dialog title="Ordens de serviço" open fullWidth maxWidth='lg' >
       <Listagem
@@ -23,14 +21,14 @@ const ListagemOrdensDeServico: React.FC = () => {
         linkToInsertTitle="Incluir ordem de serviço"
         formSearchFilters={["status", "veiculo",]}
         getLinkToShow={ordemDeServico => `/ordensdeservico/exibirordemdeservico?id=${ordemDeServico._id}`}
-        renderAvatar={ordemDeServico => (
+        renderAvatar={ordemDeServico =>
           <Avatar>
             <CircularProgressWithLabel value={ordemDeServico.andamento} />
           </Avatar>
-        )}
+        }
       />
       <Switch>
-        <Route path={["/ordensdeservico/alterarordemdeservico", "/ordensdeservico/incluirordemdeservico" ]} component={DialogoAlterarOrdemDeServico} />
+        <Route path={["/ordensdeservico/alterarordemdeservico", "/ordensdeservico/incluirordemdeservico"]} component={DialogoAlterarOrdemDeServico} />
         <Route path="/ordensdeservico/exibirordemdeservico" component={ShowOrdemDeServico} />
       </Switch>
     </Dialog>

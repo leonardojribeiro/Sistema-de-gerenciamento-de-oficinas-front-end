@@ -2,11 +2,18 @@ import ptLocale from 'date-fns/locale/pt-BR';
 import datefns from '@date-io/date-fns';
 import numberMask from "./NumberMask";
 
-export function formatarData(date: Date): string {
+export function formatarData(date: Date, formato?: 'ano' | 'completa' | 'abreviada'): string {
   if (!date) {
     return "";
   }
-  return new datefns({ locale: ptLocale }).format(new Date(date), "PPPP");
+  switch (formato) {
+    case undefined: return new datefns({ locale: ptLocale }).format(new Date(date), "P");
+    case 'ano': return new datefns({ locale: ptLocale }).format(new Date(date), "u");
+    case 'completa': return new datefns({ locale: ptLocale }).format(new Date(date), "PPPP");
+    case 'abreviada': return new datefns({ locale: ptLocale }).format(new Date(date), "P");
+  }
+
+
 }
 
 export function formatarMoeda(valor: string | number) {
