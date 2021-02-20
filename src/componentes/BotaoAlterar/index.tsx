@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { makeStyles, Tooltip, Fab, Box } from '@material-ui/core';
-import AddIcon from "@material-ui/icons/Add";
+import EditIcon from "@material-ui/icons/Edit";
 import { Link } from 'react-router-dom';
 
 interface BotaoAlterarProps {
@@ -24,7 +24,7 @@ const BotaoAlterar: React.FC<BotaoAlterarProps> = ({ title, linkTo, ...props }) 
   const fab = (
     <Tooltip title={title}>
       <Fab {...props} className={classes.fab} color="primary">
-        <AddIcon />
+        <EditIcon />
       </Fab>
     </Tooltip>
   )

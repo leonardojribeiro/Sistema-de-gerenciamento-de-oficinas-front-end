@@ -4,7 +4,7 @@ import OrdemDeServicoContext from '../../OrdemDeServico/OrdemDeServicoContext';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { agruparPecasPorFornecedor } from '../../../recursos/Agrupamento';
-import Formato from '../../../recursos/Formato';
+import { formatarMoeda, formatarTipoGarantia } from '../../../recursos/Formato';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 
 const useStyles = makeStyles((theme) => ({
@@ -43,9 +43,9 @@ const ListagemItensDePeca: React.FC = () => {
                         primary={itemDePeca.peca.descricao}
                         secondary={
                           <>
-                            {`Valor unitário: R$ ${Formato.formatarMoeda(itemDePeca.valorUnitario)}. Quantidade: ${itemDePeca.quantidade}. Valor Total: R$ ${Formato.formatarMoeda(itemDePeca.valorTotal)}`}
+                            {`Valor unitário: R$ ${formatarMoeda(itemDePeca.valorUnitario)}. Quantidade: ${itemDePeca.quantidade}. Valor Total: R$ ${formatarMoeda(itemDePeca.valorTotal)}`}
                             <br />
-                            {`Garantia: ${itemDePeca.garantia} ${Formato.formatarTipoGarantia(itemDePeca.unidadeDeGarantia)}`}
+                            {`Garantia: ${itemDePeca.garantia} ${formatarTipoGarantia(itemDePeca.unidadeDeGarantia)}`}
                           </>
                         }
                       />
@@ -71,7 +71,7 @@ const ListagemItensDePeca: React.FC = () => {
         }
       </Box>
       <Box alignSelf="flex-end" justifySelf="flex-end" py={1}>
-        <Typography>{`Valor Total das peças: R$${Formato.formatarMoeda(valorTotalPecas())}`}</Typography>
+        <Typography>{`Valor Total das peças: R$${formatarMoeda(valorTotalPecas())}`}</Typography>
       </Box>
     </Box>
   )

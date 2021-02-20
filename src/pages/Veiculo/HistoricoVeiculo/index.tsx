@@ -1,4 +1,4 @@
-import { Avatar, Box, Divider, Grid, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@material-ui/core';
+import { Avatar, Box, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@material-ui/core';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import BotaoIncluir from '../../../componentes/BotaoIncluir';
 import Dialog from '../../../componentes/Dialog';
@@ -68,11 +68,11 @@ const HistoricoVeiculo: React.FC = () => {
     <Dialog title={`Histórico do veículo `} open maxWidth="md" fullWidth>
       <Typography align="center" variant="h6">Ordens de serviço desse veículo</Typography>
       <Box mb={2}>
-        <List dense>
+        <List dense >
           {
             agrupamento?.map((agrupamento, index) => (
-              <>
-                <ListItem key={index}>
+              <React.Fragment key={index}>
+                <ListItem>
                   <ListItemAvatar>
                     <Avatar>
                       <PersonIcon />
@@ -85,38 +85,36 @@ const HistoricoVeiculo: React.FC = () => {
                 </ListItem>
                 {
                   agrupamento.ordensDeServico.length > 0
-                    ? (
-                      <Box pl={2}>
-                        <List dense>
-                          {agrupamento.ordensDeServico.map((ordemDeServico, index) => (
-                            <ListItem divider key={index} button component={Link} to={`${path}/exibirordemdeservico?id=${ordemDeServico._id}`}>
-                              <ListItemAvatar>
-                                <Avatar>
-                                  <CircularProgressWithLabel value={ordemDeServico.andamento} />
-                                </Avatar>
-                              </ListItemAvatar>
-                              <ListItemText
-                                primary={Formato.formatarPlaca(ordemDeServico.veiculo.placa)}
-                                secondary={ordemDeServico.sintoma}
-                              />
-                            </ListItem>
-                          ))}
-                        </List>
+                    ? agrupamento.ordensDeServico.map((ordemDeServico, index) => (
+                      <Box pl={2} key={index}>
+                        <ListItem divider button component={Link} to={`${path}/exibirordemdeservico?id=${ordemDeServico._id}`}>
+                          <ListItemAvatar>
+                            <Avatar>
+                              <CircularProgressWithLabel value={ordemDeServico.andamento} />
+                            </Avatar>
+                          </ListItemAvatar>
+                          <ListItemText
+                            primary={Formato.formatarPlaca(ordemDeServico.veiculo.placa)}
+                            secondary={ordemDeServico.sintoma}
+                          />
+                        </ListItem>
                       </Box>
-                    )
+                    ))
                     : (
-                      <Typography align="center" variant="h6">Não houveram ordens de serviço nesse período!</Typography>
+                      <ListItem divider>
+                        <ListItemText primary="Não houveram ordens de serviço nesse período!" />
+                      </ListItem>
                     )
                 }
-              </>
+              </React.Fragment>
             ))}
         </List>
-      </Box>
+      </Box >
       <BotaoIncluir titulo="Incluir ordem de serviço para este veículo" linkTo={`/ordensdeservico/incluir?veiculo=${veiculo}`} />
       <Switch>
         <Route path={`${url}/exibirordemdeservico`} component={ShowOrdemDeServico} />
       </Switch>
-    </Dialog>
+    </Dialog >
   );
 }
 

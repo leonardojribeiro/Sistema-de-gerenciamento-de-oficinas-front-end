@@ -23,6 +23,12 @@ function AutoComplete<T>({ getDefaultValue, path, name, label, required, onChang
   const valueSelected = useRef<any>(null);
   const { fieldName, registerField, defaultValue } = useField(name);
 
+  const clear = useCallback(() => {
+    setValue(props.multiple ? [] : null);
+    valueSelected.current = null;
+    setValid(true);
+  }, [props.multiple]);
+
   const getValue = useCallback((ref) => {
     if (ref.current) {
       if (props.multiple) {
@@ -71,8 +77,9 @@ function AutoComplete<T>({ getDefaultValue, path, name, label, required, onChang
       ref: valueSelected,
       getValue,
       validate,
+      clear
     })
-  }, [fieldName, getValue, path, registerField, validate]);
+  }, [clear, fieldName, getValue, path, registerField, validate]);
 
   const fill = useCallback(async () => {
     let value;

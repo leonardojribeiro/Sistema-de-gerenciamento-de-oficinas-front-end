@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import CircularProgressWithLabel from '../../../componentes/CircularProgressWithLabel';
 import Dialog from '../../../componentes/Dialog';
 import Listagem from '../../../componentes/Listagem';
-import Formato from '../../../recursos/Formato';
+import { formatarData, formatarMoeda, formatarPlaca } from '../../../recursos/Formato';
 import DialogoAlterarOrdemDeServico from '../DialogoAlterarOrdemDeServico';
 import ShowOrdemDeServico from '../ShowOrdemDeServico';
 
@@ -15,10 +15,10 @@ const ListagemOrdensDeServico: React.FC = () => {
     <Dialog title="Ordens de serviço" open fullWidth maxWidth='lg' >
       <Listagem
         dominio="ordemdeservico"
-        getPrimaryText={ordemDeServico => Formato.formatarPlaca(ordemDeServico.veiculo.placa)}
-        getSecondaryText={ordemDeServico => ordemDeServico.sintoma}
+        getPrimaryText={ordemDeServico => `${formatarPlaca(ordemDeServico.veiculo.placa)} - ${formatarData(ordemDeServico.dataDeRegistro)}`}
+        getSecondaryText={ordemDeServico => `Sintoma: ${ordemDeServico.sintoma}. Valor total :R$${formatarMoeda(ordemDeServico.valorTotal)}`}
         getLinkToChange={ordemDeServico => `/ordensdeservico/alterarordemdeservico?id=${ordemDeServico._id}`}
-        getTitleLinkToChange={() => ""}
+        getTitleLinkToChange={() => "Alterar ordem de serviço"}
         linkToInsert="/ordensdeservico/incluirordemdeservico"
         linkToInsertTitle="Incluir ordem de serviço"
         formSearchFilters={["status", "veiculo",]}

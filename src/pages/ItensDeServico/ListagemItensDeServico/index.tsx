@@ -5,7 +5,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PersonIcon from '@material-ui/icons/Person';
 import { agruparServicosPorFuncionario } from '../../../recursos/Agrupamento';
-import Formato from '../../../recursos/Formato';
+import { formatarMoeda, formatarTipoGarantia } from '../../../recursos/Formato';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,9 +46,9 @@ const ListagemItensDeServico: React.FC = () => {
                           primary={itemDeServico.servico.descricao}
                           secondary={
                             <>
-                              {`Valor unitário: R$ ${Formato.formatarMoeda(itemDeServico.valorUnitario)}. Quantidade: ${itemDeServico.quantidade}. Valor Total: R$ ${Formato.formatarMoeda(itemDeServico.valorTotal)}`}
+                              {`Valor unitário: R$ ${formatarMoeda(itemDeServico.valorUnitario)}. Quantidade: ${itemDeServico.quantidade}. Valor Total: R$ ${formatarMoeda(itemDeServico.valorTotal)}`}
                               <br />
-                              {`Garantia: ${itemDeServico.garantia} ${Formato.formatarTipoGarantia(itemDeServico.unidadeDeGarantia)}`}
+                              {`Garantia: ${itemDeServico.garantia} ${formatarTipoGarantia(itemDeServico.unidadeDeGarantia)}`}
                             </>
                           }
                         />
@@ -74,7 +74,7 @@ const ListagemItensDeServico: React.FC = () => {
         }
       </Box>
       <Box alignSelf="flex-end" justifySelf="flex-end" py={1}>
-        <Typography>{`Valor Total dos serviços: R$${Formato.formatarMoeda(valorTotalServicos())}`}</Typography>
+        <Typography>{`Valor Total dos serviços: R$${formatarMoeda(valorTotalServicos())}`}</Typography>
       </Box>
     </Box>
   )

@@ -5,10 +5,8 @@ import OrdemDeServico from '../../../Types/OrdemDeServico';
 import useListagemUnica from '../../../hooks/useListagemUnica';
 import { Avatar, Box, createStyles, Divider, Grid, Hidden, List, ListItem, ListItemText, makeStyles, Typography } from '@material-ui/core';
 import DriveEtaIcon from '@material-ui/icons/DriveEta';
-import Formato from '../../../recursos/Formato';
+import { formatarData, formatarMoeda, formatarPlaca, formatarTipoGarantia } from '../../../recursos/Formato';
 import CircularProgressWithLabel from '../../../componentes/CircularProgressWithLabel';
-import datefns from '@date-io/date-fns';
-import ptLocale from "date-fns/locale/pt-BR";
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import PersonIcon from '@material-ui/icons/Person';
 import { agruparPecasPorFornecedor, agruparServicosPorFuncionario } from '../../../recursos/Agrupamento';
@@ -56,7 +54,6 @@ function ShowOrdemDeServico(): JSX.Element {
     listar()
   }, [listar])
 
-  console.log(item)
   return (
     <Dialog title="Ordem de serviço" open maxWidth="md" fullWidth>
       {
@@ -70,17 +67,28 @@ function ShowOrdemDeServico(): JSX.Element {
                       <DriveEtaIcon />
                     </Grid>
                     <Grid item >
-                      <Typography>{Formato.formatarPlaca(item.veiculo.placa)}</Typography>
+                      <Typography>{formatarPlaca(item.veiculo.placa)}</Typography>
                     </Grid>
                   </Grid>
                 </Grid>
                 <Grid item >
-                  <Typography>{new datefns({ locale: ptLocale }).format(new Date(item.dataDeRegistro), "PPPP")}</Typography>
+                  <Typography>{formatarData(item.dataDeRegistro)}</Typography>
                 </Grid>
                 <Grid item>
                   <Avatar>
                     <CircularProgressWithLabel value={item.andamento} />
                   </Avatar>
+                </Grid>
+              </Grid>
+            </Box>
+            <Divider />
+            <Box my={1}>
+              <Grid container justify="space-between">
+                <Grid item>
+                  <Typography>{`Iniciada em ${formatarData(item.dataDeInicio)}.`}</Typography>
+                </Grid>
+                <Grid item>
+                  <Typography>{`Finalizada em ${formatarData(item.dataDeConclusao)}.`}</Typography>
                 </Grid>
               </Grid>
             </Box>
@@ -118,9 +126,9 @@ function ShowOrdemDeServico(): JSX.Element {
                                     primary={itemDeServico.servico.descricao}
                                     secondary={
                                       <>
-                                        {`Valor unitário: R$ ${Formato.formatarMoeda(itemDeServico.valorUnitario)}. Quantidade: ${itemDeServico.quantidade}. Valor Total: R$ ${Formato.formatarMoeda(itemDeServico.valorTotal)}`}
+                                        {`Valor unitário: R$ ${formatarMoeda(itemDeServico.valorUnitario)}. Quantidade: ${itemDeServico.quantidade}. Valor Total: R$ ${formatarMoeda(itemDeServico.valorTotal)}`}
                                         <br />
-                                        {`Garantia: ${itemDeServico.garantia} ${Formato.formatarTipoGarantia(itemDeServico.unidadeDeGarantia)}`}
+                                        {`Garantia: ${itemDeServico.garantia} ${formatarTipoGarantia(itemDeServico.unidadeDeGarantia)}`}
                                       </>
                                     }
                                   />
@@ -135,7 +143,7 @@ function ShowOrdemDeServico(): JSX.Element {
                 </Box>
                 <Hidden mdUp>
                   <Box display="flex" justifyContent="flex-end" mb={2}>
-                    <Typography>{`Valor total dos serviços: R$${Formato.formatarMoeda(item.valorTotalDosServicos)}`}</Typography>
+                    <Typography>{`Valor total dos serviços: R$${formatarMoeda(item.valorTotalDosServicos)}`}</Typography>
                   </Box>
                   <Divider />
                 </Hidden>
@@ -165,9 +173,9 @@ function ShowOrdemDeServico(): JSX.Element {
                                     primary={itemDePeca.peca.descricao}
                                     secondary={
                                       <>
-                                        {`Valor unitário: R$ ${Formato.formatarMoeda(itemDePeca.valorUnitario)}. Quantidade: ${itemDePeca.quantidade}. Valor Total: R$ ${Formato.formatarMoeda(itemDePeca.valorTotal)}`}
+                                        {`Valor unitário: R$ ${formatarMoeda(itemDePeca.valorUnitario)}. Quantidade: ${itemDePeca.quantidade}. Valor Total: R$ ${formatarMoeda(itemDePeca.valorTotal)}`}
                                         <br />
-                                        {`Garantia: ${itemDePeca.garantia} ${Formato.formatarTipoGarantia(itemDePeca.unidadeDeGarantia)}`}
+                                        {`Garantia: ${itemDePeca.garantia} ${formatarTipoGarantia(itemDePeca.unidadeDeGarantia)}`}
                                       </>
                                     }
                                   />
@@ -182,37 +190,37 @@ function ShowOrdemDeServico(): JSX.Element {
                   }
                 </Box>
                 <Hidden mdUp>
-                  <Box display="flex" justifyContent="flex-end" pb={2}>
-                    <Typography>{`Valor total das peças: R$${Formato.formatarMoeda(item.valorTotalDasPecas)}`}</Typography>
+                  <Box display="flex" justifyContent="flex-end" pb={1}>
+                    <Typography>{`Valor total das peças: R$${formatarMoeda(item.valorTotalDasPecas)}`}</Typography>
                   </Box>
                 </Hidden>
               </Grid>
               <Hidden smDown>
                 <Grid item xs={12} md={6}>
                   <Box display="flex" justifyContent="flex-end" pr={2} py={1}>
-                    <Typography>{`Valor total dos serviços: R$${Formato.formatarMoeda(item.valorTotalDosServicos)}`}</Typography>
+                    <Typography>{`Valor total dos serviços: R$${formatarMoeda(item.valorTotalDosServicos)}`}</Typography>
                   </Box>
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Box display="flex" justifyContent="flex-end" pl={2} py={1}>
-                    <Typography>{`Valor total das peças: R$${Formato.formatarMoeda(item.valorTotalDasPecas)}`}</Typography>
+                    <Typography>{`Valor total das peças: R$${formatarMoeda(item.valorTotalDasPecas)}`}</Typography>
                   </Box>
                 </Grid>
               </Hidden>
             </Grid>
-            <Divider/>
+            <Divider />
             <Box display="flex" flexDirection="column" alignItems="flex-end" py={1}>
-              <Typography>{`Valor total das peças e serviços: R$${Formato.formatarMoeda(item.valorTotalDasPecas + item.valorTotalDosServicos)}`}</Typography>
+              <Typography>{`Valor total das peças e serviços: R$${formatarMoeda(item.valorTotalDasPecas + item.valorTotalDosServicos)}`}</Typography>
             </Box>
             <Divider />
             <Box display="flex" flexDirection="column" alignItems="flex-end" py={1}>
-              <Typography>{`Desconto: R$${Formato.formatarMoeda(item.desconto)}`}</Typography>
+              <Typography>{`Desconto: R$${formatarMoeda(item.desconto)}`}</Typography>
             </Box>
             <Divider />
             <Box display="flex" flexDirection="column" alignItems="flex-end" py={1}>
-              <Typography>{`Valor total da ordem de serviço: R$${Formato.formatarMoeda(item.valorTotal)}`}</Typography>
+              <Typography>{`Valor total da ordem de serviço: R$${formatarMoeda(item.valorTotal)}`}</Typography>
             </Box>
-            <BotaoAlterar title="Alterar essa ordem de serviço" linkTo={`/ordensdeservico/alterarordemdeservico?id=${item._id}`}/>
+            <BotaoAlterar title="Alterar essa ordem de serviço" linkTo={`/ordensdeservico/alterarordemdeservico?id=${item._id}`} />
           </>
         )
       }
