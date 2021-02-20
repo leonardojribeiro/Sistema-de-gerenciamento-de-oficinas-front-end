@@ -6,9 +6,11 @@ import ApiContext from '../../../contexts/ApiContext';
 import useQuery from '../../../hooks/useQuery';
 import OrdemDeServico from '../../../Types/OrdemDeServico';
 import Vinculo from '../../../Types/Vinculo';
-import ItemOrdemDeServico from '../../OrdemDeServico/ItemOrdemDeServico';
 import PersonIcon from '@material-ui/icons/Person';
 import Formato from '../../../recursos/Formato';
+import CircularProgressWithLabel from '../../../componentes/CircularProgressWithLabel';
+import { Link, Route, Switch, useRouteMatch } from 'react-router-dom';
+import ShowOrdemDeServico from '../../OrdemDeServico/ShowOrdemDeServico';
 
 interface AgrupamentoVinculoOrdemDeServico {
   vinculo: Vinculo;
@@ -19,7 +21,7 @@ const HistoricoVeiculo: React.FC = () => {
   const veiculo = useQuery('veiculo');
   const [agrupamento, setAgrupamento] = useState<AgrupamentoVinculoOrdemDeServico[]>()
   const { get } = useContext(ApiContext);
-
+  const { path, url } = useRouteMatch();
   const listar = useCallback(async () => {
     const vinculos = await get(`/veiculo/consultaVinculo?veiculo=${veiculo}`) as any;
     if (vinculos) {
@@ -52,55 +54,68 @@ const HistoricoVeiculo: React.FC = () => {
           }
         })
       })
-
-      console.log(agr);
       setAgrupamento(agr);
     }
   }, [get, veiculo]);
 
   useEffect(() => {
-    listar();
-  }, [listar]);
+    if (veiculo) {
+      listar();
+    }
+  }, [listar, veiculo]);
 
   return (
-    <Dialog title={`Histórico do veículo `} open maxWidth="lg" fullWidth>
+    <Dialog title={`Histórico do veículo `} open maxWidth="md" fullWidth>
       <Typography align="center" variant="h6">Ordens de serviço desse veículo</Typography>
       <Box mb={2}>
-        <List>
+        <List dense>
           {
             agrupamento?.map((agrupamento, index) => (
-              <Grid container key={index} spacing={2} justify="center" >
-                <Grid item xs={12} sm={11} lg={10} xl={8}>
-                  <ListItem>
-                    <ListItemAvatar>
-                      <Avatar>
-                        <PersonIcon />
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={`${agrupamento.vinculo.cliente.nome}`}
-                      secondary={`Desde: ${Formato.formatarData(agrupamento.vinculo.vinculoInicial)} até ${agrupamento.vinculo.vinculoFinal ? Formato.formatarData(agrupamento.vinculo.vinculoFinal) : "o momento"}.`}
-                    />
-                  </ListItem>
-                </Grid>
-                {agrupamento.ordensDeServico.length > 0
-                  ? agrupamento.ordensDeServico.map((ordemDeServico, index) => (
-                    <ItemOrdemDeServico ordemDeServico={ordemDeServico} key={index} />
-                  ))
-                  : (
-                    <Grid item xs={12} sm={11} lg={10} xl={8}>
+              <>
+                <ListItem key={index}>
+                  <ListItemAvatar>
+                    <Avatar>
+                      <PersonIcon />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={`${agrupamento.vinculo.cliente.nome}`}
+                    secondary={`Desde: ${Formato.formatarData(agrupamento.vinculo.vinculoInicial)} até ${agrupamento.vinculo.vinculoFinal ? Formato.formatarData(agrupamento.vinculo.vinculoFinal) : "o momento"}.`}
+                  />
+                </ListItem>
+                {
+                  agrupamento.ordensDeServico.length > 0
+                    ? (
+                      <Box pl={2}>
+                        <List dense>
+                          {agrupamento.ordensDeServico.map((ordemDeServico, index) => (
+                            <ListItem divider key={index} button component={Link} to={`${path}/exibirordemdeservico?id=${ordemDeServico._id}`}>
+                              <ListItemAvatar>
+                                <Avatar>
+                                  <CircularProgressWithLabel value={ordemDeServico.andamento} />
+                                </Avatar>
+                              </ListItemAvatar>
+                              <ListItemText
+                                primary={Formato.formatarPlaca(ordemDeServico.veiculo.placa)}
+                                secondary={ordemDeServico.sintoma}
+                              />
+                            </ListItem>
+                          ))}
+                        </List>
+                      </Box>
+                    )
+                    : (
                       <Typography align="center" variant="h6">Não houveram ordens de serviço nesse período!</Typography>
-                    </Grid>
-                  )}
-                <Grid item xs={12} sm={11} lg={10} xl={8}>
-                  <Divider />
-                </Grid>
-              </Grid>
-            ))
-          }
+                    )
+                }
+              </>
+            ))}
         </List>
       </Box>
       <BotaoIncluir titulo="Incluir ordem de serviço para este veículo" linkTo={`/ordensdeservico/incluir?veiculo=${veiculo}`} />
+      <Switch>
+        <Route path={`${url}/exibirordemdeservico`} component={ShowOrdemDeServico} />
+      </Switch>
     </Dialog>
   );
 }
