@@ -14,7 +14,7 @@ interface ItemVeiculoProps {
 function ItemVeiculo({ veiculo, baseURLToHistory }: ItemVeiculoProps): JSX.Element {
   const imagensUrl = process.env.REACT_APP_IMAGENS_URL;
   return (
-    <ListItem button divider component={Link} to={`${baseURLToHistory}?veiculo=${veiculo._id}`}>
+    <ListItem button divider component={Link} to={`${baseURLToHistory}?veiculo=${veiculo._id}&placa=${veiculo.placa}`}>
       <ListItemAvatar>
         <Avatar src={`${imagensUrl}/${veiculo?.modelo?.marca?.uriLogo}`} alt={veiculo?.modelo?.marca?.descricao} />
       </ListItemAvatar>

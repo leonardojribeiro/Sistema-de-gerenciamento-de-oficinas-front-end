@@ -22,7 +22,7 @@ const DialogoClientes: React.FC = () => {
         getLinkToChange={cliente => `/clientes/alterarcliente?id=${cliente._id}`}
         renderSecondaryActions={cliente => (
           <Tooltip title="Veículos desse cliente">
-            <IconButton component={Link} to={`clientes/veiculos?cliente=${cliente._id}`}>
+            <IconButton component={Link} to={`clientes/veiculos?cliente=${cliente._id}&nome=${cliente.nome}`}>
               <DriveEtaIcon />
             </IconButton>
           </Tooltip>

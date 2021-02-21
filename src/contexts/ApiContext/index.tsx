@@ -1,11 +1,12 @@
-import React, { createContext, useCallback } from "react";
+import React, { createContext, useCallback, useState } from "react";
 import api from "../../services/api";
 import ProgressoCircular, { ProgressoCircularHandles } from "../../componentes/ProgressoCircular";
 import dot from "dot-object";
-import Alerta, { AlertaHandles } from "../../componentes/Alerta";
 import { useRef } from "react";
 import useAuth from "../../hooks/useAuth";
-import { AxiosRequestConfig } from "axios";
+import { AxiosError, AxiosRequestConfig } from "axios";
+import { Snackbar } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 
 interface ApiContextValues {
   get: (url: string, desablitarProgresso?: boolean, config?: AxiosRequestConfig) => Promise<object>,
@@ -16,59 +17,69 @@ interface ApiContextValues {
   multipartPut: (url: string, dados: object) => Promise<object>
 }
 
+interface AlertValues {
+  severity: "success" | "info" | "warning" | "error" | undefined;
+  message: JSX.Element | string;
+}
+
 const ApiContext = createContext<ApiContextValues>({} as ApiContextValues);
 
 export const ApiProvider: React.FC = ({ children }) => {
-  const refAlerta = useRef<AlertaHandles | undefined>(undefined);
   const refProgresso = useRef<ProgressoCircularHandles | undefined>(undefined);
-  const { token } = useAuth();
+  const { token, verificarTempoRestante, logout } = useAuth();
+  const [alert, setAlert] = useState<AlertValues | null>(null)
 
-  const headers = {
-    authorization: token,
-  }
+  const headers = useCallback(() => {
+    verificarTempoRestante();
+    return { authorization: token };
+  }, [token, verificarTempoRestante]);
 
-  function handleProgresso(e: any) {
+  const handleProgresso = useCallback((e: any) => {
     const progresso = (e.loaded * 100 / e.total);
     if (refProgresso && refProgresso.current) {
       refProgresso.current.setValor(progresso === 100 ? 0 : progresso);
     }
-  }
+  }, []);
 
-  function handleErro(erro: any) {
-    if (refAlerta && refAlerta.current) {
-      refAlerta.current.setTipo("error")
-      if (erro.response && erro.response.data) {
-        const mensagem = (erro.response.data.mensagem);
-        refAlerta.current.setMensagem(
-          Array.isArray(mensagem)
-            ? mensagem.map((mensagem, index) => <p key={index}>{mensagem}</p>)
-            : mensagem
-        )
-      }
-      else if (erro.response && erro.response.request && erro.response.request.response && erro.response.request.response.mensagem) {
-        const { mensagem } = JSON.parse(erro.response.request.response);
-        refAlerta.current.setMensagem(
-          Array.isArray(mensagem)
-            ? mensagem.map((mensagem, index) => <p key={index}>{mensagem}</p>)
-            : mensagem
-        )
-      }
-      else {
-        refAlerta.current.setMensagem(erro.message === "Network Error" ? "Erro ao se conectar com o servidor." : erro.message);
-      }
-      refAlerta.current.setAberto(true);
+
+  const handleErro = useCallback((erro: AxiosError) => {
+    if (erro && erro.response && erro.response.status === 401) {
+      logout();
     }
-  }
+    if (erro.response && erro.response.data) {
+      const mensagem = erro.response.data.mensagem;
+      setAlert({
+        message: Array.isArray(mensagem)
+          ? mensagem.map((mensagem, index) => <p key={index}>{mensagem}</p>)
+          : mensagem,
+        severity: "error",
+      });
+    }
+    else if (erro.response && erro.response.request && erro.response.request.response && erro.response.request.response.mensagem) {
+      const { mensagem } = JSON.parse(erro.response.request.response);
+      setAlert({
+        message: Array.isArray(mensagem)
+          ? mensagem.map((mensagem, index) => <p key={index}>{mensagem}</p>)
+          : mensagem,
+        severity: "error",
+      });
+    }
+    else {
+      setAlert({
+        message: erro.message === "Network Error" ? "Erro ao se conectar com o servidor." : erro.message,
+        severity: "error",
+      });
+    }
+  }, [logout]);
 
   const handleResposta = useCallback((resposta) => {
     if (resposta) {
       if (resposta.status === 201 || resposta.status === 200) {
         if (resposta.data.mensagem) {
-          if (refAlerta && refAlerta.current) {
-            refAlerta.current.setTipo("success")
-            refAlerta.current.setMensagem(resposta.data.mensagem);
-            refAlerta.current.setAberto(true);
-          }
+          setAlert({
+            message: resposta.data.mensagem,
+            severity: 'success',
+          });
         }
       }
       if (resposta.data) {
@@ -86,7 +97,7 @@ export const ApiProvider: React.FC = ({ children }) => {
         resposta = await api.get(url, config);
       }
       else {
-        resposta = await api.get(url, { headers });
+        resposta = await api.get(url, { headers: headers() });
       }
     }
     catch (e) {
@@ -94,7 +105,7 @@ export const ApiProvider: React.FC = ({ children }) => {
     }
     !desablitarProgresso && refProgresso && refProgresso.current && refProgresso.current.setAberto(false);
     return handleResposta(resposta);
-  }, [handleResposta, headers]);
+  }, [handleErro, handleResposta, headers]);
 
   const getTipoBlob = useCallback(async (url) => {
     refProgresso && refProgresso.current && refProgresso.current.setAberto(true);
@@ -109,7 +120,7 @@ export const ApiProvider: React.FC = ({ children }) => {
     }
     refProgresso && refProgresso.current && refProgresso.current.setAberto(false);
     return handleResposta(resposta) as Blob;
-  }, [handleResposta]);
+  }, [handleErro, handleResposta]);
 
   const post = useCallback(async (url: string, dados: object) => {
     refProgresso && refProgresso.current && refProgresso.current.setAberto(true);
@@ -121,7 +132,7 @@ export const ApiProvider: React.FC = ({ children }) => {
           dados,
           {
             onUploadProgress: handleProgresso,
-            headers,
+            headers: headers(),
           }
         );
     }
@@ -130,7 +141,7 @@ export const ApiProvider: React.FC = ({ children }) => {
     }
     refProgresso && refProgresso.current && refProgresso.current.setAberto(false);
     return handleResposta(resposta)
-  }, [handleResposta, headers]);
+  }, [handleErro, handleProgresso, handleResposta, headers]);
 
   const put = useCallback(async (url: string, dados: object) => {
     refProgresso && refProgresso.current && refProgresso.current.setAberto(true);
@@ -142,7 +153,7 @@ export const ApiProvider: React.FC = ({ children }) => {
           dados,
           {
             onUploadProgress: handleProgresso,
-            headers,
+            headers: headers(),
           }
         );
     }
@@ -151,7 +162,7 @@ export const ApiProvider: React.FC = ({ children }) => {
     }
     refProgresso && refProgresso.current && refProgresso.current.setAberto(false);
     return handleResposta(resposta)
-  }, [handleResposta, headers]);
+  }, [handleErro, handleProgresso, handleResposta, headers]);
 
   const prepararDados = useCallback((dados: object) => {
     const formDados = new FormData();
@@ -176,6 +187,9 @@ export const ApiProvider: React.FC = ({ children }) => {
     return put(url, formDados);
   }, [prepararDados, put]);
 
+  const handleClose = useCallback(() => {
+    setAlert(null);
+  }, [])
 
   return (
     <>
@@ -192,7 +206,11 @@ export const ApiProvider: React.FC = ({ children }) => {
         {children}
       </ApiContext.Provider>
       <ProgressoCircular ref={refProgresso} />
-      <Alerta ref={refAlerta} />
+      <Snackbar open={alert !== null} autoHideDuration={5000} onClose={handleClose}>
+        <Alert severity={alert?.severity} onClose={handleClose} closeText="Fechar">
+          {alert?.message}
+        </Alert>
+      </Snackbar>
     </>
   )
 }

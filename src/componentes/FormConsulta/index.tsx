@@ -23,14 +23,14 @@ const useStyles = makeStyles((theme: Theme) =>
     chipContainer: {
       display: 'flex',
       flexWrap: 'wrap',
-      
+
     },
     container: {
       border: `solid 1px ${theme.palette.divider}`,
       borderRadius: theme.spacing(0.5),
       padding: theme.spacing(1)
     },
-    chip:{
+    chip: {
       margin: theme.spacing(0.5),
     }
   }),
@@ -118,39 +118,18 @@ const FormConsulta: React.FC<FormConsultaPessoaProps> = ({ onSubmit, filters }) 
         : undefined
     }
     switch (filter) {
-      case 'cpf': {
-        return <Chip label="CPF" {...props} />
-      }
-      case 'cpfCnpj': {
-        return <Chip label="CPF/CNPJ" {...props} />
-      }
-      case 'placa': {
-        return <Chip label="Placa" {...props} />
-      }
-      case 'descricao': {
-        return <Chip label="Descrição" {...props} />
-      }
-      case 'nome': {
-        return <Chip label="Nome" {...props} />
-      }
-      case 'telefone': {
-        return <Chip label="Telefone" {...props} />
-      }
-      case 'email': {
-        return <Chip label="Email" {...props} />
-      }
-      case 'status': {
-        return <Chip label="Status" {...props} />
-      }
-      case 'veiculo': {
-        return <Chip label="Veículo" {...props} />
-      }
-      case 'marca': {
-        return <Chip label={`Marca${labelValuesSelected.current['marca'] ? `: ${labelValuesSelected.current['marca']}` : ""}`} {...props} />
-      }
-      case 'modelo': {
-        return <Chip label={`Modelo${labelValuesSelected.current['modelo'] ? `: ${labelValuesSelected.current['modelo']}` : ""}`} {...props} />
-      }
+      case 'cpf': return <Chip label="CPF" {...props} />
+      case 'nomeFantasia': return <Chip label="Nome fantasia" {...props} />
+      case 'cpfCnpj': return <Chip label="CPF/CNPJ" {...props} />
+      case 'placa': return <Chip label="Placa" {...props} />
+      case 'descricao': return <Chip label="Descrição" {...props} />
+      case 'nome': return <Chip label="Nome" {...props} />
+      case 'telefone': return <Chip label="Telefone" {...props} />
+      case 'email': return <Chip label="Email" {...props} />
+      case 'status': return <Chip label="Status" {...props} />
+      case 'veiculo': return <Chip label="Veículo" {...props} />
+      case 'marca': return <Chip label={`Marca${labelValuesSelected.current['marca'] ? `: ${labelValuesSelected.current['marca']}` : ""}`} {...props} />
+      case 'modelo': return <Chip label={`Modelo${labelValuesSelected.current['modelo'] ? `: ${labelValuesSelected.current['modelo']}` : ""}`} {...props} />
     }
     return <Chip {...props} />
   }, [classes.chip, filters, filtersSelected, handleFilterAdition, handleFilterDelete, isAditionAllowed])
@@ -168,53 +147,33 @@ const FormConsulta: React.FC<FormConsultaPessoaProps> = ({ onSubmit, filters }) 
       onChange: (event: any) => { handleValueChange(event.target.value) }
     };
     switch (filtersSelected[filtersSelected.length - 1]) {
-      case "nome" || "nomeFantasia": {
-        return <NameField {...props} />
-      }
-      case "telefone": {
-        return <PhoneField {...props} />
-      }
-      case "email": {
-        return <EmailField {...props} />
-      }
-      case "cpfCnpj": {
-        return <CpfCnpjField {...props} />
-      }
-      case "placa": {
-        return <PlacaField {...props} />
-      }
-      case "cpf": {
-        return <CpfCnpjField {...props} />
-      }
-      case "descricao": {
-        return <TextField {...props} />
-      }
-      case "veiculo": {
-        return <AutoCompleteVeiculo {...props} onChange={(_, value) => {
-          if (value) {
-            handleValueChange(value._id)
-            labelValuesSelected.current['veiculo'] = value.descricao;
-          }
-        }} />
-      }
-      case "marca": {
-        return <AutoCompleteMarca {...props} onChange={(_, value) => {
-          if (value) {
-            handleValueChange(value._id)
-            labelValuesSelected.current['marca'] = value.descricao;
-          }
-        }} />
-      }
-      case "modelo": {
-        return <AutoCompleteModelo {...props} onChange={(_, value) => {
-          if (value) {
-            handleValueChange(value._id)
-            labelValuesSelected.current['modelo'] = value.descricao;
-          }
-        }} />
-      }
+      case ("nome"): return <NameField {...props} />
+      case ("nomeFantasia"): return <NameField {...props} />
+      case "telefone": return <PhoneField {...props} />
+      case "email": return <EmailField {...props} />
+      case "cpfCnpj": return <CpfCnpjField {...props} />
+      case "placa": return <PlacaField {...props} />
+      case "cpf": return <CpfCnpjField {...props} />
+      case "descricao": return <TextField {...props} />
+      case "veiculo": return <AutoCompleteVeiculo {...props} onChange={(_, value) => {
+        if (value) {
+          handleValueChange(value._id)
+          labelValuesSelected.current['veiculo'] = value.descricao;
+        }
+      }} />
+      case "marca": return <AutoCompleteMarca {...props} onChange={(_, value) => {
+        if (value) {
+          handleValueChange(value._id)
+          labelValuesSelected.current['marca'] = value.descricao;
+        }
+      }} />
+      case "modelo": return <AutoCompleteModelo {...props} onChange={(_, value) => {
+        if (value) {
+          handleValueChange(value._id)
+          labelValuesSelected.current['modelo'] = value.descricao;
+        }
+      }} />
     }
-
   }, [filtersSelected, getChipForCurrentFilter, handleValueChange]);
 
   return (

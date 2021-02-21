@@ -2,7 +2,7 @@ import ptLocale from 'date-fns/locale/pt-BR';
 import datefns from '@date-io/date-fns';
 import numberMask from "./NumberMask";
 
-export function formatarData(date: Date, formato?: 'ano' | 'completa' | 'abreviada'): string {
+export function formatarData(date: Date, formato?: 'ano' | 'completa' | 'abreviada' | 'completaComHora'): string {
   if (!date) {
     return "";
   }
@@ -11,9 +11,8 @@ export function formatarData(date: Date, formato?: 'ano' | 'completa' | 'abrevia
     case 'ano': return new datefns({ locale: ptLocale }).format(new Date(date), "u");
     case 'completa': return new datefns({ locale: ptLocale }).format(new Date(date), "PPPP");
     case 'abreviada': return new datefns({ locale: ptLocale }).format(new Date(date), "P");
+    case 'completaComHora': return new datefns({ locale: ptLocale }).format(new Date(date), "PPPPpp");
   }
-
-
 }
 
 export function formatarMoeda(valor: string | number) {
@@ -75,6 +74,19 @@ export function formatarTipoOrdemDeServico(tipo: string) {
     default: return "";
   }
 }
+
+export function formatarTelefone(telefone: string) {
+  if (telefone) {
+    return numberMask(
+      telefone,
+      tamanho => tamanho < 11
+        ? "(00) 0000-0000"
+        : "(00) 00000-0000"
+    )
+  }
+  return "";
+}
+
 export function formatarTipoGarantia(tipo: string) {
   switch (tipo) {
     case "0": return "Km";

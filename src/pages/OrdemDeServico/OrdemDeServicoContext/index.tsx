@@ -65,7 +65,6 @@ export const OrdemDeServicoProvider: React.FC = ({ children }) => {
       return true;
     }
     else {
-      //setActiveIndex(2);
       return false;
     }
   }, [itensDeServico.length,])

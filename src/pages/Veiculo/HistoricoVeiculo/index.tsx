@@ -7,7 +7,7 @@ import useQuery from '../../../hooks/useQuery';
 import OrdemDeServico from '../../../Types/OrdemDeServico';
 import Vinculo from '../../../Types/Vinculo';
 import PersonIcon from '@material-ui/icons/Person';
-import Formato from '../../../recursos/Formato';
+import Formato, { formatarPlaca } from '../../../recursos/Formato';
 import CircularProgressWithLabel from '../../../componentes/CircularProgressWithLabel';
 import { Link, Route, Switch, useRouteMatch } from 'react-router-dom';
 import ShowOrdemDeServico from '../../OrdemDeServico/ShowOrdemDeServico';
@@ -19,6 +19,7 @@ interface AgrupamentoVinculoOrdemDeServico {
 
 const HistoricoVeiculo: React.FC = () => {
   const veiculo = useQuery('veiculo');
+  const placa = useQuery('placa');
   const [agrupamento, setAgrupamento] = useState<AgrupamentoVinculoOrdemDeServico[]>()
   const { get } = useContext(ApiContext);
   const { path, url } = useRouteMatch();
@@ -26,8 +27,7 @@ const HistoricoVeiculo: React.FC = () => {
     const vinculos = await get(`/veiculo/consultaVinculo?veiculo=${veiculo}`) as any;
     if (vinculos) {
       let vinculos0 = vinculos.vinculos as Vinculo[];
-
-      vinculos0 = vinculos0.sort((a, b) => {
+      vinculos0 = vinculos0?.sort((a, b) => {
         if (new Date(a.vinculoInicial).getTime() < new Date(b.vinculoInicial).getTime()) {
           return 1;
         }
@@ -36,25 +36,27 @@ const HistoricoVeiculo: React.FC = () => {
         }
         return 0;
       })
-      const resposta = await get(`/ordemdeservico/veiculo?veiculo=${veiculo}`) as any;
-      const oss = resposta.ordensDeServico as OrdemDeServico[];
-      const agr: AgrupamentoVinculoOrdemDeServico[] = [];
-      vinculos0.forEach((vinculo, index) => {
-        agr.push({ vinculo, ordensDeServico: [] });
-        oss.forEach((os) => {
-          if (vinculo.vinculoFinal !== undefined) {
-            if (new Date(os.dataDeRegistro).getTime() >= new Date(vinculo.vinculoInicial).getTime() && new Date(os.dataDeRegistro).getTime() < new Date(vinculo.vinculoFinal).getTime()) {
-              agr[index].ordensDeServico.push(os);
+      const resposta = await get(`/ordemdeservico/consulta?veiculo=${veiculo}&pagina=1&limite=10000`) as any;
+      if (resposta) {
+        const oss = resposta.itens as OrdemDeServico[];
+        const agr: AgrupamentoVinculoOrdemDeServico[] = [];
+        vinculos0?.forEach((vinculo, index) => {
+          agr.push({ vinculo, ordensDeServico: [] });
+          oss?.forEach((os) => {
+            if (vinculo.vinculoFinal !== undefined) {
+              if (new Date(os.dataDeRegistro).getTime() >= new Date(vinculo.vinculoInicial).getTime() && new Date(os.dataDeRegistro).getTime() < new Date(vinculo.vinculoFinal).getTime()) {
+                agr[index].ordensDeServico.push(os);
+              }
             }
-          }
-          else {
-            if (new Date(os.dataDeRegistro).getTime() >= new Date(vinculo.vinculoInicial).getTime()) {
-              agr[index].ordensDeServico.push(os);
+            else {
+              if (new Date(os.dataDeRegistro).getTime() >= new Date(vinculo.vinculoInicial).getTime()) {
+                agr[index].ordensDeServico.push(os);
+              }
             }
-          }
+          })
         })
-      })
-      setAgrupamento(agr);
+        setAgrupamento(agr);
+      }
     }
   }, [get, veiculo]);
 
@@ -65,7 +67,7 @@ const HistoricoVeiculo: React.FC = () => {
   }, [listar, veiculo]);
 
   return (
-    <Dialog title={`Histórico do veículo `} open maxWidth="md" fullWidth>
+    <Dialog title={`Histórico do veículo ${placa && formatarPlaca(placa)}`} open maxWidth="md" fullWidth>
       <Typography align="center" variant="h6">Ordens de serviço desse veículo</Typography>
       <Box mb={2}>
         <List dense >

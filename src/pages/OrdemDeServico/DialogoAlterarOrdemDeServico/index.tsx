@@ -10,7 +10,7 @@ import useQuery from '../../../hooks/useQuery';
 
 const DialogAlterarOrdemDeServico: React.FC = () => {
   const { getOrdemDeServico } = useContext(OrdemDeServicoContext);
-  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [activeIndex, setActiveIndex] = useState<number>(1);
   const id = useQuery("id");
 
   useEffect(() => {

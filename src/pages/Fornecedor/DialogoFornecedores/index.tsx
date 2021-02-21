@@ -4,17 +4,18 @@ import { Switch, Route, } from 'react-router-dom';
 import FormCliente from '../FormFornecedor';
 import Listagem from '../../../componentes/Listagem';
 import ShowPessoa from '../../../componentes/ShowPessoa';
+import { formatarTelefone } from '../../../recursos/Formato';
 
 const DialogoFornecedores: React.FC = () => {
   const listagem = useMemo(() => {
     return (
       <Listagem
         dominio="fornecedor"
-        formSearchFilters={['nome', 'cpf', 'email', 'telefone']}
+        formSearchFilters={['nomeFantasia', 'cpfCnpj', 'email', 'telefone']}
         linkToInsert="/fornecedores/incluirfornecedor"
         linkToInsertTitle="incluir fornecedor"
         getPrimaryText={fornecedor => fornecedor.nomeFantasia}
-        getSecondaryText={fornecedor => `Celular: ${fornecedor.telefoneCelular}`}
+        getSecondaryText={fornecedor => `Celular: ${formatarTelefone(fornecedor.telefoneCelular)}`}
         getTitleLinkToChange={fornecedor => `Alterar o fornecedor ${fornecedor.nomeFantasia}`}
         getLinkToChange={fornecedor => `/fornecedores/alterarfornecedor?id=${fornecedor._id}`}
         getLinkToShow={fornecedor => `/fornecedores/exibirfornecedor?id=${fornecedor._id}`}

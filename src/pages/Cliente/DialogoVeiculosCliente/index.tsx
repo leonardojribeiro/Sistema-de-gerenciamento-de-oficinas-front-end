@@ -13,6 +13,7 @@ import HistoricoVeiculo from '../../Veiculo/HistoricoVeiculo';
 
 const DialogoVeiculosCliente: React.FC = () => {
   const cliente = useQuery('cliente');
+  const nomeCliente = useQuery('nome');
   const [vinculos, setVinculos] = useState<Vinculo[]>();
   const { get } = useContext(ApiContext);
   const { pathname } = useLocation();
@@ -31,7 +32,7 @@ const DialogoVeiculosCliente: React.FC = () => {
   }, [listar, pathname]);
 
   return (
-    <Dialog title="Veículos do cliente" open maxWidth="sm" fullWidth>
+    <Dialog title={`Veículos do cliente ${nomeCliente}`} open maxWidth="sm" fullWidth>
       {
         vinculos?.length
           ? <List>
