@@ -61,7 +61,7 @@ const Provider: React.FC<ProviderProps> = ({ webSocket, children }) => {
     modelo: { changed: 0, inserted: 0 },
     peca: { changed: 0, inserted: 0 },
     veiculo: { changed: 0, inserted: 0 },
-    ordemdeservico: {changed: 0, inserted: 0 }
+    ordemdeservico: { changed: 0, inserted: 0 }
   } as Notifications);
 
   const isOpen = useRef<Dominio | undefined>(undefined);
@@ -144,19 +144,21 @@ const Provider: React.FC<ProviderProps> = ({ webSocket, children }) => {
 }
 
 export const WebSocketProvider: React.FC = ({ children }) => {
-  const auth = useAuth();
-  const webSocket = io(process.env.REACT_APP_API_URL as string, { auth: { token: auth.token }, });
+  const { logado, token } = useAuth();
+
+  const webSocket = io(process.env.REACT_APP_API_URL as string, { auth: { token }, });
 
   useEffect(() => {
-    webSocket.on("connect", () => {
-      console.log("conectou");
-    })
-    webSocket.on("connect_error", (err: any) => {
-      console.log(err.message);
-    });
+    if (logado) {
+      webSocket.on("connect", () => {
+        console.log("conectou");
+      })
+      webSocket.on("connect_error", (err: any) => {
+        console.log(err.message);
+      });
+    }
     return () => console.log('desmontando')
-  }, [webSocket])
-
+  }, [logado, webSocket])
 
   return (
     <Provider webSocket={webSocket} >

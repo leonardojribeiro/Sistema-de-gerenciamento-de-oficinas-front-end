@@ -5,6 +5,7 @@ import DialogoEspecialidades from '../pages/Especialidade/DialogoEspecialidades'
 import DialogoFornecedores from '../pages/Fornecedor/DialogoFornecedores';
 import DialogFuncionarios from '../pages/Funcionario/DialogoFuncionarios';
 import Home from '../pages/Home/Home';
+import DialogLogin from '../pages/Login/DialogLogin';
 import DialogMarcas from '../pages/Marca/DialogoMarcas';
 import DialogoModelos from '../pages/Modelo/DialogoModelos';
 import DialogOpcoes from '../pages/Opcoes';
@@ -22,6 +23,7 @@ const AdminitradorOficinaRoutes: React.FC = () => {
     <>
       <Home />
       <Switch>
+        <Route path="/login" exact component={DialogLogin} />
         <Route path="/marcas" component={DialogMarcas} />
         <Route path="/modelos" component={DialogoModelos} />
         <Route path="/pecas" component={DialogoPecas} />

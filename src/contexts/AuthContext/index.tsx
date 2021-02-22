@@ -1,7 +1,7 @@
-import { Snackbar } from '@material-ui/core';
+import { Button, Checkbox, DialogActions, FormControlLabel, Link, Snackbar, Typography } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { differenceInMinutes, formatDistanceToNow } from 'date-fns';
-import React, { createContext, useState, useCallback, useContext, useMemo } from 'react';
+import React, { createContext, useState, useCallback, useContext, useMemo, useRef } from 'react';
 import { useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
@@ -9,6 +9,7 @@ import { formatarData } from '../../recursos/Formato';
 import Usuario from '../../Types/Usuario';
 import ApiContext, { ApiProvider } from '../ApiContext';
 import ptLocale from 'date-fns/locale/pt-BR';
+import Dialog from '../../componentes/Dialog';
 
 interface AuthContextValues {
   logout: () => void,
@@ -20,7 +21,11 @@ interface AuthContextValues {
 const AuthContext = createContext<AuthContextValues>({} as AuthContextValues);
 
 export const AuthProvider: React.FC = ({ children }) => {
+  const { location } = useHistory();
   const [usuario, setUsuario] = useState<Usuario>({} as Usuario);
+  const [open, setOpen] = useState<boolean>(false);
+  const showAgain = useRef<boolean>(true);
+  const distanceToNow = useRef<string>("");
 
   const logout = useCallback(() => {
     localStorage.removeItem("tokenUsuario");
@@ -28,20 +33,28 @@ export const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   const verificarTempoRestante = useCallback(() => {
-    console.log("verificando")
     if (usuario.token) {
       const partes = usuario.token.split('.');
       const decodificado = JSON.parse(atob(partes[1]));
       const expireToken = decodificado.exp * 1000;
       const diferenca = differenceInMinutes(expireToken, Date.now())
       console.log(diferenca)
-      if (diferenca < 10) {
-        console.log(formatDistanceToNow(expireToken, { locale: ptLocale, includeSeconds: true }))
+      if (diferenca < 10 && showAgain.current && usuario._id && location.pathname !== '/login') {
+        distanceToNow.current = formatDistanceToNow(expireToken, { locale: ptLocale, includeSeconds: true });
+        setOpen(true);
       }
     }
-  }, [usuario.token]);
+  }, [location.pathname, usuario._id, usuario.token]);
 
-  return (
+  const handleClose = useCallback(() => {
+    setOpen(false);
+  }, []);
+
+  const handleDontShowAgainClick = useCallback((event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+    showAgain.current = !checked;
+  }, []);
+
+  const content = useMemo(() => (
     <AuthContext.Provider value={{ logout, usuario, setUsuario, verificarTempoRestante }}>
       <ApiProvider>
         <AuthHelper>
@@ -49,6 +62,32 @@ export const AuthProvider: React.FC = ({ children }) => {
         </AuthHelper>
       </ApiProvider>
     </AuthContext.Provider>
+  ), [children, logout, usuario, verificarTempoRestante])
+
+  const handleClickLogin = useCallback((event: React.SyntheticEvent) => {
+    event.preventDefault();
+    logout();
+  }, [logout]);
+
+  return (
+    <>
+      {content}
+      <Dialog open={open && usuario._id !== undefined} title="Sessão prestes a encerrar" maxWidth="xs" fullWidth onClose={handleClose}>
+        <Typography>
+          {`Sua sessão será encerrada em ${distanceToNow.current}.`}
+          <br />
+          Nehuma informação poderá ser incluída, listada ou alterada após o encerramento da sessão.
+          <br />
+          Todo trabalho não salvo será perdido.
+          <br />
+          <Link href="#" onClick={handleClickLogin} color="inherit">Clique aqui</Link> para refazer seu login e evitar perda de trabalho.
+        </Typography>
+        <DialogActions>
+          <FormControlLabel label="Não mostrar novamente" control={<Checkbox onChange={handleDontShowAgainClick} color="primary" />} />
+          <Button onClick={handleClose} variant="outlined" color="default">Ok</Button>
+        </DialogActions>
+      </Dialog>
+    </>
   )
 }
 

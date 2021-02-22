@@ -35,12 +35,12 @@ const DialogLogin: React.FC = () => {
   }
 
   function fechar() {
-    history.goBack();
+    history.replace('/');
   }
 
   return (
-    <Dialogo open title="Login" >
-      <Form clearOnSubmit onSubmit={handleLogin}>
+    <Dialogo open title="Login" onClose={fechar}>
+      <Form clearOnSubmit onSubmit={handleLogin} >
         <Box p={2}>
           <CampoDeTexto
             autoFocus

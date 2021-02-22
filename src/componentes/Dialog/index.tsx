@@ -6,7 +6,8 @@ import CloseIcon from '@material-ui/icons/Close';
 interface DialogProps extends DialogoPropsMUI {
   open: boolean,
   title: string,
-  fullHeight?: boolean
+  fullHeight?: boolean;
+  onClose?: () => void;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -23,20 +24,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Dialog: React.FC<DialogProps> = ({ open, title, children, ...props }) => {
+const Dialog: React.FC<DialogProps> = ({ open, title, children, onClose,...props }) => {
   const classes = useStyles();
   const history = useHistory();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
 
   const manipularFechamento = useCallback(() => {
-    if (history.length > 2) {
+    if(onClose){
+      onClose();
+    }
+    else if (history.length > 2) {
       history.goBack();
     }
     else {
       history.replace("/")
     }
-  }, [history]);
+  }, [history, onClose]);
 
   return (
     <DialogMUI fullScreen={fullScreen} open={open} onClose={manipularFechamento} disableBackdropClick {...props}>
