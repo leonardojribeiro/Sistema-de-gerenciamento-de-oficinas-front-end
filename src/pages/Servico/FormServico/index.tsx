@@ -2,7 +2,6 @@ import React, { useContext, useCallback, memo, useState, useRef, useEffect } fro
 import Dialogo from '../../../componentes/Dialog';
 import ApiContext from '../../../contexts/ApiContext';
 import { useHistory } from 'react-router-dom';
-
 import { Form, CampoDeTexto, MoneyField } from '../../../componentes/Form';
 import Servico from '../../../Types/Servico';
 import useQuery from '../../../hooks/useQuery';

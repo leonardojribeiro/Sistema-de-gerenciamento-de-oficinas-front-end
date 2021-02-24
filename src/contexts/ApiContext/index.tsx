@@ -5,8 +5,8 @@ import dot from "dot-object";
 import { useRef } from "react";
 import useAuth from "../../hooks/useAuth";
 import { AxiosError, AxiosRequestConfig } from "axios";
-import { Snackbar } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 
 interface ApiContextValues {
   get: (url: string, desablitarProgresso?: boolean, config?: AxiosRequestConfig) => Promise<object>,

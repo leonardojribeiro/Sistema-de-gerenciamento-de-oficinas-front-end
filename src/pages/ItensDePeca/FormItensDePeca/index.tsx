@@ -1,6 +1,13 @@
 import React, { useCallback, useContext, useRef, memo } from 'react';
 import { Form, MoneyField, CampoDeSelecao } from '../../../componentes/Form';
-import { Grid, MenuItem, Button, Card, CardContent, CardActions, CardHeader, Hidden } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import CardHeader from '@material-ui/core/CardHeader';
+import Hidden from '@material-ui/core/Hidden';
 import { FormProviderHandles } from '../../../componentes/Form/types';
 import OrdemDeServicoContext from '../../OrdemDeServico/OrdemDeServicoContext';
 import AutoCompletePeca from '../../../componentes/AutoComplete/AutoCompletePeca';
@@ -43,10 +50,10 @@ const FormItensDePeca: React.FC = () => {
           <CardContent>
             <Grid container spacing={2} justify="flex-end">
               <Grid item xs={12} md={6}>
-                <AutoCompletePeca label="Peça" name="peca" required  />
+                <AutoCompletePeca label="Peça" name="peca" required />
               </Grid>
               <Grid item xs={12} md={6}>
-                <AutoCompleteFornecedor label="Fornecedor" name="fornecedor" required  />
+                <AutoCompleteFornecedor label="Fornecedor" name="fornecedor" required />
               </Grid>
               <Grid item xs={7} md={2} >
                 <NumberField name="garantia" min={0} fullWidth required label="Garantia" />
@@ -58,7 +65,7 @@ const FormItensDePeca: React.FC = () => {
                 </CampoDeSelecao>
               </Grid>
               <Grid item xs={6} md={3}>
-                <MoneyField name="valorUnitario"  min={0} max={10000}  fullWidth required label="Valor unitário" onChange={calcularValorTotal} />
+                <MoneyField name="valorUnitario" min={0} max={10000} fullWidth required label="Valor unitário" onChange={calcularValorTotal} />
               </Grid>
               <Grid item xs={6} md={2} >
                 <NumberField name="quantidade" min={0} fullWidth required label="Quantidade" onChange={calcularValorTotal} />

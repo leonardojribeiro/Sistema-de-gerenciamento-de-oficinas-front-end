@@ -1,6 +1,10 @@
 import React, { useContext, useCallback } from 'react';
 import Dialogo from '../../componentes/Dialog';
-import { Grid, Typography, Slider, FormControlLabel, Switch } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Slider from '@material-ui/core/Slider';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 import TemaContexto from '../../contexts/TemaContext';
 
 

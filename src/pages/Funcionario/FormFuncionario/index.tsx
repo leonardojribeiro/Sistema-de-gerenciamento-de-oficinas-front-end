@@ -2,7 +2,9 @@ import React, { useContext, useRef, memo, useEffect, useCallback, useState } fro
 import Dialogo from '../../../componentes/Dialog';
 import ApiContext from '../../../contexts/ApiContext';
 import { useHistory } from 'react-router-dom';
-import { Grid, FormControlLabel, Radio } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
 import useQuery from '../../../hooks/useQuery';
 import comparar from '../../../recursos/Comparar';
 import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
@@ -100,7 +102,7 @@ const FormFuncionario: React.FC = () => {
         </Grid>
         <Grid container>
           <Grid item xs={12}>
-            <AutoCompleteEspecialidade label="Especialidades" multiple required name="especialidades"  />
+            <AutoCompleteEspecialidade label="Especialidades" multiple required name="especialidades" />
           </Grid>
         </Grid>
         <BotaoIncluirOuAlterar isEdit={isEdit} />

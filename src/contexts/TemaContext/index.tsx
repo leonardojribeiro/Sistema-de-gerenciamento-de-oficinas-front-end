@@ -1,5 +1,8 @@
 import React, { createContext, useState, useEffect } from "react";
-import { ThemeProvider, createMuiTheme, responsiveFontSizes, Paper, useMediaQuery } from "@material-ui/core";
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import responsiveFontSizes from '@material-ui/core/styles/responsiveFontSizes';
+import Paper from '@material-ui/core/Paper';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 interface ThemeContextValues {
   alterarTema: () => void,
@@ -58,9 +61,9 @@ export const TemaProvider: React.FC = (props: any) => {
     typography: {
       fontSize: tamanhoFonte,
     },
-    overrides:{
-      MuiGrid:{
-        item:{
+    overrides: {
+      MuiGrid: {
+        item: {
           transition: '0.3s'
         }
       }

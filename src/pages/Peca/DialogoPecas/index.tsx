@@ -3,7 +3,7 @@ import Dialogo from '../../../componentes/Dialog';
 import { Switch, Route } from 'react-router-dom';
 import FormPeca from '../FormPeca';
 import Listagem from '../../../componentes/Listagem';
-import { Avatar } from '@material-ui/core';
+import Avatar from '@material-ui/core/Avatar';
 
 const DialogoPecas: React.FC = () => {
   const imagensUrl = process.env.REACT_APP_IMAGENS_URL;

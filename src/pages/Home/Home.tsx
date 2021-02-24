@@ -1,5 +1,15 @@
 import React, { memo, useContext, useState } from 'react';
-import { Avatar, AppBar, Toolbar, IconButton, Menu, MenuItem, Box, Typography, makeStyles, Container, List } from '@material-ui/core';
+import Avatar from '@material-ui/core/Avatar';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import Container from '@material-ui/core/Container';
+import List from '@material-ui/core/List';
 import AuthContext from '../../contexts/AuthContext';
 import MiniDrawer from '../../componentes/Drawer';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -31,10 +41,10 @@ const useStyles = makeStyles((theme) => ({
   areaBtn: {
     height: "88px",
   },
-  dashboardContainer:{
+  dashboardContainer: {
     height: `calc(100vh - 128px)`
   },
-  toolbar:{
+  toolbar: {
     display: 'flex',
     justifyContent: 'space-between'
   }
@@ -102,7 +112,7 @@ const Home: React.FC = () => {
       <Box display="flex">
         <MiniDrawer open={open} setOpen={setOpen}>
           <List onClick={() => setOpen(false)}>
-            <ItemDrawer icon={<AssignmentIcon/>} title="Ordens de Serviço" dominio="ordemdeservico" navigateTo="/ordensdeservico" />
+            <ItemDrawer icon={<AssignmentIcon />} title="Ordens de Serviço" dominio="ordemdeservico" navigateTo="/ordensdeservico" />
             <ItemDrawer icon={<FolderIcon />} title="Marcas" dominio="marca" navigateTo="/marcas" />
             <ItemDrawer icon={<FolderIcon />} title="Modelos" dominio="modelo" navigateTo="/modelos" />
             <ItemDrawer icon={<ExtensionIcon />} title="Peças" dominio="peca" navigateTo="/pecas" />
@@ -116,7 +126,7 @@ const Home: React.FC = () => {
           </List>
         </MiniDrawer>
         <Container className={classes.dashboardContainer} maxWidth="xl" >
-          <Dashboard/>
+          <Dashboard />
         </Container>
       </Box >
       <Rodape />

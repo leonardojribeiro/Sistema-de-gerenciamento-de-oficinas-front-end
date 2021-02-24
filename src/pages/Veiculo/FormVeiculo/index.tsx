@@ -1,9 +1,10 @@
-import React, { useContext, useRef, useCallback, useEffect, memo } from 'react';
+import React, { useContext, useRef, useCallback, useEffect, memo, useState } from 'react';
 import Dialogo from '../../../componentes/Dialog';
 import ApiContext from '../../../contexts/ApiContext';
 import { useHistory, Link, useRouteMatch, Switch, Route } from 'react-router-dom';
-import { Box, Tooltip, IconButton, } from '@material-ui/core';
-import { useState } from 'react';
+import Box from '@material-ui/core/Box';
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
 import useQuery from '../../../hooks/useQuery';
 import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
 import { Form, DateField, PlacaField } from '../../../componentes/Form';
@@ -78,7 +79,7 @@ const FormVeiculo: React.FC = () => {
         <DateField name="anoFabricacao" label="Ano de fabricação" fullWidth required />
         <DateField name="anoModelo" label="Ano de modelo" fullWidth required />
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-          <AutoCompleteModelo name="modelo" label="Modelo" required  />
+          <AutoCompleteModelo name="modelo" label="Modelo" required />
           <Link to={`${path}/incluirmodelo`}>
             <Tooltip title="Incluir modelo">
               <IconButton>
@@ -88,7 +89,7 @@ const FormVeiculo: React.FC = () => {
           </Link>
         </Box>
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-          <AutoCompleteCliente name="cliente" label="Cliente" required  />
+          <AutoCompleteCliente name="cliente" label="Cliente" required />
           {cliente
             ? null
             : (<Link to={`${path}/incluircliente`}>

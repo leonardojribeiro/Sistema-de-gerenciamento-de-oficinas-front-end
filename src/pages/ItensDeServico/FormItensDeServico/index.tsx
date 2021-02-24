@@ -1,6 +1,13 @@
 import React, { useCallback, useContext, useRef, memo } from 'react';
 import { Form, MoneyField, CampoDeTexto, CampoDeSelecao } from '../../../componentes/Form';
-import { Grid, MenuItem, Button, CardContent, CardHeader, Card, CardActions, Hidden } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import CardHeader from '@material-ui/core/CardHeader';
+import Hidden from '@material-ui/core/Hidden';
 import { FormProviderHandles } from '../../../componentes/Form/types';
 import OrdemDeServicoContext from '../../OrdemDeServico/OrdemDeServicoContext';
 import AutoCompleteServico from '../../../componentes/AutoComplete/AutoCompleteServico';
@@ -32,7 +39,7 @@ const FormItensDeServico: React.FC = () => {
   return (
     <>
       <Hidden mdUp>
-        <ArrowTop/>
+        <ArrowTop />
       </Hidden>
       <Form onSubmit={handleSubmitFormItemDeServico} ref={formRef} initialData={intialData} clearOnSubmit>
         <Card>
@@ -40,10 +47,10 @@ const FormItensDeServico: React.FC = () => {
           <CardContent>
             <Grid container spacing={2} justify="flex-end">
               <Grid item xs={12} md={6} >
-                <AutoCompleteServico name="servico" label="Serviço"  />
+                <AutoCompleteServico name="servico" label="Serviço" />
               </Grid>
               <Grid item xs={12} md={6}>
-                <AutoCompleteFuncionario name="funcionario" required label="Funcionário"  />
+                <AutoCompleteFuncionario name="funcionario" required label="Funcionário" />
               </Grid>
               <Grid item xs={7} md={2} >
                 <CampoDeTexto type="number" name="garantia" fullWidth required label="Garantia" />

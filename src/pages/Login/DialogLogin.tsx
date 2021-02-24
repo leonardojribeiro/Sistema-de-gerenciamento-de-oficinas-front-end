@@ -1,8 +1,10 @@
 import React, { memo, useCallback, useContext } from 'react';
-import { DialogActions, Button, Box } from '@material-ui/core';
+import DialogActions from '@material-ui/core/DialogActions';
+import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
 import { useHistory } from 'react-router-dom';
 import AuthContext from '../../contexts/AuthContext';
-import { Form, CampoDeTexto, CampoDeSenha,} from '../../componentes/Form';
+import { Form, CampoDeTexto, CampoDeSenha, } from '../../componentes/Form';
 import Dialogo from '../../componentes/Dialog';
 import ApiContext from '../../contexts/ApiContext';
 import Usuario from '../../Types/Usuario';

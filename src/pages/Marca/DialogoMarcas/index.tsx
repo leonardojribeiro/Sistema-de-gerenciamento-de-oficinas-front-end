@@ -3,7 +3,7 @@ import Dialogo from '../../../componentes/Dialog';
 import { Route, Switch } from 'react-router-dom';
 import FormMarca from '../FormMarca';
 import Listagem from '../../../componentes/Listagem';
-import { Avatar } from '@material-ui/core';
+import Avatar from '@material-ui/core/Avatar';
 
 const DialogMarcas: React.FC = () => {
   const imagensUrl = process.env.REACT_APP_IMAGENS_URL as string;

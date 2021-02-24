@@ -5,7 +5,8 @@ import Listagem from '../../../componentes/Listagem';
 import Dialog from '../../../componentes/Dialog';
 import DialogoVeiculosCliente from '../DialogoVeiculosCliente';
 import DriveEtaIcon from '@material-ui/icons/DriveEta';
-import { IconButton, Tooltip } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 import ShowPessoa from '../../../componentes/ShowPessoa';
 
 const DialogoClientes: React.FC = () => {

@@ -1,4 +1,10 @@
-import { Button, Checkbox, DialogActions, FormControlLabel, Link, Snackbar, Typography } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
+import DialogActions from '@material-ui/core/DialogActions';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Link from '@material-ui/core/Link';
+import Snackbar from '@material-ui/core/Snackbar';
+import Typography from '@material-ui/core/Typography';
 import { Alert } from '@material-ui/lab';
 import { differenceInMinutes, formatDistanceToNow } from 'date-fns';
 import React, { createContext, useState, useCallback, useContext, useMemo, useRef } from 'react';

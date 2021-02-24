@@ -1,5 +1,6 @@
 import React, { memo, useContext } from 'react';
-import { Grid, makeStyles } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import AuthContext from '../../contexts/AuthContext';
 
 const useStyles = makeStyles((theme) => ({

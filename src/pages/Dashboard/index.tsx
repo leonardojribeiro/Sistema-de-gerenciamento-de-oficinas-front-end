@@ -1,4 +1,4 @@
-import { Box } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import Chart from 'react-google-charts';
 import ApiContext from '../../contexts/ApiContext';
@@ -86,7 +86,7 @@ const Dashboard: React.FC = () => {
         rootProps={{ 'data-testid': '1' }}
       />
     </Box>
-  ) : <div/>;
+  ) : <div />;
 }
 
 export default Dashboard;

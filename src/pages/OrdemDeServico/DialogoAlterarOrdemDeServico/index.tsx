@@ -1,7 +1,8 @@
 import React, { memo, useContext, useEffect, useMemo, useState } from 'react';
 import Dialog from '../../../componentes/Dialog';
 import SwipeableViews from 'react-swipeable-views';
-import { Tabs, Tab, } from '@material-ui/core';
+import Tab from '@material-ui/core/Tab';
+import Tabs from "@material-ui/core/Tabs";
 import OrdemDeServicoContext from '../OrdemDeServicoContext';
 import FormOrdemDeServico from '../FormOrdemDeServico';
 import FrameItensDePeca from '../../ItensDePeca/FrameItensDePeca';

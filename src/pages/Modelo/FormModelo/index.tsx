@@ -2,7 +2,9 @@ import React, { useContext, useRef, useCallback, useEffect, memo } from 'react';
 import Dialogo from '../../../componentes/Dialog';
 import ApiContext from '../../../contexts/ApiContext';
 import { useHistory, useRouteMatch, Switch, Route, Link } from 'react-router-dom';
-import { Box, Tooltip, IconButton } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
 import { useState } from 'react';
 import useQuery from '../../../hooks/useQuery';
 import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
@@ -69,7 +71,7 @@ const FormModelo: React.FC = () => {
       <Form onSubmit={manipularEnvio} initialData={modelo}>
         <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-          <AutoCompleteMarca name="marca" label="Marca" required  />
+          <AutoCompleteMarca name="marca" label="Marca" required />
           <Link to={`${path}/incluirmarca`}>
             <Tooltip title="Incluir marca">
               <IconButton>

@@ -1,4 +1,5 @@
-import { List, Typography } from '@material-ui/core';
+import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import BotaoIncluir from '../../../componentes/BotaoIncluir';

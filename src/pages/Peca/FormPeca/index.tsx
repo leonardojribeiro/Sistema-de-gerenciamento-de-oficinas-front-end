@@ -2,10 +2,12 @@ import React, { useContext, useCallback, memo, useState, useRef, useEffect } fro
 import Dialogo from '../../../componentes/Dialog';
 import ApiContext from '../../../contexts/ApiContext';
 import { useHistory, Link, Switch, Route, useRouteMatch } from 'react-router-dom';
-import { Box, Tooltip, IconButton } from '@material-ui/core';
+import Box from "@material-ui/core/Box";
+import Tooltip from "@material-ui/core/Tooltip";
+import IconButton from "@material-ui/core/IconButton";
 import { Form, CampoDeTexto, } from '../../../componentes/Form';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
-import FormMarca from '../../Marca/FormMarca'; 
+import FormMarca from '../../Marca/FormMarca';
 import AutoCompleteMarca from '../../../componentes/AutoComplete/AutoCompleteMarca';
 import Peca from '../../../Types/Peca';
 import Alerta, { AlertaHandles } from '../../../componentes/Alerta';
@@ -70,7 +72,7 @@ const FormPeca: React.FC = () => {
       <Form onSubmit={manipularEnvio} initialData={peca}>
         <CampoDeTexto name="descricao" label="Descrição" fullWidth required autoFocus />
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
-          <AutoCompleteMarca name="marca" label="Marca" required  />
+          <AutoCompleteMarca name="marca" label="Marca" required />
           <Link to={`${path}/incluirmarca`}>
             <Tooltip title="Incluir marca">
               <IconButton>
