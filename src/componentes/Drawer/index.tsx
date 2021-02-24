@@ -1,10 +1,15 @@
 import React, { SetStateAction, memo } from 'react';
 import clsx from 'clsx';
-import { makeStyles, Drawer, Toolbar, IconButton, SwipeableDrawer, Hidden } from '@material-ui/core';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import Drawer from '@material-ui/core/Drawer';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import Hidden from '@material-ui/core/Hidden';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
-interface DrawerProps{
+interface DrawerProps {
   open: boolean;
   setOpen: React.Dispatch<SetStateAction<boolean>>;
   children: React.ReactNode;
@@ -41,9 +46,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MiniDrawer: React.FC<DrawerProps> = ({open, setOpen, children}) => {
+const MiniDrawer: React.FC<DrawerProps> = ({ open, setOpen, children }) => {
   const classes = useStyles();
-  
+
 
   const handleDrawerClose = () => {
     setOpen(!open);
@@ -57,14 +62,14 @@ const MiniDrawer: React.FC<DrawerProps> = ({open, setOpen, children}) => {
         </IconButton>
       </Toolbar>
       {children}
-      <div className={classes.toolbar}/>
+      <div className={classes.toolbar} />
     </>
   );
 
   return (
     <>
       <Hidden smUp>
-        <SwipeableDrawer 
+        <SwipeableDrawer
           swipeAreaWidth={50}
           open={open}
           onOpen={() => setOpen(true)}

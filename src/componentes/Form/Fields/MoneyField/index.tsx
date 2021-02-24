@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef, memo } from 'react';
-import { TextField as TextFieldMUI, StandardTextFieldProps as TextFieldPropsMUI, } from '@material-ui/core';
+import TextFieldMUI, { StandardTextFieldProps as TextFieldPropsMUI } from '@material-ui/core/TextField';
 import { useEffect } from 'react';
 import useField from '../../Hooks/useField';
 

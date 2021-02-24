@@ -1,5 +1,8 @@
 import React, { memo, useRef, useCallback, useEffect, useState } from 'react';
-import { Select, FormControl, InputLabel, FormHelperText, SelectProps } from '@material-ui/core';
+import Select, {SelectProps} from '@material-ui/core/Select';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import useField from '../../Hooks/useField';
 
 

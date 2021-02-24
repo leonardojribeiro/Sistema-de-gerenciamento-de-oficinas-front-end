@@ -1,5 +1,8 @@
 import React, { memo } from 'react';
-import { makeStyles, Tooltip, Fab, Box } from '@material-ui/core';
+import  makeStyles  from "@material-ui/core/styles/makeStyles";
+import Tooltip from "@material-ui/core/Tooltip"
+import Fab from "@material-ui/core/Fab"
+import Box from "@material-ui/core/Box"
 import AddIcon from "@material-ui/icons/Add";
 import { Link } from 'react-router-dom';
 

@@ -1,5 +1,9 @@
-import { Box, Chip, ChipProps, ClickAwayListener, createStyles, makeStyles, Theme, Tooltip } from '@material-ui/core';
 import React, { memo, useCallback, useRef, useState } from 'react';
+import Box from '@material-ui/core/Box';
+import Chip, { ChipProps } from '@material-ui/core/Chip';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import { Theme, createStyles, makeStyles } from '@material-ui/core/styles/';
+import Tooltip from '@material-ui/core/Tooltip';
 import { Form, PhoneField, PlacaField } from '../Form';
 import CpfCnpjField from '../Form/Fields/CpfCnpjField';
 import EmailField from '../Form/Fields/EmailField';

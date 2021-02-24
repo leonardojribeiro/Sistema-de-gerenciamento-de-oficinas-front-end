@@ -1,6 +1,6 @@
-import { makeStyles } from '@material-ui/core';
+import React, { ReactElement } from 'react';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import { motion } from 'framer-motion';
-import React, {  ReactElement } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   absolute: {

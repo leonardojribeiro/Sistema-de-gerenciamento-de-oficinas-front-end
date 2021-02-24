@@ -1,5 +1,8 @@
 import React, { useRef, useEffect, memo } from 'react';
-import { TextField, StandardTextFieldProps as TextFieldPropsMUI, InputAdornment, IconButton, Tooltip } from '@material-ui/core';
+import TextField, { StandardTextFieldProps as TextFieldPropsMUI } from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 import SearchIcon from '@material-ui/icons/Search';
 import useField from '../../Hooks/useField';
 

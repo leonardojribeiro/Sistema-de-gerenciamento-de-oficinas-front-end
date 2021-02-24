@@ -1,5 +1,8 @@
 import React, { memo, useRef, useCallback, useEffect, useState } from 'react';
-import { FormControl, FormLabel, RadioGroup, FormHelperText, RadioGroupProps } from '@material-ui/core';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+import RadioGroup, { RadioGroupProps } from '@material-ui/core/RadioGroup';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import useField from '../../Hooks/useField';
 
 interface RadioFieldProps extends RadioGroupProps {

@@ -1,5 +1,5 @@
 import React, { useCallback, memo } from 'react';
-import { TextField, StandardTextFieldProps } from '@material-ui/core';
+import  TextField, {StandardTextFieldProps } from '@material-ui/core/TextField';
 import validacao from '../../../../recursos/Validacao';
 import numberMask from '../../../../recursos/NumberMask';
 import useFormField from '../../Hooks/useFormField';

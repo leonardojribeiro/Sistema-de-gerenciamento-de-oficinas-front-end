@@ -1,5 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
-import { Box, CircularProgress, CircularProgressProps, Typography } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import CircularProgress, { CircularProgressProps } from '@material-ui/core/CircularProgress';
+import Typography from '@material-ui/core/Typography';
 
 interface CircularProgressWithLabelProps extends CircularProgressProps {
   value: number;

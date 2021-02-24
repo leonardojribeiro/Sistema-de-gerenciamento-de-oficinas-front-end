@@ -1,6 +1,8 @@
 import React, { useEffect, useCallback, useState, useRef, memo } from "react";
 import { useDropzone } from "react-dropzone";
-import { makeStyles, Box, Typography } from "@material-ui/core";
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import useField from '../../Hooks/useField';
 
 interface DragAndDropProps {

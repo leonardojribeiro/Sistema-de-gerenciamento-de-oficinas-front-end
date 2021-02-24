@@ -1,5 +1,9 @@
 import React from 'react';
-import { Box, Grid, Typography, makeStyles, Link } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles((theme) => ({
   rodape: {

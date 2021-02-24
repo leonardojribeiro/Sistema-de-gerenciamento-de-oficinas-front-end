@@ -1,6 +1,13 @@
-import { Box, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, Tooltip } from '@material-ui/core';
-import { Pagination } from '@material-ui/lab';
 import React, { useCallback, useEffect } from 'react';
+import Box from '@material-ui/core/Box';
+import IconButton from '@material-ui/core/IconButton';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
+import Tooltip from '@material-ui/core/Tooltip';
+import Pagination from '@material-ui/lab/Pagination';
 import { Link, useHistory } from 'react-router-dom';
 import BotaoIncluir from '../BotaoIncluir';
 import EditIcon from '@material-ui/icons/Edit';

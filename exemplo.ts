@@ -1,7 +1,12 @@
 
-
-
-let mensagem = "Olá, mundo!"
+let numero: number = 2021 //variável do tipo number.
+let mensagem: string = "Olá, mundo!" //variável do tipo string.
+let visualizado: boolean = false //variável do tipo boolean.
+let numerosPares: number[] = [0, 2, 4, 6, 8, 10] //variável do tipo array de number.
+let numerosImpares: Array<number> = [1, 3, 5, 7, 9] //variável do tipo array de number.
+let estado: [number, string] = [0, "Alterado nenhuma vez"] //variável do tipo tuple.
+let desconhecido: unknown = 3 //variável do tipo unknow.
+let qualquer: any = "";
 
 
 
@@ -38,7 +43,7 @@ function updateUser(id: number, update: Partial<User>) {
 
 
 
-console.log("numero")F
+console.log("numero")
 function getUser(id): User {
   return {} as User;
 }

@@ -1,7 +1,7 @@
 import React, { forwardRef, useImperativeHandle, useState, memo } from 'react';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 //import { motion } from 'framer-motion';
 
 export interface ProgressoCircularHandles {
@@ -9,19 +9,19 @@ export interface ProgressoCircularHandles {
   setAberto: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-const useStyles = makeStyles((theme) => 
-{
-  
-  return({
-  backdrop: {
-    zIndex: theme.zIndex.modal + 1,
-  },
-  b: {
-     
+const useStyles = makeStyles((theme) => {
 
-  }
+  return ({
+    backdrop: {
+      zIndex: theme.zIndex.modal + 1,
+    },
+    b: {
 
-})});
+
+    }
+
+  })
+});
 
 
 
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) =>
 //   if(v){
 //     v.style.overflow = 'hidden';
 //   }
-  
+
 
 //   const classes = useStyles();
 //   return (
@@ -60,7 +60,7 @@ const ProgressoCircular = forwardRef<ProgressoCircularHandles | undefined>((prop
     <>
       { <Backdrop className={classes.backdrop} open={aberto} >
         <CircularProgress variant={valor > 0 ? "static" : "indeterminate"} value={valor} />
-      </Backdrop >  }
+      </Backdrop >}
     </>
   )
 });

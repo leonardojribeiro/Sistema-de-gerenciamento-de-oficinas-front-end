@@ -1,5 +1,10 @@
-import { Box, Chip, Divider, Grid, IconButton, Typography } from '@material-ui/core';
 import React, { useEffect } from 'react';
+import Box from '@material-ui/core/Box';
+import Chip from '@material-ui/core/Chip';
+import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
 import { Dominio } from '../../contexts/WebSocketContext';
 import useListagemUnica from '../../hooks/useListagemUnica';
 import useQuery from '../../hooks/useQuery';

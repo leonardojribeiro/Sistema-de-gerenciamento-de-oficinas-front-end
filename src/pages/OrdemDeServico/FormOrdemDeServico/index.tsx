@@ -52,7 +52,7 @@ const FormOrdemDeServico: React.FC = () => {
     name?: string | undefined;
     value: unknown;
   }>, child: React.ReactNode) => {
-    if(event.target.value  === '1'){
+    if (event.target.value === '1') {
       console.log('object')
       formRef.current.setFieldValue("andamento", 100);
     }
@@ -94,7 +94,7 @@ const FormOrdemDeServico: React.FC = () => {
                 </CampoDeSelecao>
               </Grid>
               <Grid item xs={12} sm={6} md={4}>
-                <NumberField name="andamento" min={0} max={100} label="Andamento (%)" required fullWidth disabled={status === '1  '}/>
+                <NumberField name="andamento" min={0} max={100} label="Andamento (%)" required fullWidth disabled={status === '1  '} />
               </Grid>
               <Grid item xs={12} sm={6} md={6}>
                 <MoneyField name="valorTotalDosServicos" label="Valor total dos serviços" disabled fullWidth />
@@ -103,7 +103,7 @@ const FormOrdemDeServico: React.FC = () => {
                 <MoneyField name="valorTotalDasPecas" label="Valor total das peças" disabled fullWidth />
               </Grid>
               <Grid item xs={12} sm={6} md={6}>
-                <MoneyField name="desconto" label="Desconto" fullWidth onChange={calcularValorTotal} />
+                <MoneyField name="desconto" label="Desconto" min={0} max={valorTotalPecas() + valorTotalServicos()} fullWidth onChange={calcularValorTotal} />
               </Grid>
               <Grid item xs={12} sm={6} md={6}>
                 <MoneyField name="valorTotal" label="Valor total da ordem de serviço" disabled fullWidth />

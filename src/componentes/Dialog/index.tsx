@@ -1,5 +1,13 @@
 import React, { memo, useCallback } from 'react';
-import { Dialog as DialogMUI, DialogProps as DialogoPropsMUI, DialogTitle, IconButton, DialogContent, makeStyles, useTheme, useMediaQuery, Typography } from '@material-ui/core';
+import DialogMUI, { DialogProps as DialogoPropsMUI } from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import IconButton from '@material-ui/core/IconButton';
+import DialogContent from '@material-ui/core/DialogContent';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import useTheme from '@material-ui/core/styles/useTheme';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Typography from '@material-ui/core/Typography';
+
 import { useHistory } from 'react-router-dom';
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -24,14 +32,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Dialog: React.FC<DialogProps> = ({ open, title, children, onClose,...props }) => {
+const Dialog: React.FC<DialogProps> = ({ open, title, children, onClose, ...props }) => {
   const classes = useStyles();
   const history = useHistory();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
 
   const manipularFechamento = useCallback(() => {
-    if(onClose){
+    if (onClose) {
       onClose();
     }
     else if (history.length > 2) {

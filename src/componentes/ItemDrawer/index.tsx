@@ -1,4 +1,9 @@
-import { Badge, ListItem, ListItemIcon, ListItemText, Tooltip, Typography } from '@material-ui/core';
+import Badge from '@material-ui/core/Badge';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
 import React, { memo, useCallback, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import WebSocketContext, { Dominio, Notification } from '../../contexts/WebSocketContext';

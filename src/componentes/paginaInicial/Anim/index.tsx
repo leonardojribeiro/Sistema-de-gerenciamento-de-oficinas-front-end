@@ -1,4 +1,7 @@
-import { makeStyles, Typography, useMediaQuery, useTheme } from '@material-ui/core';
+import makeStyles from '@material-ui/core/styles/makeStyles'; 
+import Typography from '@material-ui/core/Typography'; 
+import useMediaQuery from '@material-ui/core/useMediaQuery'; 
+import useTheme from '@material-ui/core/styles/useTheme'; 
 import React from 'react';
 import { motion, useTransform, useViewportScroll, } from "framer-motion";
 import Sticky from '../Sticky';

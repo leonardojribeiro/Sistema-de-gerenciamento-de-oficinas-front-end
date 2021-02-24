@@ -1,8 +1,8 @@
 import React, { useCallback, useRef, useEffect, useState, } from 'react';
-import { Autocomplete, AutocompleteProps, AutocompleteChangeDetails, AutocompleteChangeReason } from '@material-ui/lab';
+import Autocomplete, { AutocompleteProps, AutocompleteChangeDetails, AutocompleteChangeReason } from '@material-ui/lab/Autocomplete';
 import useField from '../../Hooks/useField';
 import dot from 'dot-object';
-import { TextField } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
 
 
 interface ComboBoxProps<T> extends Omit<AutocompleteProps<T, boolean | undefined, false, false>, 'renderInput'> {

@@ -1,13 +1,13 @@
-import React, { useState, memo} from 'react';
-import { Snackbar } from '@material-ui/core';
-import { Alert, AlertProps } from '@material-ui/lab';
+import React, { useState, memo } from 'react';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert, { AlertProps } from '@material-ui/lab/Alert'
 import { useImperativeHandle } from 'react';
 import { forwardRef } from 'react';
 
 export interface AlertaHandles {
   setAberto: React.Dispatch<React.SetStateAction<boolean>>,
   setMensagem: React.Dispatch<React.SetStateAction<React.ReactNode | undefined>>,
-  setTipo: React.Dispatch<React.SetStateAction<AlertProps["severity"]| undefined>>
+  setTipo: React.Dispatch<React.SetStateAction<AlertProps["severity"] | undefined>>
 }
 
 const Alerta = forwardRef<AlertaHandles | undefined>((props, ref) => {
@@ -15,7 +15,7 @@ const Alerta = forwardRef<AlertaHandles | undefined>((props, ref) => {
   const [mensagem, setMensagem] = useState<React.ReactNode | undefined>(undefined);
   const [tipo, setTipo] = useState<AlertProps["severity"]>("info");
 
-  useImperativeHandle(ref, ()=>({
+  useImperativeHandle(ref, () => ({
     setAberto,
     setMensagem,
     setTipo,

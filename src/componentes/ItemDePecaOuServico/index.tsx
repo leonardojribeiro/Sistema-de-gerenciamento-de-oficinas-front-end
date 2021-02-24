@@ -1,4 +1,6 @@
-import { Box, Grid, Typography } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import React, { memo } from 'react';
 import Formato from '../../recursos/Formato';
 

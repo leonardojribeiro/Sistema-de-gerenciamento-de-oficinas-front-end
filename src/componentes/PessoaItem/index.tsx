@@ -1,5 +1,14 @@
 import React, { memo } from 'react';
-import { Box, IconButton, Grid, Tooltip, Hidden, Typography, Accordion, AccordionSummary, AccordionDetails, AccordionActions, } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import IconButton from '@material-ui/core/IconButton';
+import Grid from '@material-ui/core/Grid';
+import Tooltip from '@material-ui/core/Tooltip';
+import Hidden from '@material-ui/core/Hidden';
+import Typography from '@material-ui/core/Typography';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import AccordionActions from '@material-ui/core/AccordionActions';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Link, useLocation } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
@@ -27,7 +36,7 @@ const PessoaItem: React.FC<PessoaItemProps> = (
   const { pathname } = useLocation();
   return (
     <Accordion>
-      <AccordionSummary onClick={()=>{}} expandIcon={<ExpandMoreIcon />}>
+      <AccordionSummary onClick={() => { }} expandIcon={<ExpandMoreIcon />}>
         <Grid container justify="space-between" alignItems="center" >
           <Grid item sm={6} md={4}>
             {nome &&
@@ -103,7 +112,7 @@ const PessoaItem: React.FC<PessoaItemProps> = (
               <Grid item>
                 <Box display="flex" alignItems="center">
                   <PhoneIcon />
-                  <Typography>{" "+ Formato.formatarTelefone(telefoneFixo)}</Typography>
+                  <Typography>{" " + Formato.formatarTelefone(telefoneFixo)}</Typography>
                 </Box>
               </Grid>
             }
@@ -113,7 +122,7 @@ const PessoaItem: React.FC<PessoaItemProps> = (
                   <Box display="flex" alignItems="center">
                     <PhoneAndroidIcon />
                     <Typography>
-                      {" "+Formato.formatarTelefone(telefoneCelular)}
+                      {" " + Formato.formatarTelefone(telefoneCelular)}
                     </Typography>
                   </Box>
                 </Grid>
@@ -123,7 +132,7 @@ const PessoaItem: React.FC<PessoaItemProps> = (
               <Grid item>
                 <Box display="flex" alignItems="center">
                   <CakeIcon />
-                  <Typography >{" "+Formato.formatarData(dataNascimento)}</Typography>
+                  <Typography >{" " + Formato.formatarData(dataNascimento)}</Typography>
                 </Box>
               </Grid>
             }

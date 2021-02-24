@@ -1,5 +1,8 @@
 import React from 'react';
-import { Button, AppBar, Toolbar, makeStyles } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Link } from 'react-router-dom';
 import Rodape from './Rodape';
 import Anim from './Anim';
@@ -13,12 +16,12 @@ const useStyles = makeStyles((theme) => ({
   main: {
     position: "relative",
   },
-  appBarContainer:{
+  appBarContainer: {
     position: "absolute",
     left: 0,
     right: 0,
   },
-  appBar:{
+  appBar: {
     position: "fixed",
   }
 }))
