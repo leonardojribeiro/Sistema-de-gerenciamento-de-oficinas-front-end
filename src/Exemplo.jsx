@@ -24,7 +24,7 @@ class ExemploClass extends React.Component {
 }
 
 function ExemploFunction(props) {
-  const [counter, setCounter] = useState(0);//Inicializa o estado.
+  const [counter, setCounter] = useState(0);// Inicializa o estado.
   useEffect(() => {// É executada toda vez que o componente é montado.
     setInterval(() => {
       setCounter(counter => counter + 1);
@@ -35,7 +35,25 @@ function ExemploFunction(props) {
   )
 }
 
+function useSeconds() {
+  const [seconds, setSeconds] = useState(0);
+  useEffect(() => {
+    setInterval(() => {
+      setSeconds(counter => counter + 1);
+    }, 1000)
+  }, [])
+  return seconds;
+}
 
 
 
-export default ExemploFunction
+function ExemploHook() {
+  const seconds = useSeconds()
+  return (
+    <p>Tempo: {seconds} segundos</p>
+  )
+}
+
+
+
+export default ExemploHook

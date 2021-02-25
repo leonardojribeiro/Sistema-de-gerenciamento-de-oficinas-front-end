@@ -4,7 +4,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
-import React, { memo, useCallback, useContext } from 'react';
+import React, { memo, useCallback, useContext, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import WebSocketContext, { Dominio, Notification } from '../../contexts/WebSocketContext';
 
@@ -26,14 +26,19 @@ const ItemDrawer: React.FC<ItemDrawerProps> = ({ icon, navigateTo, title, domini
     }
   }, [dismissNotification, dominio])
 
+  const listIcon = useMemo(() => (
+    <ListItemIcon>
+      <Badge color={total > 0 ? "primary" : "default"} badgeContent={total > 0 ? total : ""}>
+        {icon}
+      </Badge>
+    </ListItemIcon>
+  )
+    , [icon, total])
+
   return (
     <ListItem button component={Link} to={navigateTo} onClick={handleClick}>
       <Tooltip title={title}>
-        <ListItemIcon>
-          <Badge color={total > 0 ? "primary" : "default"} badgeContent={total > 0 ? total : ""}>
-            {icon}
-          </Badge>
-        </ListItemIcon>
+        {listIcon}
       </Tooltip>
       <ListItemText>
         <Typography>

@@ -27,15 +27,16 @@ interface AuthContextValues {
 const AuthContext = createContext<AuthContextValues>({} as AuthContextValues);
 
 export const AuthProvider: React.FC = ({ children }) => {
-  const { location } = useHistory();
   const [usuario, setUsuario] = useState<Usuario>({} as Usuario);
   const [open, setOpen] = useState<boolean>(false);
   const showAgain = useRef<boolean>(true);
   const distanceToNow = useRef<string>("");
+  const { push } = useHistory();
 
   const logout = useCallback(() => {
     localStorage.removeItem("tokenUsuario");
     setUsuario({} as Usuario);
+    setOpen(false);
   }, []);
 
   const verificarTempoRestante = useCallback(() => {
@@ -44,13 +45,12 @@ export const AuthProvider: React.FC = ({ children }) => {
       const decodificado = JSON.parse(atob(partes[1]));
       const expireToken = decodificado.exp * 1000;
       const diferenca = differenceInMinutes(expireToken, Date.now())
-      console.log(diferenca)
-      if (diferenca < 10 && showAgain.current && usuario._id && location.pathname !== '/login') {
+      if (diferenca < 10 && diferenca >= 0 && showAgain.current && usuario._id) {
         distanceToNow.current = formatDistanceToNow(expireToken, { locale: ptLocale, includeSeconds: true });
         setOpen(true);
       }
     }
-  }, [location.pathname, usuario._id, usuario.token]);
+  }, [usuario._id, usuario.token]);
 
   const handleClose = useCallback(() => {
     setOpen(false);
@@ -73,7 +73,8 @@ export const AuthProvider: React.FC = ({ children }) => {
   const handleClickLogin = useCallback((event: React.SyntheticEvent) => {
     event.preventDefault();
     logout();
-  }, [logout]);
+    push('/login');
+  }, [logout, push]);
 
   return (
     <>
@@ -98,7 +99,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 }
 
 const AuthHelper: React.FC = ({ children }) => {
-  const { setUsuario, usuario } = useContext(AuthContext);
+  const { setUsuario, logout } = useContext(AuthContext);
   const { get } = useContext(ApiContext);
   const { logado } = useAuth();
   const { pathname } = useLocation()
@@ -116,13 +117,18 @@ const AuthHelper: React.FC = ({ children }) => {
     }
   }, [get, setUsuario]);
 
+  const readToken = useCallback(() => {
+    return localStorage.getItem("tokenUsuario");
+  }, []);
+
   useEffect(() => {
-    const token = localStorage.getItem("tokenUsuario");
+    const token = readToken();
     if (token && !logado) {
       const partes = token.split('.');
       const decodificado = JSON.parse(atob(partes[1]));
       const expireToken = decodificado.exp * 1000;
       if (Date.now() < expireToken) {
+        console.log('fzd login por token')
         efetuarLoginPorToken(token);
       }
       else if (pathname !== '/login') {
@@ -131,9 +137,10 @@ const AuthHelper: React.FC = ({ children }) => {
       }
     }
     if (!token && pathname !== '/' && pathname !== '/login') {
+      logout();
       push('/login');
     }
-  }, [efetuarLoginPorToken, logado, pathname, push, setUsuario, usuario.token]);
+  }, [efetuarLoginPorToken, logado, logout, pathname, push, readToken]);
 
   const conteudo = useMemo(() => children, [children])
 

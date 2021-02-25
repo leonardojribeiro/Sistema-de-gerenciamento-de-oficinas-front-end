@@ -13,6 +13,8 @@ import TextField from '../Form/Fields/TextField';
 import AutoCompleteVeiculo from '../AutoComplete/AutoCompleteVeiculo';
 import AutoCompleteMarca from '../AutoComplete/AutoCompleteMarca';
 import AutoCompleteModelo from '../AutoComplete/AutoCompleteModelo';
+import SelectField from '../Form/Fields/SelectField';
+import { MenuItem } from '@material-ui/core';
 
 export type Filter = "nome" | "nomeFantasia" | "cpfCnpj" | "cpf" | "email" | "telefone" | "descricao"
   | "placa" | "status" | "categoria" | "veiculo" | "marca" | "modelo";
@@ -40,14 +42,14 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const FormConsulta: React.FC<FormConsultaPessoaProps> = ({ onSubmit, filters }) => {
+function FormConsulta({ onSubmit, filters }: FormConsultaPessoaProps): JSX.Element {
   const classes = useStyles();
   const [filtersSelected, setFiltersSelected] = useState<Filter[]>([filters[0]]);
   const valuesSelected = useRef<string[]>([""]);
   const labelValuesSelected = useRef<any>({});
   const [tooltipOpen, setTooltipOpen] = useState<Filter | null>(null);
 
-  const handleSubmit = useCallback((data) => {
+  const handleSubmit = useCallback(() => {
     const d = filtersSelected.map((filter, index) => {
       return {
         name: filter,
@@ -59,7 +61,7 @@ const FormConsulta: React.FC<FormConsultaPessoaProps> = ({ onSubmit, filters }) 
   }, [filtersSelected, onSubmit]);
 
   const isAlowMoreSelectable = useCallback((filter: Filter) => {
-    const filtersSelectable = ['marca', 'modelo', 'veiculo'];
+    const filtersSelectable = ['marca', 'modelo', 'veiculo',];
     let alowMoreSelectable: boolean = true;
     filtersSelected.forEach(filter => {
       if (!filtersSelectable.includes(filter)) {
@@ -72,7 +74,6 @@ const FormConsulta: React.FC<FormConsultaPessoaProps> = ({ onSubmit, filters }) 
   const handleFilterAdition = useCallback((filter: Filter) => {
     if (!filtersSelected.includes(filter)) {
       if (isAlowMoreSelectable(filter)) {
-        console.log('aqsas')
         if (valuesSelected.current[filtersSelected.length - 1]) {
           setFiltersSelected(filters => [...filters, filter])
         }
@@ -100,14 +101,16 @@ const FormConsulta: React.FC<FormConsultaPessoaProps> = ({ onSubmit, filters }) 
   }, [filters, filtersSelected])
 
   const handleValueChange = useCallback((value: string) => {
+    console.log(value)
     valuesSelected.current[filtersSelected.length - 1] = value;
-  }, [filtersSelected.length])
+    handleSubmit();
+  }, [filtersSelected.length, handleSubmit])
 
   const isAditionAllowed = useCallback((filter: Filter) => {
     return !filtersSelected.includes(filter) && (filtersSelected.length < 2 || isAlowMoreSelectable(filter))
   }, [filtersSelected, isAlowMoreSelectable])
 
-  const getChipForCurrentFilter = useCallback((filter: Filter, insideField: boolean = false) => {
+  const getChipForCurrentFilter = useCallback((filter: Filter) => {
     const props: ChipProps = {
       onClick: isAditionAllowed(filter) ? () => handleFilterAdition(filter) : undefined,
       variant: filtersSelected.includes(filter) && filtersSelected[filtersSelected.length - 1] === filter ? "default" : "outlined",
@@ -131,7 +134,7 @@ const FormConsulta: React.FC<FormConsultaPessoaProps> = ({ onSubmit, filters }) 
       case 'telefone': return <Chip label="Telefone" {...props} />
       case 'email': return <Chip label="Email" {...props} />
       case 'status': return <Chip label="Status" {...props} />
-      case 'veiculo': return <Chip label="Veículo" {...props} />
+      case 'veiculo': return <Chip label={`Veículo${labelValuesSelected.current['veiculo'] ? `: ${labelValuesSelected.current['veiculo']}` : ""}`} {...props} />
       case 'marca': return <Chip label={`Marca${labelValuesSelected.current['marca'] ? `: ${labelValuesSelected.current['marca']}` : ""}`} {...props} />
       case 'modelo': return <Chip label={`Modelo${labelValuesSelected.current['modelo'] ? `: ${labelValuesSelected.current['modelo']}` : ""}`} {...props} />
     }
@@ -146,23 +149,28 @@ const FormConsulta: React.FC<FormConsultaPessoaProps> = ({ onSubmit, filters }) 
       label: "",
       placeholder: 'Consultar',
       InputProps: {
-        startAdornment: filtersSelected.map(filter => getChipForCurrentFilter(filter, true))
+        startAdornment: filtersSelected.map(filter => getChipForCurrentFilter(filter))
       },
       onChange: (event: any) => { handleValueChange(event.target.value) }
     };
     switch (filtersSelected[filtersSelected.length - 1]) {
-      case ("nome"): return <NameField {...props} />
-      case ("nomeFantasia"): return <NameField {...props} />
+      case "nome": return <NameField {...props} />
+      case "nomeFantasia": return <NameField {...props} />
       case "telefone": return <PhoneField {...props} />
       case "email": return <EmailField {...props} />
       case "cpfCnpj": return <CpfCnpjField {...props} />
       case "placa": return <PlacaField {...props} />
       case "cpf": return <CpfCnpjField {...props} />
       case "descricao": return <TextField {...props} />
+      case "status": return <SelectField defaultValue='2' {...props}>
+        <MenuItem value='2'>Todas</MenuItem>
+        <MenuItem value="0" >Em andamento</MenuItem>
+        <MenuItem value="1">Finalizada</MenuItem>
+      </SelectField>
       case "veiculo": return <AutoCompleteVeiculo {...props} onChange={(_, value) => {
         if (value) {
           handleValueChange(value._id)
-          labelValuesSelected.current['veiculo'] = value.descricao;
+          labelValuesSelected.current['veiculo'] = value.placa;
         }
       }} />
       case "marca": return <AutoCompleteMarca {...props} onChange={(_, value) => {

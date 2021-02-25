@@ -14,7 +14,7 @@ const DialogoClientes: React.FC = () => {
     return (
       <Listagem
         dominio="cliente"
-        formSearchFilters={['nome', 'cpf', 'email', 'telefone']}
+        formSearchFilters={['nome', 'cpfCnpj', 'email', 'telefone']}
         linkToInsert="/clientes/incluircliente"
         linkToInsertTitle="incluir cliente"
         getPrimaryText={cliente => cliente.nome}

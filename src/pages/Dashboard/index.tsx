@@ -10,7 +10,7 @@ const Dashboard: React.FC = () => {
   const [estatisticas, setEstatisticas] = useState<any | undefined>(undefined);
 
   const listar = useCallback(async () => {
-    const resposta = await get('oficina', true);
+    const resposta = await get('oficina', {disableAllProgress: true});
     if (resposta) {
       setEstatisticas(resposta);
     }

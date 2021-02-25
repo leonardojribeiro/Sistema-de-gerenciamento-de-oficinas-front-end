@@ -8,7 +8,7 @@ interface ListaItens<T> {
   total: number
 }
 
-export default function useListagem<T = any>(dominio: Dominio, desbilitarProgresso: boolean = false) {
+export default function useListagem<T = any>(dominio: Dominio, disableCircularProgress?: boolean, disableAllProgress?: boolean) {
   const [itens, setItens] = useState<ListaItens<T>>({ total: 1, itens: [] });
   const [page, setPage] = useState<number>(1);
   const { get } = useContext(ApiContext);
@@ -31,36 +31,38 @@ export default function useListagem<T = any>(dominio: Dominio, desbilitarProgres
   }, [dominio, setIsOpen])
 
   useEffect(() => {
-    webSocket.on(`${dominio}Incluido`, (item: T) => {
-      if (componentMounted.current) {
-        setItens(itens => {
-          return {
-            total: itens.total + 1,
-            itens: [item, ...itens.itens]
-          }
-        })
-      }
-    })
+    if (webSocket) {
+      webSocket.on(`${dominio}Incluido`, (item: T) => {
+        if (componentMounted.current) {
+          setItens(itens => {
+            return {
+              total: itens.total + 1,
+              itens: [item, ...itens.itens]
+            }
+          })
+        }
+      })
+    }
   }, [dominio, webSocket]);
 
   const listar = useCallback(async () => {
     if (!consultaValues.current) {
-      const resposta = await get(`/${dominio}?pagina=${page}&limite=100`, desbilitarProgresso) as any;
+      const resposta = await get(`/${dominio}?pagina=${page}&limite=100`, { disableCircularProgress, disableAllProgress }) as any;
       if (resposta) {
         setItens(resposta as ListaItens<T>);
       }
     }
-  }, [desbilitarProgresso, dominio, get, page]);
+  }, [disableAllProgress, disableCircularProgress, dominio, get, page]);
 
   const handleSearch = useCallback(async (dados: Query[]) => {
     let queryStr = "";
     dados.forEach(query => queryStr = `${queryStr}${query.name}=${query.value}&`)
     consultaValues.current = dados;
-    const resposta = await get(`/${dominio}/consulta?${queryStr}limite=100&pagina=${page}`, desbilitarProgresso) as any;
+    const resposta = await get(`/${dominio}/consulta?${queryStr}limite=100&pagina=${page}`, { disableCircularProgress, disableAllProgress }) as any;
     if (resposta) {
       setItens(resposta as ListaItens<T>);
     }
-  }, [desbilitarProgresso, dominio, get, page]);
+  }, [disableAllProgress, disableCircularProgress, dominio, get, page]);
 
   const handlePageChange = useCallback((event, value: number) => {
     setPage(value);

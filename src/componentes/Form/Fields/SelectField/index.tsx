@@ -1,5 +1,5 @@
 import React, { memo, useRef, useCallback, useEffect, useState } from 'react';
-import Select, {SelectProps} from '@material-ui/core/Select';
+import Select, { SelectProps } from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -8,15 +8,18 @@ import useField from '../../Hooks/useField';
 
 interface SelectFieldProps extends SelectProps {
   name: string;
+  InputProps?: {
+    startAdornment?: React.ReactNode;
+  }
 }
 
 interface SelectRef {
   value: any | any[] | undefined;
 }
 
-const SelectField: React.FC<SelectFieldProps> = ({ name, ...props }) => {
+const SelectField: React.FC<SelectFieldProps> = ({ name, InputProps, ...props }) => {
   const [valid, setValid] = useState<boolean>(true);
-  const [value, setValue] = useState<SelectRef['value']>(props.multiple ? [] : '');
+  const [value, setValue] = useState<SelectRef['value']>(props.multiple ? [] : props.defaultValue ? props.defaultValue : '');
   const [aberto, setAberto] = useState(false);
   const ref = useRef<SelectRef>({} as SelectRef);
   const { registerField, fieldName, defaultValue } = useField(name);
@@ -104,6 +107,7 @@ const SelectField: React.FC<SelectFieldProps> = ({ name, ...props }) => {
         onChange={handleChange}
         value={value}
         fullWidth
+        startAdornment={InputProps?.startAdornment}
       >
         {props.children}
       </Select>

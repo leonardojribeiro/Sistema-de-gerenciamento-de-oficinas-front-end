@@ -5,7 +5,7 @@ import { Dominio } from "../contexts/WebSocketContext";
 import useListagem from "./useListagem";
 
 export default function useAutoComplete<T>(pathToItens: string, dominio: string, filterToSearch: string) {
-  const { itens, listar, handleSearch, setItens } = useListagem<T>(dominio as Dominio, true);
+  const { itens, listar, handleSearch, setItens } = useListagem<T>(dominio as Dominio, undefined, true);
   const { get } = useContext(ApiContext);
 
   const getMoreOptions = useCallback(async (search) => {
@@ -25,7 +25,7 @@ export default function useAutoComplete<T>(pathToItens: string, dominio: string,
       return defaultValue;
     }
     else {
-      defaultValue = await get(`/${dominio}/id?_id=${value}`, true) as any;
+      defaultValue = await get(`/${dominio}/id?_id=${value}`, {disableAllProgress: true}) as any;
       if (defaultValue) {
         setItens(itens => {
           return {

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
@@ -23,6 +23,8 @@ import OrdemDeServico from '../../Types/OrdemDeServico';
 import Cliente from '../../Types/Cliente';
 import Fornecedor from '../../Types/Fornecedor';
 import Funcionario from '../../Types/Funcionario';
+import LinearProgress from '../LinearProgress';
+import ApiContext from '../../contexts/ApiContext';
 
 interface BaseListagemProps<T,> {
   getPrimaryText?: (item: T) => string;
@@ -80,7 +82,8 @@ export default function Listagem({
   renderListItem
 }: Props): JSX.Element {
   const history = useHistory();
-  const { handlePageChange, handleSearch, itens, listar, page, total } = useListagem(dominio);
+  const { handlePageChange, handleSearch, itens, listar, page, total } = useListagem(dominio, true);
+  const { inProgress } = useContext(ApiContext);
 
   useEffect(() => {
     listar()
@@ -97,6 +100,7 @@ export default function Listagem({
 
   return (
     <>
+      <LinearProgress open={inProgress} />
       <FormConsulta onSubmit={handleSearch} filters={formSearchFilters} />
       <Box mb={2}>
         <List>

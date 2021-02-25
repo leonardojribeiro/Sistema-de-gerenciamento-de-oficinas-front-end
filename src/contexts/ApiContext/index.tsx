@@ -1,20 +1,20 @@
-import React, { createContext, useCallback, useState } from "react";
+import React, { createContext, useCallback, useMemo, useRef, useState } from "react";
 import api from "../../services/api";
-import ProgressoCircular, { ProgressoCircularHandles } from "../../componentes/ProgressoCircular";
 import dot from "dot-object";
-import { useRef } from "react";
 import useAuth from "../../hooks/useAuth";
 import { AxiosError, AxiosRequestConfig } from "axios";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
+import CircularProgress from "../../componentes/CircularProgress";
 
 interface ApiContextValues {
-  get: (url: string, desablitarProgresso?: boolean, config?: AxiosRequestConfig) => Promise<object>,
+  get: (url: string, options?: Options, axiosRequestConfig?: AxiosRequestConfig) => Promise<object>,
   getTipoBlob: (url: string) => Promise<object>,
   post: (url: string, dados: object) => Promise<object>,
   put: (url: string, dados: object) => Promise<object>,
   multipartPost: (url: string, dados: object) => Promise<object>,
   multipartPut: (url: string, dados: object) => Promise<object>
+  inProgress: boolean;
 }
 
 interface AlertValues {
@@ -22,12 +22,18 @@ interface AlertValues {
   message: JSX.Element | string;
 }
 
+export interface Options {
+  disableCircularProgress?: boolean;
+  disableAllProgress?: boolean;
+}
+
 const ApiContext = createContext<ApiContextValues>({} as ApiContextValues);
 
 export const ApiProvider: React.FC = ({ children }) => {
-  const refProgresso = useRef<ProgressoCircularHandles | undefined>(undefined);
   const { token, verificarTempoRestante, logout } = useAuth();
   const [alert, setAlert] = useState<AlertValues | null>(null)
+  const [progress, setProgress] = useState<boolean>(false);
+  const useCircularProgress = useRef<boolean>(true);
 
   const headers = useCallback(() => {
     verificarTempoRestante();
@@ -36,9 +42,8 @@ export const ApiProvider: React.FC = ({ children }) => {
 
   const handleProgresso = useCallback((e: any) => {
     const progresso = (e.loaded * 100 / e.total);
-    if (refProgresso && refProgresso.current) {
-      refProgresso.current.setValor(progresso === 100 ? 0 : progresso);
-    }
+    //setProgress(progresso);
+    console.log(progresso)
   }, []);
 
 
@@ -89,12 +94,22 @@ export const ApiProvider: React.FC = ({ children }) => {
     return null;
   }, []);
 
-  const get = useCallback(async (url: string, desablitarProgresso?: boolean, config?: AxiosRequestConfig) => {
-    !desablitarProgresso && refProgresso && refProgresso.current && refProgresso.current.setAberto(true);
+  const get = useCallback(async (url: string, options?: Options, axiosRequestConfig?: AxiosRequestConfig) => {
+    if (options !== undefined) {
+      if(options.disableCircularProgress){
+        useCircularProgress.current = false;
+      }
+      if(!options.disableAllProgress){
+        setProgress(true);
+      }
+    }
+    else{
+      setProgress(true);
+    }
     let resposta = null;
     try {
-      if (config) {
-        resposta = await api.get(url, config);
+      if (axiosRequestConfig) {
+        resposta = await api.get(url, axiosRequestConfig);
       }
       else {
         resposta = await api.get(url, { headers: headers() });
@@ -103,12 +118,22 @@ export const ApiProvider: React.FC = ({ children }) => {
     catch (e) {
       handleErro(e)
     }
-    !desablitarProgresso && refProgresso && refProgresso.current && refProgresso.current.setAberto(false);
+    if (options !== undefined) {
+      if(options.disableCircularProgress){
+        useCircularProgress.current = true;
+      }
+      if(!options.disableAllProgress){
+        setProgress(false);
+      }
+    }
+    else{
+      setProgress(false);
+    }
     return handleResposta(resposta);
   }, [handleErro, handleResposta, headers]);
 
   const getTipoBlob = useCallback(async (url) => {
-    refProgresso && refProgresso.current && refProgresso.current.setAberto(true);
+    setProgress(true);
     let resposta = null;
     try {
       resposta = await api.get(url, {
@@ -118,12 +143,12 @@ export const ApiProvider: React.FC = ({ children }) => {
     catch (e) {
       handleErro(e)
     }
-    refProgresso && refProgresso.current && refProgresso.current.setAberto(false);
+    setProgress(false)
     return handleResposta(resposta) as Blob;
   }, [handleErro, handleResposta]);
 
   const post = useCallback(async (url: string, dados: object) => {
-    refProgresso && refProgresso.current && refProgresso.current.setAberto(true);
+    setProgress(true)
     let resposta = null;
     try {
       resposta = await api
@@ -139,12 +164,12 @@ export const ApiProvider: React.FC = ({ children }) => {
     catch (e) {
       handleErro(e)
     }
-    refProgresso && refProgresso.current && refProgresso.current.setAberto(false);
+    setProgress(false);
     return handleResposta(resposta)
   }, [handleErro, handleProgresso, handleResposta, headers]);
 
   const put = useCallback(async (url: string, dados: object) => {
-    refProgresso && refProgresso.current && refProgresso.current.setAberto(true);
+    setProgress(true)
     let resposta = null;
     try {
       resposta = await api
@@ -160,7 +185,7 @@ export const ApiProvider: React.FC = ({ children }) => {
     catch (e) {
       handleErro(e)
     }
-    refProgresso && refProgresso.current && refProgresso.current.setAberto(false);
+    setProgress(false)
     return handleResposta(resposta)
   }, [handleErro, handleProgresso, handleResposta, headers]);
 
@@ -191,21 +216,26 @@ export const ApiProvider: React.FC = ({ children }) => {
     setAlert(null);
   }, [])
 
+  const content = useMemo(() => (
+    <ApiContext.Provider
+      value={{
+        get,
+        getTipoBlob,
+        post,
+        put,
+        multipartPost,
+        multipartPut,
+        inProgress: progress,
+      }}
+    >
+      {children}
+    </ApiContext.Provider>
+  ), [children, get, getTipoBlob, multipartPost, multipartPut, post, progress, put]);
+
   return (
     <>
-      <ApiContext.Provider
-        value={{
-          get,
-          getTipoBlob,
-          post,
-          put,
-          multipartPost,
-          multipartPut,
-        }}
-      >
-        {children}
-      </ApiContext.Provider>
-      <ProgressoCircular ref={refProgresso} />
+      {content}
+      <CircularProgress open={progress && useCircularProgress.current} />
       <Snackbar open={alert !== null} autoHideDuration={5000} onClose={handleClose}>
         <Alert severity={alert?.severity} onClose={handleClose} closeText="Fechar">
           {alert?.message}

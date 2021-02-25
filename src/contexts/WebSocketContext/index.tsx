@@ -22,7 +22,7 @@ export type Dominio =
   | "ordemdeservico"
 
 interface WebSocketValues {
-  webSocket: Socket;
+  webSocket: Socket | undefined;
   getNotification: (dominio: Dominio) => Notification;
   dismissNotification: (dominio: Dominio) => void;
   setIsOpen: (dominio: Dominio | undefined) => void;
@@ -47,7 +47,7 @@ interface Notifications {
 const WebSocketContext = createContext<WebSocketValues>({} as WebSocketValues)
 
 interface ProviderProps {
-  webSocket: Socket;
+  webSocket: Socket | undefined;
 }
 
 const Provider: React.FC<ProviderProps> = ({ webSocket, children }) => {
@@ -85,43 +85,35 @@ const Provider: React.FC<ProviderProps> = ({ webSocket, children }) => {
   }, []);
 
   useEffect(() => {
-
-    webSocket.on(`servicoIncluido`, (item: any) => {
-      updateNotifications("servico", "inserted")
-    })
-
-    webSocket.on(`marcaIncluido`, (item: any) => {
-      updateNotifications("marca", "inserted")
-    })
-
-    webSocket.on(`pecaIncluido`, (item: any) => {
-      updateNotifications("peca", "inserted")
-    })
-
-    webSocket.on(`modeloIncluido`, (item: any) => {
-      updateNotifications("modelo", "inserted")
-    })
-
-    webSocket.on(`clienteIncluido`, (item: any) => {
-      updateNotifications("cliente", "inserted")
-    })
-
-    webSocket.on(`fornecedorIncluido`, (item: any) => {
-      updateNotifications("fornecedor", "inserted")
-    })
-
-    webSocket.on(`funcionarioIncluido`, (item: any) => {
-      updateNotifications("funcionario", "inserted")
-    })
-
-    webSocket.on(`especialidadeIncluido`, (item: any) => {
-      updateNotifications("especialidade", "inserted")
-    })
-
-    return () => {
-      webSocket.close()
+    if (webSocket) {
+      webSocket.on(`servicoIncluido`, (item: any) => {
+        updateNotifications("servico", "inserted")
+      })
+      webSocket.on(`marcaIncluido`, (item: any) => {
+        updateNotifications("marca", "inserted")
+      })
+      webSocket.on(`pecaIncluido`, (item: any) => {
+        updateNotifications("peca", "inserted")
+      })
+      webSocket.on(`modeloIncluido`, (item: any) => {
+        updateNotifications("modelo", "inserted")
+      })
+      webSocket.on(`clienteIncluido`, (item: any) => {
+        updateNotifications("cliente", "inserted")
+      })
+      webSocket.on(`fornecedorIncluido`, (item: any) => {
+        updateNotifications("fornecedor", "inserted")
+      })
+      webSocket.on(`funcionarioIncluido`, (item: any) => {
+        updateNotifications("funcionario", "inserted")
+      })
+      webSocket.on(`especialidadeIncluido`, (item: any) => {
+        updateNotifications("especialidade", "inserted")
+      })
+      return () => {
+        webSocket.close()
+      }
     }
-
   }, [updateNotifications, webSocket])
 
   const getNotification = useCallback((dominio: Dominio) => {
@@ -145,23 +137,27 @@ const Provider: React.FC<ProviderProps> = ({ webSocket, children }) => {
 
 export const WebSocketProvider: React.FC = ({ children }) => {
   const { logado, token } = useAuth();
-
-  const webSocket = io(process.env.REACT_APP_API_URL as string, { auth: { token }, });
+  const webSocket = useRef<Socket | undefined>(undefined)
 
   useEffect(() => {
     if (logado) {
-      webSocket.on("connect", () => {
+      webSocket.current = io(process.env.REACT_APP_API_URL as string, { auth: { token }, });
+      webSocket.current.connect();
+      webSocket.current.on("connect", () => {
         console.log("conectou");
       })
-      webSocket.on("connect_error", (err: any) => {
+      webSocket.current.on("connect_error", (err: any) => {
         console.log(err.message);
       });
     }
+    else {
+      webSocket.current = undefined;
+    }
     return () => console.log('desmontando')
-  }, [logado, webSocket])
+  }, [logado, token])
 
   return (
-    <Provider webSocket={webSocket} >
+    <Provider webSocket={webSocket.current} >
       {children}
     </Provider>
   );

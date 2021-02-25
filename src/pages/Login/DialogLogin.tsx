@@ -42,7 +42,7 @@ const DialogLogin: React.FC = () => {
 
   return (
     <Dialogo open title="Login" onClose={fechar}>
-      <Form clearOnSubmit onSubmit={handleLogin} >
+      <Form onSubmit={handleLogin} >
         <Box p={2}>
           <CampoDeTexto
             autoFocus
@@ -66,7 +66,6 @@ const DialogLogin: React.FC = () => {
         </Box>
         <DialogActions>
           <Button onClick={fechar}>Cancelar</Button>
-          <Button type="reset">limpar</Button>
           <Button type="submit">Login</Button>
         </DialogActions>
       </Form>
