@@ -34,7 +34,7 @@ const DialogoClientes: React.FC = () => {
   }, []);
 
   return (
-    <Dialog maxWidth="lg" fullWidth open title="Clientes">
+    <Dialog maxWidth="md" fullWidth open title="Clientes">
       {listagem}
       <Switch>
         <Route path={["/clientes/incluircliente", "/clientes/alterarcliente"]} component={FormCliente} />

@@ -177,7 +177,7 @@ const ShowPessoa: React.FC<ShowPessoaProps> = ({ title, dominio, linkToEdit }) =
             <Grid container alignItems="flex-end" justify="flex-end" spacing={1}>
               {dominio === 'cliente' && (
                 <Grid item>
-                  <IconButton component={Link} to={`/clientes/veiculos?cliente=${id}`}>
+                  <IconButton component={Link} to={`/clientes/veiculos?cliente=${id}&nome=${item.nome}`}>
                     <DriveEtaIcon />
                   </IconButton>
                 </Grid>

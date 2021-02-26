@@ -23,7 +23,7 @@ const DialogFuncionarios: React.FC = () => {
   }, [])
 
   return (
-    <Dialogo maxWidth="lg" fullWidth open title="Funcionários">
+    <Dialogo maxWidth="md" fullWidth open title="Funcionários">
       {listagem}
       <Switch>
         <Route path={["/funcionarios/incluirfuncionario", "/funcionarios/alterarfuncionario"]} component={FormFuncionario} />

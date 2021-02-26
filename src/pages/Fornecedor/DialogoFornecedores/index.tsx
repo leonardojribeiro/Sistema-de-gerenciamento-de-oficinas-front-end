@@ -24,7 +24,7 @@ const DialogoFornecedores: React.FC = () => {
   }, [])
   
   return (
-    <Dialogo maxWidth="lg" fullWidth open title="Fornecedores">
+    <Dialogo maxWidth="md" fullWidth open title="Fornecedores">
       {listagem}
       <Switch>
         <Route path={["/fornecedores/incluirfornecedor", "/fornecedores/alterarfornecedor"]} component={FormCliente} />

@@ -1,5 +1,5 @@
 import React, { useCallback, memo } from 'react';
-import  TextField, {StandardTextFieldProps } from '@material-ui/core/TextField';
+import TextField, { StandardTextFieldProps } from '@material-ui/core/TextField';
 import validacao from '../../../../recursos/Validacao';
 import numberMask from '../../../../recursos/NumberMask';
 import useFormField from '../../Hooks/useFormField';
@@ -32,6 +32,7 @@ const CampoCpfCnpj: React.FC<CpfCnpjFieldProps> = ({ name, onlyCpf, onChange, ..
 
   return (
     <TextField
+      type="number"
       onChange={handleInputChange}
       error={!valid}
       inputRef={ref}
