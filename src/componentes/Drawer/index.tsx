@@ -2,12 +2,8 @@ import React, { SetStateAction, memo } from 'react';
 import clsx from 'clsx';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Drawer from '@material-ui/core/Drawer';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Hidden from '@material-ui/core/Hidden';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 interface DrawerProps {
   open: boolean;
@@ -48,19 +44,8 @@ const useStyles = makeStyles((theme) => ({
 
 const MiniDrawer: React.FC<DrawerProps> = ({ open, setOpen, children }) => {
   const classes = useStyles();
-
-
-  const handleDrawerClose = () => {
-    setOpen(!open);
-  };
-
   const itensDrawer = (
     <>
-      <Toolbar className={classes.toolbar} >
-        <IconButton onClick={handleDrawerClose}>
-          {open ? <ChevronLeftIcon /> : <MenuIcon />}
-        </IconButton>
-      </Toolbar>
       {children}
       <div className={classes.toolbar} />
     </>

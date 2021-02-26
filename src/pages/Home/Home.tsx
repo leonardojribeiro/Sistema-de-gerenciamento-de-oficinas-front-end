@@ -1,11 +1,10 @@
-import React, { memo, useContext, useState } from 'react';
+import React, { memo, useCallback, useContext, useEffect, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Container from '@material-ui/core/Container';
@@ -27,6 +26,7 @@ import ItemDrawer from '../../componentes/ItemDrawer';
 import GroupIcon from '@material-ui/icons/Group';
 import Dashboard from '../Dashboard';
 import AssignmentIcon from '@material-ui/icons/Assignment'
+import { useMediaQuery, useTheme } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -47,17 +47,26 @@ const useStyles = makeStyles((theme) => ({
   toolbar: {
     display: 'flex',
     justifyContent: 'space-between'
+  },
+  drawerToolbar: {
+    padding: theme.spacing(0, 1),
+    ...theme.mixins.toolbar,
   }
 }));
 
 
 const Home: React.FC = () => {
+  const theme = useTheme();
+  const query = useMediaQuery(theme.breakpoints.up('md'));
   const classes = useStyles();
   const { usuario, logout } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = useState<EventTarget & HTMLAnchorElement | null>(null);
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(query);
   const opend = Boolean(anchorEl);
 
+  useEffect(() => {
+    setOpen(query);
+  }, [query])
 
   const handleMenu = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -72,13 +81,21 @@ const Home: React.FC = () => {
     logout()
   };
 
+  const handleDrawerClose = useCallback(() => {
+    if (!query) {
+      setOpen(false)
+    }
+  }, [query]);
+
   return (
     <>
       <AppBar color="primary" position="relative" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
-          <IconButton onClick={() => setOpen(!open)}>
-            {open ? <ChevronLeftIcon /> : <MenuIcon />}
-          </IconButton>
+          {!query &&
+            <IconButton onClick={() => !query && setOpen(!open)}>
+              {open ? <ChevronLeftIcon /> : <MenuIcon />}
+            </IconButton>
+          }
           <Typography>{usuario?.oficina.nomeFantasia}</Typography>
           <IconButton
             aria-label="account of current user"
@@ -87,7 +104,7 @@ const Home: React.FC = () => {
             onClick={handleMenu}
             color="inherit"
           >
-            <Avatar src={`${process.env.REACT_APP_API_URL}/${usuario?.oficina.uriLogo}`} />
+            <Avatar src={`${process.env.REACT_APP_IMAGES_URL}/${usuario?.oficina.uriLogo}`} />
           </IconButton>
           <Menu
             id="menu-appbar"
@@ -109,26 +126,31 @@ const Home: React.FC = () => {
           </Menu>
         </Toolbar>
       </AppBar>
-      <Box display="flex">
-        <MiniDrawer open={open} setOpen={setOpen}>
-          <List onClick={() => setOpen(false)}>
-            <ItemDrawer icon={<AssignmentIcon />} title="Ordens de Serviço" dominio="ordemdeservico" navigateTo="/ordensdeservico" />
-            <ItemDrawer icon={<FolderIcon />} title="Marcas" dominio="marca" navigateTo="/marcas" />
-            <ItemDrawer icon={<FolderIcon />} title="Modelos" dominio="modelo" navigateTo="/modelos" />
-            <ItemDrawer icon={<ExtensionIcon />} title="Peças" dominio="peca" navigateTo="/pecas" />
-            <ItemDrawer icon={<PersonIcon />} title="Clientes" dominio="cliente" navigateTo="/clientes" />
-            <ItemDrawer icon={<DriveEtaIcon />} title="Veículos" dominio="veiculo" navigateTo="/veiculos" />
-            <ItemDrawer icon={<LocalShippingIcon />} title="Fornecedores" dominio="fornecedor" navigateTo="/fornecedores" />
-            <ItemDrawer icon={<SchoolIcon />} title="Especialidades" dominio="especialidade" navigateTo="/especialidades" />
-            <ItemDrawer icon={<GroupIcon />} title="Funcionários" dominio="funcionario" navigateTo="/funcionarios" />
-            <ItemDrawer icon={<BuildIcon />} title="Serviços" dominio="servico" navigateTo="/servicos" />
-            <ItemDrawer icon={<SettingsIcon />} title="Opções" navigateTo="/opcoes" />
-          </List>
-        </MiniDrawer>
-        <Container className={classes.dashboardContainer} maxWidth="xl" >
-          <Dashboard />
-        </Container>
-      </Box >
+      <MiniDrawer open={open} setOpen={setOpen}>
+        <Toolbar className={classes.drawerToolbar} >
+          {!query &&
+            <IconButton onClick={() => !query && setOpen(!open)}>
+              {open ? <ChevronLeftIcon /> : <MenuIcon />}
+            </IconButton>
+          }
+        </Toolbar>
+        <List onClick={handleDrawerClose}>
+          <ItemDrawer icon={<AssignmentIcon />} title="Ordens de Serviço" dominio="ordemdeservico" navigateTo="/ordensdeservico" />
+          <ItemDrawer icon={<FolderIcon />} title="Marcas" dominio="marca" navigateTo="/marcas" />
+          <ItemDrawer icon={<FolderIcon />} title="Modelos" dominio="modelo" navigateTo="/modelos" />
+          <ItemDrawer icon={<ExtensionIcon />} title="Peças" dominio="peca" navigateTo="/pecas" />
+          <ItemDrawer icon={<PersonIcon />} title="Clientes" dominio="cliente" navigateTo="/clientes" />
+          <ItemDrawer icon={<DriveEtaIcon />} title="Veículos" dominio="veiculo" navigateTo="/veiculos" />
+          <ItemDrawer icon={<LocalShippingIcon />} title="Fornecedores" dominio="fornecedor" navigateTo="/fornecedores" />
+          <ItemDrawer icon={<SchoolIcon />} title="Especialidades" dominio="especialidade" navigateTo="/especialidades" />
+          <ItemDrawer icon={<GroupIcon />} title="Funcionários" dominio="funcionario" navigateTo="/funcionarios" />
+          <ItemDrawer icon={<BuildIcon />} title="Serviços" dominio="servico" navigateTo="/servicos" />
+          <ItemDrawer icon={<SettingsIcon />} title="Opções" navigateTo="/opcoes" />
+        </List>
+      </MiniDrawer>
+      <Container className={classes.dashboardContainer} maxWidth="xl" >
+        <Dashboard />
+      </Container>
       <Rodape />
     </>
   );

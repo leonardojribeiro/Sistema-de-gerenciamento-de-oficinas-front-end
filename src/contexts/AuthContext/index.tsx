@@ -128,7 +128,6 @@ const AuthHelper: React.FC = ({ children }) => {
       const decodificado = JSON.parse(atob(partes[1]));
       const expireToken = decodificado.exp * 1000;
       if (Date.now() < expireToken) {
-        console.log('fzd login por token')
         efetuarLoginPorToken(token);
       }
       else if (pathname !== '/login') {

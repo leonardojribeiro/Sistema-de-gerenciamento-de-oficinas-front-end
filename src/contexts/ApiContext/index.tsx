@@ -225,7 +225,7 @@ export const ApiProvider: React.FC = ({ children }) => {
         put,
         multipartPost,
         multipartPut,
-        inProgress: progress,
+        inProgress: !useCircularProgress.current && progress,
       }}
     >
       {children}
