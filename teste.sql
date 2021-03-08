@@ -12,17 +12,20 @@ CREATE TABLE IF NOT EXISTS `publicacoes` (
 
 
 INSERT INTO `publicacoes` 
-(`autor`, `titulo`, `oculto`, `data`, `corpo`)
-VALUES ("Maria", "Título da publicação", false, now(), "Texto da publicação....");
+(`autor`, `titulo`, `oculto`, `data`, `corpo`) VALUES 
+("Maria", "Título da publicação", false, now(), "Texto da publicação....");
 
 
 
 
 
-SELECT * FROM publicacoes WHERE publicacoes.autor = "Maria";
-cor
+SELECT `autor`, `titulo`, `corpo` FROM `publicacoes`
+WHERE `autor` = "Maria";
 
 
+UPDATE `publicacoes`
+SET `corpo` = "Texto do corpo que foi alterado"
+WHERE `id` = 1
 
 
 

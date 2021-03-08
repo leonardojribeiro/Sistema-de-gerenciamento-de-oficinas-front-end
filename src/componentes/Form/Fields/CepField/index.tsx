@@ -28,7 +28,7 @@ const CepField: React.FC<CepFieldProps> = ({ name, onChange, ...props }) => {
   return (
     <TextField
       onChange={handleInputChange}
-      type="number"
+      type="tel"
       error={!valid}
       value={value}
       inputRef={ref}

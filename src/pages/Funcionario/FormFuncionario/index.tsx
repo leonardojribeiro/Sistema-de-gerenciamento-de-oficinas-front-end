@@ -25,7 +25,6 @@ const FormFuncionario: React.FC = () => {
 
 
   const manipularEnvio = useCallback(async (dados) => {
-    console.log(dados);
     if (isEdit) {
       if (dados) {
         if (!comparar(funcionario, dados)) {
@@ -69,6 +68,7 @@ const FormFuncionario: React.FC = () => {
       popular()
     }
   }, [isEdit, popular])
+  console.log(funcionario)
 
   return (
     <Dialogo maxWidth="md" fullWidth open title={isEdit ? "Alterar funcionário" : "Incluir funcionário"}>
@@ -78,7 +78,7 @@ const FormFuncionario: React.FC = () => {
             <NameField name="nome" label="Nome" autoComplete="no" fullWidth required autoFocus />
           </Grid>
           <Grid item xs={12} sm={4} md={4}>
-            <CampoDeCpfOuCnpj name="cpf" label="CPF" autoComplete="no" onlyCpf fullWidth required />
+            <CampoDeCpfOuCnpj name="cpf" label="CPF" autoComplete="no" disabled={isEdit} onlyCpf fullWidth required />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <DateField name="dataNascimento" label="Data de nascimento" fullWidth required openTo="year" />

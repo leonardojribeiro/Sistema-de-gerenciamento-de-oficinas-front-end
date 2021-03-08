@@ -152,7 +152,7 @@ const MoneyField: React.FC<TextFieldProps> = ({ name, min, max, ...props }) => {
 
   return (
     <TextFieldMUI
-      type="number"
+      type="tel"
       {...props}
       onChange={handleChange}
       value={value}

@@ -32,7 +32,7 @@ const CampoCpfCnpj: React.FC<CpfCnpjFieldProps> = ({ name, onlyCpf, onChange, ..
 
   return (
     <TextField
-      type="number"
+      type="tel"
       onChange={handleInputChange}
       error={!valid}
       inputRef={ref}
