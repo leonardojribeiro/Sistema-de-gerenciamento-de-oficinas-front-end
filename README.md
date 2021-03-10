@@ -63,7 +63,7 @@ são elas:
 
 >REACT_APP_IMAGENS_URL
 
-O arqivo .envExample já possui essas variáveis definidas para a utilização do [back-end](https://github.com/LeonardoJRibeiro/Sistema-de-gerenciamento-de-oficinas-back-end), bastando alterar seu nome para ".env".
+O arquivo .envExample já possui essas variáveis definidas para a utilização do [back-end](https://github.com/LeonardoJRibeiro/Sistema-de-gerenciamento-de-oficinas-back-end), bastando alterar seu nome para ".env".
 
 ## Scripts disponíveis
 
