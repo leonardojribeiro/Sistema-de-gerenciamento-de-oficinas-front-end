@@ -5,6 +5,7 @@ Tabela de conteúdos
 <!--ts-->
    * [Sobre](#Sobre)
    * [Status](#Status)
+   * [Requerimentos](#Requerimentos)
    * [Scripts disponíveis](#Scripts-disponíveis)
       * [Executar em modo de desenvolvimento](#yarn-start)
       * [Compilar para o modo de produção](#yarn-build)
@@ -21,6 +22,48 @@ Esse projeto está sendo desenvolvido como requisito parcial de avaliação do t
 Tendo como principal objetivo auxiliar no cotidiano das oficinas automobilísticas.
 
 Esse projeto foi criado através do [Create React App](https://github.com/facebook/create-react-app).
+
+## Requerimentos
+Para executar esse projeto é necessário que você tenha algumas ferramentas instaladas no seu dispositivo.
+### Node.js
+O download do Node está disponível [aqui](https://nodejs.org/pt-br/download/).
+Após o download e instalação do Node.js, abra console do seu dispositivo e verifique se a instalação foi bem sucedida através do comando:
+> node -v 
+
+Deve aparecer a versão do Node.js que foi instalada.
+### Yarn
+Após instalar o Node.js, é necessário instalar o yarn, que é o gerenciador de pacotes do Facebook. Essa instalação é feita através do NPM, que por padrão é instalado junto com o Node.js.
+> npm install -g yarn
+
+### Visual Studio Code
+O Visual Studio Code é o editor de código recomendável para esse projeto. Você pode fazer o download do Visual Studio Code [aqui](https://code.visualstudio.com/).
+
+## Execução 
+### Fazer o Download desse projeto
+Você pode utilizar o git no diretório desejado para clonar o projeto através do comando:
+>git clone https://github.com/LeonardoJRibeiro/Sistema-de-gerenciamento-de-oficinas-front-end.git
+
+Ou você pode fazer o download do projeto zipado e descompactar no diretório desejado.
+
+### Abrir o projeto no Visual Studio Code
+1. Abra o Visual Studio Code
+2. Navegue até o menu "File"
+3. Clique na opçao "Open Folder"
+4. Selecione a pasta "Sistema-de-gerenciamento-de-oficinas-front-end" no diretório onde você clonou ou descompactou o projeto.
+5. Abra o terminal integrado do Visual.
+### Instalação das dependências
+Instale as dependências através do comando 
+> yarn install
+
+no terminal integrado do Visual Studio Code. <br/>
+### Definição das variáveis de ambiente
+O arquivo .env fornece algumas variáveis que são fundamentais para a comunicação com o back-end.
+são elas:
+>REACT_APP_API_URL
+
+>REACT_APP_IMAGENS_URL
+
+O arqivo .envExample já possui essas variáveis definidas para a utilização do [back-end](https://github.com/LeonardoJRibeiro/Sistema-de-gerenciamento-de-oficinas-back-end), bastando alterar seu nome para ".env".
 
 ## Scripts disponíveis
 
@@ -64,39 +107,39 @@ Veja a sessão [deployment](https://facebook.github.io/create-react-app/docs/dep
     - [x] Alteração de Peças
     - [x] Listagem de Peças
     - [X] Consulta de Peças
-  - [ ] Clientes
+  - [X] Clientes
     - [x] Cadastro de Clientes
     - [x] Alteração de Clientes
     - [x] Listagem de Clientes
     - [X] Consulta de Clientes
-    - [ ] Consulta de veículos de Clientes
-  - [ ] Veículos
+    - [X] Consulta de veículos de Clientes
+  - [X] Veículos
     - [x] Cadastro de Veículos
     - [x] Alteração de Veículos
     - [x] Listagem de Veículos
-    - [ ] Consulta de Veículos
-  - [ ] Fornecedores
+    - [X] Consulta de Veículos
+  - [X] Fornecedores
     - [x] Cadastro de Fornecedores
     - [x] Alteração de Fornecedores
     - [x] Listagem de Fornecedores
-    - [ ] Consulta de Fornecedores
-  - [ ] Especialidades
+    - [X] Consulta de Fornecedores
+  - [X] Especialidades
     - [x] Cadastro de Especialidades
     - [x] Alteração de Especialidades
     - [x] Listagem de Especialidades
-    - [ ] Consulta de Especialidades
+    - [X] Consulta de Especialidades
   - [X] Funcionários
     - [X] Cadastro de Funcionários
     - [X] Alteração de Funcionários
     - [X] Listagem de Funcionários
-    - [ ] Consulta de Funcionários
-  - [ ] Serviços
+    - [X] Consulta de Funcionários
+  - [X] Serviços
     - [X] Cadastro de Serviços
     - [X] Alteração de Serviços
     - [X] Listagem de Serviços
-    - [ ] Consulta de Serviços
-  - [ ] Ordens de Serviço
-    - [ ] Cadastro de Ordens de Serviço
-    - [ ] Alteração de Ordens de Serviço
-    - [ ] Listagem de Ordens de Serviço
-    - [ ] Consulta de Ordens de Serviço
+    - [X] Consulta de Serviços
+  - [X] Ordens de Serviço
+    - [X] Cadastro de Ordens de Serviço
+    - [X] Alteração de Ordens de Serviço
+    - [X] Listagem de Ordens de Serviço
+    - [X] Consulta de Ordens de Serviço
