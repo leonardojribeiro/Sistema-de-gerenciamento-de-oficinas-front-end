@@ -147,3 +147,16 @@ Veja a sessão [deployment](https://facebook.github.io/create-react-app/docs/dep
     - [X] Alteração de Ordens de Serviço
     - [X] Listagem de Ordens de Serviço
     - [X] Consulta de Ordens de Serviço
+  - [ ] Usuarios
+    - [X] Login
+    - [ ] Cadastro de Usuários
+    - [ ] Alteração de Usuários
+    - [ ] Listagem de Usuários
+    - [ ] Consulta de Usuários 
+  - [ ] Oficinas
+    - [ ] Cadastro de Oficinas Candidatas
+    - [ ] Cadastro de Oficinas
+    - [ ] Alteração de Oficinas
+    - [ ] Listagem de Oficinas
+    - [ ] Consulta de Oficinas
+  -[ ] Dashboard
