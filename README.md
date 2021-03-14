@@ -61,9 +61,13 @@ O arquivo .env fornece algumas variáveis que são fundamentais para a comunica�
 são elas:
 >REACT_APP_API_URL
 
+A URL base para a comunicação com o back-end
+
 >REACT_APP_IMAGENS_URL
 
-O arquivo .envExample já possui essas variáveis definidas para a utilização do [back-end](https://github.com/LeonardoJRibeiro/Sistema-de-gerenciamento-de-oficinas-back-end), bastando alterar seu nome para ".env".
+A URL base das imagens
+
+O arquivo .envExample já possui essas variáveis definidas para a utilização do [back-end](https://github.com/LeonardoJRibeiro/Sistema-de-gerenciamento-de-oficinas-back-end) na dispositivo local, bastando alterar seu nome para ".env".
 
 ## Scripts disponíveis
 
