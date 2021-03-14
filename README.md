@@ -159,4 +159,4 @@ Veja a sessão [deployment](https://facebook.github.io/create-react-app/docs/dep
     - [ ] Alteração de Oficinas
     - [ ] Listagem de Oficinas
     - [ ] Consulta de Oficinas
-  -[ ] Dashboard
+  - [ ] Dashboard
