@@ -12,13 +12,13 @@ const DialogoPecas: React.FC = () => {
       <Listagem
         dominio="peca"
         formSearchFilters={["descricao", "marca"]}
-        getPrimaryText={item => item.descricao}
-        getSecondaryText={item => item.marca.descricao}
+        getPrimaryText={item => item?.descricao}
+        getSecondaryText={item => item?.marca?.descricao}
         renderAvatar={item => (
-          <Avatar src={`${imagensUrl}/${item.marca.uriLogo}`} alt={item.marca.descricao} />
+          <Avatar src={`${imagensUrl}/${item?.marca?.uriLogo}`} alt={item?.marca?.descricao} />
         )}
-        getLinkToChange={item => `/pecas/alterarpeca?id=${item._id}`}
-        getTitleLinkToChange={item => `Alterar a peça ${item.descricao}`}
+        getLinkToChange={item => `/pecas/alterarpeca?id=${item?._id}`}
+        getTitleLinkToChange={item => `Alterar a peça ${item?.descricao}`}
         linkToInsertTitle="Incluir peça"
         linkToInsert="/pecas/incluirpeca"
       />
