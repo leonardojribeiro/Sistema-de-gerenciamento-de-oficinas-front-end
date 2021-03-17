@@ -76,8 +76,8 @@ const FormVeiculo: React.FC = () => {
     <Dialogo open title={isEdit ? "Alterar veículo" : "Incluir veículo"} fullWidth maxWidth="sm">
       <Form onSubmit={manipularEnvio} initialData={veiculo ? veiculo : cliente ? { cliente } : undefined}>
         <PlacaField name="placa" label="Placa" fullWidth required autoFocus />
-        <DateField name="anoFabricacao" label="Ano de fabricação" fullWidth required />
-        <DateField name="anoModelo" label="Ano de modelo" fullWidth required />
+        <DateField name="anoFabricacao" views={['year']} format="yyyy" label="Ano de fabricação" fullWidth required />
+        <DateField name="anoModelo" format="yyyy" views={['year']} label="Ano de modelo" fullWidth required />
         <Box display="flex" flexDirection="row" alignItems="center" justifyContent="end">
           <AutoCompleteModelo name="modelo" label="Modelo" required />
           <Link to={`${path}/incluirmodelo`}>
