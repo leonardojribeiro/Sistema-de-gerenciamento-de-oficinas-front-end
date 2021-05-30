@@ -18,7 +18,7 @@ Tabela de conteúdos
 
 ## Sobre
 
-Esse projeto está sendo desenvolvido como requisito parcial de avaliação do trabalho de conclusão de curso de Sistemas de Informação da [Universidade Estadual de Goiás - Unidade de Itaberaí](http://www.itaberai.ueg.br/).<br/>
+Esse projeto foi desenvolvido como requisito parcial de avaliação do trabalho de conclusão de curso de Sistemas de Informação da [Universidade Estadual de Goiás - Unidade de Itaberaí](http://www.itaberai.ueg.br/).<br/>
 Tendo como principal objetivo auxiliar no cotidiano das oficinas automobilísticas.
 
 Esse projeto foi criado através do [Create React App](https://github.com/facebook/create-react-app).
